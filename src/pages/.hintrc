@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "axe/aria": "off",
+    "axe/forms": "off",
+    "disown-opener": "off"
+  }
+}

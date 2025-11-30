@@ -1,0 +1,596 @@
+{
+  "topbar.tagline": "Ihr zuverlässiger Schweizer Partner",
+  "topbar.lang.de": "Deutsch",
+  "topbar.lang.fr": "Französisch",
+  "topbar.lang.en": "Englisch",
+
+  "auth.login.title": "Anmelden",
+  "auth.login.email": "E-Mail",
+  "auth.login.password": "Passwort",
+  "auth.login.submit": "Anmelden",
+  "auth.login.forgot": "Passwort vergessen?",
+  "auth.login.noAccount": "Sie haben noch kein Konto?",
+  "auth.login.signup": "Registrieren",
+
+  "auth.signup.title": "Konto erstellen",
+  "auth.signup.email": "E-Mail",
+  "auth.signup.password": "Passwort",
+  "auth.signup.confirm": "Passwort bestätigen",
+  "auth.signup.strength": "Stärke",
+  "auth.signup.firstName": "Vorname",
+  "auth.signup.lastName": "Nachname",
+  "auth.signup.street": "Adresse",
+  "auth.signup.postal": "Postleitzahl",
+  "auth.signup.city": "Stadt",
+  "auth.signup.terms": "Ich stimme den Bedingungen & Datenschutz zu",
+  "auth.signup.submit": "Konto erstellen",
+  "auth.signup.loading": "Wird erstellt...",
+  "auth.signup.haveAccount": "Sie haben bereits ein Konto?",
+  "auth.signup.signin": "Anmelden",
+
+  "auth.signup.verifyTitle": "E-Mail bestätigen",
+  "auth.signup.verifyMsg": "Wir haben einen 6-stelligen Code gesendet an",
+  "auth.signup.code": "6-stelliger Code",
+  "auth.signup.verify": "Bestätigen",
+  "auth.signup.changeEmail": "E-Mail ändern",
+  "auth.signup.resend": "Code erneut senden",
+  "auth.signup.resendIn": "Erneut senden in",
+  "auth.signup.successMsg": "Konto erstellt! Bitte bestätigen Sie Ihre E-Mail.",
+
+  "auth.signup.errors.match": "Passwörter stimmen nicht überein",
+  "auth.signup.errors.invalidCode": "Ungültiger Code",
+  "auth.signup.errors.mustAgree": "Sie müssen zustimmen, um fortzufahren",
+  "auth.signup.errors.failed": "Registrierung fehlgeschlagen",
+  "auth.signup.errors.weak": "Passwort ist zu schwach",
+  "auth.forgot.title": "Passwort vergessen",
+  "auth.forgot.email": "E-Mail",
+  "auth.forgot.submit": "Link zum Zurücksetzen senden",
+  "auth.forgot.loading": "Wird gesendet...",
+  "auth.forgot.success": "Falls diese E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.",
+  "auth.forgot.error": "Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+  "topbar.login": "Login",
+  "menu.getOffer": "Offerte erhalten",
+  "menu.dashboard": "Dashboard",
+  "menu.settings": "Einstellungen",
+  "menu.logout": "Abmelden",
+  "footer.blog": "Blog",
+  "footer.about": "Über uns",
+  "footer.terms": "Nutzungsbedingungen",
+  "footer.privacy": "Datenschutzbestimmungen",
+  "home.hero.tagline": "Ihre Steuererklärung online – einfach, schnell und 100 % schweizerisch.",
+  "home.hero.title": "Erledigen Sie Ihre Schweizer Steuererklärung online mit professioneller Unterstützung.",
+
+  "home.strengths.title": "Unsere wichtigsten Stärken",
+  "home.strengths.item1": "Team mit Sitz in der Schweiz",
+  "home.strengths.item2": "Transparente und fixe Preise",
+  "home.strengths.item3": "Persönliche Unterstützung online",
+  "home.strengths.item4": "Datensicherheit und Vertraulichkeit",
+
+  "home.price.title": "Ihre Steuererklärung ab CHF 59.–",
+  "home.price.text": "Ihre Schweizer Steuererklärung wird sicher online erledigt – zu einem Preis, der Ihrer Situation entspricht.",
+  "home.price.cta": "Offerte einholen",
+  "home.price.note": "Verfügbar für Kundinnen und Kunden in der ganzen Schweiz.",
+
+  "home.reviews.title": "Google Reviews",
+  "home.reviews.subtitle": "Echte Rückmeldungen von Kundinnen und Kunden, die uns ihre Steuererklärung anvertrauen.",
+  "home.reviews.score": "Durchschnittliche Bewertung: 4,8/5",
+  "home.reviews.count": "Basierend auf Dutzenden verifizierten Google-Bewertungen.",
+  "home.reviews.placeholder": "Hier wird ein Google-Reviews-Widget oder Screenshots eingebunden, um echte Kundenmeinungen zu zeigen.",
+
+  "home.seo.title": "Online-Steuererklärung in der Schweiz – nützliche Informationen",
+  "home.seo.intro": "SwissTaxOnline verbindet die Flexibilität eines digitalen Tools mit der Qualität eines Treuhandservices.",
+  "home.seo.text1": "Wir erstellen Steuererklärungen für Privatpersonen in der ganzen Schweiz. Unser Online-Prozess ist einfach und effizient und erfüllt gleichzeitig alle kantonalen Anforderungen.",
+  "home.seo.text2": "Von Freiburg über Waadt bis Genf unterstützen wir Sie bei der Erstellung und Optimierung Ihrer Steuererklärung unter Berücksichtigung der lokalen Vorschriften.",
+  "home.seo.linkAbout": "Über SwissTaxOnline",
+  "home.seo.linkBlog": "Blog",
+  "home.seo.linkFaq": "FAQ",
+  "home.seo.linkContact": "Kontakt",
+
+  "home.how.title": "So funktioniert es",
+  "home.how.step1.title": "1. Formular ausfüllen",
+  "home.how.step1.text": "Beantworten Sie einige Fragen, damit wir Ihre Situation verstehen.",
+  "home.how.step2.title": "2. Unterlagen hochladen",
+  "home.how.step2.text": "Laden Sie Lohnabrechnungen, Kontoauszüge und weitere Unterlagen sicher hoch.",
+  "home.how.step3.title": "3. Wir erstellen Ihre Steuererklärung",
+  "home.how.step3.text": "Unsere Schweizer Steuerexpertinnen und -experten bereiten Ihre Erklärung vor und optimieren die Abzüge.",
+  "home.how.step4.title": "4. Sie erhalten die Unterlagen zur Kontrolle",
+  "home.how.step4.text": "Sie prüfen die vorbereitete Erklärung und stellen bei Bedarf Fragen.",
+  "home.how.step5.title": "5. Wir reichen die Erklärung für Sie ein",
+  "home.how.step5.text": "Nach Ihrer Freigabe übermitteln wir die Steuererklärung an die zuständige Behörde.",
+  "home.how.learnMore": "Mehr dazu in der FAQ",
+
+  "home.guarantees.title": "Unsere Garantien",
+  "home.guarantees.item1.title": "Daten in der Schweiz gehostet",
+  "home.guarantees.item1.text": "Ihre Daten werden in einer sicheren Schweizer Infrastruktur gespeichert.",
+  "home.guarantees.item2.title": "100 % Online-Service",
+  "home.guarantees.item2.text": "Von der Registrierung bis zur Einreichung läuft alles online.",
+  "home.guarantees.item3.title": "Beraterinnen und Berater für Sie da",
+  "home.guarantees.item3.text": "Unser Team ist für Ihre Fragen zu Ihrem Dossier erreichbar.",
+  "home.guarantees.item4.title": "Keine versteckten Gebühren",
+  "home.guarantees.item4.text": "Der Preis ist fix und wird bestätigt, bevor wir mit Ihrer Steuererklärung beginnen.",
+
+  "home.faq.title": "Kurze FAQ",
+  "home.faq.q1.q": "Wie lange dauert die Bearbeitung meiner Steuererklärung?",
+  "home.faq.q1.a": "Die meisten Erklärungen werden innerhalb weniger Arbeitstage nach Eingang aller Unterlagen bearbeitet.",
+  "home.faq.q2.q": "Kann ich meine Fahrtkosten abziehen?",
+  "home.faq.q2.a": "Ja, in vielen Fällen können Fahrkosten und gewisse Berufsauslagen – je nach Kanton – abgezogen werden.",
+  "home.faq.q3.q": "Sind meine Daten sicher?",
+  "home.faq.q3.a": "Ja. Wir verwenden Verschlüsselung, sicheres Hosting in der Schweiz und strenge Zugriffskontrollen, um Ihre Daten zu schützen.",
+  "product.title": "Ihre Offerte für die Steuererklärung",
+  "product.subtitle": "Beantworten Sie einige Fragen, damit wir den passenden Preis für Ihre Online-Steuererklärung berechnen können.",
+
+  "product.editRequest": "Anfrage bearbeiten",
+
+  "product.sections.profile": "Ihr Profil",
+  "product.taxYear": "Steuerjahr",
+  "product.maritalStatus": "Zivilstand",
+  "product.marital.single": "Ledig",
+  "product.marital.married": "Verheiratet",
+  "product.childrenCount": "Anzahl Kinder",
+
+  "product.sections.situation": "Ihre Steuersituation",
+  "product.incomeSources": "Anzahl Einkommensquellen",
+  "product.incomeHint": "Beispiele: Löhne, AHV-Renten, Pensionskassen-Renten, selbständige Erwerbstätigkeit.",
+  "product.wealthStatements": "Anzahl Vermögens- / Steuerunterlagen",
+  "product.wealthHint": "Beispiele: Bankauszüge, e-tax Unterlagen, Depotauszüge, Beteiligungen.",
+  "product.properties": "Anzahl Liegenschaften",
+
+  "product.propertiesDetailsTitle": "Details zu den Liegenschaften",
+  "product.propertiesCount": "Wie viele Liegenschaften insgesamt?",
+  "product.newProperties": "Wie viele werden zum ersten Mal deklariert?",
+  "product.newPropertiesHint": "Zum Beispiel: eine während des Steuerjahres gekaufte Liegenschaft.",
+
+  "product.sections.billing": "Rechnungsadresse",
+  "product.billing.firstName": "Vorname",
+  "product.billing.lastName": "Nachname",
+  "product.billing.street": "Strasse und Nummer",
+  "product.billing.postalCode": "PLZ",
+  "product.billing.city": "Ort",
+
+  "product.sections.summary": "Zusammenfassung Ihrer Anfrage",
+  "product.summary.taxYear": "Steuerjahr: {{year}}",
+  "product.summary.marital": "Zivilstand: {{status}}",
+  "product.summary.children": "Kinder: {{count}}",
+  "product.summary.incomes": "Einkommensquellen: {{count}}",
+  "product.summary.wealth": "Vermögens- / Steuerunterlagen: {{count}}",
+  "product.summary.properties": "Liegenschaften: {{count}}",
+
+  "product.cancel": "Abbrechen",
+  "product.confirm": "Anfrage bestätigen",
+  "product.confirming": "Wird bestätigt...",
+  "product.next": "Weiter",
+  "product.back": "Zurück",
+
+
+  "product.sections.offers": "Unsere Angebote",
+  "product.offersHint": "Basierend auf Ihren Antworten – wählen Sie das Angebot, das am besten zu Ihrer Situation passt.",
+  "product.offers.basic": "Basic",
+  "product.offers.basicDesc": "Einfache Steuersituationen. Ideal bei einer Einkommensquelle und wenig Vermögen.",
+  "product.offers.standard": "Standard",
+  "product.offers.standardDesc": "Die meisten typischen Situationen. Einschliesslich mehrerer Einkommensquellen und einfacher Anlagen.",
+  "product.offers.premium": "Premium",
+  "product.offers.premiumDesc": "Komplexe Situationen mit mehreren Einkommensquellen, Anlagen oder Liegenschaften.",
+  "product.recommended": "Empfohlen",
+  "product.goToSummary": "Zur Zusammenfassung",
+
+  "product.errors.noOfferSelected": "Bitte wählen Sie ein Angebot aus, bevor Sie Ihre Anfrage bestätigen.",
+  "product.confirmation.mock": "Ihre Anfrage wurde gespeichert (Demo). In der finalen Version werden die Daten an das Backend gesendet.",
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Verwalten Sie alle Ihre Schweizer Steuererklärungen an einem Ort.",
+    "newDeclaration": "Neue Steuererklärung",
+    "myDeclarations": "Meine Steuererklärungen",
+    "helpLink": "Brauchen Sie Hilfe?",
+    "loading": "Wird geladen…",
+    "empty": "Sie haben noch keine Steuererklärungen.",
+    "startFirst": "Erste Erklärung starten",
+
+    "declarationTitle": "{{year}} – {{name}}",
+
+    "steps": {
+      "request": "Dokumentenvorbereitung",
+      "documents": "Dokumentenprüfung",
+      "preparation": "Erstellung der Steuererklärung",
+      "review": "Überprüfung und Freigabe",
+      "submission": "Einreichung"
+    },
+
+    "actions": {
+      "viewRequest": "Anfrage anzeigen",
+      "viewDeclaration": "Erklärung anzeigen"
+    },
+
+    "banner": {
+      "step1": "Wir prüfen, ob alle erforderlichen Dokumente eingegangen sind.",
+      "step2": "Wir überprüfen Ihre Dokumente.",
+      "step3": "Wir erstellen Ihre Steuererklärung.",
+      "step4": "Ihre Erklärung ist bereit. Bitte prüfen und bestätigen.",
+      "step5": "Ihre Steuererklärung wurde beim Steueramt eingereicht."
+    },
+
+    "steps1": {
+      "1": {
+        "title": "Dokumentenvorbereitung",
+        "time": "Übliche Dauer: 1 Woche"
+      },
+      "2": {
+        "title": "Dokumentenprüfung durch SwissTaxOnline",
+        "time": "Übliche Dauer: 1 Woche"
+      },
+      "3": {
+        "title": "Erstellung der Steuererklärung durch SwissTaxOnline",
+        "time": "Übliche Dauer: 2 Wochen"
+      },
+      "4": {
+        "title": "Überprüfung und Freigabe der Steuererklärung",
+        "time": "Übliche Dauer: 1 Tag"
+      },
+      "5": {
+        "title": "Einreichung der Steuererklärung",
+        "time": "Übliche Dauer: 1–3 Tage"
+      }
+    },
+
+    "defaultStepMessage": "Ihre Erklärung befindet sich derzeit in Schritt {{step}} von 5.",
+    "statusSubmitted": "Eingereicht"
+  }
+  ,
+  "view": {
+    "title": "Meine Anfrage anzeigen",
+    "back": "Zur Übersicht zurück",
+
+    "formSummary": "Zusammenfassung des Initialformulars",
+
+    "summary": {
+      "maritalStatus": "Zivilstand",
+      "childrenCount": "Anzahl Kinder",
+      "incomes": "Einkommensangaben",
+      "properties": "Immobilien",
+      "offer": "Gewählte Dienstleistung",
+      "price": "Preis",
+      "taxYear": "Steuerjahr"
+    },
+
+    "sections": {
+      "initialUpload": "Erstes Hochladen der Unterlagen",
+      "reviewDocuments": "Prüfung der Unterlagen und Zusatzfragen",
+      "prepareDeclaration": "Erstellung der Steuererklärung",
+      "validation": "Prüfung und Freigabe der Steuererklärung",
+      "submission": "Einreichung der Steuererklärung"
+    },
+
+    "status": {
+      "locked": "Gesperrt",
+      "current": "In Bearbeitung",
+      "completed": "Abgeschlossen"
+    },
+
+    "invoice": "Rechnung",
+    "invoice.offer": "Leistung",
+    "invoice.total": "Gesamtbetrag",
+    "downloadInvoice": "Rechnung herunterladen",
+
+    "loading": "Wird geladen…",
+    "errors": {
+      "loadFailed": "Die Anfrage konnte nicht geladen werden."
+    },
+    "notFound": "Anfrage nicht gefunden.",
+
+    "doc": {
+      "status": {
+        "uploaded": "Hochgeladen",
+        "todo": "Offen"
+      }
+    },
+
+    "step1": {
+      "description": "Laden Sie Ihre Lohnausweise, Kontoauszüge, 3.-Säule-Bescheinigungen und weitere Belege hoch.",
+      "uploadBtn": "Dokumente hochladen (PDF)",
+      "saveInfo": "Sie können Ihren Fortschritt speichern und später fortfahren. Alle Pflichtdokumente müssen jedoch vor der definitiven Einreichung hochgeladen werden.",
+      "submit": "Unterlagen zur Prüfung einreichen",
+      "completed": "Ihre Unterlagen wurden eingereicht."
+    },
+
+    "step2": {
+      "description": "Wir prüfen Ihre Unterlagen. Falls zusätzliche Informationen nötig sind, können Sie die Fragen unten beantworten.",
+      "answerPlaceholder": "Ihre Antwort hier…",
+      "submit": "Antworten und Unterlagen einreichen",
+      "completed": "Ihre zusätzlichen Antworten wurden eingereicht und werden geprüft."
+    },
+
+    "step3": {
+      "text": "Ihre Steuererklärung wird aktuell von SwissTaxOnline vorbereitet. Dieser Schritt wird vollständig durch unser Team erledigt.",
+      "eta": "Voraussichtliche Dauer: ca. 2 Wochen, nachdem alle Unterlagen vollständig sind."
+    },
+
+    "step4": {
+      "description": "Ihr Entwurf der Steuererklärung ist bereit. Bitte prüfen Sie alles sorgfältig und bestätigen Sie.",
+      "downloadDraft": "Entwurf der Steuererklärung herunterladen (PDF)",
+      "comments": "Bemerkungen oder Korrekturen",
+      "comments.placeholder": "Fügen Sie hier Ihre Bemerkungen oder Korrekturen ein…",
+      "uploadExtra": "Zusätzliche Dokumente hochladen",
+      "meetingInfo": "Für Comfort- und Premium-Pakete können Sie ein Gespräch zur Besprechung Ihrer Steuererklärung vereinbaren.",
+      "bookMeeting": "Termin buchen",
+      "validate": "Bestätigen und freigeben",
+      "completed": "Sie haben Ihre Steuererklärung freigegeben."
+    },
+
+    "step5": {
+      "description": "Ihre Steuererklärung wurde bei der Steuerbehörde eingereicht.",
+      "date": "Einreichungsdatum",
+      "method": "Einreichungsart",
+      "downloadFinal": "Endgültige Steuererklärung herunterladen",
+      "uploadAssessment": "Steuerveranlagung hochladen (nur Comfort-Paket)",
+      "thanks": "Vielen Dank! Dieser Prozess ist jetzt abgeschlossen. Sie können jederzeit eine neue Steuererklärung für das nächste Jahr über Ihr Dashboard starten."
+    }
+  }
+  ,
+  "about": {
+    "title": "Über SwissTaxOnline",
+    "subtitle": "Ein digitales Schweizer Steuerservice, entwickelt von A&G Fiduciaire Sàrl, um Ihre Steuererklärung einfacher, klarer und sicherer zu machen.",
+
+    "company": {
+      "title": "Wer wir sind",
+      "text1": "SwissTaxOnline ist ein Online-Dienst, der Privatpersonen und Unternehmer bei ihren Schweizer Steuererklärungen unterstützt. Hinter der Plattform steht A&G Fiduciaire Sàrl, eine Schweizer Treuhandgesellschaft mit Erfahrung in den Bereichen Steuern, Buchhaltung und Beratung.",
+      "text2": "Durch die Kombination von menschlicher Expertise und einer sicheren digitalen Plattform bieten wir einen Service, der sowohl effizient als auch persönlich ist – angepasst an Ihre Situation, Ihren Kanton und Ihre Sprache."
+    },
+
+    "mission": {
+      "title": "Unsere Mission",
+      "text": "Unsere Mission ist es, den Prozess der Steuererklärung in der Schweiz zu vereinfachen. Wir möchten Komplexität reduzieren, unangenehme Überraschungen vermeiden und Ihnen Zeit sparen. Mit SwissTaxOnline beantworten Sie einen klar strukturierten Fragebogen, laden Ihre Unterlagen sicher hoch und unser Team übernimmt die Vorbereitung, Prüfung und Einreichung Ihrer Steuererklärung beim Steueramt."
+    },
+
+    "team": {
+      "title": "Unser Team",
+      "intro": "Hinter SwissTaxOnline steht ein multidisziplinäres Team von Steuerspezialisten, Treuhand-Fachleuten und Supportmitarbeitenden mit Sitz in der Schweiz.",
+      "members": {
+        "founder": {
+          "initials": "AG",
+          "name": "A&G Fiduciaire Sàrl",
+          "role": "Gründerin und Betreiberin von SwissTaxOnline"
+        },
+        "partner": {
+          "initials": "ST",
+          "name": "Steuerpartner",
+          "role": "Verantwortlich für Steuerreview und Qualität"
+        },
+        "taxExpert": {
+          "initials": "TE",
+          "name": "Steuerexpert:innen-Team",
+          "role": "Erstellung und Optimierung Ihrer Steuererklärung"
+        }
+      }
+    },
+
+    "values": {
+      "title": "Unsere Werte",
+      "intro": "Vier Werte prägen alle unsere Entscheidungen und die Art, wie wir unsere Kundinnen und Kunden begleiten.",
+      "items": {
+        "transparency": {
+          "title": "Transparenz",
+          "text": "Klare Preise, einfache Kommunikation und keine versteckten Überraschungen. Sie wissen jederzeit, wo Ihr Dossier steht und was im gewählten Paket enthalten ist."
+        },
+        "reliability": {
+          "title": "Zuverlässigkeit",
+          "text": "Ihre Steuererklärung wird von Fachleuten bearbeitet, die das Schweizer Steuersystem und die Besonderheiten der Kantone kennen."
+        },
+        "confidentiality": {
+          "title": "Vertraulichkeit",
+          "text": "Ihre Daten werden streng vertraulich behandelt – im Einklang mit Schweizer Standards und bewährten Praktiken im Datenschutz."
+        },
+        "proximity": {
+          "title": "Nähe",
+          "text": "Auch wenn der Service digital ist, bleibt die Beziehung menschlich. Sie können uns kontaktieren, wenn Sie Fragen haben oder Erklärungen wünschen."
+        }
+      }
+    },
+
+    "commitments": {
+      "title": "Unsere Verpflichtungen",
+      "intro": "Neben der Technologie geben wir konkrete Zusagen für Ihre Daten und Ihr Erlebnis.",
+      "items": {
+        "security": {
+          "text": "Datensicherheit: verschlüsselte Kommunikation, kontrollierte Zugriffe und Prozesse, die auf den Schutz Ihrer persönlichen Informationen ausgelegt sind."
+        },
+        "hosting": {
+          "text": "Hosting in der Schweiz: Ihre Daten werden auf Servern in der Schweiz und bei Anbietern gespeichert, die Schweizer Standards erfüllen."
+        },
+        "support": {
+          "text": "Menschlicher Kundensupport: Unser Team hilft Ihnen, den Prozess, Ihre Unterlagen und Ihre Steuersituation zu verstehen."
+        }
+      }
+    },
+
+    "contact": {
+      "title": "Kontakt und Adresse",
+      "intro": "Haben Sie Fragen zu SwissTaxOnline, zu unserem Prozess oder zu unseren Angeboten? Sie können uns über die folgenden Kontaktdaten erreichen.",
+      "addressLabel": "Postadresse",
+      "contactLabel": "Kontakt",
+      "addressLines": [
+        "A&G Fiduciaire Sàrl",
+        "Strasse und Hausnummer",
+        "PLZ – Ort",
+        "Schweiz"
+      ],
+      "emailLabel": "E-Mail:",
+      "phoneLabel": "Telefon:"
+    }
+  }
+  ,
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "subtitle": "Hier finden Sie die wichtigsten Fragen und Antworten zu SwissTaxOnline, zum Ablauf der Steuererklärung und zum Umgang mit Ihren Daten.",
+
+    "categories": {
+      "general": {
+        "title": "Allgemeine Informationen",
+        "description": "Ein kurzer Überblick darüber, was SwissTaxOnline ist und für wen der Service gedacht ist.",
+        "items": {
+          "q1": {
+            "question": "Was ist SwissTaxOnline?",
+            "answer": "SwissTaxOnline ist ein Online-Dienst von A&G Fiduciaire Sàrl, der Ihnen hilft, Ihre Schweizer Steuererklärung zu erstellen und einzureichen. Sie beantworten einen strukturierten Fragebogen, laden Ihre Unterlagen sicher hoch, und unser Team bereitet Ihre Steuererklärung vor und reicht sie bei der Steuerbehörde ein."
+          },
+          "q2": {
+            "question": "Wer kann SwissTaxOnline nutzen?",
+            "answer": "Der Service richtet sich in erster Linie an Privatpersonen mit Steuerdomizil in der Schweiz. Je nach Kanton und Situation können auch selbständig Erwerbende und kleine Unternehmen in Frage kommen. Genauere Informationen finden Sie im Fragebogen und auf unserer öffentlichen Website."
+          },
+          "q3": {
+            "question": "Ist der Service vollständig online?",
+            "answer": "Ja. Der gesamte Prozess – von der ersten Anfrage bis zur Einreichung der Steuererklärung – findet online statt. Sie können unser Team jedoch jederzeit kontaktieren, wenn Sie Unterstützung benötigen oder bestimmte Punkte mit einer Fachperson klären möchten."
+          }
+        }
+      },
+
+      "process": {
+        "title": "Ablauf der Steuererklärung",
+        "description": "Wie die einzelnen Schritte der Steuererklärung mit SwissTaxOnline ablaufen.",
+        "items": {
+          "q1": {
+            "question": "Wie funktioniert der Ablauf der Steuererklärung?",
+            "answer": "Sie beginnen mit dem Ausfüllen des Online-Fragebogens und wählen ein Angebot. Anschliessend laden Sie Ihre Unterlagen hoch. Unser Team prüft Ihr Dossier, erstellt Ihre Steuererklärung und sendet Ihnen eine Entwurfsversion zur Durchsicht. Nach Ihrer Freigabe reichen wir die Erklärung bei der zuständigen Steuerbehörde ein."
+          },
+          "q2": {
+            "question": "Wie lange dauert der Prozess in der Regel?",
+            "answer": "Die Dauer hängt von Ihrer Situation und davon ab, wie schnell wir alle erforderlichen Unterlagen erhalten. In der Regel kann die Prüfung und Vorbereitung zwischen 1 und 3 Wochen dauern, sobald Ihr Dossier vollständig ist. Bei dringenden Fällen kontaktieren Sie uns bitte so früh wie möglich."
+          },
+          "q3": {
+            "question": "Kann ich den Fortschritt meiner Erklärung verfolgen?",
+            "answer": "Ja. In Ihrem Dashboard wird jede Erklärung mit fünf klaren Phasen angezeigt – vom Dokumenten-Upload bis zur Einreichung. Sie sehen den aktuellen Schritt, einen Richtwert für die Dauer und eine kurze Statusmeldung zu jeder Phase."
+          }
+        }
+      },
+
+      "documents": {
+        "title": "Erforderliche Unterlagen",
+        "description": "Welche Unterlagen Sie für Ihre Schweizer Steuererklärung vorbereiten und hochladen sollten.",
+        "items": {
+          "q1": {
+            "question": "Welche Unterlagen muss ich einreichen?",
+            "answer": "Die Liste hängt von Ihrer Situation ab, umfasst aber typischerweise Lohnausweise, AVS/LPP-Bescheinigungen, Bankauszüge, Nachweise der 3. Säule, Informationen zu Immobilien sowie weitere Einkünfte oder Abzüge. Das Portal zeigt Ihnen eine personalisierte Liste basierend auf Ihren Antworten."
+          },
+          "q2": {
+            "question": "Wie lade ich meine Unterlagen hoch?",
+            "answer": "Sie können Ihre Dokumente direkt in Ihrem Kundenbereich im PDF hochladen, entsprechend den Hinweisen zu jeder Dokumentkategorie. Sie können Ihren Fortschritt speichern und später zurückkehren, falls noch nicht alles vorhanden ist."
+          },
+          "q3": {
+            "question": "Was mache ich, wenn ein Dokument fehlt?",
+            "answer": "Wenn ein Dokument vorübergehend fehlt, können Sie dies im Portal vermerken und es später nachreichen. Unser Team kann Ihnen Zusatzfragen stellen oder Alternativen vorschlagen, wenn bestimmte Informationen nicht verfügbar sind."
+          }
+        }
+      },
+
+      "payment": {
+        "title": "Zahlung und Rechnungsstellung",
+        "description": "Informationen zu Preisen, Zahlungsmethoden und Rechnungen.",
+        "items": {
+          "q1": {
+            "question": "Wie wird der Service verrechnet?",
+            "answer": "Der Preis hängt von Ihrer Situation und der Komplexität Ihrer Steuererklärung ab. Wenn Sie den Fragebogen ausfüllen, schlägt Ihnen unser Preiskalkulator passende Angebote für Ihr Profil vor – mit klaren und transparenten Gebühren."
+          },
+          "q2": {
+            "question": "Wann und wie bezahle ich?",
+            "answer": "Sie erhalten nach Bestätigung Ihres Auftrags eine Rechnung per E-Mail. Die Rechnung ist ebenfalls in Ihrem Kundenbereich verfügbar. Die Zahlung erfolgt in der Regel per Banküberweisung oder über die auf der Rechnung angegebenen Zahlungsmöglichkeiten."
+          },
+          "q3": {
+            "question": "Erhalte ich eine Rechnung für meine Unterlagen?",
+            "answer": "Ja. Eine Rechnung im PDF-Format wird automatisch erstellt und kann jederzeit aus Ihrem Kundenbereich heruntergeladen werden. Sie wird von A&G Fiduciaire Sàrl für den Dienst SwissTaxOnline ausgestellt."
+          }
+        }
+      },
+
+      "security": {
+        "title": "Sicherheit und Vertraulichkeit",
+        "description": "Wie wir Ihre personenbezogenen und steuerlichen Daten schützen.",
+        "items": {
+          "q1": {
+            "question": "Wie werden meine Daten geschützt?",
+            "answer": "Wir verwenden sichere Verbindungen (verschlüsselte Kommunikation), kontrollierte Zugriffe und interne Prozesse, die auf den Schutz Ihrer personenbezogenen Daten ausgelegt sind. Nur autorisierte Teammitglieder haben Zugang zu Ihrem Dossier, um Ihre Erklärung zu bearbeiten."
+          },
+          "q2": {
+            "question": "Wo werden meine Daten gespeichert?",
+            "answer": "In der Regel werden die Daten in der Schweiz und bei Anbietern gespeichert, die Schweizer Standards in Bezug auf Sicherheit und Datenschutz erfüllen. Weitere Details finden Sie in unserer Datenschutzerklärung."
+          },
+          "q3": {
+            "question": "Werden meine Informationen an Dritte weitergegeben?",
+            "answer": "Ihre Daten werden nur dann an Dritte weitergegeben, wenn dies für die Ausführung des Mandats erforderlich ist, zum Beispiel an die zuständige Steuerbehörde. Wir verkaufen Ihre personenbezogenen Daten nicht. Alle Details sind in unseren Nutzungsbedingungen und der Datenschutzerklärung aufgeführt."
+          }
+        }
+      }
+    }
+  },
+  "verifyEmail": {
+  "title": "E-Mail bestätigen",
+  "statusLabel": "Kontostatus:",
+  "statusPending": "Bestätigung ausstehend",
+  "statusVerified": "Konto verifiziert",
+
+  "instructionsNoToken": "Ein Bestätigungslink wurde an Ihre E-Mail-Adresse gesendet. Bitte klicken Sie auf den Link in der Nachricht, um Ihr Konto zu aktivieren.",
+  "verifying": "Wir prüfen gerade Ihre E-Mail…",
+
+  "verifiedMessage": "Ihre E-Mail wurde erfolgreich bestätigt. Sie werden zu Ihrem Dashboard weitergeleitet.",
+  "invalidLinkMessage": "Dieser Bestätigungslink ist ungültig. Sie können unten einen neuen Link anfordern.",
+  "linkExpired": "Dieser Bestätigungslink ist abgelaufen. Bitte fordern Sie eine neue Bestätigungs-E-Mail an.",
+
+  "resendTitle": "E-Mail nicht erhalten?",
+  "resendHint": "Überprüfen Sie Ihren Spam-Ordner oder klicken Sie auf die Schaltfläche unten, um den Bestätigungslink erneut zu senden.",
+  "resendCta": "Bestätigungs-E-Mail erneut senden",
+  "resendLoading": "Wird gesendet…",
+  "resendSuccess": "Eine neue Bestätigungs-E-Mail wurde an Ihr Postfach gesendet.",
+  "resendError": "Die E-Mail konnte nicht erneut gesendet werden. Bitte versuchen Sie es später noch einmal.",
+
+  "goToDashboard": "Zum Dashboard",
+  "backToLogin": "Zur Anmeldung zurück"
+},
+"accountSettings": {
+  "title": "Kontoeinstellungen",
+  "subtitle": "Verwalten Sie Ihre persönlichen Daten, Spracheinstellungen und Sicherheitsoptionen.",
+  "loading": "Kontoeinstellungen werden geladen…",
+
+  "save": "Änderungen speichern",
+  "saving": "Wird gespeichert…",
+  "saveSuccess": "Ihre Kontoeinstellungen wurden aktualisiert.",
+  "saveError": "Die Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+
+  "errors": {
+    "passwordMismatch": "Die neuen Passwörter stimmen nicht überein."
+  },
+
+  "personal": {
+    "title": "Persönliche Daten",
+    "desc": "Aktualisieren Sie die Angaben, die mit Ihrem SwissTaxOnline-Konto verbunden sind.",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "phone": "Telefonnummer"
+  },
+
+  "language": {
+    "title": "Spracheinstellungen",
+    "desc": "Wählen Sie die Sprache der Benutzeroberfläche. Sie wird bei zukünftigen Anmeldungen verwendet.",
+    "label": "Anzeigesprache",
+    "en": "Englisch",
+    "fr": "Französisch",
+    "de": "Deutsch"
+  },
+
+  "security": {
+    "title": "Kontosicherheit",
+    "desc": "Ändern Sie Ihr Passwort und verwalten Sie die Zwei-Faktor-Authentifizierung.",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "confirmNewPassword": "Neues Passwort bestätigen",
+    "twoFactorLabel": "Zwei-Faktor-Authentifizierung (2FA)",
+    "twoFactorToggle": "2FA für zusätzliche Sicherheit bei der Anmeldung aktivieren."
+  },
+
+  "delete": {
+    "title": "Konto löschen",
+    "desc": "Durch das Löschen Ihres Kontos wird Ihr Zugang deaktiviert und Ihre Daten können gemäss unserer internen Richtlinie dauerhaft entfernt werden.",
+    "button": "Mein Konto löschen",
+    "confirmQuestion": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+    "error": "Ihr Konto konnte nicht gelöscht werden. Bitte kontaktieren Sie den Support, falls das Problem bestehen bleibt."
+  }
+}
+
+
+}

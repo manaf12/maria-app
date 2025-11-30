@@ -1,0 +1,596 @@
+{
+  "topbar.tagline": "Your trusted Swiss partner",
+  "topbar.lang.de": "German",
+  "topbar.lang.fr": "French",
+  "topbar.lang.en": "English",
+
+  "auth.login.title": "Sign in",
+  "auth.login.email": "Email",
+  "auth.login.password": "Password",
+  "auth.login.submit": "Sign in",
+  "auth.login.forgot": "Forgot password?",
+  "auth.login.noAccount": "Don’t have an account?",
+  "auth.login.signup": "Sign up",
+  "auth.signup.title": "Create account",
+  "auth.signup.email": "Email",
+  "auth.signup.password": "Password",
+  "auth.signup.confirm": "Confirm password",
+  "auth.signup.strength": "Strength",
+  "auth.signup.firstName": "First name",
+  "auth.signup.lastName": "Last name",
+  "auth.signup.street": "Street address",
+  "auth.signup.postal": "Postal code",
+  "auth.signup.city": "City",
+  "auth.signup.terms": "I agree to the Terms & Privacy",
+  "auth.signup.submit": "Create account",
+  "auth.signup.loading": "Creating...",
+  "auth.signup.haveAccount": "Already have an account?",
+  "auth.signup.signin": "Sign in",
+  "auth.signup.successMsg": "Account created! Please verify your email.",
+
+  "auth.signup.verifyTitle": "Verify your email",
+  "auth.signup.verifyMsg": "We sent a 6-digit code to",
+  "auth.signup.code": "6-digit code",
+  "auth.signup.verify": "Verify",
+  "auth.signup.changeEmail": "Change email",
+  "auth.signup.resend": "Resend code",
+  "auth.signup.resendIn": "Resend in",
+
+  "auth.signup.errors.match": "Passwords do not match",
+  "auth.signup.errors.invalidCode": "Invalid code",
+  "auth.signup.errors.mustAgree": "You must agree to continue",
+  "auth.signup.errors.failed": "Sign up failed",
+  "auth.signup.errors.weak": "Password is too weak",
+
+
+  "auth.forgot.title": "Forgot password",
+  "auth.forgot.email": "Email",
+  "auth.forgot.submit": "Send reset link",
+  "auth.forgot.loading": "Sending...",
+  "auth.forgot.success": "If this email exists, a reset link has been sent.",
+  "auth.forgot.error": "Could not send reset link. Please try again.",
+  "topbar.login": "Login",
+  "menu.getOffer": "Get an offer",
+  "menu.dashboard": "Dashboard",
+  "menu.settings": "Settings",
+  "menu.logout": "Logout",
+  "footer.blog": "Blog",
+  "footer.about": "About",
+  "footer.terms": "Terms of Use",
+  "footer.privacy": "Privacy Policy",
+  "home.hero.tagline": "Your online tax declaration — simple, fast, and 100% Swiss.",
+  "home.hero.title": "File your Swiss tax return online with professional support.",
+
+  "home.strengths.title": "Our key strengths",
+  "home.strengths.item1": "Team based in Switzerland",
+  "home.strengths.item2": "Transparent and fixed pricing",
+  "home.strengths.item3": "Human assistance available online",
+  "home.strengths.item4": "Data security and confidentiality",
+
+  "home.price.title": "Your tax declaration from CHF 59.–",
+  "home.price.text": "Your Swiss tax declaration done securely online, with a price adapted to your situation.",
+  "home.price.cta": "Get a quote",
+  "home.price.note": "Accessible to all clients throughout Switzerland.",
+
+  "home.reviews.title": "Google Reviews",
+  "home.reviews.subtitle": "Real feedback from clients who entrusted us with their Swiss tax returns.",
+  "home.reviews.score": "Average rating: 4.8/5",
+  "home.reviews.count": "Based on dozens of verified Google Reviews.",
+  "home.reviews.placeholder": "Google Reviews widget or screenshots will be integrated here to showcase real client feedback.",
+
+  "home.seo.title": "Online Swiss tax declaration – useful information",
+  "home.seo.intro": "SwissTaxOnline combines the flexibility of a digital tool with the quality of a fiduciary service.",
+  "home.seo.text1": "We handle Swiss tax declarations for individuals throughout Switzerland. Our online process is designed to be simple and efficient, while remaining fully compliant with cantonal requirements.",
+  "home.seo.text2": "From Fribourg to Vaud and Geneva, we help you prepare and optimise your tax declaration while respecting local tax regulations.",
+  "home.seo.linkAbout": "About SwissTaxOnline",
+  "home.seo.linkBlog": "Blog",
+  "home.seo.linkFaq": "FAQ",
+  "home.seo.linkContact": "Contact",
+
+  "home.how.title": "How it works",
+  "home.how.step1.title": "1. Fill out the form",
+  "home.how.step1.text": "Answer a few questions so we can understand your situation.",
+  "home.how.step2.title": "2. Upload your documents",
+  "home.how.step2.text": "Securely upload salary certificates, bank statements and other documents.",
+  "home.how.step3.title": "3. We prepare your tax declaration",
+  "home.how.step3.text": "Our Swiss tax experts prepare your declaration and optimise your deductions.",
+  "home.how.step4.title": "4. You receive your file for confirmation",
+  "home.how.step4.text": "You review the prepared declaration and ask any questions you may have.",
+  "home.how.step5.title": "5. We submit your declaration for you",
+  "home.how.step5.text": "Once validated, we submit your tax declaration to the tax authorities.",
+  "home.how.learnMore": "Learn more in the FAQ",
+
+  "home.guarantees.title": "Our guarantees",
+  "home.guarantees.item1.title": "Data hosted in Switzerland",
+  "home.guarantees.item1.text": "Your data is stored in secure Swiss infrastructure.",
+  "home.guarantees.item2.title": "100% online service",
+  "home.guarantees.item2.text": "From registration to submission, everything is done online.",
+  "home.guarantees.item3.title": "Advisors available for support",
+  "home.guarantees.item3.text": "You can contact our team if you have any questions about your file.",
+  "home.guarantees.item4.title": "No hidden fees",
+  "home.guarantees.item4.text": "The price is fixed and confirmed before we start working on your declaration.",
+
+  "home.faq.title": "Short FAQ",
+  "home.faq.q1.q": "How long does it take to process my declaration?",
+  "home.faq.q1.a": "Most declarations are processed within a few working days after we receive all your documents.",
+  "home.faq.q2.q": "Can I deduct my transportation costs?",
+  "home.faq.q2.a": "Yes, in many cases commuting and certain professional expenses can be deducted, depending on your canton.",
+  "home.faq.q3.q": "Are my data secure?",
+  "home.faq.q3.a": "Yes. We use encryption, secure hosting in Switzerland and strict access controls to protect your data.",
+  "product.title": "Get your Swiss tax quote",
+  "product.subtitle": "Answer a few questions so we can calculate the right price for your online tax declaration.",
+
+  "product.editRequest": "Edit my request",
+
+  "product.sections.profile": "Your profile",
+  "product.taxYear": "Tax year",
+  "product.maritalStatus": "Marital status",
+  "product.marital.single": "Single",
+  "product.marital.married": "Married",
+  "product.childrenCount": "Number of children",
+
+  "product.sections.situation": "Your tax situation",
+  "product.incomeSources": "Number of income sources",
+  "product.incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
+  "product.wealthStatements": "Number of wealth / tax statements",
+  "product.wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
+  "product.properties": "Number of real-estate properties",
+
+  "product.propertiesDetailsTitle": "Real-estate details",
+  "product.propertiesCount": "How many properties?",
+  "product.newProperties": "How many are declared for the first time?",
+  "product.newPropertiesHint": "For example: a property purchased during the tax year.",
+
+  "product.sections.billing": "Billing address",
+  "product.billing.firstName": "First name",
+  "product.billing.lastName": "Last name",
+  "product.billing.street": "Street address",
+  "product.billing.postalCode": "Postal code",
+  "product.billing.city": "City",
+
+  "product.sections.summary": "Summary of your request",
+  "product.summary.taxYear": "Tax year: {{year}}",
+  "product.summary.marital": "Marital status: {{status}}",
+  "product.summary.children": "Children: {{count}}",
+  "product.summary.incomes": "Income sources: {{count}}",
+  "product.summary.wealth": "Wealth / tax statements: {{count}}",
+  "product.summary.properties": "Real-estate properties: {{count}}",
+
+  "product.cancel": "Cancel",
+  "product.confirm": "Confirm my request",
+  "product.confirming": "Confirming...",
+  "product.next": "Next",
+  "product.back": "Back",
+
+  "product.sections.offers": "Our offers",
+  "product.offersHint": "Based on your answers, choose the offer that best matches your situation.",
+  "product.offers.basic": "Basic",
+  "product.offers.basicDesc": "Simple tax situations. Ideal if you have one income source and limited assets.",
+  "product.offers.standard": "Standard",
+  "product.offers.standardDesc": "Most common tax situations. Includes several income sources and basic investments.",
+  "product.offers.premium": "Premium",
+  "product.offers.premiumDesc": "Complex situations with several income sources, investments or real estate.",
+  "product.recommended": "Recommended",
+  "product.goToSummary": "Go to summary",
+
+  "product.errors.noOfferSelected": "Please select an offer before confirming your request.",
+  "product.confirmation.mock": "Your request has been recorded (demo). The final integration will send this data to the backend.",
+  "dashboard": {
+  "title": "Dashboard",
+  "subtitle": "Manage all your Swiss tax declarations in one place.",
+  "newDeclaration": "New tax declaration",
+  "myDeclarations": "My tax declarations",
+  "helpLink": "Need help?",
+  "loading": "Loading…",
+  "empty": "You don’t have any tax declarations yet.",
+  "startFirst": "Start your first declaration",
+
+  "declarationTitle": "{{year}} – {{name}}",
+
+  "steps": {
+    "request": "Document preparation",
+    "documents": "Document review",
+    "preparation": "Declaration preparation",
+    "review": "Review & validation",
+    "submission": "Submission"
+  },
+
+  "actions": {
+    "viewRequest": "View request",
+    "viewDeclaration": "View declaration"
+  },
+
+  "defaultStepMessage": "Your declaration is currently at step {{step}} out of 5.",
+  "statusSubmitted": "Submitted",
+  "banner": {
+    "step1": "We are checking whether all required documents have been received.",
+    "step2": "We are reviewing your documents.",
+    "step3": "We are preparing your tax declaration.",
+    "step4": "Your declaration is ready. Please review and confirm.",
+    "step5": "Your declaration has been submitted to the tax office."
+    },
+
+    "steps1": {
+      "1": {
+        "title": "Document preparation",
+        "time": "Indicative time: 1 week"
+      },
+      "2": {
+        "title": "Document review by SwissTaxOnline",
+        "time": "Indicative time: 1 week"
+      },
+      "3": {
+        "title": "Tax declaration preparation by SwissTaxOnline",
+        "time": "Indicative time: 2 weeks"
+      },
+      "4": {
+        "title": "Review and validation of the tax declaration",
+        "time": "Indicative time: 1 day"
+      },
+      "5": {
+        "title": "Submission of the tax declaration",
+        "time": "Indicative time: 1–3 days"
+      }
+    }
+  }
+  ,
+  "view": {
+    "title": "View my request",
+    "back": "Back to dashboard",
+
+    "formSummary": "Initial form summary",
+
+    "summary": {
+      "maritalStatus": "Marital status",
+      "childrenCount": "Number of children",
+      "incomes": "Income details",
+      "properties": "Real estate",
+      "offer": "Selected offer",
+      "price": "Price",
+      "taxYear": "Tax year"
+    },
+
+    "sections": {
+      "initialUpload": "Initial document upload",
+      "reviewDocuments": "Document review and additional questions",
+      "prepareDeclaration": "Preparation of the tax declaration",
+      "validation": "Review and validation of the tax declaration",
+      "submission": "Submission of the tax declaration"
+    },
+
+    "status": {
+      "locked": "Locked",
+      "current": "In progress",
+      "completed": "Completed"
+    },
+
+    "invoice": "Invoice",
+    "invoice.offer": "Offer",
+    "invoice.total": "Total amount",
+    "downloadInvoice": "Download invoice",
+
+    "loading": "Loading…",
+    "errors": {
+      "loadFailed": "Could not load request."
+    },
+    "notFound": "Request not found.",
+
+    "doc": {
+      "status": {
+        "uploaded": "Uploaded",
+        "todo": "To complete"
+      }
+    },
+
+    "step1": {
+      "description": "Upload your salary certificates, bank statements, 3rd pillar certificates and other supporting documents.",
+      "uploadBtn": "Upload documents (PDF)",
+      "saveInfo": "You can save your progress and continue later, but all mandatory documents must be uploaded before submission.",
+      "submit": "Submit documents for review",
+      "completed": "Your documents have been submitted."
+    },
+
+    "step2": {
+      "description": "We are reviewing your documents. If additional information is required, you can answer the questions below.",
+      "answerPlaceholder": "Your answer here…",
+      "submit": "Submit answers and documents",
+      "completed": "Your additional answers have been submitted and are being reviewed."
+    },
+
+    "step3": {
+      "text": "Your tax declaration is currently being prepared by SwissTaxOnline. This step is handled entirely by our team.",
+      "eta": "Estimated preparation time: around 2 weeks after all documents are complete."
+    },
+
+    "step4": {
+      "description": "Your draft tax declaration is ready. Please review it carefully and confirm.",
+      "downloadDraft": "Download draft declaration (PDF)",
+      "comments": "Comments or corrections",
+      "comments.placeholder": "Add any comments or corrections here…",
+      "uploadExtra": "Upload additional documents",
+      "meetingInfo": "For Comfort and Premium packages, you can request a meeting to discuss your declaration.",
+      "bookMeeting": "Book a meeting",
+      "validate": "Validate and confirm",
+      "completed": "You have validated your declaration."
+    },
+
+    "step5": {
+      "description": "Your tax declaration has been submitted to the tax authorities.",
+      "date": "Submission date",
+      "method": "Submission method",
+      "downloadFinal": "Download final declaration",
+      "uploadAssessment": "Upload your tax assessment notice (Comfort only)",
+      "thanks": "Thank you! This process is now completed. You can start a new declaration for the next year at any time from your dashboard."
+    }
+  }
+  ,
+  "about": {
+    "title": "About SwissTaxOnline",
+    "subtitle": "A digital Swiss tax service developed by A&G Fiduciaire Sàrl to make your tax declarations simpler, clearer, and more secure.",
+
+    "company": {
+      "title": "Who we are",
+      "text1": "SwissTaxOnline is an online service dedicated to helping individuals and entrepreneurs file their Swiss tax declarations with confidence. Behind the platform stands A&G Fiduciaire Sàrl, a Swiss fiduciary firm with experience in taxation, accounting and advisory services.",
+      "text2": "By combining human expertise with a secure digital platform, we offer a service that is both efficient and personal – adapted to your situation, your canton and your preferred language."
+    },
+
+    "mission": {
+      "title": "Our mission",
+      "text": "Our mission is to simplify the Swiss tax declaration process. We want to remove complexity, avoid unpleasant surprises and save you time. With SwissTaxOnline, you answer a clear and structured questionnaire, upload your documents securely, and our team takes care of preparing, reviewing and filing your declaration with the tax office."
+    },
+
+    "team": {
+      "title": "Our team",
+      "intro": "SwissTaxOnline is powered by a multidisciplinary team of tax experts, fiduciary specialists and support staff based in Switzerland.",
+      "members": {
+        "founder": {
+          "initials": "AG",
+          "name": "A&G Fiduciaire Sàrl",
+          "role": "Founder and operator of SwissTaxOnline"
+        },
+        "partner": {
+          "initials": "TP",
+          "name": "Tax partner",
+          "role": "Responsible for tax review and quality"
+        },
+        "taxExpert": {
+          "initials": "TE",
+          "name": "Tax expert team",
+          "role": "Preparation and optimisation of your declaration"
+        }
+      }
+    },
+
+    "values": {
+      "title": "Our values",
+      "intro": "Four values guide all our decisions and the way we support our clients.",
+      "items": {
+        "transparency": {
+          "title": "Transparency",
+          "text": "Clear prices, simple communication and no hidden surprises. You always know where your file stands and what is included in each package."
+        },
+        "reliability": {
+          "title": "Reliability",
+          "text": "Your declaration is handled by professionals who know the Swiss tax system and the specificities of each canton."
+        },
+        "confidentiality": {
+          "title": "Confidentiality",
+          "text": "Your data is handled with strict confidentiality, in compliance with Swiss standards and best practices in data protection."
+        },
+        "proximity": {
+          "title": "Proximity",
+          "text": "Even if the service is digital, the relationship remains human. You can contact us if you have questions or need explanations."
+        }
+      }
+    },
+
+    "commitments": {
+      "title": "Our commitments",
+      "intro": "Beyond technology, we commit to concrete guarantees for your data and your experience.",
+      "items": {
+        "security": {
+          "text": "Data security: encrypted communication, controlled access and processes designed to protect your personal information."
+        },
+        "hosting": {
+          "text": "Swiss-based hosting: your data is stored on servers located in Switzerland and with providers that meet Swiss standards."
+        },
+        "support": {
+          "text": "Human customer support: our team is available to help you understand the process, your documents and your tax situation."
+        }
+      }
+    },
+
+    "contact": {
+      "title": "Contact and address",
+      "intro": "Do you have questions about SwissTaxOnline, our process or our offers? You can contact us using the details below.",
+      "addressLabel": "Postal address",
+      "contactLabel": "Contact",
+      "addressLines": [
+        "A&G Fiduciaire Sàrl",
+        "Street and number",
+        "ZIP – City",
+        "Switzerland"
+      ],
+      "emailLabel": "Email:",
+      "phoneLabel": "Phone:"
+    }
+  }
+  ,
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find the most common questions about SwissTaxOnline, the online tax declaration process and how we handle your data.",
+
+    "categories": {
+      "general": {
+        "title": "General information",
+        "description": "A quick overview of what SwissTaxOnline is and who it is for.",
+        "items": {
+          "q1": {
+            "question": "What is SwissTaxOnline?",
+            "answer": "SwissTaxOnline is an online service operated by A&G Fiduciaire Sàrl that helps you prepare and file your Swiss tax declaration. You answer a structured questionnaire, upload your documents securely, and our team prepares and submits your declaration to the tax authorities."
+          },
+          "q2": {
+            "question": "Who can use SwissTaxOnline?",
+            "answer": "The service is designed primarily for individuals who are tax resident in Switzerland. Depending on the canton and your situation, self-employed persons and small business owners may also be eligible. Specific information will be provided in the questionnaire and on our public website."
+          },
+          "q3": {
+            "question": "Is the service fully online?",
+            "answer": "Yes. The entire process – from your initial request to the submission of your declaration – takes place online. However, you can still contact our team if you need assistance or prefer to clarify certain points with a human advisor."
+          }
+        }
+      },
+
+      "process": {
+        "title": "Tax declaration process",
+        "description": "How the different stages of the tax declaration work with SwissTaxOnline.",
+        "items": {
+          "q1": {
+            "question": "How does the tax declaration process work?",
+            "answer": "You start by filling in the online questionnaire and choosing an offer. Then you upload your documents. Our team reviews your file, prepares your tax declaration and sends you a draft for review. Once you approve it, we submit the declaration to the competent tax authority."
+          },
+          "q2": {
+            "question": "How long does the process usually take?",
+            "answer": "The timelines depend on your situation and how quickly we receive all required documents. As a general rule, document review and preparation may take between 1 and 3 weeks once your file is complete. For urgent cases, please contact us as early as possible."
+          },
+          "q3": {
+            "question": "Can I follow the progress of my declaration?",
+            "answer": "Yes. In your dashboard, each declaration is displayed with five clear stages – from document upload to submission. You can see the current step, an indicative time frame and a short status message for each stage."
+          }
+        }
+      },
+
+      "documents": {
+        "title": "Required documents",
+        "description": "What documents you should prepare and upload for your Swiss tax declaration.",
+        "items": {
+          "q1": {
+            "question": "Which documents do I need to provide?",
+            "answer": "The list of documents depends on your situation, but typically includes salary certificates, pension or AVS/LPP statements, bank statements, 3rd pillar certificates, information about real estate and any other income or deductions. The portal will show you a personalised list based on your answers."
+          },
+          "q2": {
+            "question": "How do I upload my documents?",
+            "answer": "You can upload your documents directly in your client area in PDF format, following the instructions given for each document category. You can save your progress and come back later if you don’t have everything at once."
+          },
+          "q3": {
+            "question": "What if I am missing a document?",
+            "answer": "If a document is temporarily missing, you can indicate it in the portal and upload it later. Our team may contact you with complementary questions or to suggest alternatives if certain information is not available."
+          }
+        }
+      },
+
+      "payment": {
+        "title": "Payment and invoicing",
+        "description": "Information about pricing, payment methods and invoices.",
+        "items": {
+          "q1": {
+            "question": "How is the service priced?",
+            "answer": "The price depends on your situation and the complexity of your tax declaration. When you complete the questionnaire, our price calculator suggests the most suitable offers for your profile, with clear and transparent fees."
+          },
+          "q2": {
+            "question": "When and how do I pay?",
+            "answer": "You receive an invoice by email once your request is confirmed. The invoice is also available in your client area. Payment is usually made via bank transfer or the payment methods indicated on the invoice."
+          },
+          "q3": {
+            "question": "Will I receive an invoice for my records?",
+            "answer": "Yes. An invoice in PDF format is generated automatically and can be downloaded at any time from your client area. It is issued by A&G Fiduciaire Sàrl for the SwissTaxOnline service."
+          }
+        }
+      },
+
+      "security": {
+        "title": "Security and confidentiality",
+        "description": "How we protect your personal and tax data.",
+        "items": {
+          "q1": {
+            "question": "How is my data protected?",
+            "answer": "We use secure connections (encrypted communication), controlled access and internal processes designed to protect your personal data. Only authorised team members can access your file in order to process your declaration."
+          },
+          "q2": {
+            "question": "Where is my data stored?",
+            "answer": "As a rule, data is hosted in Switzerland and with providers that respect Swiss standards in terms of security and data protection. More details about data hosting are available in our privacy policy."
+          },
+          "q3": {
+            "question": "Will my information be shared with third parties?",
+            "answer": "Your data is only shared with third parties when it is necessary for the execution of the mandate, for example with the relevant tax administration. We do not sell your personal data. All details are specified in our terms of use and privacy policy."
+          }
+        }
+      }
+    }
+  },
+  "verifyEmail": {
+  "title": "Verify your email",
+  "statusLabel": "Account status:",
+  "statusPending": "Pending verification",
+  "statusVerified": "Account verified",
+
+  "instructionsNoToken": "A confirmation link has been sent to your email address. Please click the link in the message to activate your account.",
+  "verifying": "We are verifying your email…",
+
+  "verifiedMessage": "Your email has been successfully verified. You will be redirected to your dashboard.",
+  "invalidLinkMessage": "This verification link is invalid. You can request a new link below.",
+  "linkExpired": "This verification link has expired. Please request a new confirmation email.",
+
+  "resendTitle": "Didn’t receive the email?",
+  "resendHint": "Check your spam folder, or click the button below to resend the verification link.",
+  "resendCta": "Resend confirmation email",
+  "resendLoading": "Sending…",
+  "resendSuccess": "A new verification email has been sent to your inbox.",
+  "resendError": "We could not resend the email. Please try again later.",
+
+  "goToDashboard": "Go to dashboard",
+  "backToLogin": "Back to login"
+},
+"accountSettings": {
+  "title": "Account Settings",
+  "subtitle": "Manage your personal information, language preferences and security options.",
+  "loading": "Loading your account settings…",
+
+  "save": "Save changes",
+  "saving": "Saving…",
+  "saveSuccess": "Your account settings have been updated.",
+  "saveError": "We could not save your changes. Please try again.",
+
+  "errors": {
+    "passwordMismatch": "The new passwords do not match."
+  },
+
+  "personal": {
+    "title": "Personal information",
+    "desc": "Update the details linked to your SwissTaxOnline account.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone number"
+  },
+
+  "language": {
+    "title": "Language preferences",
+    "desc": "Choose the language of the interface. It will be used for your future logins.",
+    "label": "Display language",
+    "en": "English",
+    "fr": "French",
+    "de": "German"
+  },
+
+  "security": {
+    "title": "Account security",
+    "desc": "Change your password and manage two-factor authentication.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "twoFactorLabel": "Two-factor authentication (2FA)",
+    "twoFactorToggle": "Enable 2FA for additional security when signing in."
+  },
+
+  "delete": {
+    "title": "Delete account",
+    "desc": "Deleting your account will deactivate your access and may permanently remove your data according to our internal policy.",
+    "button": "Delete my account",
+    "confirmQuestion": "Are you sure you want to delete your account? This action cannot be undone.",
+    "error": "We could not delete your account. Please contact support if the problem persists."
+  }
+}
+
+
+}
+
