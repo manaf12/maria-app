@@ -223,20 +223,20 @@ export default function ProductPage() {
 
     return [
       {
-        id: "standard",
+        id: "Standard",
         name: t("product.offers.basic"),
         description: t("product.offers.basicDesc"),
         price: base,
       },
       {
-        id: "premium",
+        id: "Premium",
         name: t("product.offers.standard"),
         description: t("product.offers.standardDesc"),
         price: standard,
         recommended: true,
       },
       {
-        id: "confort",
+        id: "Confort",
         name: t("product.offers.premium"),
         description: t("product.offers.premiumDesc"),
         price: premium,
@@ -421,62 +421,63 @@ const handleChooseOffer = async (offer: Offer) => {
     handleChooseOffer(offer);
   };
 
-const onSubmit = async () => { // <-- اترك 'data' كما هو
-  if (!selectedOffer) {
-    alert("Please select an offer first.");
-    setStep(8);
-    return;
-  }
-
+const onSubmit = handleSubmit(async () => {
   const questionnaireId = localStorage.getItem("questionnaireId");
   if (!questionnaireId) {
-    alert("Critical error: Session lost. Please start over.");
+    alert("Session error");
     return;
   }
 
+  // 1) اجمع كل القيم من الفورم (تشمل billing*)
+  const formValues = getValues(); // يحتوي على billingFirstName, billingCity, ...
   try {
-    // --- الخطوة 1: تحديث عنوان الفوترة (تم تعطيلها مؤقتاً للاختبار) ---
-    /*
-    console.log("Updating user profile with billing address...");
-    await axiosClient.patch('/users/me/profile', {
-      firstName: data.billingFirstName,
-      lastName: data.billingLastName,
-      streetAddress: data.billingStreet,
-      postalCode: data.billingPostalCode,
-      city: data.billingCity,
-    });
-    console.log("User profile updated successfully.");
-    */
-    // --- نهاية الجزء المعطل ---
+    // 2) احفظ بيانات الخطوة الحالية (بما فيها billing) على الـ backend
+    await axiosClient.post(`/questionnaire/${questionnaireId}/save-step`, formValues);
+    console.log("Billing saved to questionnaire");
 
+    // 3) اختياري: حدّث profile المستخدم لو اختار saveAsProfile
+    // await axiosClient.patch('/users/me/profile', { ... }) 
 
-    // --- الخطوة 2: حساب السعر ---
-    console.log(`Calculating price for questionnaire ${questionnaireId}...`);
-    const pricingResponse = await axiosClient.post(
-      `/pricing/calculate`,
-      {
-        questionnaireId: questionnaireId,
-        offer: selectedOffer.id,
+    // 4) إذا لم تكن قد اخترت offer بعد، تأكد من selectedOffer
+    if (!selectedOffer) {
+      alert("Please choose an offer first");
+      setStep(8);
+      return;
+    }
+
+    // 5) إرسال finalize مع العرض (والبيانات إن أردت)
+    // بعض backends يتوقع مجرد { offer: 'Confort' } والبعض الآخر يتوقع billing داخل body
+    await axiosClient.post(`/questionnaire/${questionnaireId}/finalize`, {
+      offer: selectedOffer.id,
+      // إن أردت تضمن billing مع ال finalize:
+      billing: {
+        firstName: formValues.billingFirstName,
+        lastName: formValues.billingLastName,
+        street: formValues.billingStreet,
+        postalCode: formValues.billingPostalCode,
+        city: formValues.billingCity,
+        // email: formValues.billingEmail,
+        // ... أي حقول أخرى
       }
-    );
-    const pricingId = pricingResponse.data.id;
-    console.log(`Price calculated. Pricing ID: ${pricingId}`);
+    });
 
-    // --- الخطوة 3: قبول السعر ---
-    console.log(`Accepting pricing with ID: ${pricingId}`);
+    // 6) إن كان هناك خطوة لقبول السعر / دفع، نفّذها (مثال)
+    const pricingResp = await axiosClient.post(`/pricing/calculate`, {
+      questionnaireId,
+      offer: selectedOffer.id,
+    });
+    const pricingId = pricingResp.data.id;
     await axiosClient.post(`/pricing/${pricingId}/accept`);
-    console.log("Pricing accepted. Final order created!");
 
-    // --- الخطوة 4: تنظيف وإنهاء ---
+    // 7) تنظيف ومتابعة
     clearDraft();
     localStorage.removeItem("questionnaireId");
     navigate("/client-dashboard");
-
   } catch (e: any) {
-    console.error("Failed to confirm the final request:", e);
-    alert(e?.response?.data?.message ?? "Could not confirm your request. Please try again.");
+    console.error("final submit error", e);
+    alert(e?.response?.data?.message ?? "Could not complete the request.");
   }
-};
+});
 
   const handleCancel = () => {
     clearDraft();
@@ -493,7 +494,7 @@ const onSubmit = async () => { // <-- اترك 'data' كما هو
         </div>
       </header>
 
-      <form className="product-layout" onSubmit={handleSubmit(onSubmit)}>
+      <form className="product-layout" onSubmit={onSubmit}>
         {/* LEFT – sections 1..9 */}
         <section className="product-main">
           {/* Step 1 */}
@@ -662,11 +663,11 @@ const onSubmit = async () => { // <-- اترك 'data' كما هو
         offers.map((offer) => {
           // 1. نحدد السعر الديناميكي الصحيح لكل عرض
           let dynamicPrice = 0;
-          if (offer.id === 'standard') {
+          if (offer.id === 'Standard') {
             dynamicPrice = offerPrices.standard;
-          } else if (offer.id === 'premium') {
+          } else if (offer.id === 'Premium') {
             dynamicPrice = offerPrices.premium;
-          } else if (offer.id === 'confort') { // افترض أن لديك عرض 'confort'
+          } else if (offer.id === 'Confort') { // افترض أن لديك عرض 'confort'
             dynamicPrice = offerPrices.confort;
           }
 
@@ -807,6 +808,18 @@ const onSubmit = async () => { // <-- اترك 'data' كما هو
         <label>{t("product.billing.lastName")}</label>
         <input type="text" {...register("billingLastName")} />
       </div>
+  <div className="field-row">
+  <label>{t("product.billing.city")}</label>
+  <input type="text" {...register("billingCity")} />
+</div>
+<div className="field-row">
+  <label>{t("product.billing.postalCode")}</label>
+  <input type="text" {...register("billingPostalCode")} />
+</div>
+<div className="field-row">
+  <label>{t("product.billing.street")}</label>
+  <input type="text" {...register("billingStreet")} />
+</div>
     </div>
     {/* ... باقي حقول الفوترة ... */}
 

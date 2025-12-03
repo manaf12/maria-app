@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/ViewRequestPage.tsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -304,9 +305,66 @@ export default function ViewRequestPage() {
       setIsLoading(true);
       setError(null);
       const res = await axiosClient.get(
-        `/api/declarations/${declarationId}/request`
+        `/orders/${declarationId}`
       );
-      setData(res.data as ViewRequestData);
+      const payload: any = res.data;
+      
+const mapped: ViewRequestData = {
+  id: payload.id,
+  taxYear: payload.questionnaireSnapshot?.taxYear ?? new Date().getFullYear(),
+  clientName: `${payload.clientProfile?.firstName ?? ""} ${payload.clientProfile?.lastName ?? ""}`.trim() || "—",
+  productName: payload.offer ?? "—",
+  // لاحظ: مكوّننا يتوقع currentStage (1..5). الـ API عندك استخدم currentStep.
+  currentStage: (payload.currentStep ?? payload.currentStage ?? 1) as StageId,
+
+  // summary نملأها من questionnaireSnapshot
+  summary: {
+    maritalStatus: payload.questionnaireSnapshot?.maritalStatus ?? "—",
+    childrenCount: payload.questionnaireSnapshot?.childrenCount ?? 0,
+    incomes: String(payload.questionnaireSnapshot?.incomeSources ?? payload.questionnaireSnapshot?.incomes ?? "—"),
+    properties: String(payload.questionnaireSnapshot?.properties ?? "—"),
+    offerName: payload.questionnaireSnapshot?.offer ?? payload.offer ?? "—",
+    offerPrice: Number(payload.offerPrice ?? 5),
+    taxYear: payload.questionnaireSnapshot?.taxYear ?? new Date().getFullYear(),
+  },
+
+  // step1: نحتاج قائمة RequiredDocument[] — إذا الـ API لا تعطيها مباشرة نبنيها من steps أو نستخدم قيمة افتراضية
+  step1: {
+    documents:
+      (payload.requiredDocuments?.map((d: any) => ({
+        id: d.id,
+        label: d.label,
+        mandatory: !!d.mandatory,
+        status: d.uploaded ? "uploaded" : "todo",
+      }))) ??
+      [],
+  },
+
+  // step2: نملأ الأسئلة إن وُجدت (مثال افتراضي)
+  step2: {
+    questions:
+      (payload.additionalQuestions?.map((q: any) => ({
+        id: q.id,
+        label: q.label,
+        answer: q.answer ?? undefined,
+      }))) ?? [],
+  },
+
+  // step5 (submission info) — إذا موجود
+  step5: {
+    date: payload.submission?.date ?? payload.submittedAt ?? undefined,
+    method: payload.submission?.method ?? undefined,
+  },
+
+  // invoice — إن لم يكن متوفر نضع قيم افتراضية
+  invoice: {
+    offerName: payload.offer ?? payload.questionnaireSnapshot?.offer ?? "—",
+    totalAmount: payload.invoice?.totalAmount ?? `${payload.offerPrice ?? 0} CHF`,
+    invoiceUrl: payload.invoice?.url ?? payload.invoiceUrl ?? "",
+  },
+};
+
+    setData(mapped);
     } catch (e: any) {
       console.error(e);
       setError(

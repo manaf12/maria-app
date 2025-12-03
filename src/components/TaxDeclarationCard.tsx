@@ -1,55 +1,49 @@
-// src/components/TaxDeclarationCard.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useTranslation } from "react-i18next";
-
-export type TaxDeclaration = {
-  id: string;
-  taxYear: number;
-  clientName: string;
-  productName: string;          // مثال: "TaxOnline Basic CHF 59.–"
-  currentStep: 1 | 2 | 3 | 4 | 5;
-};
+import type { TaxDeclarationFull } from "../types/types";
+import {  useNavigate } from "react-router";
 
 type Props = {
-  declaration: TaxDeclaration;
-  onActionClick?: (decl: TaxDeclaration) => void;
+  declaration: TaxDeclarationFull;
+  onActionClick?: (decl: TaxDeclarationFull) => void;
 };
 
-/**
- * كارت واحد لتصريح ضريبي في صفحة الـ Dashboard
- * يعرض:
- * - بانر الحالة
- * - العنوان (السنة + اسم العميل + اسم المنتج)
- * - زر الأكشن حسب المرحلة
- * - ٥ خطوات مع أوقات تقريبية
- */
-export default function TaxDeclarationCard({ declaration, onActionClick }: Props) {
+function computeCurrentFromSteps(steps?: { id: string; order: number; status: string }[]) {
+  if (!Array.isArray(steps) || steps.length === 0) return 0;
+  const inProgress = steps.find((s) => s.status === "IN_PROGRESS");
+  if (inProgress) return inProgress.order;
+  const firstNotDone = steps.find((s) => s.status !== "DONE");
+  if (firstNotDone) return firstNotDone.order;
+  return steps.length;
+}
+
+export default function TaxDeclarationCard({ declaration }: Props) {
   const { t } = useTranslation();
-  const steps = [1, 2, 3, 4, 5] as const;
+  const stepsArray = [1, 2, 3, 4, 5] as const;
+const navigate=useNavigate()
+  const fallback = computeCurrentFromSteps(declaration.steps as any);
+  const current = typeof declaration.currentStep === "number" && declaration.currentStep > 0
+    ? declaration.currentStep
+    : fallback; 
+  const totalSteps = Array.isArray(declaration.steps) ? declaration.steps.length : 5;
+  const bannerText = current > 0
+    ? t("dashboard.banner.stepProgress", {
+        current,
+        total: totalSteps,
+        defaultValue: `we are now in step${current} from  ${totalSteps}`,
+      })
+    : t("dashboard.banner.noStepInfo", { defaultValue: "no step found" });
 
-  // أي زر نستخدم لكل مرحلة؟
-  // 1,2,3,5 → View request
-  // 4       → View declaration
-  const actionKeyByStep: Record<(typeof steps)[number], string> = {
-    1: "dashboard.actions.viewRequest",
-    2: "dashboard.actions.viewRequest",
-    3: "dashboard.actions.viewRequest",
-    4: "dashboard.actions.viewDeclaration",
-    5: "dashboard.actions.viewRequest"
+
+  console.debug("Declaration steps:", declaration.steps, "currentStep (backend):", declaration.currentStep, "computed:", fallback);
+  const handleViewRequestClick = () => {
+    // 3. Navigate to the dynamic URL with the declaration's ID
+    navigate(`/declaration/${declaration.id}`);
   };
-
-  const actionLabel = t(actionKeyByStep[declaration.currentStep]);
-
-  // Banner message for current step
-  const bannerKey = `dashboard.banner.step${declaration.currentStep}`;
-  const bannerText = t(bannerKey, {
-    defaultValue: t("dashboard.defaultStepMessage", {
-      step: declaration.currentStep
-    })
-  });
 
   return (
     <article className="declaration-card">
-      {/* ===== Banner أعلى الكارت ===== */}
+      {/* Banner */}
       <div className="declaration-banner">
         <div className="banner-left">
           <span className="banner-icon">i</span>
@@ -57,58 +51,61 @@ export default function TaxDeclarationCard({ declaration, onActionClick }: Props
         </div>
       </div>
 
-      {/* ===== هيدر: العنوان + المنتج + زر الأكشن ===== */}
+      {/* Header */}
       <div className="declaration-header-row">
         <div>
           <h3 className="declaration-title">
             {t("dashboard.declarationTitle", {
-              year: declaration.taxYear,
-              name: declaration.clientName,
-              defaultValue: `${declaration.taxYear} – ${declaration.clientName}`
+              year: declaration.questionnaireSnapshot?.taxYear,
+              name: declaration.clientProfile?.firstName ?? "",
+              defaultValue: `${declaration.questionnaireSnapshot?.taxYear ?? ""} – ${declaration.clientProfile?.firstName ?? ""}`,
             })}
           </h3>
-          <p className="declaration-subtitle">{declaration.productName}</p>
+          <p className="declaration-subtitle">{declaration.questionnaireSnapshot?.offer}</p>
+        </div>
+
+        <div>
+          {declaration.pricing?.finalPrice} {declaration.questionnaireSnapshot?.billingFirstName}
         </div>
 
         <button
           type="button"
           className="declaration-action-btn"
-          onClick={(e) => {
-            e.stopPropagation();
-            onActionClick?.(declaration);
-          }}
+          onClick={handleViewRequestClick} // 4. Use the new handler
+
         >
-          {actionLabel}
+          View Request
         </button>
       </div>
 
-      {/* ===== سطر الخطوات الخمسة (دوائر + عنوان + زمن) ===== */}
+      {/* Steps row */}
       <div className="declaration-steps-row">
-        {steps.map((step) => {
-          const isCurrent = step === declaration.currentStep;
-          const isDone = step < declaration.currentStep;
+        {stepsArray.map((stepNum) => {
+          const isCurrent = stepNum === current;
+          const isDone = current > 0 && stepNum < current;
 
-          let status: "done" | "current" | "future" = "future";
-          if (isDone) status = "done";
-          else if (isCurrent) status = "current";
+          let statusClass: "done" | "current" | "future" = "future";
+          if (isDone) statusClass = "done";
+          else if (isCurrent) statusClass = "current";
+
+          const stepMeta = Array.isArray(declaration.steps)
+            ? declaration.steps.find((s) => s.order === stepNum)
+            : undefined;
+          const stepTitle = stepMeta?.name
+            ? stepMeta.name
+            :
+              t(`dashboard.steps1.${stepNum}.title`);
+          const stepTime = t(`dashboard.steps1.${stepNum}.time`);
 
           return (
-            <div
-              key={step}
-              className={`decl-step decl-step-${status}`}
-            >
+            <div key={stepNum} className={`decl-step decl-step-${statusClass}`}>
               <div className="decl-step-circle">
-                {/* لو حابة تحطي ✓ للمنتهي بدل الرقم */}
-                {isDone ? "✓" : step}
+                {isDone ? "✓" : stepNum}
               </div>
 
               <div className="decl-step-text">
-                <div className="decl-step-title">
-                  {t(`dashboard.steps1.${step}.title`)}
-                </div>
-                <div className="decl-step-time">
-                  {t(`dashboard.steps1.${step}.time`)}
-                </div>
+                <div className="decl-step-title">{stepTitle}</div>
+                <div className="decl-step-time">{stepTime}</div>
               </div>
             </div>
           );

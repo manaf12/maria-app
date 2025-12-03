@@ -33,10 +33,10 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/product" element={<ProductPage />} />
-        <Route path="/declarations/:id" element={<ViewRequestPage />} />
+        <Route path="/declaration/:id" element={<ViewRequestPage />} />
         <Route path="/test-card" element={<TestDeclarationCard  />} />
         <Route path="/client-dashboard" element={<DashboardPage1 />} />
-        <Route path="/test-view-request" element={<TestViewRequestPage />} />
+        <Route path="/declarations/:declarationId" element={<TestViewRequestPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/verify-email" element={<EmailVerificationPage />} />

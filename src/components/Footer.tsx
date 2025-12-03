@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import { useTranslation } from "react-i18next";
+import logoTaxera1 from "../assets/Typeface.svg";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -10,17 +11,22 @@ export default function Footer() {
 
         {/* Left side (Logo + Address) */}
         <div className="footer-left">
+
           <a
             className="footer-logo"
             href="https://www.swisstaxonline.ch/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            SwissTaxOnline
+            <img
+              src={logoTaxera1}
+              alt="Taxera Logo"
+              className="footer-logo-img"
+            />
           </a>
 
           <p className="footer-address">
-            SwissTaxOnline AG<br />
+            Taxero AG<br />
             Bahnhofstrasse 10<br />
             8001 Zürich<br />
             Switzerland
