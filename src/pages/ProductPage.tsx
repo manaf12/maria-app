@@ -40,55 +40,38 @@ type QuoteDraft = {
 const DRAFT_KEY = "taxonline_quote_draft";
 
 
-const saveStepData = async (dataToSave: Partial<FormValues>) => {
-  // 1. اقرأ الـ ID من localStorage
-  const questionnaireId = localStorage.getItem("questionnaireId");
+// const saveStepData = async (dataToSave: Partial<FormValues>) => {
+//   const questionnaireId = localStorage.getItem("questionnaireId");
+//   if (!questionnaireId) {
+//     console.error("Questionnaire ID not found. Cannot save progress.");
+//     return;
+//   }
+//   const payload = dataToSave;
+//   if (!payload || Object.keys(payload).length === 0) {
+//     console.log("No new data to save.");
+//     return;
+//   }
 
-  if (!questionnaireId) {
-    console.error("Questionnaire ID not found. Cannot save progress.");
-    // لا تفعل شيئاً إذا لم يكن هناك ID
-    return;
-  }
-
-  // 2. لا داعي لترجمة الحقول، الـ Backend مرن بما يكفي
-  //    فقط تأكد من أن الواجهة الخلفية يمكنها التعامل مع أسماء الحقول كما هي في الفورم
-  //    (e.g., 'maritalStatus', 'childrenCount')
-  const payload = dataToSave;
-
-  // 3. لا ترسل طلباً إذا لم يكن هناك بيانات جديدة للحفظ
-  if (!payload || Object.keys(payload).length === 0) {
-    console.log("No new data to save.");
-    return;
-  }
-
-  try {
-    const url = `/questionnaire/${questionnaireId}/save-step`;
-    console.log(`Saving step data to ${url} with payload:`, payload);
-    
-    // 4. أرسل الطلب
-    await axiosClient.post(url, payload);
-
-    console.log("Progress saved successfully.");
-  } catch (error) {
-    console.error("Failed to save progress:", error);
-    // يمكنك عرض رسالة خطأ غير مزعجة هنا إذا أردت
-  }
-};
+//   try {
+//     const url = `/questionnaire/${questionnaireId}/save-step`;
+//     console.log(`Saving step data to ${url} with payload:`, payload);
+//         await axiosClient.post(url, payload);
+//   } catch (error) {
+//     console.error("Failed to save progress:", error);
+//   }
+// };
 
 
 
 
 
 function saveDraft(draft: QuoteDraft) {
-    console.log('--- SAVING DRAFT ---', draft); // <-- أضف هذا
   localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
 }
 
 function loadDraft(): QuoteDraft | null {
   try {
     const raw = localStorage.getItem(DRAFT_KEY);
-        console.log('--- LOADING DRAFT ---', raw ? JSON.parse(raw) : null); // <-- أضف هذا
-
     if (!raw) return null;
     return JSON.parse(raw);
   } catch {
@@ -165,7 +148,30 @@ export default function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentYear = new Date().getFullYear();
+const saveStepData = async (dataToSave: Partial<FormValues>) => {
+  const questionnaireId = localStorage.getItem("questionnaireId");
+  if (!questionnaireId) {
+    console.error("Questionnaire ID not found. Cannot save progress.");
+    return;
+  }
+  const payload = dataToSave;
+  if (!payload || Object.keys(payload).length === 0) {
+    console.log("No new data to save.");
+    return;
+  }
 
+  try {
+    // اختر المسار حسب تسجيل الدخول
+    const url = user
+      ? `/questionnaire/${questionnaireId}/save-step`         // محمي - يتطلب JWT
+      : `/questionnaire/${questionnaireId}/save-step-public`; // عام
+
+    console.log(`Saving step data to ${url} with payload:`, payload);
+    await axiosClient.post(url, payload);
+  } catch (error) {
+    console.error("Failed to save progress:", error);
+  }
+};
   const {
     register,
     watch,
@@ -199,7 +205,6 @@ export default function ProductPage() {
     premium: number;
     confort: number;
   } | null>(null);
-  // watch values
   const taxYear = watch("taxYear");
   const maritalStatus = watch("maritalStatus");
   const childrenCount = watch("childrenCount");
@@ -208,85 +213,134 @@ export default function ProductPage() {
   const properties = watch("properties");
   const newProperties = watch("newProperties");
 
-  // -------- Price Calculator (offers) --------
-  const offers: Offer[] = useMemo(() => {
-    const complexityScore =
-      (maritalStatus === "married" ? 2 : 1) +
-      childrenCount * 0.3 +
-      incomeSources * 0.5 +
-      wealthStatements * 0.4 +
-      properties * 0.7;
-
-    const base = 59;
-    const standard = Math.round(base + complexityScore * 20);
-    const premium = Math.round(base + complexityScore * 35);
-
-    return [
-      {
-        id: "Standard",
-        name: t("product.offers.basic"),
-        description: t("product.offers.basicDesc"),
-        price: base,
-      },
-      {
-        id: "Premium",
-        name: t("product.offers.standard"),
-        description: t("product.offers.standardDesc"),
-        price: standard,
-        recommended: true,
-      },
-      {
-        id: "Confort",
-        name: t("product.offers.premium"),
-        description: t("product.offers.premiumDesc"),
-        price: premium,
-      },
-    ];
-  }, [maritalStatus, childrenCount, incomeSources, wealthStatements, properties, t]);
-
-  // const totalPrice = selectedOffer?.price ?? (offers[0]?.price ?? 0);
-
-  // إذا عدد العقارات 0 خلي newProperties دائماً 0
+const offers: Offer[] = useMemo(() => [
+  {
+    id: "Standard",
+    name: t("product.offers.basic"),
+    description: t("product.offers.basicDesc"),
+    price: 0, 
+  },
+  {
+    id: "Premium",
+    name: t("product.offers.standard"),
+    description: t("product.offers.standardDesc"),
+    price: 0,
+    recommended: true,
+  },
+  {
+    id: "Confort",
+    name: t("product.offers.premium"),
+    description: t("product.offers.premiumDesc"),
+    price: 0,
+  },
+], [t]); 
   useEffect(() => {
     if (properties === 0) {
       setValue("newProperties", 0);
     }
   }, [properties, setValue]);
-
-  // شرط صالحية Step 7 (نستخدمه لعرض/إخفاء زر Next)
   const canGoFrom7 =
     properties > 0 &&
     newProperties >= 0 &&
     newProperties <= properties;
+useEffect(() => {
+  let mounted = true;
 
-  // ----- تحميل مسوّدة بعد الـ sign-in / sign-up -----
-  useEffect(() => {
+  const inferStepFromData = (formData: Partial<FormValues> | null): number => {
+    if (!formData) return 1;
+    // Heuristic: return the first incomplete step
+    if (!formData.taxYear) return 1;
+    if (!formData.maritalStatus) return 2;
+    if (formData.childrenCount === undefined || formData.childrenCount === null) return 3;
+    if (!formData.incomeSources) return 4;
+    if (formData.wealthStatements === undefined || formData.wealthStatements === null) return 5;
+    if (formData.properties === undefined || formData.properties === null) return 6;
+    if (formData.properties > 0 && (formData.newProperties === undefined || formData.newProperties === null)) return 7;
+    // if offers were calculated/selected, go to 8/9
+    return 8;
+  };
+
+  const loadState = async () => {
     const draft = loadDraft();
+    const questionId = localStorage.getItem("questionnaireId");
     const fromAuth = (location.state as any)?.fromAuth;
+  console.log("🟡 restore start", { draft, questionId, fromAuth });
 
+  if (draft) {
+    console.log("🟢 restoring from draft", draft);
+  }
+
+  if (questionId) {
+    console.log("🟢 fetching questionnaire", questionId);
+  }
+    // 1) If there is a draft, use it (this preserves exact UX for anonymous and logged)
     if (draft && draft.form) {
-      reset(draft.form);
+      if (!mounted) return;
+      reset(draft.form); // populate form
+      setSelectedOffer(draft.selectedOfferId ? offers.find((o) => o.id === draft.selectedOfferId) ?? null : null);
 
-      const offerFromDraft = draft.selectedOfferId
-        ? offers.find((o) => o.id === draft.selectedOfferId) ?? null
-        : null;
-
-      if (offerFromDraft) {
-        setSelectedOffer(offerFromDraft);
-      }
-
-      if (user && offerFromDraft) {
+      // If user is logged and selectedOffer exists then go to summary
+      if (user && draft.selectedOfferId) {
         setStep(9);
-      } else {
-        setStep(draft.step || 1);
+        return;
       }
-    } else if (fromAuth && user) {
-      setStep(8);
-    }
-    // ما حطّينا offers بالـ deps حتى ما نرجع نعمل reset كل ما تتغيّر القيم
-  }, [location.state, reset, user]);
 
-  // لما تتغير الفورم أو الستب، خزّن draft
+      // Otherwise continue from draft.step
+      setStep(draft.step ?? inferStepFromData(draft.form));
+      return;
+    }
+
+    // 2) If no draft but we have a questionnaireId, try to fetch it from backend
+    if (questionId) {
+      try {
+        const res = await axiosClient.get(`/questionnaire/${questionId}`); // expects { id, data, status, ... }
+        const resp = res.data;
+        const serverForm = resp?.data ?? null;
+
+        if (!mounted) return;
+
+        if (serverForm) {
+          // populate the form with server data
+          // reset will replace all fields; ensure serverForm has matching keys
+          reset(serverForm as any);
+
+          // set selected offer if present in server snapshot
+          if (resp?.data?.offer) {
+            const offerFound = offers.find((o) => o.id.toLowerCase() === String(resp.data.offer).toLowerCase());
+            if (offerFound) setSelectedOffer(offerFound);
+          }
+
+          // Decide step
+          if (fromAuth && user) {
+            // user just logged in and came back: go to offers (step 8) or summary if offer already chosen
+            if (resp.data.offer) setStep(9);
+            else setStep(8);
+          } else {
+            setStep(inferStepFromData(serverForm));
+          }
+          return;
+        }
+      } catch (err) {
+        console.warn("Could not load questionnaire from server:", err);
+        // fallback to starting step 1
+      }
+    }
+
+    // 3) fallback: start from step 1 or if fromAuth request go to offers
+    if (fromAuth && user) {
+      setStep(8);
+    } else {
+      setStep(1);
+    }
+  };
+
+  loadState();
+
+  return () => {
+    mounted = false;
+  };
+}, [location.state, reset, user, offers]);
+
   useEffect(() => {
     const form = getValues();
     const draft: QuoteDraft = {
@@ -328,29 +382,21 @@ const goNext = async () => {
     try {
       console.log("Calculating all offer prices...");
       const res = await axiosClient.get(`/pricing/calculate-all/${questionnaireId}`);
-      setOfferPrices(res.data); // خزّن الأسعار في متغير الحالة
+      setOfferPrices(res.data);
       console.log("Prices calculated:", res.data);
       
-      setStep(8); // انتقل إلى صفحة العروض
+      setStep(8);
     } catch (error) {
       console.error("Failed to calculate prices:", error);
       alert("Could not calculate offer prices.");
-      // لا تنتقل إلى الخطوة التالية إذا فشل حساب السعر
     }
-    return; // <-- مهم: أوقف تنفيذ باقي الدالة هنا
+    return;
   }
   
 
 
   if (step === 6) {
     if (properties === 0) {
-      // إذا لا توجد عقارات، اقفز مباشرة إلى الخطوة 8 (صفحة العروض)
-      // لكننا نحتاج لحساب الأسعار هنا أيضاً!
-      // لتجنب تكرار الكود، من الأفضل تعديل هذا الجزء قليلاً
-      
-      // تعديل مقترح:
-      // بدلاً من setStep(8)، استدعِ goNext مرة أخرى من الخطوة 7 الوهمية
-      // هذا معقد. دعنا نختار الحل الأبسط: كرر منطق حساب السعر.
       
       const questionnaireId = localStorage.getItem("questionnaireId");
       if (!questionnaireId) { /* ... معالجة الخطأ ... */ return; }
@@ -361,7 +407,7 @@ const goNext = async () => {
       } catch (error : any) { /* ... معالجة الخطأ ... */ }
 
     } else {
-      setStep(7); // انتقل إلى خطوة تفاصيل العقارات
+      setStep(7);
     }
   } else if (step < 9) { // تم تعديل الشرط ليشمل الخطوات الأقل من 9
     setStep((s) => s + 1);
@@ -369,50 +415,42 @@ const goNext = async () => {
 };
 
 // ProductPage.tsx
-
 const handleChooseOffer = async (offer: Offer) => {
   setSelectedOffer(offer);
-  const questionnaireId = localStorage.getItem("questionnaireId");
 
+  const questionnaireId = localStorage.getItem("questionnaireId");
   if (!questionnaireId) {
-    console.error("ID not found, cannot proceed.");
+    alert("Session error. Please restart.");
     return;
   }
 
-  try {
-    // --- بداية التعديل ---
-
-    // 1. إنهاء الاستبيان وتحديد العرض
-    const finalizeUrl = `/questionnaire/${questionnaireId}/finalize`;
-    await axiosClient.post(finalizeUrl, { offer: offer.id });
-    console.log("Questionnaire finalized with offer:", offer.id);
-
-    // 2. بعد النجاح، قم بحساب السعر فوراً
-    console.log(`Calculating price for questionnaire ${questionnaireId}...`);
-    const calculateUrl = `/pricing/calculate`;
-    const pricingResponse = await axiosClient.post(calculateUrl, {
-      questionnaireId: questionnaireId,
-      offer: offer.id,
-    });
-    
-    // 3. خزّن السعر المحسوب في متغير الحالة
-    const finalPrice = pricingResponse.data.finalPrice;
-    setCalculatedPrice(finalPrice);
-    console.log(`Price calculated successfully: ${finalPrice}`);
-
-    // 4. انتقل إلى الخطوة 9 الجديدة (عرض السعر)
+  if (user) {
+    // Logged in → go to next step
     setStep(9);
+    return;
+  }
 
-    // --- نهاية التعديل ---
+  // Anonymous → submit existing questionnaire & get token + declaration
+  try {
+    const res = await axiosClient.post(
+      `/questionnaire/${questionnaireId}/submit-anonymous`
+    );
 
-  } catch (error) {
-    console.error("Failed to select offer and calculate price:", error);
-    alert("An error occurred. Please try again.");
+    const { declarationId, token } = res.data;
+
+    localStorage.setItem("anonymousDeclarationId", declarationId);
+    localStorage.setItem("anonymousToken", token);
+
+    navigate("/login", {
+      state: { redirectTo: "/product", fromAnonymous: true },
+    });
+  } catch (e: any) {
+    console.error("submit-anonymous failed", e);
+    alert("Failed to create temporary quote. Please try again.");
   }
 };
 
 
-  // Guard: ما منسمح بالـ choose قبل Step 8
   const handleOfferGuard = (offer: Offer) => {
     if (step < 8) {
       setStep(8);
@@ -428,48 +466,25 @@ const onSubmit = handleSubmit(async () => {
     return;
   }
 
-  // 1) اجمع كل القيم من الفورم (تشمل billing*)
-  const formValues = getValues(); // يحتوي على billingFirstName, billingCity, ...
+  const formValues = getValues(); 
   try {
-    // 2) احفظ بيانات الخطوة الحالية (بما فيها billing) على الـ backend
     await axiosClient.post(`/questionnaire/${questionnaireId}/save-step`, formValues);
     console.log("Billing saved to questionnaire");
-
-    // 3) اختياري: حدّث profile المستخدم لو اختار saveAsProfile
-    // await axiosClient.patch('/users/me/profile', { ... }) 
-
-    // 4) إذا لم تكن قد اخترت offer بعد، تأكد من selectedOffer
     if (!selectedOffer) {
       alert("Please choose an offer first");
       setStep(8);
       return;
     }
-
-    // 5) إرسال finalize مع العرض (والبيانات إن أردت)
-    // بعض backends يتوقع مجرد { offer: 'Confort' } والبعض الآخر يتوقع billing داخل body
     await axiosClient.post(`/questionnaire/${questionnaireId}/finalize`, {
       offer: selectedOffer.id,
-      // إن أردت تضمن billing مع ال finalize:
       billing: {
         firstName: formValues.billingFirstName,
         lastName: formValues.billingLastName,
         street: formValues.billingStreet,
         postalCode: formValues.billingPostalCode,
         city: formValues.billingCity,
-        // email: formValues.billingEmail,
-        // ... أي حقول أخرى
       }
     });
-
-    // 6) إن كان هناك خطوة لقبول السعر / دفع، نفّذها (مثال)
-    const pricingResp = await axiosClient.post(`/pricing/calculate`, {
-      questionnaireId,
-      offer: selectedOffer.id,
-    });
-    const pricingId = pricingResp.data.id;
-    await axiosClient.post(`/pricing/${pricingId}/accept`);
-
-    // 7) تنظيف ومتابعة
     clearDraft();
     localStorage.removeItem("questionnaireId");
     navigate("/client-dashboard");
@@ -644,7 +659,6 @@ const onSubmit = handleSubmit(async () => {
             </StepCard>
           )}
 
-          {/* Step 8 – Offers ككارد على اليسار */}
    {step === 8 && (
   <StepCard
     title={t("product.sections.offers")}
@@ -783,12 +797,10 @@ const onSubmit = handleSubmit(async () => {
 )}
 
 
-{/* --- الخطوة 10 (الجديدة): الفوترة والتأكيد النهائي --- */}
 {step === 10 && (
   <div className="product-block">
     <div className="product-block-header">
       <h2>{t("product.sections.billing")}</h2>
-      {/* زر الرجوع الآن يرجع إلى الخطوة 9 */}
       <button
         type="button"
         className="link-like edit-request-inline"
@@ -798,7 +810,6 @@ const onSubmit = handleSubmit(async () => {
       </button>
     </div>
 
-    {/* حقول الفوترة هنا */}
     <div className="field-grid-2">
       <div className="field-row">
         <label>{t("product.billing.firstName")}</label>
@@ -808,20 +819,19 @@ const onSubmit = handleSubmit(async () => {
         <label>{t("product.billing.lastName")}</label>
         <input type="text" {...register("billingLastName")} />
       </div>
-  <div className="field-row">
-  <label>{t("product.billing.city")}</label>
-  <input type="text" {...register("billingCity")} />
-</div>
-<div className="field-row">
-  <label>{t("product.billing.postalCode")}</label>
-  <input type="text" {...register("billingPostalCode")} />
-</div>
-<div className="field-row">
-  <label>{t("product.billing.street")}</label>
-  <input type="text" {...register("billingStreet")} />
-</div>
+      <div className="field-row">
+        <label>{t("product.billing.street")}</label>
+        <input type="text" {...register("billingStreet")} />
+      </div>
+      <div className="field-row">
+        <label>{t("product.billing.postalCode")}</label>
+        <input type="text" {...register("billingPostalCode")} />
+      </div>
+      <div className="field-row">
+        <label>{t("product.billing.city")}</label>
+        <input type="text" {...register("billingCity")} />
+      </div>
     </div>
-    {/* ... باقي حقول الفوترة ... */}
 
     <div className="product-actions">
       <button
@@ -831,75 +841,86 @@ const onSubmit = handleSubmit(async () => {
       >
         {t("product.cancel")}
       </button>
-      {/* هذا هو الزر الذي يشغل onSubmit */}
-      <button
-        type="submit"
-        className="btn-primary"
-        disabled={isSubmitting}
-        onClick={()=>navigate('/client-dashboard')}
-      >
-        {isSubmitting
-          ? t("product.confirming")
-          : t("product.confirm")}
-      </button>
+
+<button
+  type="button"
+  className="btn-primary"
+  disabled={isSubmitting}
+  onClick={handleSubmit(async (formValues) => {
+        console.log("Billing values:", formValues.billingFirstName, formValues.billingCity);
+
+    if (!selectedOffer) {
+      alert("Please choose an offer first");
+      setStep(8);
+      return;
+    }
+
+    const questionnaireId = localStorage.getItem("questionnaireId");
+    if (!questionnaireId) {
+      alert("Session error, please restart.");
+      return;
+    }
+
+    try {
+      // --- Step 1: Finalize questionnaire ---
+      await axiosClient.post(`/questionnaire/${questionnaireId}/finalize`, {
+        offer: selectedOffer.id,
+        billing: {
+          firstName: formValues.billingFirstName,
+          lastName: formValues.billingLastName,
+          street: formValues.billingStreet,
+          postalCode: formValues.billingPostalCode,
+          city: formValues.billingCity,
+        },
+      });
+
+      // --- Step 2: Generate QR-Bill PDF ---
+      const pdfResponse = await axiosClient.post(
+        "/qr-bill/generate",
+        {
+          creditorAccount: "CH37 8080 8001 0062 4300 3",
+          amount: selectedOffer.price,
+          currency: "CHF",
+          debtor: {
+            name: `${formValues.billingFirstName} ${formValues.billingLastName}`,
+            address: formValues.billingStreet,
+            zip: formValues.billingPostalCode,
+            city: formValues.billingCity,
+            country: "CH",
+          },
+          reference: `RF${questionnaireId}`,
+          additionalInformation: `Tax declaration ${taxYear}`,
+          year: taxYear,
+        },
+        { responseType: "blob" }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([pdfResponse.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "qr-bill.pdf");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      clearDraft();
+      localStorage.removeItem("questionnaireId");
+      navigate("/client-dashboard");
+
+    } catch (error: any) {
+      console.error("QR-Bill generation error", error);
+      alert(error?.response?.data?.message || "Failed to generate QR-Bill.");
+    }
+  })}
+>
+  {isSubmitting ? t("product.confirming") : t("product.confirm")}
+</button>
     </div>
   </div>
 )}
 
         </section>
 
-        {/* RIGHT – Section 8 (Offers & price)
-        <aside className="
-        product-sidebar">
-          <div className="product-block sticky">
-            <h2>{t("product.sections.offers")}</h2>
-            <p className="field-hint">{t("product.offersHint")}</p>
-
-            <p className="product-total">
-              {t("product.totalPrice")} CHF {totalPrice.toFixed(0)}.–
-            </p>
-
-            {step >= 8 && (
-              <button
-                type="button"
-                className="link-like edit-request-inline"
-                onClick={() => setStep(8)}
-              >
-                {t("product.editRequest")}
-              </button>
-            )}
-
-            {offers.map((offer) => (
-              <button
-                key={offer.id}
-                type="button"
-                className={
-                  "offer-card" +
-                  (selectedOffer?.id === offer.id ? " selected" : "") +
-                  (offer.recommended ? " recommended" : "")
-                }
-                onClick={() => handleOfferGuard(offer)}
-              >
-                <div className="offer-header">
-                  <span className="offer-name">{offer.name}</span>
-                  <span className="offer-price">
-                    CHF {offer.price.toFixed(0)}.–
-                  </span>
-                </div>
-                <p className="offer-desc">{offer.description}</p>
-                {offer.recommended && (
-                  <span className="offer-badge">
-                    {t("product.recommended")}
-                  </span>
-                )}
-                <span className="offer-cta">
-                  {t("product.chooseOffer")}
-                </span>
-              </button>
-            ))}
-          </div>
-        </aside> */}
-        
       </form>
     </div>
   );

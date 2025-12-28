@@ -37,7 +37,6 @@ const navigate=useNavigate()
 
   console.debug("Declaration steps:", declaration.steps, "currentStep (backend):", declaration.currentStep, "computed:", fallback);
   const handleViewRequestClick = () => {
-    // 3. Navigate to the dynamic URL with the declaration's ID
     navigate(`/declaration/${declaration.id}`);
   };
 
@@ -71,7 +70,7 @@ const navigate=useNavigate()
         <button
           type="button"
           className="declaration-action-btn"
-          onClick={handleViewRequestClick} // 4. Use the new handler
+          onClick={handleViewRequestClick} 
 
         >
           View Request
@@ -79,37 +78,44 @@ const navigate=useNavigate()
       </div>
 
       {/* Steps row */}
-      <div className="declaration-steps-row">
-        {stepsArray.map((stepNum) => {
-          const isCurrent = stepNum === current;
-          const isDone = current > 0 && stepNum < current;
+   <div className="declaration-steps-row">
+  {stepsArray.map((stepNum) => {
+    // --- ✨ التعديلات هنا ✨ ---
 
-          let statusClass: "done" | "current" | "future" = "future";
-          if (isDone) statusClass = "done";
-          else if (isCurrent) statusClass = "current";
+    // 1. استخرج الحالة الكلية للطلب
+    const isDeclarationCompleted = declaration.status === 'COMPLETED';
 
-          const stepMeta = Array.isArray(declaration.steps)
-            ? declaration.steps.find((s) => s.order === stepNum)
-            : undefined;
-          const stepTitle = stepMeta?.name
-            ? stepMeta.name
-            :
-              t(`dashboard.steps1.${stepNum}.title`);
-          const stepTime = t(`dashboard.steps1.${stepNum}.time`);
+    // 2. عدّل منطق isDone و isCurrent
+    const isDone = (current > 0 && stepNum < current) || (isDeclarationCompleted && stepNum === 5);
+    const isCurrent = !isDone && stepNum === current;
 
-          return (
-            <div key={stepNum} className={`decl-step decl-step-${statusClass}`}>
-              <div className="decl-step-circle">
-                {isDone ? "✓" : stepNum}
-              </div>
+    // --- نهاية التعديلات ---
 
-              <div className="decl-step-text">
-                <div className="decl-step-title">{stepTitle}</div>
-                <div className="decl-step-time">{stepTime}</div>
-              </div>
-            </div>
-          );
-        })}
+    let statusClass: "done" | "current" | "future" = "future";
+    if (isDone) statusClass = "done";
+    else if (isCurrent) statusClass = "current";
+
+    const stepMeta = Array.isArray(declaration.steps)
+      ? declaration.steps.find((s) => s.order === stepNum)
+      : undefined;
+    const stepTitle = stepMeta?.name
+      ? stepMeta.name
+      : t(`dashboard.steps1.${stepNum}.title`);
+    const stepTime = t(`dashboard.steps1.${stepNum}.time`);
+
+    return (
+      <div key={stepNum} className={`decl-step decl-step-${statusClass}`}>
+        <div className="decl-step-circle">
+          {isDone ? "✓" : stepNum}
+        </div>
+
+        <div className="decl-step-text">
+          <div className="decl-step-title">{stepTitle}</div>
+          <div className="decl-step-time">{stepTime}</div>
+        </div>
+      </div>
+    );
+  })}
       </div>
     </article>
   );

@@ -17,12 +17,10 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!user) return;
-
     const load = async () => {
       try {
         setIsLoading(true);
         const res = await axiosClient.get("/orders/my-declarations");
-        console.log(res.data)
         const items = (res.data as TaxDeclaration[])
           .slice()
           .sort((a, b) => b.taxYear - a.taxYear);
@@ -94,7 +92,7 @@ export default function DashboardPage() {
                 key={decl.id}
                 declaration={decl}
                 onActionClick={(d) =>
-                  navigate(`/declarations/${d.id}`) // أو `/dashboard/requests/${d.id}` حسب اللي معرّفته
+                  navigate(`/declarations/${d.id}`)
                 }
               />
             ))}

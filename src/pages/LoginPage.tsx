@@ -8,6 +8,7 @@ import { useAuth } from "../auth/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles.css";
 import { useTranslation } from "react-i18next";
+import axiosClient from "../api/axiosClient";
 
 type FormData = { email: string; password: string };
 
@@ -30,7 +31,33 @@ export default function LoginPage() {
   } = useForm<FormData>();
 
   const [otpStep, setOtpStep] = useState(false);
+  const afterLogin = async (): Promise<boolean> => {
+    const token = localStorage.getItem("anonymousToken");
+    // const declarationId = localStorage.getItem("anonymousDeclarationId");
 
+    if (!token) {
+      return false; // لا كان هناك جلسة مجهولة
+    }
+
+    try {
+      const res = await axiosClient.post("/questionnaire/claim-anonymous", {
+        token,
+      });
+      const { questionnaireId, declarationId } = res.data;
+
+      if (questionnaireId) {
+        localStorage.setItem("questionnaireId", questionnaireId);
+      }
+      if (declarationId) {
+        localStorage.setItem("anonymousDeclarationId", declarationId);
+      }
+      localStorage.removeItem("anonymousToken");
+      return true;
+    } catch (err) {
+      console.error("Claim anonymous failed", err);
+      return false;
+    }
+  };
   const onSubmit = async (data: FormData) => {
     try {
       const status = await login(data.email, data.password);
@@ -38,27 +65,34 @@ export default function LoginPage() {
       if (status === "OTP_REQUIRED") {
         setOtpStep(true);
       } else {
-        // نجاح بدون OTP → رجّع المستخدم لمكانه (مثلاً /product أو /dashboard)
-        navigate(redirectTo, {
-          replace: true,
-          state: fromAuth ? { fromAuth } : undefined,
-        });
+        const claimed = await afterLogin();
+        // الآن نتنقل للمكان المناسب حسب redirectTo أو بعد claim
+        if (claimed) {
+          // لو تريد توجيه خاص بعد الربط، ضع هنا
+          navigate("/product", { state: { fromAuth: true } });
+        } else {
+          navigate(redirectTo, {
+            replace: true,
+            state: fromAuth ? { fromAuth } : undefined,
+          });
+        }
       }
     } catch (e: any) {
       alert(e?.response?.data?.error ?? "Login failed");
     }
   };
 
-
   if (otpStep) {
     return (
       <OtpStep
-        onDone={() =>
-          navigate(redirectTo, {
-            replace: true,
-            state: fromAuth ? { fromAuth } : undefined,
-          })
-        }
+        onDone={async () => {
+          const claimed = await afterLogin();
+          if (claimed) {
+            navigate("/product", { state: { fromAuth: true } });
+          } else {
+            navigate(redirectTo, { replace: true });
+          }
+        }}
       />
     );
   }
@@ -117,7 +151,7 @@ function OtpStep({ onDone }: { onDone: () => void }) {
   const submit = async ({ otp }: { otp: string }) => {
     try {
       await verifyOtp(otp);
-      onDone();
+      await onDone();
     } catch (e: any) {
       alert(e?.response?.data?.error ?? "Invalid code");
     }

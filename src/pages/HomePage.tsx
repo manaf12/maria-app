@@ -11,21 +11,15 @@ export default function HomePage() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const goToQuote = async() => {
-
-    if (!user) {
-      navigate("/login", { state: { redirectTo: "/" }});
-      return;
-    }
+const goToQuote = async () => {
+  if (user) {
+    // المستخدم مسجّل: نستخدم الـ protected start
     try {
-      console.log("Starting questionnaire...");
       const res = await axiosClient.post("/questionnaire/start", {});
-      console.log("Questionnaire started:", res.data);
       const questionnaireId = res.data.id;
       localStorage.setItem("questionnaireId", questionnaireId);
       navigate(`/product`);
     } catch (err: any) {
-      console.log("Error response:", err.response);
       if (err?.response?.status === 401) {
         navigate("/login", { state: { redirectTo: "/product" }});
       } else {
@@ -33,7 +27,21 @@ export default function HomePage() {
         alert("Failed to start questionnaire. Please try again later.");
       }
     }
-  };
+    return;
+  }
+
+  // المستخدم مجهول: ننشئ استبيان مستقل
+  try {
+    const res = await axiosClient.post("/questionnaire/create-standalone", {});
+    const questionnaireId = res.data.id ?? res.data?.id; // بعض الإصدارات ترجع كائن كامل
+    // بعض backends تعيد الكائن كاملاً؛ افحص res.data
+    localStorage.setItem("questionnaireId", questionnaireId);
+    navigate(`/product`);
+  } catch (err) {
+    console.error("Failed to create standalone questionnaire:", err);
+    alert("Failed to start anonymous session. Please try again.");
+  }
+};
       
 //   const goToQuote = () => {
 //   window.location.href = "https://app.swisstaxonline.ch/blablabla";
