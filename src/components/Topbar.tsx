@@ -39,7 +39,6 @@ export default function Topbar() {
 
   return (
     <div className="topbar">
-      {/* Left side: Swiss flag + tagline */}
       <div className="topbar-left">
         <div className="topbar-flag" >
           <img 
@@ -50,7 +49,6 @@ export default function Topbar() {
         <span className="topbar-text">{t("topbar.tagline")}</span>
       </div>
 
-      {/* Right side: language selector + login */}
       <div className="topbar-right">
         <div className="topbar-langs">
           {LANGS.map((lng, idx) => (

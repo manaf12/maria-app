@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/pages/LoginPage.tsx
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
@@ -33,10 +32,9 @@ export default function LoginPage() {
   const [otpStep, setOtpStep] = useState(false);
   const afterLogin = async (): Promise<boolean> => {
     const token = localStorage.getItem("anonymousToken");
-    // const declarationId = localStorage.getItem("anonymousDeclarationId");
 
     if (!token) {
-      return false; // لا كان هناك جلسة مجهولة
+      return false;   
     }
 
     try {
@@ -66,9 +64,7 @@ export default function LoginPage() {
         setOtpStep(true);
       } else {
         const claimed = await afterLogin();
-        // الآن نتنقل للمكان المناسب حسب redirectTo أو بعد claim
         if (claimed) {
-          // لو تريد توجيه خاص بعد الربط، ضع هنا
           navigate("/product", { state: { fromAuth: true } });
         } else {
           navigate(redirectTo, {

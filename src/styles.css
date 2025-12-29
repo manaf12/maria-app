@@ -295,34 +295,34 @@ input[type="checkbox"] {
 .topbar-langs {
   display: flex;
   align-items: center;
-  gap: 16px;
-  color: #64748b;
+  gap: 12px;
+  color: #003784;
 }
 
 .topbar-lang-item {
   display: inline-flex;
   align-items: center;
-  color: #163e64;
+  color: #1e4060;
 }
 
 .topbar-lang-btn {
   border: none;
   background: none;
-  padding: 0.2em 0.4em;
+  padding: 0.6em 0.6em;
   margin: 0;
   cursor: pointer;
   font-size: 14px;
-  color: #163e64;
+  color: #a7b8c8;
 }
 
 .topbar-lang-btn:hover {
-  color: #163e64;
+  color: #fcfcfc;
   /* color: #ffffff; */
 }
 
 .topbar-lang-btn.active {
   font-weight: 600;
-  color: #163e64;
+  background-color: #163e64;
 }
 
 .topbar-lang-separator {
@@ -330,16 +330,18 @@ input[type="checkbox"] {
   color: #163e64;
 }
 
+
 /* Login button */
 .topbar-login-btn {
   border-radius: 999px;
   border: 1px solid #0f172a;
-  padding: 6px 16px;
+  padding: 4px 18px;
   font-size: 14px;
   text-decoration: none;
   color: #0f172a;
   font-weight: 500;
   background: #ffffff;
+  text-align: center;
 }
 
 .topbar-login-btn:hover {
@@ -360,13 +362,18 @@ input[type="checkbox"] {
 }
 .user-menu {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 7px;
+  margin-left: 2px;
 }
 
 .user-menu-trigger {
   border-radius: 999px;
   border: 1px solid #0f172a;
-  padding: 6px 14px;
-  background: #fff;
+  padding: 8px 14px;
+  /* background: #fff; */
   font-size: 14px;
   cursor: pointer;
   display: flex;
@@ -397,6 +404,7 @@ input[type="checkbox"] {
   border: none;
   text-align: left;
   font-size: 14px;
+  color: black;
   cursor: pointer;
 }
 

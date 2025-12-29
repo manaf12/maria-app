@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/ProductPage.tsx
@@ -38,31 +39,6 @@ type QuoteDraft = {
 };
 
 const DRAFT_KEY = "taxonline_quote_draft";
-
-
-// const saveStepData = async (dataToSave: Partial<FormValues>) => {
-//   const questionnaireId = localStorage.getItem("questionnaireId");
-//   if (!questionnaireId) {
-//     console.error("Questionnaire ID not found. Cannot save progress.");
-//     return;
-//   }
-//   const payload = dataToSave;
-//   if (!payload || Object.keys(payload).length === 0) {
-//     console.log("No new data to save.");
-//     return;
-//   }
-
-//   try {
-//     const url = `/questionnaire/${questionnaireId}/save-step`;
-//     console.log(`Saving step data to ${url} with payload:`, payload);
-//         await axiosClient.post(url, payload);
-//   } catch (error) {
-//     console.error("Failed to save progress:", error);
-//   }
-// };
-
-
-
 
 
 function saveDraft(draft: QuoteDraft) {
@@ -143,6 +119,7 @@ function StepCard({
 
 
 export default function ProductPage() {
+  const [restored, setRestored] = useState(false);
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -151,22 +128,17 @@ export default function ProductPage() {
 const saveStepData = async (dataToSave: Partial<FormValues>) => {
   const questionnaireId = localStorage.getItem("questionnaireId");
   if (!questionnaireId) {
-    console.error("Questionnaire ID not found. Cannot save progress.");
     return;
   }
   const payload = dataToSave;
   if (!payload || Object.keys(payload).length === 0) {
-    console.log("No new data to save.");
     return;
   }
 
   try {
-    // اختر المسار حسب تسجيل الدخول
     const url = user
-      ? `/questionnaire/${questionnaireId}/save-step`         // محمي - يتطلب JWT
-      : `/questionnaire/${questionnaireId}/save-step-public`; // عام
-
-    console.log(`Saving step data to ${url} with payload:`, payload);
+      ? `/questionnaire/${questionnaireId}/save-step`
+      : `/questionnaire/${questionnaireId}/save-step-public`; 
     await axiosClient.post(url, payload);
   } catch (error) {
     console.error("Failed to save progress:", error);
@@ -182,7 +154,7 @@ const saveStepData = async (dataToSave: Partial<FormValues>) => {
     formState: { isSubmitting },
   } = useForm<FormValues>({
     defaultValues: {
-      taxYear: currentYear - 1, // n-1
+      taxYear: currentYear - 1,
       maritalStatus: "single",
       childrenCount: 0,
       incomeSources: 1,
@@ -199,7 +171,6 @@ const saveStepData = async (dataToSave: Partial<FormValues>) => {
 
   const [step, setStep] = useState<number>(1);
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
-  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
    const [offerPrices, setOfferPrices] = useState<{
     standard: number;
     premium: number;
@@ -245,95 +216,50 @@ const offers: Offer[] = useMemo(() => [
     newProperties <= properties;
 useEffect(() => {
   let mounted = true;
+ const loadState = async () => {
+  const draft = loadDraft();
+  const questionId = localStorage.getItem("questionnaireId");
+  const fromAuth = (location.state as any)?.fromAuth;
+  if (draft && draft.form) {
+    if (!mounted) return;
+    reset(draft.form);
+    setSelectedOffer(
+      draft.selectedOfferId
+        ? offers.find(o => o.id === draft.selectedOfferId) ?? null
+        : null
+    );
 
-  const inferStepFromData = (formData: Partial<FormValues> | null): number => {
-    if (!formData) return 1;
-    // Heuristic: return the first incomplete step
-    if (!formData.taxYear) return 1;
-    if (!formData.maritalStatus) return 2;
-    if (formData.childrenCount === undefined || formData.childrenCount === null) return 3;
-    if (!formData.incomeSources) return 4;
-    if (formData.wealthStatements === undefined || formData.wealthStatements === null) return 5;
-    if (formData.properties === undefined || formData.properties === null) return 6;
-    if (formData.properties > 0 && (formData.newProperties === undefined || formData.newProperties === null)) return 7;
-    // if offers were calculated/selected, go to 8/9
-    return 8;
-  };
+    if (user && draft.selectedOfferId) {
+      setStep(9);
+    } else {
+      setStep(draft.step ?? 1);
+    }
 
-  const loadState = async () => {
-    const draft = loadDraft();
-    const questionId = localStorage.getItem("questionnaireId");
-    const fromAuth = (location.state as any)?.fromAuth;
-  console.log("🟡 restore start", { draft, questionId, fromAuth });
-
-  if (draft) {
-    console.log("🟢 restoring from draft", draft);
+    setRestored(true);
+    return;
   }
 
   if (questionId) {
-    console.log("🟢 fetching questionnaire", questionId);
-  }
-    // 1) If there is a draft, use it (this preserves exact UX for anonymous and logged)
-    if (draft && draft.form) {
-      if (!mounted) return;
-      reset(draft.form); // populate form
-      setSelectedOffer(draft.selectedOfferId ? offers.find((o) => o.id === draft.selectedOfferId) ?? null : null);
-
-      // If user is logged and selectedOffer exists then go to summary
-      if (user && draft.selectedOfferId) {
-        setStep(9);
+    try {
+      const res = await axiosClient.get(`/questionnaire/${questionId}`);
+      const serverForm = res.data?.data;
+      if (serverForm) {
+        reset(serverForm as any);
+        if (res.data?.data?.offer) {
+          const offerFound = offers.find(
+            o => o.id.toLowerCase() === String(res.data.data.offer).toLowerCase()
+          );
+          if (offerFound) setSelectedOffer(offerFound);
+        }
+        setStep(res.data?.data?.offer ? 9 : 8);
+        setRestored(true);
         return;
       }
-
-      // Otherwise continue from draft.step
-      setStep(draft.step ?? inferStepFromData(draft.form));
-      return;
-    }
-
-    // 2) If no draft but we have a questionnaireId, try to fetch it from backend
-    if (questionId) {
-      try {
-        const res = await axiosClient.get(`/questionnaire/${questionId}`); // expects { id, data, status, ... }
-        const resp = res.data;
-        const serverForm = resp?.data ?? null;
-
-        if (!mounted) return;
-
-        if (serverForm) {
-          // populate the form with server data
-          // reset will replace all fields; ensure serverForm has matching keys
-          reset(serverForm as any);
-
-          // set selected offer if present in server snapshot
-          if (resp?.data?.offer) {
-            const offerFound = offers.find((o) => o.id.toLowerCase() === String(resp.data.offer).toLowerCase());
-            if (offerFound) setSelectedOffer(offerFound);
-          }
-
-          // Decide step
-          if (fromAuth && user) {
-            // user just logged in and came back: go to offers (step 8) or summary if offer already chosen
-            if (resp.data.offer) setStep(9);
-            else setStep(8);
-          } else {
-            setStep(inferStepFromData(serverForm));
-          }
-          return;
-        }
-      } catch (err) {
-        console.warn("Could not load questionnaire from server:", err);
-        // fallback to starting step 1
-      }
-    }
-
-    // 3) fallback: start from step 1 or if fromAuth request go to offers
-    if (fromAuth && user) {
-      setStep(8);
-    } else {
-      setStep(1);
-    }
-  };
-
+    } catch {}
+  }
+  setStep(fromAuth && user ? 8 : 1);
+  setRestored(true);
+};
   loadState();
 
   return () => {
@@ -342,6 +268,7 @@ useEffect(() => {
 }, [location.state, reset, user, offers]);
 
   useEffect(() => {
+    if (!restored) return;
     const form = getValues();
     const draft: QuoteDraft = {
       step,
@@ -349,7 +276,7 @@ useEffect(() => {
       selectedOfferId: selectedOffer?.id,
     };
     saveDraft(draft);
-  }, [step, selectedOffer, getValues]);
+  }, [step, selectedOffer, getValues,restored]);
 
   const goPrev = () => {
     if (step <= 1) return;
@@ -380,11 +307,8 @@ const goNext = async () => {
     }
 
     try {
-      console.log("Calculating all offer prices...");
       const res = await axiosClient.get(`/pricing/calculate-all/${questionnaireId}`);
-      setOfferPrices(res.data);
-      console.log("Prices calculated:", res.data);
-      
+      setOfferPrices(res.data);      
       setStep(8);
     } catch (error) {
       console.error("Failed to calculate prices:", error);
@@ -409,12 +333,11 @@ const goNext = async () => {
     } else {
       setStep(7);
     }
-  } else if (step < 9) { // تم تعديل الشرط ليشمل الخطوات الأقل من 9
+  } else if (step < 9) {
     setStep((s) => s + 1);
   }
 };
 
-// ProductPage.tsx
 const handleChooseOffer = async (offer: Offer) => {
   setSelectedOffer(offer);
 
@@ -425,12 +348,15 @@ const handleChooseOffer = async (offer: Offer) => {
   }
 
   if (user) {
-    // Logged in → go to next step
     setStep(9);
     return;
   }
+  saveDraft({
+    step: 9,           
+    form: getValues(),
+    selectedOfferId: offer.id,
+  });
 
-  // Anonymous → submit existing questionnaire & get token + declaration
   try {
     const res = await axiosClient.post(
       `/questionnaire/${questionnaireId}/submit-anonymous`

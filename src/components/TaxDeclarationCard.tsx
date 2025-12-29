@@ -80,17 +80,9 @@ const navigate=useNavigate()
       {/* Steps row */}
    <div className="declaration-steps-row">
   {stepsArray.map((stepNum) => {
-    // --- ✨ التعديلات هنا ✨ ---
-
-    // 1. استخرج الحالة الكلية للطلب
     const isDeclarationCompleted = declaration.status === 'COMPLETED';
-
-    // 2. عدّل منطق isDone و isCurrent
     const isDone = (current > 0 && stepNum < current) || (isDeclarationCompleted && stepNum === 5);
     const isCurrent = !isDone && stepNum === current;
-
-    // --- نهاية التعديلات ---
-
     let statusClass: "done" | "current" | "future" = "future";
     if (isDone) statusClass = "done";
     else if (isCurrent) statusClass = "current";

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-wrapper-object-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/pages/ViewRequestPage.tsx
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -13,7 +12,6 @@ import { fetchDeclaration } from "../services/declaration.service";
 
 export type StageId = 1 | 2 | 3 | 4 | 5;
 type StageStatus = "completed" | "current" | "locked";
-
 type SummaryBlock = {
   maritalStatus: string;
   childrenCount: number;
@@ -163,13 +161,11 @@ onStep3DraftUpload?: () => Promise<void>;
   ) => Promise<void>;
 };
 
-function FilesSummary({ files, onDownloadFile, isAdmin }: FilesSummaryProps) {
+function FilesSummary({ files, onDownloadFile}: FilesSummaryProps) {
   const { t } = useTranslation();
-
   if (!files || files.length === 0) {
     return null;
   }
-
   const userFiles = files.filter((f) => f.meta?.uploaderRole !== 'admin');
   const adminFiles = files.filter((f) => f.meta?.uploaderRole === 'admin');
 
@@ -178,7 +174,6 @@ function FilesSummary({ files, onDownloadFile, isAdmin }: FilesSummaryProps) {
       <h2>{t("view.filesSummary.title", "Uploaded Files Summary")}</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* قسم ملفات المستخدم */}
         <div>
           <h3 className="font-bold text-lg mb-2">
             {t("view.filesSummary.userFiles", "Client Files")}
@@ -275,7 +270,6 @@ export function ViewRequestContent({
   isUploadingDraft,
   onConfirmReceipt,
   onStep3DraftUpload,
-  
   confirming,
   onAddStepComment,
   step4UserComment,
@@ -299,10 +293,7 @@ export function ViewRequestContent({
   const [optionalEnabled, setOptionalEnabled] = useState<
     Record<string, boolean>
   >({});
-  // const { currentStage } = data;
     const { currentStage, status: declarationStatus, steps } = data;
-
-  // 2. (اختياري ولكن موصى به) تحقق من حالة الخطوة الداخلية أيضاً
   const isStep5Done = steps?.find(s => s.id === 'submission')?.status === 'DONE';
   const stages: { id: StageId; titleKey: string; status: StageStatus }[] = [
     {
@@ -534,10 +525,10 @@ const DocumentUploadItem: React.FC<DocumentUploadItemProps> = ({
     try {
       await uploadSingleFile(declarationId, selectedFile, documentType);
 
-      alert(`تم تحميل المستند ${documentType} بنجاح!`);
+      alert(`${documentType} Uploaded Successfully !`);
       onUploadSuccess();
     } catch (error) {
-      console.error("فشل التحميل:", error);
+      console.error(" error uploading:", error);
     } finally {
       setIsUploading(false);
       setSelectedFile(null);
@@ -565,14 +556,14 @@ const DocumentUploadItem: React.FC<DocumentUploadItemProps> = ({
           onClick={() => document.getElementById(inputId)?.click()}
           disabled={isUploading}
         >
-          {selectedFile ? `تم اختيار: ${selectedFile.name}` : "اختر ملف"}
+          {selectedFile ? `Done : ${selectedFile.name}` : "Choose File "}
         </button>
         <button
           className="btn btn-primary"
           onClick={handleUpload}
           disabled={isUploading || !selectedFile}
         >
-          {isUploading ? "جاري التح ميل..." : "Upload file"}
+          {isUploading ? "Uploading file ..." : "Upload file"}
         </button>
       </div>
     </div>
@@ -741,8 +732,6 @@ export default function ViewRequestPage() {
   try {
     const fd = new FormData();
     fd.append("file", adminDraftFile);
-
-    // استدعِ المسار الجديد
     await axiosClient.post(
       `/admin/declarations/${declarationId}/step3-upload-draft`,
       fd,
@@ -1110,7 +1099,7 @@ onCompleteStep5?: () => void;
   onAddStepComment?: (comment: string) => Promise<void>;
   step4UserComment?: string;
   setStep4UserComment?: (value: string) => void;
-  setStep4AdminComment?: (value: string) => void; // <--- أضف هذا
+  setStep4AdminComment?: (value: string) => void;
   isAddingStepComment?: boolean;
   step4AdminComment?: string;
   userSubmissionFile?: File | null;
@@ -1167,7 +1156,6 @@ function renderStageContent(props: RenderProps) {
   const isCurrent = status === "current";
   const isCompleted = status === "completed";
 
-  // Step 1
   if (stageId === 1) {
     const filesByType = (data.files ?? []).reduce((acc, file) => {
       const docType = file.documentType;
@@ -1188,17 +1176,14 @@ function renderStageContent(props: RenderProps) {
 
             return (
               <div key={docType} className="border p-4 rounded-lg">
-                {/* the type of the files for example (salary)  */}
                 <h4 className="font-bold text-lg capitalize">
                   {docType.replace(/_/g, " ")} *
                 </h4>
-                {/* number of uploaded files  */}
    {uploadedFiles.length > 0 && (
                 <span className="text-gray-500 font-normal ml-2">
                   ({uploadedFiles.length})
                 </span>
               )}
-         {/* files that the user uploaded  */}
                 {uploadedFiles.length > 0 && (
                   <ul className="mt-2 space-y-2">
                     {uploadedFiles.map((file) => (
@@ -1222,7 +1207,7 @@ function renderStageContent(props: RenderProps) {
                         : `Please upload your ${docType.replace(/_/g, " ")}.`}
                     </p>
                     <DocumentUploadItem
-                      key={`${docType}-${uploadedFiles.length}`} // مفتاح متغير لإعادة تعيين المكون
+                      key={`${docType}-${uploadedFiles.length}`}
                       declarationId={data.id}
                       documentType={docType}
                       onUploadSuccess={() => onUploadDocuments?.()}
@@ -1291,7 +1276,6 @@ function renderStageContent(props: RenderProps) {
       );
     }
 
-    // --- CLIENT VIEW FOR STEP 2 (Your existing code) ---
     else {
       return (
         <div className="stage-block">
@@ -1624,21 +1608,16 @@ const canUserUploadInStep5 = !isAdmin && (isCurrent || isCompleted);
             <p className="muted small">No user files yet.</p>
           )}
         </div>
-
-        {/* Admin upload final file (only admin on current step) */}
         {isCurrent && isAdmin && (
           <div style={{ marginTop: 16 }}>
             <label className="block mb-2 font-medium">
               Admin: upload final file (PDF)
             </label>
-
-            {/* استخدم setter الموجود في props (setAdminDraftFile) بدلاً من setAdminFinalFile */}
             <input
               type="file"
               accept="application/pdf"
               onChange={(e) => {
                 const f = e.target.files?.[0] ?? null;
-                // ستستخدم نفس state التي مرّرتها من الولي parent
                 setAdminDraftFile?.(f);
               }}
             />
@@ -1647,7 +1626,6 @@ const canUserUploadInStep5 = !isAdmin && (isCurrent || isCompleted);
               <button
                 className="btn-primary"
                 disabled={isUploadingDraft || !adminDraftFile}
-                // استدعِ onAdminUpload الموجود كـ prop؛ هو مُعرّف في الـ parent (handleAdminUpload)
                 onClick={() => onAdminUpload?.("submission", "final_file")}
               >
                 {isUploadingDraft ? "Uploading..." : "Upload final file"}

@@ -13,7 +13,6 @@ export default function HomePage() {
 
 const goToQuote = async () => {
   if (user) {
-    // المستخدم مسجّل: نستخدم الـ protected start
     try {
       const res = await axiosClient.post("/questionnaire/start", {});
       const questionnaireId = res.data.id;
@@ -29,12 +28,10 @@ const goToQuote = async () => {
     }
     return;
   }
-
-  // المستخدم مجهول: ننشئ استبيان مستقل
+  
   try {
     const res = await axiosClient.post("/questionnaire/create-standalone", {});
-    const questionnaireId = res.data.id ?? res.data?.id; // بعض الإصدارات ترجع كائن كامل
-    // بعض backends تعيد الكائن كاملاً؛ افحص res.data
+    const questionnaireId = res.data.id ?? res.data?.id;
     localStorage.setItem("questionnaireId", questionnaireId);
     navigate(`/product`);
   } catch (err) {
@@ -43,12 +40,9 @@ const goToQuote = async () => {
   }
 };
       
-//   const goToQuote = () => {
-//   window.location.href = "https://app.swisstaxonline.ch/blablabla";
-// };
+
   return (
     <main className="home">
-      {/* HERO: strengths left + price/right CTA */}
       <section className="home-hero">
         <div className="home-hero-left">
           <p className="home-hero-tagline">

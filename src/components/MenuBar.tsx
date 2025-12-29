@@ -11,7 +11,7 @@ export default function MenuBar() {
   const location = useLocation();
 
   // Logo always sends logged-in users to dashboard
-  const logoTarget = user ? "/dashboard" : "/";
+  const logoTarget = user ? "/" : "/";
 
   return (
     <header className="menu-bar">
@@ -29,7 +29,7 @@ export default function MenuBar() {
       {/* Right side: Dashboard button (only if logged in) */}
       <div className="menu-right">
         {user && (
-          <Link to="/dashboard" className="menu-cta-btn">
+          <Link to="/client-dashboard" className="menu-cta-btn">
             {t("menu.dashboard")}
           </Link>
         )}
