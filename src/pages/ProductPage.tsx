@@ -425,7 +425,6 @@ const onSubmit = handleSubmit(async () => {
     window.location.href = "https://www.swisstaxonline.ch";
   };
 
-  // -------------------- UI --------------------
   return (
     <div className="product-page">
       <header className="product-header">
@@ -592,26 +591,19 @@ const onSubmit = handleSubmit(async () => {
     onPrev={goPrev}
   >
     <div className="offers-list">
-      {/* 
-        نتحقق أولاً إذا كانت الأسعار قد تم تحميلها.
-        إذا لم تكن قد حُملت بعد، يمكننا عرض رسالة "جاري التحميل..." أو لا شيء.
-      */}
       {!offerPrices ? (
-        <p>{t("product.calculatingPrices")}</p> // "Calculating prices..."
+        <p>{t("product.calculatingPrices")}</p>
       ) : (
-        // إذا تم تحميل الأسعار، نقوم بعرضها
         offers.map((offer) => {
-          // 1. نحدد السعر الديناميكي الصحيح لكل عرض
           let dynamicPrice = 0;
           if (offer.id === 'Standard') {
             dynamicPrice = offerPrices.standard;
           } else if (offer.id === 'Premium') {
             dynamicPrice = offerPrices.premium;
-          } else if (offer.id === 'Confort') { // افترض أن لديك عرض 'confort'
+          } else if (offer.id === 'Confort') { 
             dynamicPrice = offerPrices.confort;
           }
 
-          // 2. ننشئ كرت العرض بالسعر الديناميكي
           return (
             <button
               key={offer.id}
@@ -621,13 +613,11 @@ const onSubmit = handleSubmit(async () => {
                 (selectedOffer?.id === offer.id ? " selected" : "") +
                 (offer.recommended ? " recommended" : "")
               }
-              // عند الضغط، نمرر العرض مع سعره المحدث
               onClick={() => handleOfferGuard({ ...offer, price: dynamicPrice })}
             >
               <div className="offer-header">
                 <span className="offer-name">{offer.name}</span>
                 <span className="offer-price">
-                  {/* 3. نعرض السعر الديناميكي هنا */}
                   CHF {dynamicPrice.toFixed(0)}.–
                 </span>
               </div>
@@ -648,9 +638,6 @@ const onSubmit = handleSubmit(async () => {
   </StepCard>
 )}
 
-
-
-{/* --- الخطوة 9 (الجديدة): عرض السعر والملخص --- */}
 {step === 9 && (
   <div className="product-block">
     <div className="product-block-header">
@@ -668,7 +655,6 @@ const onSubmit = handleSubmit(async () => {
       <h3>{t("product.sections.summary")}</h3>
       
       <ul>
-        {/* 1. عناصر الملخص الحالية (صحيحة) */}
         <li>{t("product.summary.taxYear", { year: taxYear })}</li>
         <li>
           {t("product.summary.marital", {
@@ -682,25 +668,18 @@ const onSubmit = handleSubmit(async () => {
         <li>{t("product.summary.incomes", { count: incomeSources })}</li>
         <li>{t("product.summary.wealth", { count: wealthStatements })}</li>
         <li>{t("product.summary.properties", { count: properties })}</li>
-        
-        {/* --- 2. بداية الإضافة: عرض العرض المختار --- */}
-        {selectedOffer && (
+                {selectedOffer && (
           <li>
             <strong>{t("product.sections.offer")}:</strong> {selectedOffer.name}
           </li>
         )}
-        {/* --- نهاية الإضافة --- */}
       </ul>
-
-      {/* --- 3. بداية التعديل: عرض السعر الصحيح --- */}
-      {/* نقرأ السعر مباشرة من selectedOffer */}
       {selectedOffer && (
-        <p className="product-final-price"> {/* يمكنك إضافة class للتنسيق */}
+        <p className="product-final-price">
           <strong>{t("product.finalPrice")}:</strong>{" "}
           CHF {selectedOffer.price.toFixed(0)}.–
         </p>
       )}
-      {/* --- نهاية التعديل --- */}
     </div>
 
     <div className="product-actions">
@@ -788,7 +767,6 @@ const onSubmit = handleSubmit(async () => {
     }
 
     try {
-      // --- Step 1: Finalize questionnaire ---
       await axiosClient.post(`/questionnaire/${questionnaireId}/finalize`, {
         offer: selectedOffer.id,
         billing: {
@@ -799,12 +777,11 @@ const onSubmit = handleSubmit(async () => {
           city: formValues.billingCity,
         },
       });
-
-      // --- Step 2: Generate QR-Bill PDF ---
       const pdfResponse = await axiosClient.post(
         "/qr-bill/generate",
+    
         {
-          creditorAccount: "CH37 8080 8001 0062 4300 3",
+          creditorAccount: "CH65 3080 8001 0062 4300 3",
           amount: selectedOffer.price,
           currency: "CHF",
           debtor: {
@@ -814,7 +791,7 @@ const onSubmit = handleSubmit(async () => {
             city: formValues.billingCity,
             country: "CH",
           },
-          reference: `RF${questionnaireId}`,
+         reference: String(questionnaireId),
           additionalInformation: `Tax declaration ${taxYear}`,
           year: taxYear,
         },
@@ -844,9 +821,7 @@ const onSubmit = handleSubmit(async () => {
     </div>
   </div>
 )}
-
         </section>
-
       </form>
     </div>
   );
