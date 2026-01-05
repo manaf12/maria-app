@@ -590,7 +590,50 @@
     "confirmQuestion": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
     "error": "Ihr Konto konnte nicht gelöscht werden. Bitte kontaktieren Sie den Support, falls das Problem bestehen bleibt."
   }
-}
+},
+  "admin.declarations.title": "Steuererklärungen",
+  "admin.declarations.subtitle": "Steuererklärungen verwalten, filtern und zuweisen.",
+  "admin.declarations.searchPlaceholder": "Suche nach Name, E-Mail, ID, Jahr…",
+  "admin.declarations.refresh": "Aktualisieren",
+  "admin.declarations.loading": "Laden…",
+  "admin.declarations.empty": "Keine Ergebnisse.",
+  "admin.declarations.assigned": "Zugewiesen",
+  "admin.declarations.unassigned": "Nicht zugewiesen",
+  "admin.declarations.defaultNote": "Zuweisung wegen hoher Priorität",
+  "admin.declarations.adminIdPlaceholder": "Admin-ID (UUID)",
+  "admin.declarations.notePlaceholder": "Zuweisungsnotiz (optional)",
+  "admin.declarations.assigning": "Wird zugewiesen…",
+  "admin.declarations.assignSelected": "Auswahl zuweisen",
+  "admin.declarations.selectVisible": "Sichtbare auswählen",
+  "admin.declarations.clearSelection": "Auswahl löschen",
+  "admin.declarations.selectedCount": "Ausgewählt: {{count}}",
+  "admin.declarations.fileShort": "Dossier #{{id}}",
+  "admin.declarations.step": "Schritt {{n}}",
+  "admin.declarations.count": "{{count}} Dossiers",
+  "admin.declarations.results": "Ergebnisse",
+  
+
+  "admin.declarations.filter.unassigned": "Nur nicht zugewiesen",
+  "admin.declarations.filter.assigned": "Nur zugewiesen",
+  "admin.declarations.filter.all": "Alle",
+
+  "admin.declarations.status.all": "Alle Status",
+  "admin.declarations.year.all": "Alle Jahre",
+
+  "admin.declarations.columns.client": "Kunde",
+  "admin.declarations.columns.tax": "Jahr / Angebot",
+  "admin.declarations.columns.status": "Status",
+  "admin.declarations.columns.step": "Schritt",
+  "admin.declarations.columns.created": "Erstellt",
+  "admin.declarations.columns.updated": "Aktualisiert",
+  "admin.declarations.columns.assignment": "Zuweisung",
+
+  "admin.declarations.unknownClient": "Unbekannter Kunde",
+
+  "admin.declarations.errors.loadFailed": "Dossiers konnten nicht geladen werden.",
+  "admin.declarations.errors.assignFailed": "Zuweisung fehlgeschlagen. Bitte erneut versuchen.",
+  "admin.declarations.errors.adminIdRequired": "Admin-ID ist erforderlich.",
+  "admin.declarations.errors.selectAtLeastOne": "Bitte mindestens eine Erklärung auswählen."
 
 
 }

@@ -19,6 +19,8 @@ import AboutPage from "./pages/AboutPage";
 import FaqPage from "./pages/FaqPage";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
 import AccountSettingsPage from "./pages/AccountSettingsPage";
+import AdminDeclarationsPage from "./pages/admin/AdminDeclarationsPage";
+import AdminDeclarationDetailsPage from "./pages/admin/AdminDeclarationDetailsPage";
 import "./i18n/i18n";
 
 export default function App() {
@@ -41,6 +43,8 @@ export default function App() {
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
         <Route path="/settings" element={<AccountSettingsPage />} />
+        <Route path="/admin/declarations" element={<AdminDeclarationsPage />} />
+        <Route path="/admin/declarations/:id" element={<AdminDeclarationDetailsPage />} />
         {/* <Route element={<ProtectedRoute />}>
           <Route path="/client-dashboard" element={<DashboardPage1 />} />
         </Route> */}

@@ -590,7 +590,50 @@
     "confirmQuestion": "Êtes-vous sûr(e) de vouloir supprimer votre compte ? Cette action est irréversible.",
     "error": "Impossible de supprimer votre compte. Veuillez contacter le support si le problème persiste."
   }
-}
+},
+
+  "admin.declarations.title": "Déclarations fiscales",
+  "admin.declarations.subtitle": "Gérer, filtrer et attribuer les déclarations fiscales.",
+  "admin.declarations.searchPlaceholder": "Rechercher par nom, e-mail, ID, année…",
+  "admin.declarations.refresh": "Actualiser",
+  "admin.declarations.loading": "Chargement…",
+  "admin.declarations.empty": "Aucun résultat.",
+  "admin.declarations.assigned": "Attribué",
+  "admin.declarations.unassigned": "Non attribué",
+  "admin.declarations.defaultNote": "Attribué en raison d’une charge prioritaire",
+  "admin.declarations.adminIdPlaceholder": "ID Admin (UUID)",
+  "admin.declarations.notePlaceholder": "Note d’attribution (optionnelle)",
+  "admin.declarations.assigning": "Attribution…",
+  "admin.declarations.assignSelected": "Attribuer la sélection",
+  "admin.declarations.selectVisible": "Sélectionner la liste",
+  "admin.declarations.clearSelection": "Effacer la sélection",
+  "admin.declarations.selectedCount": "Sélection : {{count}}",
+  "admin.declarations.fileShort": "Dossier #{{id}}",
+  "admin.declarations.step": "Étape {{n}}",
+  "admin.declarations.results": "Résultats",
+  "admin.declarations.count": "Total : {{count}}",
+
+  "admin.declarations.filter.unassigned": "Non attribuées",
+  "admin.declarations.filter.assigned": "Attribuées",
+  "admin.declarations.filter.all": "Toutes",
+
+  "admin.declarations.status.all": "Tous les statuts",
+  "admin.declarations.year.all": "Toutes les années",
+
+  "admin.declarations.columns.client": "Client",
+  "admin.declarations.columns.tax": "Année / Offre",
+  "admin.declarations.columns.status": "Statut",
+  "admin.declarations.columns.step": "Étape",
+  "admin.declarations.columns.created": "Créé",
+  "admin.declarations.columns.updated": "Mis à jour",
+  "admin.declarations.columns.assignment": "Attribution",
+
+  "admin.declarations.unknownClient": "Client inconnu",
+
+  "admin.declarations.errors.loadFailed": "Impossible de charger les déclarations.",
+  "admin.declarations.errors.assignFailed": "Échec de l’attribution. Veuillez réessayer.",
+  "admin.declarations.errors.adminIdRequired": "L’ID Admin est obligatoire.",
+  "admin.declarations.errors.selectAtLeastOne": "Sélectionnez au moins une déclaration."
 
 
 }

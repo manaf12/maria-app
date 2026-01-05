@@ -589,8 +589,49 @@
     "confirmQuestion": "Are you sure you want to delete your account? This action cannot be undone.",
     "error": "We could not delete your account. Please contact support if the problem persists."
   }
-}
+},
+  "admin.declarations.title": "Tax Declarations",
+  "admin.declarations.subtitle": "Manage, filter, and assign tax declarations.",
+  "admin.declarations.searchPlaceholder": "Search by name, email, ID, year…",
+  "admin.declarations.refresh": "Refresh",
+  "admin.declarations.loading": "Loading…",
+  "admin.declarations.empty": "No results found.",
+  "admin.declarations.assigned": "Assigned",
+  "admin.declarations.unassigned": "Unassigned",
+  "admin.declarations.defaultNote": "Assigned due to high priority workload",
+  "admin.declarations.adminIdPlaceholder": "Admin ID (UUID)",
+  "admin.declarations.notePlaceholder": "Assignment note (optional)",
+  "admin.declarations.assigning": "Assigning…",
+  "admin.declarations.assignSelected": "Assign selected",
+  "admin.declarations.selectVisible": "Select visible",
+  "admin.declarations.clearSelection": "Clear selection",
+  "admin.declarations.selectedCount": "Selected: {{count}}",
+  "admin.declarations.fileShort": "File #{{id}}",
+  "admin.declarations.step": "Step {{n}}",
+  "admin.declarations.results": "Results",
+  "admin.declarations.count": "Total: {{count}}",
 
+  "admin.declarations.filter.unassigned": "Unassigned only",
+  "admin.declarations.filter.assigned": "Assigned only",
+  "admin.declarations.filter.all": "All",
+
+  "admin.declarations.status.all": "All statuses",
+  "admin.declarations.year.all": "All years",
+
+  "admin.declarations.columns.client": "Client",
+  "admin.declarations.columns.tax": "Tax year / Offer",
+  "admin.declarations.columns.status": "Status",
+  "admin.declarations.columns.step": "Step",
+  "admin.declarations.columns.created": "Created",
+  "admin.declarations.columns.updated": "Updated",
+  "admin.declarations.columns.assignment": "Assignment",
+
+  "admin.declarations.unknownClient": "Unknown client",
+
+  "admin.declarations.errors.loadFailed": "Failed to load declarations.",
+  "admin.declarations.errors.assignFailed": "Assignment failed. Please try again.",
+  "admin.declarations.errors.adminIdRequired": "Admin ID is required.",
+  "admin.declarations.errors.selectAtLeastOne": "Select at least one declaration."
 
 }
 
