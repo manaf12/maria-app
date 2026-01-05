@@ -30,7 +30,11 @@ const REQUIRED_DOCUMENT_TYPES = [
 
 const OPTIONAL_DOCUMENT_TYPES = ["others"];
 
-export default function Stage1Section({ declaration, isCurrent, onUploadDocuments }: Stage1SectionProps) {
+export default function Stage1Section({
+  declaration,
+  isCurrent,
+  onUploadDocuments,
+}: Stage1SectionProps) {
   const queryClient = useQueryClient();
 
   const filesByType = useMemo(() => {
@@ -41,7 +45,9 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
   }, [declaration.files]);
 
   const declaredMissingMap = useMemo(() => {
-    const documentsStep = (declaration.steps ?? []).find((s) => s.id === "documentsPreparation");
+    const documentsStep = (declaration.steps ?? []).find(
+      (s) => s.id === "documentsPreparation",
+    );
     const missingMeta = documentsStep?.meta?.missingDocs ?? [];
     const map: Record<string, boolean> = {};
     (missingMeta as any[]).forEach((m) => {
@@ -50,10 +56,13 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
     return map;
   }, [declaration.steps]);
 
-  const initialStep1Answers = declaration.questionnaireSnapshot?.step1Answers ?? {};
+  const initialStep1Answers =
+    declaration.questionnaireSnapshot?.step1Answers ?? {};
 
   const invalidateDeclaration = async () => {
-    await queryClient.invalidateQueries({ queryKey: ["declaration", declaration.id] });
+    await queryClient.invalidateQueries({
+      queryKey: ["declaration", declaration.id],
+    });
   };
 
   const uploadOne = async (docType: string, file: File) => {
@@ -83,12 +92,17 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
   };
 
   const markMissing = async (docType: string, reason?: string) => {
-    await axiosClient.post(`/files/${declaration.id}/documents/${docType}/missing`, { reason });
+    await axiosClient.post(
+      `/files/${declaration.id}/documents/${docType}/missing`,
+      { reason },
+    );
     await invalidateDeclaration();
   };
 
   const undoMissing = async (docType: string) => {
-    await axiosClient.delete(`/files/${declaration.id}/documents/${docType}/missing`);
+    await axiosClient.delete(
+      `/files/${declaration.id}/documents/${docType}/missing`,
+    );
     await invalidateDeclaration();
   };
 
@@ -102,18 +116,19 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
     return { done, total: REQUIRED_DOCUMENT_TYPES.length };
   }, [filesByType, declaredMissingMap]);
 
-  const allDocTypesForUI = [...REQUIRED_DOCUMENT_TYPES, ...OPTIONAL_DOCUMENT_TYPES];
+  const allDocTypesForUI = [
+    ...REQUIRED_DOCUMENT_TYPES,
+    ...OPTIONAL_DOCUMENT_TYPES,
+  ];
   return (
     <div className="space-y-6">
       <div className="rounded-xl border bg-white p-4">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="font-semibold text-lg">Step 1 — Documents & Questions</h3>
-            <p className="text-sm text-gray-600">
-              ارفع ملف PDF واحد على الأقل لكل تصنيف مطلوب، أو علّم التصنيف كـ “غير متوفر”.
-            </p>
+            <h3 className="font-semibold text-lg">
+              Step 1 — Documents & Questions
+            </h3>
           </div>
-
           <div className="text-right">
             <div className="text-sm text-gray-500">Documents progress</div>
             <div className="text-lg font-semibold">
@@ -128,8 +143,15 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
         <Step1Questions
           declarationId={declaration.id}
           questions={[
-            { id: "distanceToWork", label: "How far is your home from your workplace?" },
-            { id: "familyMembers", label: "How many family members?", type: "number" },
+            {
+              id: "distanceToWork",
+              label: "How far is your home from your workplace?",
+            },
+            {
+              id: "familyMembers",
+              label: "How many family members?",
+              type: "number",
+            },
           ]}
           initialAnswers={initialStep1Answers}
           onSaved={invalidateDeclaration}
@@ -143,11 +165,18 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
           const isOthers = docType === "others";
           const canEditDocType = isCurrent || isOthers;
           return (
-            <div key={docType} className="rounded-xl border bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div
+              key={docType}
+              className="rounded-xl border bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+            >
               <div className="flex items-center justify-between mb-3">
                 <div>
-                  <h4 className="font-semibold text-lg capitalize">{docType.replace(/_/g, " ")}</h4>
-                  <div className="text-xs text-gray-500">{isOthers ? "Optional" : "Required"}</div>
+                  <h4 className="font-semibold text-lg capitalize">
+                    {docType.replace(/_/g, " ")}
+                  </h4>
+                  <div className="text-xs text-gray-500">
+                    {isOthers ? "Optional" : "Required"}
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -172,18 +201,23 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
               {uploadedFiles.length > 0 && (
                 <ul className="space-y-2 mb-4">
                   {uploadedFiles.map((file) => (
-                    <li key={file.id} className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2 border">
+                    <li
+                      key={file.id}
+                      className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2 border"
+                    >
                       <span className="truncate">{file.originalName}</span>
                       <button
-  className="text-sm text-red-600 underline"
-  onClick={async () => {
-    if (!confirm("Delete this file?")) return;
-    await axiosClient.delete(`/files/${file.id}`);
-    await queryClient.invalidateQueries({ queryKey: ["declaration", declaration.id] });
-  }}
->
-  Delete
-</button>
+                        className="text-sm text-red-600 underline"
+                        onClick={async () => {
+                          if (!confirm("Delete this file?")) return;
+                          await axiosClient.delete(`/files/${file.id}`);
+                          await queryClient.invalidateQueries({
+                            queryKey: ["declaration", declaration.id],
+                          });
+                        }}
+                      >
+                        Delete
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -195,15 +229,17 @@ export default function Stage1Section({ declaration, isCurrent, onUploadDocument
                   documentType={docType}
                   uploadedFiles={uploadedFiles}
                   isMissing={isMissing}
-                  allowMultiple={isOthers}   // others يسمح multiple
-                  disableMissing={isOthers}  // others لا يوجد missing
+                  allowMultiple={isOthers} // others يسمح multiple
+                  disableMissing={isOthers} // others لا يوجد missing
                   onUpload={(file) => uploadOne(docType, file)}
                   onUploadMultiple={(files) => uploadMultiple(docType, files)}
                   onMarkMissing={(reason) => markMissing(docType, reason)}
                   onUndoMissing={() => undoMissing(docType)}
                 />
               ) : (
-                <p className="text-sm text-gray-500">This step is not currently editable.</p>
+                <p className="text-sm text-gray-500">
+                  This step is not currently editable.
+                </p>
               )}
             </div>
           );

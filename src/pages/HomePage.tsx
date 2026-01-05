@@ -11,10 +11,16 @@ export default function HomePage() {
   const navigate = useNavigate();
   const { user } = useAuth();
 
+const DRAFT_KEY = "taxonline_quote_draft";
+
 const goToQuote = async () => {
+  // مهم جداً: امسحي الاسترجاع المحلي
+  localStorage.removeItem(DRAFT_KEY);
+  localStorage.removeItem("questionnaireId");
+
   if (user) {
     try {
-      const res = await axiosClient.post("/questionnaire/start", {});
+      const res = await axiosClient.post("/questionnaire/start?forceNew=true", {});
       const questionnaireId = res.data.id;
       localStorage.setItem("questionnaireId", questionnaireId);
       navigate(`/product`);
@@ -28,7 +34,7 @@ const goToQuote = async () => {
     }
     return;
   }
-  
+
   try {
     const res = await axiosClient.post("/questionnaire/create-standalone", {});
     const questionnaireId = res.data.id ?? res.data?.id;
