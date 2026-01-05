@@ -1,0 +1,144 @@
+/* eslint-disable no-empty */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import axiosClient from "../api/axiosClient";
+
+export type Step1Question = { id: string; label: string; type?: "text" | "number" };
+
+export function Step1Questions({
+  declarationId,
+  initialAnswers,
+  questions,
+  onSaved,
+}: {
+  declarationId: string;
+  initialAnswers?: Record<string, string>;
+  questions: Step1Question[];
+  onSaved?: () => void;
+}) {
+  const queryClient = useQueryClient();
+  const [answers, setAnswers] = useState<Record<string, string>>(initialAnswers ?? {});
+  const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "saved" | "error">>({});
+  const [savedAt, setSavedAt] = useState<Record<string, string>>({});
+  const timers = useRef<Record<string, number | undefined>>({});
+  const controllers = useRef<Record<string, AbortController | undefined>>({});
+  const DEBOUNCE_MS = 800;
+const hasLoadedRef = useRef(false);
+  useEffect(() => {
+      if (hasLoadedRef.current) return;
+    if (initialAnswers) setAnswers(initialAnswers);
+  }, [initialAnswers]);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await axiosClient.get<{ answers: Record<string, string> }>(
+          `/files/${declarationId}/step1/answers`,
+        );
+        if (!mounted) return;
+        setAnswers(res.data.answers ?? {});
+        hasLoadedRef.current = true;
+      } catch (err) {
+        console.error("Could not load step1 answers", err);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [declarationId]);
+
+const handleChange = (qid: string, value: string) => {
+  setAnswers((p) => ({ ...p, [qid]: value }));
+  setStatusMap((s) => ({ ...s, [qid]: "idle" }));
+
+  if (timers.current[qid]) {
+    clearTimeout(timers.current[qid]);
+  }
+
+  const nextValue = value; // ✅ capture value
+  timers.current[qid] = window.setTimeout(() => {
+    void saveSingle(qid, nextValue);
+  }, DEBOUNCE_MS);
+};
+
+
+const saveSingle = async (qid: string, value: string) => {
+  // ألغي أي طلب سابق لنفس الحقل
+  try {
+    controllers.current[qid]?.abort();
+  } catch {}
+
+  const controller = new AbortController();
+  controllers.current[qid] = controller;
+
+  setStatusMap((s) => ({ ...s, [qid]: "saving" }));
+
+  try {
+    await axiosClient.post(
+      `/files/${declarationId}/step1/answers`,
+      { answers: { [qid]: value } }, // ✅ استخدم value مباشرة
+      { signal: controller.signal as any },
+    );
+
+    const now = new Date().toISOString();
+    setStatusMap((s) => ({ ...s, [qid]: "saved" }));
+    setSavedAt((s) => ({ ...s, [qid]: now }));
+
+    await queryClient.invalidateQueries({
+      queryKey: ["declaration", declarationId],
+    });
+
+    onSaved?.();
+
+    setTimeout(() => {
+      setStatusMap((s) => ({ ...s, [qid]: "idle" }));
+    }, 1200);
+  } catch (err: any) {
+    if (err?.name === "AbortError") return;
+    console.error("Save single error", err);
+    setStatusMap((s) => ({ ...s, [qid]: "error" }));
+  } finally {
+    // لا تمسحي controller إذا تغير أثناء الطلب (احتياط)
+    if (controllers.current[qid] === controller) {
+      controllers.current[qid] = undefined;
+    }
+  }
+};
+
+  return (
+    <div className="space-y-4">
+      {questions.map((q) => (
+        <div key={q.id} className="flex items-start gap-4">
+          <div className="flex-1">
+            <label className="block text-sm font-medium mb-1" htmlFor={q.id}>
+              {q.label}
+            </label>
+            <input
+              id={q.id}
+              className="w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50"
+              type={q.type === "number" ? "number" : "text"}
+              value={answers[q.id] ?? ""}
+              onChange={(e) => handleChange(q.id, e.target.value)}
+            />
+            {statusMap[q.id] === "error" && (
+              <div className="text-xs text-red-600 mt-1">خطأ في الحفظ — حاول مرة أخرى.</div>
+            )}
+          </div>
+
+          <div style={{ width: 140 }} className="text-right text-sm">
+            {statusMap[q.id] === "saving" && <div className="text-gray-500 animate-pulse">Saving…</div>}
+            {statusMap[q.id] === "saved" && <div className="text-green-600">✓ Saved</div>}
+            {statusMap[q.id] === "error" && <div className="text-red-600">Error</div>}
+            {savedAt[q.id] && (
+              <div className="text-xs text-gray-500 mt-1">
+                Last: {new Date(savedAt[q.id]).toLocaleString()}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

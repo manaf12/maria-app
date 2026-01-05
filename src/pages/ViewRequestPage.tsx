@@ -1,15 +1,17 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-empty */
 /* eslint-disable @typescript-eslint/no-wrapper-object-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useEffect, useState , useRef } from "react";
+import { useEffect, useState  } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axiosClient from "../api/axiosClient";
 import { useAuth } from "../auth/AuthContext";
-import { uploadSingleFile } from "../services/file-upload.service";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchDeclaration } from "../services/declaration.service";
+import Stage1Section from "../components/Stage1Section";
+
 export type StageId = 1 | 2 | 3 | 4 | 5;
 type StageStatus = "completed" | "current" | "locked";
 type SummaryBlock = {
@@ -22,181 +24,7 @@ type SummaryBlock = {
   taxYear: number;
 };
 
-const REQUIRED_DOCUMENT_TYPES = [
-  "salary_certificate",
-  "bank_statement",
-  "pillar_3_certificate",
-  "property_deed_main",
-  "property_deed_rental",
-  "debt_statement",
-  "medical_expense_receipt",
-];
-interface DocumentUploadItemProps {
-  declarationId: string;
-  documentType: string;
-  onUploadSuccess: () => void;
-    declaredMissing?: boolean; // جديد
-  onMarkMissing?: (reason?: string) => Promise<void>; // جديد
 
-}
-type Step1Question = { id: string; label: string; type?: "text" | "number" };
-
-export function Step1Questions({
-  declarationId,
-  initialAnswers,
-  questions,
-  onSaved,
-}: {
-  declarationId: string;
-  initialAnswers?: Record<string, string>;
-  questions: Step1Question[];
-  onSaved?: () => void;
-}) {
-  const queryClient = useQueryClient();
-  const [answers, setAnswers] = useState<Record<string, string>>(initialAnswers ?? {});
-  const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "saved" | "error">>({});
-  const [savedAt, setSavedAt] = useState<Record<string, string>>({});
-  const timers = useRef<Record<string, number | undefined>>({});
-  const controllers = useRef<Record<string, AbortController | undefined>>({});
-  const DEBOUNCE_MS = 800;
-
-  // إذا تغيرت initialAnswers من الخارج نحدّث الحالة
-  useEffect(() => {
-    if (initialAnswers) setAnswers(initialAnswers);
-  }, [initialAnswers]);
-
-  // تحميل الإجابات من السيرفر عند التركيب
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const res = await axiosClient.get<{ answers: Record<string, string> }>(`/files/${declarationId}/step1/answers`);
-        if (!mounted) return;
-        setAnswers(res.data.answers ?? {});
-      } catch (err) {
-        console.error("Could not load step1 answers", err);
-      }
-    })();
-    return () => { mounted = false; };
-  }, [declarationId]);
-
-  // عند تغيير حقل: تحديث محلي + إعادة جدولة الحفظ
-  const handleChange = (qid: string, value: string) => {
-    setAnswers((p) => ({ ...p, [qid]: value }));
-    setStatusMap((s) => ({ ...s, [qid]: "idle" }));
-
-    // إلغاء المؤقت القديم
-    if (timers.current[qid]) {
-      clearTimeout(timers.current[qid]);
-    }
-
-    // جدولة الحفظ بعد توقف
-    timers.current[qid] = window.setTimeout(() => {
-      saveSingle(qid);
-    }, DEBOUNCE_MS);
-  };
-
-  // حفظ إجابة واحدة (debounced caller)
-  const saveSingle = async (qid: string) => {
-    // إلغاء أي طلب سابق حقل نفسه
-    try {
-      controllers.current[qid]?.abort();
-    } catch {}
-    const controller = new AbortController();
-    controllers.current[qid] = controller;
-
-    setStatusMap((s) => ({ ...s, [qid]: "saving" }));
-    try {
-      // نرسل جزئياً: { answers: { qid: value } }
-      await axiosClient.post(
-        `/files/${declarationId}/step1/answers`,
-        { answers: { [qid]: answers[qid] ?? "" } },
-        { signal: controller.signal as any } // axios في بعض الإصدارات يقبل signal
-      );
-
-      const now = new Date().toISOString();
-      setStatusMap((s) => ({ ...s, [qid]: "saved" }));
-      setSavedAt((s) => ({ ...s, [qid]: now }));
-
-      // حافظ على الإجابة في الواجهة (optimistic already)
-      await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
-      // بعد فترة طويلة نعكس الحالة لidle (لإزالة الbadge)
-      setTimeout(() => {
-        setStatusMap((s) => ({ ...s, [qid]: "idle" }));
-      }, 1200);
-    } catch (err: any) {
-      if (err?.name === "AbortError") {
-        // إلغاء مقصود، تجاهل
-        return;
-      }
-      console.error("Save single error", err);
-      setStatusMap((s) => ({ ...s, [qid]: "error" }));
-    } finally {
-      controllers.current[qid] = undefined;
-    }
-  };
-
-  // حفظ الجميع - fallback (ترسل كل الإجابات مرة واحدة)
-  const saveAll = async () => {
-    // ألغي مؤقتات وحالات قبل الإرسال
-    Object.values(timers.current).forEach((t) => t && clearTimeout(t));
-    setStatusMap((s) => {
-      const m = { ...s };
-      questions.forEach((q) => (m[q.id] = "saving"));
-      return m;
-    });
-    try {
-      await axiosClient.post(`/files/${declarationId}/step1/answers`, { answers });
-      const map: Record<string, "saved"> = {};
-      questions.forEach((q) => (map[q.id] = "saved"));
-      setStatusMap(map);
-      const now = new Date().toISOString();
-      const at: Record<string, string> = {};
-      questions.forEach((q) => (at[q.id] = now));
-      setSavedAt(at);
-      await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
-      setTimeout(() => setStatusMap({}), 1200);
-      onSaved?.();
-    } catch (err) {
-      console.error("Save all failed", err);
-      alert("Could not save answers");
-    }
-  };
-
-  return (
-    <div className="space-y-4">
-      {questions.map((q) => (
-        <div key={q.id} className="flex items-start gap-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-1" htmlFor={q.id}>{q.label}</label>
-            <input
-              id={q.id}
-              className="w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50"
-              type={q.type === "number" ? "number" : "text"}
-              value={answers[q.id] ?? ""}
-              onChange={(e) => handleChange(q.id, e.target.value)}
-            />
-            {statusMap[q.id] === "error" && (
-              <div className="text-xs text-red-600 mt-1">خطأ في الحفظ — حاول مرة أخرى.</div>
-            )}
-          </div>
-
-          <div style={{ width: 140 }} className="text-right text-sm">
-            {statusMap[q.id] === "saving" && <div className="text-gray-500 animate-pulse">Saving…</div>}
-            {statusMap[q.id] === "saved" && <div className="text-green-600">✓ Saved</div>}
-            {statusMap[q.id] === "error" && <div className="text-red-600">Error</div>}
-            {savedAt[q.id] && <div className="text-xs text-gray-500 mt-1">Last: {new Date(savedAt[q.id]).toLocaleString()}</div>}
-          </div>
-        </div>
-      ))}
-
-      <div className="flex justify-end gap-2">
-        <button onClick={() => setAnswers(initialAnswers ?? {})} className="px-3 py-1 border rounded text-sm">Reset</button>
-        <button onClick={saveAll} className="px-3 py-1 bg-blue-600 text-white rounded text-sm">Save all</button>
-      </div>
-    </div>
-  );
-}
 type RequiredDocument = {
   id: string;
   label: string;
@@ -697,135 +525,6 @@ const [isFilesModalOpen, setFilesModalOpen] = useState(false);
     </div>
   );
 }
-
-const DocumentUploadItem: React.FC<DocumentUploadItemProps> = ({
-  declarationId,
-  documentType,
-  onUploadSuccess,
-  declaredMissing = false,
-  onMarkMissing,
-}) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [isMarkingMissing, setIsMarkingMissing] = useState(false);
-  const [missingReason, setMissingReason] = useState("");
-  const [confirmedMissing, setConfirmedMissing] = useState(declaredMissing);
-  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
-const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
-
-
-const canUpload = !confirmedMissing;
-const canMarkMissing = uploadedFiles.length === 0;
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      setSelectedFile(e.target.files[0]);
-    }
-  };
-
-const handleUpload = async () => {
-  if (!selectedFile) return;
-  setIsUploading(true);
-  try {
-    await uploadSingleFile(declarationId, selectedFile, documentType);
-    onUploadSuccess?.();
-    setUploadedFiles((prev) => [...prev, selectedFile.name]); // إضافة للملفات المرفوعة
-    setSelectedFile(null);
-    setConfirmedMissing(false); // الغي حالة "لا أملك المستند" إذا كانت مختارة
-  } finally {
-    setIsUploading(false);
-  }
-};
-
-  const handleConfirmMissing = async () => {
-    if (!onMarkMissing) return;
-    setIsMarkingMissing(true);
-    try {
-      await onMarkMissing(missingReason);
-      setConfirmedMissing(true);
-      setUploadedFileName(null); // حذف أي اسم ملف مرفوع
-    } finally {
-      setIsMarkingMissing(false);
-      setMissingReason("");
-    }
-  };
-
-  const handleUndoMissing = () => {
-    setConfirmedMissing(false);
-  };
-
-  return (
-    <div className="border rounded-xl p-4 space-y-3 bg-white shadow-sm">
-      <div className="flex justify-between items-center">
-        <span className="font-semibold">{documentType.replace(/_/g, " ")}</span>
-        {confirmedMissing && <span className="text-yellow-600 text-sm">Not available</span>}
-{uploadedFiles.length > 0 && (
-  <ul className="mt-2 space-y-1">
-    {uploadedFiles.map((file, idx) => (
-      <li key={idx} className="text-green-600 text-sm">Uploaded: {file}</li>
-    ))}
-  </ul>
-)}      </div>
-
-      {/* رفع الملفات */}
-      {canUpload && (
-        <div className="flex gap-2 items-center">
-          <input
-            type="file"
-            accept="application/pdf"
-            hidden
-            id={`file-${documentType}`}
-            onChange={handleFileChange}
-          />
-          <button
-            className="btn btn-secondary"
-            onClick={() => document.getElementById(`file-${documentType}`)?.click()}
-          >
-            {selectedFile ? selectedFile.name : "Choose file"}
-          </button>
-          <button
-            className="btn btn-primary"
-            disabled={!selectedFile || isUploading}
-            onClick={handleUpload}
-          >
-            {isUploading ? "Uploading..." : "Upload"}
-          </button>
-        </div>
-      )}
-
-  {!confirmedMissing && uploadedFiles.length === 0 && (
-  <button
-    className="text-sm text-gray-500 underline mt-1"
-    onClick={() => setIsMarkingMissing(true)}
-  >
-    I don’t have this document
-  </button>
-)}
-
-      {/* تأكيد عدم وجود المستند */}
-      {isMarkingMissing && !confirmedMissing && (
-        <div className="space-y-2 bg-gray-50 p-3 rounded-lg">
-          <div className="flex gap-2">
-            <button className="btn btn-outline" onClick={() => setIsMarkingMissing(false)}>Cancel</button>
-            <button className="btn btn-warning" onClick={handleConfirmMissing}>
-              Confirm not available
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Undo لتراجع عن "لا أملك المستند" */}
-      {confirmedMissing && (
-        <div className="mt-2">
-          <button className="btn btn-outline btn-sm" onClick={handleUndoMissing}>
-            Undo
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
 export default function ViewRequestPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
@@ -1428,115 +1127,14 @@ function renderStageContent(props: RenderProps) {
   const isCompleted = status === "completed";
 
 if (stageId === 1) {
-  // تجميع الملفات حسب النوع
-  const filesByType = (data.files ?? []).reduce((acc, file) => {
-    const docType = file.documentType;
-    if (!acc[docType]) acc[docType] = [];
-    acc[docType].push(file);
-    return acc;
-  }, {} as Record<string, FileEntity[]>);
-
-  // استخرج missingDocs من steps.meta (إذا موجود)
-  const documentsStep = (data.steps ?? []).find((s) => s.id === "documentsPreparation");
-  const missingMeta = documentsStep?.meta?.missingDocs ?? [];
-  const declaredMissingMap: Record<string, boolean> = {};
-  (missingMeta as any[]).forEach((m) => {
-    if (m?.documentType) declaredMissingMap[m.documentType] = true;
-  });
-
-  // إجابات step1 من snapshot
-  const initialStep1Answers = (data as any).questionnaireSnapshot?.step1Answers ?? {};
-
   return (
-    <div className="stage-block space-y-6">
-      <p className="text-gray-600">{t("view.step1.description")}</p>
-
-      {/* أسئلة step1 */}
-      <div className="mb-6">
-        <h3 className="font-semibold mb-2">Additional questions</h3>
-        <Step1Questions
-          declarationId={data.id}
-          questions={[
-            { id: "distanceToWork", label: "How far is your home from your workplace?" },
-              { id: "familyMembers", label: "How many family members?" , type: "number" },
-
-            // أضف هنا الأسئلة التي تريد
-          ]}
-          initialAnswers={initialStep1Answers}
-          onSaved={() => {
-            // بعد الحفظ نعيد جلب البيانات
-            // يمكنك استخدام refetch أو load() حسب مشروعك
-            (async () => {
-              try {
-                await axiosClient.get(`/orders/${data.id}`); // مجرد طلب لاستخدام cache invalidation
-              } finally {
-                // استخدم الطريقة المناسبة لديك لإعادة تحميل
-                // هنا نستخدم window.location hack أو استدعاء refetch المتاح
-                // أفضل: استدعاء queryClient.invalidateQueries(['declaration', data.id])
-              }
-            })();
-          }}
-        />
-      </div>
-
-      <div className="grid gap-6 mt-4 md:grid-cols-2">
-        {REQUIRED_DOCUMENT_TYPES.map((docType) => {
-          const uploadedFiles = filesByType[docType] ?? [];
-          const isMissing = !!declaredMissingMap[docType];
-
-          return (
-            <div key={docType} className="border border-gray-200 shadow-sm p-5 rounded-xl hover:shadow-md transition-shadow duration-200">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="font-semibold text-lg capitalize">{docType.replace(/_/g, " ")}</h4>
-                {uploadedFiles.length > 0 && (
-                  <span className="text-gray-500 text-sm">
-                    {uploadedFiles.length} file{uploadedFiles.length > 1 ? "s" : ""}
-                  </span>
-                )}
-              </div>
-
-              {uploadedFiles.length > 0 && (
-                <ul className="space-y-2 mb-4">
-                  {uploadedFiles.map((file) => (
-                    <li key={file.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors duration-150">
-                      <span className="truncate">{file.originalName}</span>
-                      <span className="text-green-600 font-medium">Uploaded</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {isCurrent && (
-                <div className="mt-4">
-                  <p className="text-sm text-gray-500 mb-2">
-                    {uploadedFiles.length > 0 ? "Do you have another file to upload for this category?" : `Please upload your ${docType.replace(/_/g, " ")}.`}
-                  </p>
-
-                  <DocumentUploadItem
-                    key={`${docType}-${uploadedFiles.length}`}
-                    declarationId={data.id}
-                    documentType={docType}
-                    onUploadSuccess={() => onUploadDocuments?.()}
-                    declaredMissing={isMissing}
-                    onMarkMissing={async (reason) => {
-                      // call backend mark missing
-                      await axiosClient.post(`/files/${data.id}/documents/${docType}/missing`, { reason });
-                      // refresh declaration
-                      await (window as any).location.reload(); // أو استبدله بـ refetch()
-                    }}
-                  />
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {isCompleted && <p className="text-green-600 font-semibold mt-6">{t("view.step1.completed")}</p>}
-    </div>
+    <Stage1Section
+      declaration={data}
+      isCurrent={status === "current"}
+      onUploadDocuments={onUploadDocuments}
+    />
   );
 }
-
 
   // Step 2
   if (stageId === 2) {
