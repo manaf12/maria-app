@@ -633,7 +633,23 @@
   "admin.declarations.errors.loadFailed": "Dossiers konnten nicht geladen werden.",
   "admin.declarations.errors.assignFailed": "Zuweisung fehlgeschlagen. Bitte erneut versuchen.",
   "admin.declarations.errors.adminIdRequired": "Admin-ID ist erforderlich.",
-  "admin.declarations.errors.selectAtLeastOne": "Bitte mindestens eine Erklärung auswählen."
+  "admin.declarations.errors.selectAtLeastOne": "Bitte mindestens eine Erklärung auswählen.",
+  "product": {
+    "services": {
+      "requestDocuments": "Anforderung von Unterlagen gemäss Profil",
+      "verifyReceivedDocuments": "Überprüfung der erhaltenen Unterlagen",
+      "prepareTaxReturn": "Erstellung der Steuererklärung",
+      "maximizeDeductions": "Optimierung der Abzüge",
+      "deadlineExtension": "Beantragung einer Fristverlängerung (falls erforderlich)",
+      "reviewAndDiscussion": "Überprüfung und Besprechung der Steuererklärung sowie gesamtheitliche Steuerberatung",
+      "submitByOurTeam": "Einreichung der Steuererklärung durch unser Team",
+      "representationBeforeAuthority": "Vertretung gegenüber der kantonalen Steuerbehörde",
+      "unlimitedCallsEmails": "Unbegrenzte Telefonanrufe und E-Mails",
+      "verifyAssessmentNotice": "Überprüfung der Steuerveranlagung",
+      "appealIfNecessary": "Einsprache bei Bedarf",
+      "ratesAccordingToProfile": "Tarife gemäss Ihrem Profil"
+    }
+  }
 
 
 }

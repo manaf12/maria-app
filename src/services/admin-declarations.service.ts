@@ -1,7 +1,11 @@
 import axiosClient from "../api/axiosClient";
 
 export type Locale = "en" | "fr" | "de";
-
+export type AdminUser = {
+  id: string;
+  email: string;
+  roles: string[];
+};
 export type AdminDeclaration = {
   id: string;
   status: string;
@@ -53,4 +57,8 @@ export async function postAssignDeclarations(
     body
   );
   return res.data;
+}
+export async function fetchAdmins(): Promise<AdminUser[]> {
+  const res = await axiosClient.get("/admin/declarations/meta/admins");
+  return Array.isArray(res.data) ? res.data : [];
 }

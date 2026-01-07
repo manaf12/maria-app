@@ -631,7 +631,23 @@
   "admin.declarations.errors.loadFailed": "Failed to load declarations.",
   "admin.declarations.errors.assignFailed": "Assignment failed. Please try again.",
   "admin.declarations.errors.adminIdRequired": "Admin ID is required.",
-  "admin.declarations.errors.selectAtLeastOne": "Select at least one declaration."
+  "admin.declarations.errors.selectAtLeastOne": "Select at least one declaration.",
+  "product": {
+    "services": {
+      "requestDocuments": "Request of documents according to profile",
+      "verifyReceivedDocuments": "Verification of received documents",
+      "prepareTaxReturn": "Preparation of the tax return",
+      "maximizeDeductions": "Maximization of deductions",
+      "deadlineExtension": "Request for deadline extension (if necessary)",
+      "reviewAndDiscussion": "Review and discussion of the tax return and overall tax advice",
+      "submitByOurTeam": "Submission of the tax return by our team",
+      "representationBeforeAuthority": "Representation before the cantonal tax authority",
+      "unlimitedCallsEmails": "Unlimited phone calls and emails",
+      "verifyAssessmentNotice": "Verification of the tax assessment notice",
+      "appealIfNecessary": "Appeal if necessary",
+      "ratesAccordingToProfile": "Rates according to your profile"
+    }
+  }
 
 }
 

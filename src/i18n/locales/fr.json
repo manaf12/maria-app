@@ -633,7 +633,23 @@
   "admin.declarations.errors.loadFailed": "Impossible de charger les déclarations.",
   "admin.declarations.errors.assignFailed": "Échec de l’attribution. Veuillez réessayer.",
   "admin.declarations.errors.adminIdRequired": "L’ID Admin est obligatoire.",
-  "admin.declarations.errors.selectAtLeastOne": "Sélectionnez au moins une déclaration."
+  "admin.declarations.errors.selectAtLeastOne": "Sélectionnez au moins une déclaration.",
+    "product": {
+    "services": {
+      "requestDocuments": "Demande de documents selon le profil",
+      "verifyReceivedDocuments": "Vérification des documents reçus",
+      "prepareTaxReturn": "Préparation de la déclaration fiscale",
+      "maximizeDeductions": "Optimisation des déductions",
+      "deadlineExtension": "Demande de prolongation de délai (si nécessaire)",
+      "reviewAndDiscussion": "Révision et discussion de la déclaration fiscale et conseil fiscal global",
+      "submitByOurTeam": "Soumission de la déclaration fiscale par notre équipe",
+      "representationBeforeAuthority": "Représentation auprès de l’autorité fiscale cantonale",
+      "unlimitedCallsEmails": "Appels téléphoniques et e-mails illimités",
+      "verifyAssessmentNotice": "Vérification de l’avis de taxation",
+      "appealIfNecessary": "Recours si nécessaire",
+      "ratesAccordingToProfile": "Tarifs selon votre profil"
+    }
+  }
 
 
 }

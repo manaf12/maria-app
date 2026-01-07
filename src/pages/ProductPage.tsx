@@ -23,6 +23,12 @@ type FormValues = {
   billingPostalCode: string;
   billingCity: string;
 };
+type ServiceRow = {
+  key: string;
+  standard: boolean;
+  premium: boolean;
+  confort: boolean;
+};
 
 type Offer = {
   id: string;
@@ -119,6 +125,68 @@ export default function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentYear = new Date().getFullYear();
+  const serviceRows: ServiceRow[] = [
+    { key: "requestDocuments", standard: true, premium: true, confort: true },
+    {
+      key: "verifyReceivedDocuments",
+      standard: true,
+      premium: true,
+      confort: true,
+    },
+    { key: "prepareTaxReturn", standard: true, premium: true, confort: true },
+    { key: "maximizeDeductions", standard: true, premium: true, confort: true },
+    { key: "deadlineExtension", standard: true, premium: true, confort: true },
+
+    // Excel shows ✗ for Standard, ✓ for Premium, ✓ for Confort
+    {
+      key: "reviewAndDiscussion",
+      standard: false,
+      premium: true,
+      confort: true,
+    },
+
+    { key: "submitByOurTeam", standard: true, premium: true, confort: true },
+
+    // Excel shows ✗ for Standard, ✗ for Premium, ✓ for Confort
+    {
+      key: "representationBeforeAuthority",
+      standard: false,
+      premium: false,
+      confort: true,
+    },
+    {
+      key: "unlimitedCallsEmails",
+      standard: false,
+      premium: false,
+      confort: true,
+    },
+    {
+      key: "verifyAssessmentNotice",
+      standard: false,
+      premium: false,
+      confort: true,
+    },
+    {
+      key: "appealIfNecessary",
+      standard: false,
+      premium: false,
+      confort: true,
+    },
+
+    // In your screenshot row is blank (no checks). If you want ✓ for all, set all true.
+    {
+      key: "ratesAccordingToProfile",
+      standard: false,
+      premium: false,
+      confort: false,
+    },
+  ];
+
+  const renderCheck = (enabled: boolean) => (
+    <span className={enabled ? "tick yes" : "tick no"}>
+      {enabled ? "✓" : "—"}
+    </span>
+  );
   const saveStepData = async (dataToSave: Partial<FormValues>) => {
     const questionnaireId = localStorage.getItem("questionnaireId");
     if (!questionnaireId) {
@@ -252,7 +320,6 @@ export default function ProductPage() {
               if (offerFound) setSelectedOffer(offerFound);
             }
 
-            // IMPORTANT: do NOT force step=8
             const serverStep = Number(
               res.data?.currentStep ?? res.data?.data?.currentStep ?? 1,
             );
@@ -291,7 +358,6 @@ export default function ProductPage() {
     const questionnaireId = localStorage.getItem("questionnaireId");
     if (!restored) return;
 
-    // إذا رجعنا للـ offers والـ offerPrices لسا null، احسبيها تلقائياً
     if (step === 8 && questionnaireId && !offerPrices) {
       axiosClient
         .get(`/pricing/calculate-all/${questionnaireId}`)
@@ -314,11 +380,6 @@ export default function ProductPage() {
 
   const goNext = async () => {
     const currentValues = getValues();
-    // saveDraft({
-    //   step: step + 1,
-    //   form: currentValues,
-    //   selectedOfferId: selectedOffer?.id,
-    // });
     await saveStepData(currentValues);
     if (step === 7) {
       if (!canGoFrom7) return;
@@ -619,59 +680,137 @@ export default function ProductPage() {
             </StepCard>
           )}
 
+          {/* Step 8 */}
           {step === 8 && (
             <StepCard
               title={t("product.sections.offers")}
               subtitle={t("product.offersHint")}
               onPrev={goPrev}
             >
-              <div className="offers-list">
-                {!offerPrices ? (
-                  <p>{t("product.calculatingPrices")}</p>
-                ) : (
-                  offers.map((offer) => {
-                    let dynamicPrice = 0;
-                    if (offer.id === "Standard") {
-                      dynamicPrice = offerPrices.standard;
-                    } else if (offer.id === "Premium") {
-                      dynamicPrice = offerPrices.premium;
-                    } else if (offer.id === "Confort") {
-                      dynamicPrice = offerPrices.confort;
-                    }
+              {!offerPrices ? (
+                <p>{t("product.calculatingPrices")}</p>
+              ) : (
+                <div className="pricing-table-card">
+                  <div
+                    className="pricing-table-wrap"
+                    role="region"
+                    aria-label="Pricing table"
+                  >
+                    <table className="pricing-table">
+                      <thead>
+                        <tr>
+                          <th className="pricing-th pricing-feature-col">
+                            Package
+                          </th>
 
-                    return (
-                      <button
-                        key={offer.id}
-                        type="button"
-                        className={
-                          "offer-card" +
-                          (selectedOffer?.id === offer.id ? " selected" : "") +
-                          (offer.recommended ? " recommended" : "")
-                        }
-                        onClick={() =>
-                          handleOfferGuard({ ...offer, price: dynamicPrice })
-                        }
-                      >
-                        <div className="offer-header">
-                          <span className="offer-name">{offer.name}</span>
-                          <span className="offer-price">
-                            CHF {dynamicPrice.toFixed(0)}.–
-                          </span>
-                        </div>
-                        <p className="offer-desc">{offer.description}</p>
-                        {offer.recommended && (
-                          <span className="offer-badge">
-                            {t("product.recommended")}
-                          </span>
-                        )}
-                        <span className="offer-cta">
-                          {t("product.chooseOffer")}
-                        </span>
-                      </button>
-                    );
-                  })
-                )}
-              </div>
+                          {offers.map((offer) => {
+                            const dynamicPrice =
+                              offer.id === "Standard"
+                                ? offerPrices.standard
+                                : offer.id === "Premium"
+                                ? offerPrices.premium
+                                : offerPrices.confort;
+
+                            const isSelected = selectedOffer?.id === offer.id;
+                            const isRecommended = !!offer.recommended;
+
+                            return (
+                              <th
+                                key={offer.id}
+                                className={
+                                  "pricing-th pricing-plan-col" +
+                                  (isRecommended ? " is-recommended" : "") +
+                                  (isSelected ? " is-selected" : "")
+                                }
+                                scope="col"
+                              >
+                                <div className="pricing-plan-head">
+                                  <div className="pricing-plan-top">
+                                    <span className="pricing-plan-name">
+                                      {offer.name}
+                                    </span>
+                                    <span className="pricing-plan-price">
+                                      CHF {dynamicPrice.toFixed(0)}.–
+                                    </span>
+                                  </div>
+
+                                  <div className="pricing-plan-sub">
+                                    <span className="pricing-plan-desc">
+                                      {offer.description}
+                                    </span>
+                                    {isRecommended && (
+                                      <span className="pricing-badge">
+                                        {t("product.recommended")}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  <button
+                                    type="button"
+                                    className={
+                                      "pricing-select-btn" +
+                                      (isSelected ? " is-selected" : "") +
+                                      (isRecommended ? " is-primary" : "")
+                                    }
+                                    onClick={() =>
+                                      handleOfferGuard({
+                                        ...offer,
+                                        price: dynamicPrice,
+                                      })
+                                    }
+                                  >
+                                    {isSelected
+                                      ? t("product.editRequest")
+                                      : t("product.chooseOffer")}
+                                  </button>
+                                </div>
+                              </th>
+                            );
+                          })}
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {serviceRows.map((row) => (
+                          <tr key={row.key}>
+                            <th
+                              className="pricing-td pricing-feature-col"
+                              scope="row"
+                            >
+                              {t(`product.services.${row.key}`)}
+                            </th>
+
+                            {offers.map((offer) => {
+                              const enabled =
+                                offer.id === "Standard"
+                                  ? row.standard
+                                  : offer.id === "Premium"
+                                  ? row.premium
+                                  : row.confort;
+
+                              const isSelected = selectedOffer?.id === offer.id;
+                              const isRecommended = !!offer.recommended;
+
+                              return (
+                                <td
+                                  key={offer.id}
+                                  className={
+                                    "pricing-td pricing-plan-col" +
+                                    (isRecommended ? " is-recommended" : "") +
+                                    (isSelected ? " is-selected" : "")
+                                  }
+                                >
+                                  {renderCheck(enabled)}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </StepCard>
           )}
 
