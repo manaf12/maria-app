@@ -1,3 +1,7 @@
+// ==============================
+// src/api/axiosClient.ts
+// (No required changes — optional 401 redirect included below)
+// ==============================
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
@@ -36,6 +40,9 @@ axiosClient.interceptors.response.use(
     if (err?.response?.status === 401) {
       localStorage.removeItem("accessToken");
       accessToken = null;
+
+      // Optional UX improvement: kick user to login
+      // if (window.location.pathname !== "/login") window.location.href = "/login";
     }
     return Promise.reject(err);
   }

@@ -1,3 +1,7 @@
+// ==============================
+// src/pages/LoginPage.tsx
+// (Updated to support ProtectedRoute redirect via state.from.pathname)
+// ==============================
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,10 +21,18 @@ export default function LoginPage() {
   const { t } = useTranslation();
 
   const location = useLocation() as {
-    state?: { redirectTo?: string; fromAuth?: string };
+    state?: {
+      redirectTo?: string;
+      fromAuth?: string;
+      from?: { pathname?: string };
+    };
   };
 
-  const redirectTo = location.state?.redirectTo ?? "/";
+  const from =
+    location.state?.from?.pathname ||
+    location.state?.redirectTo ||
+    "/dashboard";
+
   const fromAuth = location.state?.fromAuth;
 
   const {
@@ -30,12 +42,10 @@ export default function LoginPage() {
   } = useForm<FormData>();
 
   const [otpStep, setOtpStep] = useState(false);
+
   const afterLogin = async (): Promise<boolean> => {
     const token = localStorage.getItem("anonymousToken");
-
-    if (!token) {
-      return false;   
-    }
+    if (!token) return false;
 
     try {
       const res = await axiosClient.post("/questionnaire/claim-anonymous", {
@@ -43,12 +53,9 @@ export default function LoginPage() {
       });
       const { questionnaireId, declarationId } = res.data;
 
-      if (questionnaireId) {
-        localStorage.setItem("questionnaireId", questionnaireId);
-      }
-      if (declarationId) {
-        localStorage.setItem("anonymousDeclarationId", declarationId);
-      }
+      if (questionnaireId) localStorage.setItem("questionnaireId", questionnaireId);
+      if (declarationId) localStorage.setItem("anonymousDeclarationId", declarationId);
+
       localStorage.removeItem("anonymousToken");
       return true;
     } catch (err) {
@@ -56,22 +63,25 @@ export default function LoginPage() {
       return false;
     }
   };
+
   const onSubmit = async (data: FormData) => {
     try {
       const status = await login(data.email, data.password);
 
       if (status === "OTP_REQUIRED") {
         setOtpStep(true);
+        return;
+      }
+
+      const claimed = await afterLogin();
+
+      if (claimed) {
+        navigate("/product", { state: { fromAuth: true } });
       } else {
-        const claimed = await afterLogin();
-        if (claimed) {
-          navigate("/product", { state: { fromAuth: true } });
-        } else {
-          navigate(redirectTo, {
-            replace: true,
-            state: fromAuth ? { fromAuth } : undefined,
-          });
-        }
+        navigate(from, {
+          replace: true,
+          state: fromAuth ? { fromAuth } : undefined,
+        });
       }
     } catch (e: any) {
       alert(e?.response?.data?.error ?? "Login failed");
@@ -86,7 +96,7 @@ export default function LoginPage() {
           if (claimed) {
             navigate("/product", { state: { fromAuth: true } });
           } else {
-            navigate(redirectTo, { replace: true });
+            navigate(from, { replace: true });
           }
         }}
       />
@@ -136,7 +146,7 @@ export default function LoginPage() {
   );
 }
 
-function OtpStep({ onDone }: { onDone: () => void }) {
+function OtpStep({ onDone }: { onDone: () => Promise<void> | void }) {
   const { verifyOtp } = useAuth();
   const {
     register,

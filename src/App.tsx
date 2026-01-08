@@ -1,59 +1,109 @@
+// ==============================
 // src/App.tsx
+// (Public routes + Protected routes + Admin routes + Lazy loading)
+// ==============================
 import { Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+
 import Topbar from "./components/Topbar";
-import LoginPage from "./pages/LoginPage";
-import DashboardPage from "./pages/DashboardPage";
-import ProtectedRoute from "./auth/ProtectedRoute";
-import ForgotPasswordPage from "./pages/ForgotPasswordPage";
-import ResetPasswordPage from "./pages/ResetPasswordPage";
-import SignupPage from "./pages/SignupPage";
 import MenuBar from "./components/MenuBar";
 import Footer from "./components/Footer";
-import HomePage from "./pages/HomePage";
-import ProductPage from "./pages/ProductPage";
-import DashboardPage1 from "./pages/DashboardPage1";
-import ViewRequestPage from "./pages/ViewRequestPage";
-import TestDeclarationCard from "./pages/TestDeclarationCard";
-import TestViewRequestPage from "./pages/TestViewRequestPage";
-import AboutPage from "./pages/AboutPage";
-import FaqPage from "./pages/FaqPage";
-import EmailVerificationPage from "./pages/EmailVerificationPage";
-import AccountSettingsPage from "./pages/AccountSettingsPage";
-import AdminDeclarationsPage from "./pages/admin/AdminDeclarationsPage";
-import AdminDeclarationDetailsPage from "./pages/admin/AdminDeclarationDetailsPage";
+
+import ProtectedRoute from "./auth/ProtectedRoute";
+import AdminRoute from "./auth/AdminRoute";
+
 import "./i18n/i18n";
+
+// Public
+const HomePage = lazy(() => import("./pages/HomePage"));
+const FaqPage = lazy(() => import("./pages/FaqPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
+
+// Auth (Public)
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+const SignupPage = lazy(() => import("./pages/SignupPage"));
+const ForgotPasswordPage = lazy(() => import("./pages/ForgotPasswordPage"));
+const ResetPasswordPage = lazy(() => import("./pages/ResetPasswordPage"));
+const EmailVerificationPage = lazy(() => import("./pages/EmailVerificationPage"));
+
+// Protected
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const DashboardPage1 = lazy(() => import("./pages/DashboardPage1"));
+const AccountSettingsPage = lazy(() => import("./pages/AccountSettingsPage"));
+const ViewRequestPage = lazy(() => import("./pages/ViewRequestPage"));
+const TestViewRequestPage = lazy(() => import("./pages/TestViewRequestPage"));
+const TestDeclarationCard = lazy(() => import("./pages/TestDeclarationCard"));
+
+// Admin
+const AdminDeclarationsPage = lazy(
+  () => import("./pages/admin/AdminDeclarationsPage")
+);
+const AdminDeclarationDetailsPage = lazy(
+  () => import("./pages/admin/AdminDeclarationDetailsPage")
+);
+
+function PageLoader() {
+  return (
+    <div className="page-loader">
+      <div className="page-loader__spinner" />
+      <div className="page-loader__text">Loading…</div>
+    </div>
+  );
+}
 
 export default function App() {
   return (
     <>
       <Topbar />
       <MenuBar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/product" element={<ProductPage />} />
-        <Route path="/declaration/:id" element={<ViewRequestPage />} />
-        <Route path="/test-card" element={<TestDeclarationCard  />} />
-        <Route path="/client-dashboard" element={<DashboardPage1 />} />
-        <Route path="/declarations/:declarationId" element={<TestViewRequestPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/faq" element={<FaqPage />} />
-        <Route path="/verify-email" element={<EmailVerificationPage />} />
-        <Route path="/settings" element={<AccountSettingsPage />} />
-        <Route path="/admin/declarations" element={<AdminDeclarationsPage />} />
-        <Route path="/admin/declarations/:id" element={<AdminDeclarationDetailsPage />} />
-        {/* <Route element={<ProtectedRoute />}>
-          <Route path="/client-dashboard" element={<DashboardPage1 />} />
-        </Route> */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<DashboardPage />} />
-        </Route>
-        
-        <Route path="*" element={<div>Not found</div>} />
-      </Routes>
+
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* PUBLIC */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/faq" element={<FaqPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/product" element={<ProductPage />} />
+
+          {/* AUTH (PUBLIC) */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
+
+          {/* PROTECTED */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/client-dashboard" element={<DashboardPage1 />} />
+            <Route path="/settings" element={<AccountSettingsPage />} />
+
+            <Route path="/declaration/:id" element={<ViewRequestPage />} />
+            <Route
+              path="/declarations/:declarationId"
+              element={<TestViewRequestPage />}
+            />
+
+            <Route path="/test-card" element={<TestDeclarationCard />} />
+          </Route>
+
+          {/* ADMIN ONLY */}
+          <Route element={<AdminRoute />}>
+            <Route
+              path="/admin/declarations"
+              element={<AdminDeclarationsPage />}
+            />
+            <Route
+              path="/admin/declarations/:id"
+              element={<AdminDeclarationDetailsPage />}
+            />
+          </Route>
+
+          <Route path="*" element={<div>Not found</div>} />
+        </Routes>
+      </Suspense>
+
       <Footer />
     </>
   );

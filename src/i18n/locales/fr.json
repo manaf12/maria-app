@@ -634,7 +634,7 @@
   "admin.declarations.errors.assignFailed": "Échec de l’attribution. Veuillez réessayer.",
   "admin.declarations.errors.adminIdRequired": "L’ID Admin est obligatoire.",
   "admin.declarations.errors.selectAtLeastOne": "Sélectionnez au moins une déclaration.",
-    "product": {
+  "product": {
     "services": {
       "requestDocuments": "Demande de documents selon le profil",
       "verifyReceivedDocuments": "Vérification des documents reçus",

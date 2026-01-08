@@ -3061,4 +3061,30 @@ button:hover {
     width: 220px;
   }
 }
+/* Simple route loader */
+.page-loader{
+  min-height: calc(100vh - 140px);
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  padding: 40px 16px;
+}
+
+.page-loader__spinner{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 3px solid rgba(15,23,42,.12);
+  border-top-color: rgba(15,23,42,.6);
+  animation: spin 0.85s linear infinite;
+}
+
+.page-loader__text{
+  font-size: 14px;
+  color: #64748b;
+}
+
+@keyframes spin{
+  to { transform: rotate(360deg); }
+}
 
