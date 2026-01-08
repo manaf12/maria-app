@@ -1,9 +1,10 @@
 // ==============================
 // src/auth/AuthContext.tsx
-// (Updated init loading logic + consistent token handling)
+// FINAL – stable & production-safe
 // ==============================
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-refresh/only-export-components */
+
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosClient, { setAccessToken } from "../api/axiosClient";
 
@@ -52,62 +53,91 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [, setPendingLogin] = useState<boolean>(false);
+  const [pendingLogin, setPendingLogin] = useState(false);
 
-  // Init: load token then /auth/me
+  // ==============================
+  // Init: restore session safely
+  // ==============================
   useEffect(() => {
+    let isMounted = true;
+
     (async () => {
       setLoading(true);
       try {
         const token = localStorage.getItem("accessToken");
+
         if (!token) {
-          setUser(null);
           setAccessToken(null);
+          if (isMounted) setUser(null);
           return;
         }
 
         setAccessToken(token);
-        const res = await axiosClient.get("auth/me");
-        setUser(res.data.user);
-      } catch (e) {
-        console.error(e);
-        setUser(null);
+
+        const res = await axiosClient.get("auth/me", {
+          headers: { "Cache-Control": "no-cache" },
+        });
+
+        if (isMounted) {
+          setUser(res.data.user ?? null);
+        }
+      } catch (err) {
+        console.error("Auth init failed:", err);
         setAccessToken(null);
+        if (isMounted) setUser(null);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     })();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const storeTokenFromResponse = (res: any) => {
+  // ==============================
+  // Helpers
+  // ==============================
+  const storeTokenFromResponse = (res: any): string | null => {
     const token =
-      res?.data?.accessToken || res?.data?.token || res?.data?.jwt || null;
+      res?.data?.accessToken ||
+      res?.data?.token ||
+      res?.data?.jwt ||
+      null;
 
     if (!token) {
-      console.warn("NO TOKEN FOUND IN RESPONSE");
+      console.warn("Auth: no token found in response");
       return null;
     }
 
-    setAccessToken(token); // writes localStorage + memory
+    setAccessToken(token);
     return token;
   };
 
   const refreshMe = async () => {
-    const res = await axiosClient.get("auth/me");
-    setUser(res.data.user);
+    const res = await axiosClient.get("auth/me", {
+      headers: { "Cache-Control": "no-cache" },
+    });
+    setUser(res.data.user ?? null);
   };
 
+  // ==============================
   // Login
-  const login = async (email: string, password: string) => {
+  // ==============================
+  const login = async (
+    email: string,
+    password: string
+  ): Promise<"OK" | "OTP_REQUIRED"> => {
     try {
       const res = await axiosClient.post("auth/login", { email, password });
 
       const token = storeTokenFromResponse(res);
-      if (token) {
-        await refreshMe();
-      } else {
-        throw new Error("Login successful but no token received.");
+      if (!token) {
+        throw new Error("Login succeeded but no token returned");
       }
+
+      await refreshMe();
+      setPendingLogin(false);
 
       return "OK";
     } catch (err: any) {
@@ -119,14 +149,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  // ==============================
+  // OTP verification
+  // ==============================
   const verifyOtp = async (otp: string) => {
     const res = await axiosClient.post("auth/verify-otp", { otp });
     storeTokenFromResponse(res);
-    setUser(res.data.user);
+    setUser(res.data.user ?? null);
     setPendingLogin(false);
   };
 
-  const registerUser = async (payload: SignupPayload) => {
+  // ==============================
+  // Registration
+  // ==============================
+  const registerUser = async (
+    payload: SignupPayload
+  ): Promise<"OTP_SENT" | "OK"> => {
     const res = await axiosClient.post("auth/register", payload);
 
     if (res.data?.status === "OTP_SENT") return "OTP_SENT";
@@ -134,30 +172,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (res.data?.user) {
       storeTokenFromResponse(res);
       setUser(res.data.user);
-      return "OK";
     }
 
     return "OK";
   };
 
   const verifySignupOtp = async (email: string, otp: string) => {
-    const res = await axiosClient.post("auth/verify-signup-otp", { email, otp });
+    const res = await axiosClient.post("auth/verify-signup-otp", {
+      email,
+      otp,
+    });
     storeTokenFromResponse(res);
-    setUser(res.data.user);
+    setUser(res.data.user ?? null);
   };
 
   const resendSignupOtp = async (email: string) => {
     await axiosClient.post("auth/resend-signup-otp", { email });
   };
 
+  // ==============================
+  // Logout (hard reset)
+  // ==============================
   const logout = async () => {
     try {
       await axiosClient.post("auth/logout");
     } catch {
-      // ignore
+      // ignore backend failure
     } finally {
-      setAccessToken(null); // removes localStorage + memory
+      setAccessToken(null);
       setUser(null);
+      setPendingLogin(false);
     }
   };
 

@@ -1,7 +1,3 @@
-// ==============================
-// src/api/axiosClient.ts
-// (No required changes — optional 401 redirect included below)
-// ==============================
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
@@ -22,6 +18,8 @@ const axiosClient = axios.create({
   headers: {
     "X-Requested-With": "XMLHttpRequest",
     "Content-Type": "application/json",
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
   },
 });
 
@@ -30,6 +28,11 @@ axiosClient.interceptors.request.use((config) => {
   if (token) {
     config.headers = config.headers ?? {};
     config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    // ensure no stale Authorization header leaks
+    if (config.headers && "Authorization" in config.headers) {
+      delete (config.headers as any).Authorization;
+    }
   }
   return config;
 });
@@ -38,10 +41,9 @@ axiosClient.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err?.response?.status === 401) {
-      localStorage.removeItem("accessToken");
-      accessToken = null;
+      setAccessToken(null);
 
-      // Optional UX improvement: kick user to login
+      // Optional UX improvement:
       // if (window.location.pathname !== "/login") window.location.href = "/login";
     }
     return Promise.reject(err);
