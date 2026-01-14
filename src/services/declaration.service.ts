@@ -21,7 +21,7 @@ status: payload.status,
       incomes: String(payload.questionnaireSnapshot?.incomeSources ?? payload.questionnaireSnapshot?.incomes ?? "—"),
       properties: String(payload.questionnaireSnapshot?.properties ?? "—"),
       offerName: payload.questionnaireSnapshot?.offer ?? payload.offer ?? "—",
-      offerPrice: Number(payload.offerPrice ?? 5),
+  offerPrice: Number(payload.pricing?.finalPrice ?? 0),
       taxYear: payload.questionnaireSnapshot?.taxYear ?? new Date().getFullYear(),
     },
 
@@ -51,7 +51,9 @@ status: payload.status,
 
     invoice: {
       offerName: payload.offer ?? payload.questionnaireSnapshot?.offer ?? "—",
-      totalAmount: payload.invoice?.totalAmount ?? `${payload.offerPrice ?? 0} CHF`,
+      totalAmount:
+  payload.invoice?.totalAmount ??
+  `${Number(payload.pricing?.finalPrice ?? 0)} CHF`,
       invoiceUrl: payload.invoice?.url ?? payload.invoiceUrl ?? "",
     },
   };

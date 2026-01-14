@@ -158,6 +158,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } finally {
       setAccessToken(null); // removes localStorage + memory
       setUser(null);
+      setPendingLogin(false);
+      
     }
   };
 

@@ -11,11 +11,13 @@ export function Step1Questions({
   initialAnswers,
   questions,
   onSaved,
+    disabled = false,
 }: {
   declarationId: string;
   initialAnswers?: Record<string, string>;
   questions: Step1Question[];
   onSaved?: () => void;
+    disabled?: boolean;
 }) {
   const queryClient = useQueryClient();
   const [answers, setAnswers] = useState<Record<string, string>>(initialAnswers ?? {});
@@ -50,6 +52,7 @@ const hasLoadedRef = useRef(false);
   }, [declarationId]);
 
 const handleChange = (qid: string, value: string) => {
+   if (disabled) return;
   setAnswers((p) => ({ ...p, [qid]: value }));
   setStatusMap((s) => ({ ...s, [qid]: "idle" }));
 
@@ -63,7 +66,26 @@ const handleChange = (qid: string, value: string) => {
   }, DEBOUNCE_MS);
 };
 
+useEffect(() => {
+  if (!disabled) return;
 
+  // clear pending debounce timers
+  Object.values(timers.current).forEach((t) => {
+    if (t) clearTimeout(t);
+  });
+  timers.current = {};
+
+  // abort any in-flight saves
+  Object.values(controllers.current).forEach((c) => {
+    try {
+      c?.abort();
+    } catch {}
+  });
+  controllers.current = {};
+
+  // optionally show neutral status
+  setStatusMap({});
+}, [disabled]);
 const saveSingle = async (qid: string, value: string) => {
   // ألغي أي طلب سابق لنفس الحقل
   try {
@@ -117,13 +139,16 @@ const saveSingle = async (qid: string, value: string) => {
             </label>
             <input
               id={q.id}
-              className="w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50"
-              type={q.type === "number" ? "number" : "text"}
+className={
+  "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
+  (disabled ? "bg-gray-100 cursor-not-allowed" : "")
+}              type={q.type === "number" ? "number" : "text"}
               value={answers[q.id] ?? ""}
+              disabled={disabled}
               onChange={(e) => handleChange(q.id, e.target.value)}
             />
             {statusMap[q.id] === "error" && (
-              <div className="text-xs text-red-600 mt-1">خطأ في الحفظ — حاول مرة أخرى.</div>
+              <div className="text-xs text-red-600 mt-1">error</div>
             )}
           </div>
 

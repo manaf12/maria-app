@@ -3088,3 +3088,8 @@ button:hover {
   to { transform: rotate(360deg); }
 }
 
+.field-error {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: #d32f2f;
+}

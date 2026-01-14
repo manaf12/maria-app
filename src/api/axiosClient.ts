@@ -38,11 +38,9 @@ axiosClient.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err?.response?.status === 401) {
-      localStorage.removeItem("accessToken");
-      accessToken = null;
+     
+ setAccessToken(null);
 
-      // Optional UX improvement: kick user to login
-      // if (window.location.pathname !== "/login") window.location.href = "/login";
     }
     return Promise.reject(err);
   }

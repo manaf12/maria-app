@@ -94,9 +94,9 @@ status: string;
 type User = {
   id: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  locale: "en" | "fr" | "de";
+  firstName?: string;
+  lastName?: string;
+  locale?: "en" | "fr" | "de";
   twoFactorEnabled?: boolean;
   emailVerified?: boolean;
   streetAddress?: string;
@@ -104,7 +104,6 @@ type User = {
   city?: string;
   roles?: string[];
 };
-
 type ViewRequestContentProps = {
   data: ViewRequestData;
   user: User | null;
@@ -142,8 +141,12 @@ onStep3DraftUpload?: () => Promise<void>;
     documentType?: string,
     deliveredForStep?: string,
   ) => Promise<void>;
-
-  adminFinalFile?: File | null;
+onAddStep2Comment: (comment: string) => Promise<void>;
+step2UserComment: string;
+setStep2UserComment: (value: string) => void;
+step2AdminComment: string;
+setStep2AdminComment: (value: string) => void;
+isAddingStep2Comment: boolean;  adminFinalFile?: File | null;
   setAdminFinalFile?: (f: File | null) => void;
   isUploadingFinal?: boolean;
   onAdminUploadFinal?: (
@@ -300,6 +303,12 @@ export function ViewRequestContent({
   setAdminFinalFile,
   isUploadingFinal,
   onAdminUploadFinal,
+    onAddStep2Comment,
+  step2UserComment,
+  setStep2UserComment,
+  step2AdminComment,
+  setStep2AdminComment,
+  isAddingStep2Comment,
 }: ViewRequestContentProps) {
   const { t } = useTranslation();
   const [step2Answers, setStep2Answers] = useState<Record<string, string>>({});
@@ -511,6 +520,12 @@ const [isFilesModalOpen, setFilesModalOpen] = useState(false);
                   setAdminFinalFile,
                   isUploadingFinal,
                   onAdminUploadFinal,
+                  onAddStep2Comment,
+step2UserComment,
+setStep2UserComment,
+step2AdminComment,
+setStep2AdminComment,
+isAddingStep2Comment,
                 })}
               </div>
             </details>
@@ -530,11 +545,7 @@ export default function ViewRequestPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
-  console.log(`[ViewRequestPage] User from useAuth:`, user);
   const [confirming, setConfirming] = useState(false);
-  const [data, setData] = useState<ViewRequestData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [adminDraftFile, setAdminDraftFile] = useState<File | null>(null);
   const [isUploadingDraft, setIsUploadingDraft] = useState(false);
   const [step4UserComment, setStep4UserComment] = useState<string>("");
@@ -543,7 +554,9 @@ export default function ViewRequestPage() {
     useState<boolean>(false);
   const [adminFinalFile, setAdminFinalFile] = useState<File | null>(null);
   const [isUploadingFinal, setIsUploadingFinal] = useState(false);
-
+const [step2UserComment, setStep2UserComment] = useState<string>("");
+const [step2AdminComment, setStep2AdminComment] = useState<string>("");
+const [isAddingStep2Comment, setIsAddingStep2Comment] = useState<boolean>(false);
   const [userSubmissionFile, setUserSubmissionFile] = useState<File | null>(
     null,
   );
@@ -562,7 +575,9 @@ export default function ViewRequestPage() {
       fd.append("stepId", stepId);
       await axiosClient.post(
         `/admin/declarations/${declarationId}/upload-draft`,
-        fd,
+        fd,{
+       headers: { "Content-Type": "multipart/form-data" },
+        }
       );
       alert("Final file uploaded successfully.");
       setAdminFinalFile(null);
@@ -576,6 +591,7 @@ export default function ViewRequestPage() {
       setIsUploadingFinal(false);
     }
   };
+
 
   const handleUserUploadSubmission = async (
     documentType = "assessment_notice",
@@ -606,6 +622,33 @@ export default function ViewRequestPage() {
   const declarationId = id!;
   const isAdmin = user?.roles?.includes("admin") ?? false;
   const queryClient = useQueryClient();
+  const handleAddStep2Comment = async (comment: string) => {
+  const text = comment.trim();
+  if (!text) return alert("Please write a comment first.");
+
+  setIsAddingStep2Comment(true);
+  try {
+    await axiosClient.post(
+      `/orders/${declarationId}/steps/documentsReview/comment`,
+      { comment: text }
+    );
+
+    await queryClient.invalidateQueries({
+      queryKey: ["declaration", declarationId],
+    });
+
+    // امسحي الحقل المناسب حسب الدور
+    if (isAdmin) setStep2AdminComment("");
+    else setStep2UserComment("");
+
+    alert("Comment submitted.");
+  } catch (err: any) {
+    console.error("Failed to add step2 comment", err);
+    alert(err?.response?.data?.message ?? "Could not submit comment.");
+  } finally {
+    setIsAddingStep2Comment(false);
+  }
+};
   const handleAddStepComment = async (comment?: string) => {
     const text = (comment ?? step4UserComment)?.trim();
     if (!text) {
@@ -681,15 +724,20 @@ export default function ViewRequestPage() {
       setConfirming(false);
     }
   };
-  const handleStep3DraftUpload = async () => {
+const handleStep3DraftUpload = async () => {
   if (!adminDraftFile) return alert("Please select a file first.");
   setIsUploadingDraft(true);
+
   try {
     const fd = new FormData();
-    fd.append("file", adminDraftFile);
+    fd.append("file", adminDraftFile); // نفس الاسم اللي ينتظره السيرفر غالباً
+
     await axiosClient.post(
       `/admin/declarations/${declarationId}/step3-upload-draft`,
       fd,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
 
     await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
@@ -702,6 +750,7 @@ export default function ViewRequestPage() {
     setIsUploadingDraft(false);
   }
 };
+
   const handleAdminUpload = async (
     stepId = "submission",
     documentType = "final_file",
@@ -717,6 +766,9 @@ export default function ViewRequestPage() {
       await axiosClient.post(
         `/admin/declarations/${declarationId}/upload-draft`,
         fd,
+         {
+  headers: { "Content-Type": "multipart/form-data" },
+}
       );
       await queryClient.invalidateQueries({
         queryKey: ["declaration", declarationId],
@@ -744,7 +796,7 @@ export default function ViewRequestPage() {
         requestBody,
       );
       alert("Step 2 approved successfully!");
-      load();
+      await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
     } catch (error) {
       console.error("Failed to approve Step 2", error);
       alert("An error occurred while approving the step.");
@@ -778,120 +830,16 @@ export default function ViewRequestPage() {
       alert("Step 5 marked as complete! The declaration is now finished.");
       refetch(); 
     }catch(err){
-            console.error("Failed to complete Step 5", error);
+            console.error("Failed to complete Step 5", err);
       alert("An error occurred while completing the final step.");
     }
   }
-  const load = async () => {
-    if (!user || !declarationId) return;
-    try {
-      setIsLoading(true);
-      setError(null);
-      const res = await axiosClient.get(`/orders/${declarationId}`);
-      const payload: any = res.data;
-const mappedSteps = (payload.steps ?? []).map((s: any) => {
-  const meta = s.meta ?? {};
-  const enrichedComments = (meta.commentHistory ?? []).map((c: any) => ({
-    ...c,
-    byName: payload.users?.find((u: any) => u.id === c.by)?.firstName ?? undefined,
-    byEmail: payload.users?.find((u: any) => u.id === c.by)?.email ?? undefined,
-  }));
-
-  return {
-    ...s,
-    meta: {
-      ...meta,
-      commentHistory: enrichedComments,
-    },
-  };
-});
-      const mapped: ViewRequestData = {
-        id: payload.id,
-          status: payload.status,
-        taxYear:
-          payload.questionnaireSnapshot?.taxYear ?? new Date().getFullYear(),
-        clientName:
-          `${payload.clientProfile?.firstName ?? ""} ${
-            payload.clientProfile?.lastName ?? ""
-          }`.trim() || "—",
-        productName: payload.offer ?? "—",
-        currentStage: (payload.currentStep ??
-          payload.currentStage ??
-          1) as StageId,
-
-        summary: {
-          maritalStatus: payload.questionnaireSnapshot?.maritalStatus ?? "—",
-          childrenCount: payload.questionnaireSnapshot?.childrenCount ?? 0,
-          incomes: String(
-            payload.questionnaireSnapshot?.incomeSources ??
-              payload.questionnaireSnapshot?.incomes ??
-              "—",
-          ),
-          properties: String(payload.questionnaireSnapshot?.properties ?? "—"),
-          offerName:
-            payload.questionnaireSnapshot?.offer ?? payload.offer ?? "—",
-          offerPrice: Number(payload.offerPrice ?? 5),
-          taxYear:
-            payload.questionnaireSnapshot?.taxYear ?? new Date().getFullYear(),
-        },
-        step1: {
-          documents:
-            payload.requiredDocuments?.map((d: any) => ({
-              id: d.id,
-              label: d.label,
-              mandatory: !!d.mandatory,
-              status: d.uploaded ? "uploaded" : "todo",
-            })) ?? [],
-        },
-        step2: {
-          questions:
-            payload.additionalQuestions?.map((q: any) => ({
-              id: q.id,
-              label: q.label,
-              answer: q.answer ?? undefined,
-            })) ?? [],
-        },
-        files: (payload.files ?? []).map((f: any) => ({
-          id: f.id,
-          originalName: f.originalName,
-          documentType: f.documentType,
-          uploadedAt: f.uploadedAt ?? f.createdAt ?? null,
-          meta: f.meta ?? {},
-        })),
-        steps: mappedSteps,
-        step5: {
-          date: payload.submission?.date ?? payload.submittedAt ?? undefined,
-          method: payload.submission?.method ?? undefined,
-        },
-        invoice: {
-          offerName:
-            payload.offer ?? payload.questionnaireSnapshot?.offer ?? "—",
-          totalAmount:
-            payload.invoice?.totalAmount ?? `${payload.offerPrice ?? 0} CHF`,
-          invoiceUrl: payload.invoice?.url ?? payload.invoiceUrl ?? "",
-        },
-      };
-
-      setData(mapped);
-    } catch (e: any) {
-      console.error(e);
-      setError(e?.response?.data?.error ?? t("view.errors.loadFailed"));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, declarationId]);
-
   const handleSubmitStep1 = async () => {
     try {
       await axiosClient.post(
         `/api/declarations/${declarationId}/steps/1/submit`,
       );
-      await load();
+      await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
     } catch (e: any) {
       alert(e?.response?.data?.error ?? "Could not submit step 1");
     }
@@ -905,7 +853,7 @@ const mappedSteps = (payload.steps ?? []).map((s: any) => {
           answers,
         },
       );
-      await load();
+      await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
     } catch (e: any) {
       alert(e?.response?.data?.error ?? "Could not submit step 2");
     }
@@ -923,7 +871,7 @@ const mappedSteps = (payload.steps ?? []).map((s: any) => {
           comments,
         },
       );
-      await load();
+await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
     } catch (e: any) {
       alert(e?.response?.data?.error ?? "Could not validate declaration");
     }
@@ -972,15 +920,11 @@ const mappedSteps = (payload.steps ?? []).map((s: any) => {
       </div>
     );
   }
-  const viewDeclaration: ViewRequestData = {
-    ...(declaration ?? data ?? ({} as any)),
-    steps: Array.isArray((declaration ?? data)?.steps)
-      ? (declaration ?? data)!.steps
-      : [],
-    files: Array.isArray((declaration ?? data)?.files)
-      ? (declaration ?? data)!.files
-      : [],
-  } as ViewRequestData;
+ const viewDeclaration = {
+  ...declaration,
+  steps: Array.isArray(declaration?.steps) ? declaration.steps : [],
+  files: Array.isArray(declaration?.files) ? declaration.files : [],
+} as ViewRequestData;
 
   return (
     <ViewRequestContent
@@ -1012,6 +956,12 @@ const mappedSteps = (payload.steps ?? []).map((s: any) => {
       setStep4UserComment={setStep4UserComment}
       step4AdminComment={step4AdminComment} 
       setStep4AdminComment={setStep4AdminComment}
+        onAddStep2Comment={handleAddStep2Comment}
+  step2UserComment={step2UserComment}
+  setStep2UserComment={setStep2UserComment}
+  step2AdminComment={step2AdminComment}
+  setStep2AdminComment={setStep2AdminComment}
+  isAddingStep2Comment={isAddingStep2Comment}
       isAddingStepComment={isAddingStepComment}
       userSubmissionFile={userSubmissionFile}
       setUserSubmissionFile={setUserSubmissionFile}
@@ -1049,8 +999,12 @@ onCompleteStep5?: () => void;
     fn: (prev: Record<string, string>) => Record<string, string>,
   ) => void;
   handleSubmitStep2Internal: () => Promise<void> | void;
-
-  step4Comments: string;
+onAddStep2Comment: (comment: string) => Promise<void>;
+step2UserComment: string;
+setStep2UserComment: (value: string) => void;
+step2AdminComment: string;
+setStep2AdminComment: (value: string) => void;
+isAddingStep2Comment: boolean;  step4Comments: string;
   setStep4Comments: (value: string) => void;
   handleValidateInternal: () => Promise<void> | void;
 
@@ -1120,74 +1074,180 @@ function renderStageContent(props: RenderProps) {
     step4AdminComment,
     setStep4AdminComment,
      onCompleteStep5,
+     onAddStep2Comment,
+step2UserComment,
+setStep2UserComment,
+step2AdminComment,
+setStep2AdminComment,
+isAddingStep2Comment,
+     
   } = props;
 
   const isCurrent = status === "current";
   const isCompleted = status === "completed";
+const documentsReviewStep = (data.steps ?? []).find(
+    (s: any) => s.id === "documentsReview"
+  );
+  const isStep2Approved = documentsReviewStep?.status === "DONE";
 
 if (stageId === 1) {
+  const lockStep1 = isStep2Approved && !isAdmin;
   return (
     <Stage1Section
       declaration={data}
-      isCurrent={status === "current"}
+       isCurrent={!lockStep1}
       onUploadDocuments={onUploadDocuments}
+      lockEditing={isStep2Approved && !isAdmin}
     />
   );
 }
 
   // Step 2
-  if (stageId === 2) {
-    if (isAdmin) {
-      return (
-        <div className="stage-block">
-          <p className="muted">{t("view.step2.admin.description")}</p>
+if (stageId === 2) {
+  const documentsReviewStep = (data.steps ?? []).find(
+    (s: any) => s.id === "documentsReview"
+  );
 
-          <h3>{t("view.step2.admin.filesTitle")}</h3>
-          <ul className="doc-list">
-            {data.files?.map((file) => (
-              <li key={file.id} className="doc-item-row">
-                <div className="doc-item-main">
-                  <span>
-                    {file.originalName} ({file.documentType})
-                  </span>
-                </div>
-                <button
-                  className="btn-secondary btn-small"
-                  onClick={() => onDownloadFile(file.id)} 
-                >
-                  {t("view.step2.admin.downloadBtn")}
-                </button>
-              </li>
-            ))}
-          </ul>
+  const commentHistory: any[] = documentsReviewStep?.meta?.commentHistory ?? [];
+  const lastComment: any = documentsReviewStep?.meta?.lastComment ?? null;
 
-          {isCurrent && (
-            <>
-              <button
-                className="btn-primary"
-                style={{ marginTop: 12 }}
-                onClick={() => onApproveStep2(adminNote)}
-              >
-                {t("view.step2.admin.approveBtn")}
-              </button>
-            </>
-          )}
+  // نص التعليق الحالي حسب الدور
+  const currentCommentValue = isAdmin
+    ? (step2AdminComment ?? "")
+    : (step2UserComment ?? "");
 
-          {isCompleted && (
-            <p className="success-text">{t("view.step2.completed")}</p>
+  const setCurrentCommentValue = (v: string) => {
+    if (isAdmin) setStep2AdminComment?.(v);
+    else setStep2UserComment?.(v);
+  };
+
+  const handleSend = () => {
+    const text = currentCommentValue.trim();
+    if (!text) return;
+    onAddStep2Comment(text); // مهم: نرسل string مضمون
+  };
+
+  return (
+    <div className="stage-block">
+      <p className="muted">
+        {isAdmin ? t("view.step2.admin.description") : t("view.step2.description")}
+      </p>
+
+      {/* Files (اختياري للطرفين) */}
+      <h3>{t("view.step2.admin.filesTitle")}</h3>
+      <ul className="doc-list">
+        {(data.files ?? []).map((file) => (
+          <li key={file.id} className="doc-item-row">
+            <div className="doc-item-main">
+              <span>
+                {file.originalName} ({file.documentType})
+              </span>
+            </div>
+            <button
+              className="btn-secondary btn-small"
+              onClick={() => onDownloadFile(file.id)}
+            >
+              {t("view.step2.admin.downloadBtn")}
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {/* Approve فقط للـ Admin وفي الحالة current */}
+      {isAdmin && isCurrent && (
+        <button
+          className="btn-primary"
+          style={{ marginTop: 12 }}
+          onClick={() => onApproveStep2(adminNote)}
+        >
+          {t("view.step2.admin.approveBtn")}
+        </button>
+      )}
+
+      {isCompleted && (
+        <p className="success-text" style={{ marginTop: 12 }}>
+          {t("view.step2.completed")}
+        </p>
+      )}
+
+      {/* Comments Section (مشترك للطرفين) */}
+      <div style={{ marginTop: 16 }}>
+        <h4 className="font-medium">Comments</h4>
+
+        {lastComment && (
+          <div className="muted small" style={{ marginTop: 6 }}>
+            Last comment: <strong>{lastComment.text}</strong>{" "}
+            <em>({new Date(lastComment.at).toLocaleString()})</em>
+          </div>
+        )}
+
+        {/* input + actions */}
+        <div style={{ marginTop: 12 }}>
+          <label className="block mb-2 font-medium">
+            Add Comment {isAdmin ? "(for client)" : "(for admin)"}
+          </label>
+
+          <textarea
+            className="input-textarea"
+            value={currentCommentValue}
+            onChange={(e) => setCurrentCommentValue(e.target.value)}
+            rows={4}
+            placeholder={
+              isAdmin
+                ? "Write a note for the client..."
+                : "Write a question or note for the admin..."
+            }
+          />
+
+          <div style={{ marginTop: 8 }}>
+            <button
+              className="btn-secondary"
+              onClick={() => setCurrentCommentValue("")}
+              disabled={!!isAddingStep2Comment}
+              style={{ marginRight: 8 }}
+            >
+              Cancel
+            </button>
+
+            <button
+              className="btn-primary"
+              onClick={handleSend}
+              disabled={!!isAddingStep2Comment || !currentCommentValue.trim()}
+            >
+              {isAddingStep2Comment ? "Sending..." : "Add Comment"}
+            </button>
+          </div>
+        </div>
+
+        {/* history */}
+        <div style={{ marginTop: 16 }}>
+          {commentHistory.length > 0 ? (
+            <ul style={{ marginTop: 8 }}>
+              {commentHistory.map((c: any, idx: number) => (
+                <li key={idx} className="border rounded p-3 mb-2">
+                  <div style={{ fontSize: 12, color: "#666" }}>
+                    <strong>
+                      {c.by === user?.id
+                        ? "You"
+                        : c.byName || c.byEmail || "Unknown"}
+                    </strong>{" "}
+                    — {c.at ? new Date(c.at).toLocaleString() : "unknown time"}
+                  </div>
+                  <div style={{ marginTop: 6 }}>{c.text}</div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="muted small" style={{ marginTop: 8 }}>
+              No comments yet.
+            </p>
           )}
         </div>
-      );
-    }
+      </div>
+    </div>
+  );
+}
 
-    else {
-      return (
-        <div className="stage-block">
-          <p className="muted">{t("view.step2.description")}</p>
-        </div>
-      );
-    }
-  }
 
 if (stageId === 3) {
   const draftFileForStep4 = (data.files ?? []).find(

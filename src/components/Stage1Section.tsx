@@ -16,6 +16,7 @@ type Stage1SectionProps = {
   };
   isCurrent: boolean;
   onUploadDocuments?: () => void;
+  lockEditing?: boolean; 
 };
 
 const REQUIRED_DOCUMENT_TYPES = [
@@ -34,8 +35,40 @@ export default function Stage1Section({
   declaration,
   isCurrent,
   onUploadDocuments,
+  lockEditing = false,
 }: Stage1SectionProps) {
   const queryClient = useQueryClient();
+  const [confirming, setConfirming] = React.useState(false);
+const [confirmError, setConfirmError] = React.useState<{
+  missingDocs?: string[];
+  missingQuestions?: string[];
+  message?: string;
+} | null>(null);
+const step1 = useMemo(() => {
+  return (declaration.steps ?? []).find((s) => s.id === "documentsPreparation");
+}, [declaration.steps]);
+
+const step1Status = (step1 as any)?.status ?? "PENDING";
+
+const confirmStep1 = async () => {
+  setConfirming(true);
+  setConfirmError(null);
+  try {
+    await axiosClient.post(`/orders/${declaration.id}/steps/documentsPreparation/confirm`);
+    await invalidateDeclaration();
+  } catch (e: any) {
+    const data = e?.response?.data;
+    // BadRequestException يرجع object
+    setConfirmError({
+      message: data?.message ?? "Could not confirm Step 1",
+      missingDocs: data?.missingDocs ?? [],
+      missingQuestions: data?.missingQuestions ?? [],
+    });
+  } finally {
+    setConfirming(false);
+  }
+};
+
 
   const filesByType = useMemo(() => {
     return (declaration.files ?? []).reduce((acc, file) => {
@@ -129,6 +162,11 @@ export default function Stage1Section({
               Step 1 — Documents & Questions
             </h3>
           </div>
+          {lockEditing && (
+  <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-800">
+    Step 1 is locked because the admin approved your documents (Step 2).
+  </div>
+)}
           <div className="text-right">
             <div className="text-sm text-gray-500">Documents progress</div>
             <div className="text-lg font-semibold">
@@ -155,6 +193,7 @@ export default function Stage1Section({
           ]}
           initialAnswers={initialStep1Answers}
           onSaved={invalidateDeclaration}
+          disabled={lockEditing}
         />
       </div>
 
@@ -163,7 +202,7 @@ export default function Stage1Section({
           const uploadedFiles = filesByType[docType] ?? [];
           const isMissing = !!declaredMissingMap[docType];
           const isOthers = docType === "others";
-          const canEditDocType = isCurrent || isOthers;
+          const canEditDocType = !lockEditing && (isCurrent || isOthers); 
           return (
             <div
               key={docType}
@@ -206,18 +245,23 @@ export default function Stage1Section({
                       className="flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2 border"
                     >
                       <span className="truncate">{file.originalName}</span>
-                      <button
-                        className="text-sm text-red-600 underline"
-                        onClick={async () => {
-                          if (!confirm("Delete this file?")) return;
-                          await axiosClient.delete(`/files/${file.id}`);
-                          await queryClient.invalidateQueries({
-                            queryKey: ["declaration", declaration.id],
-                          });
-                        }}
-                      >
-                        Delete
-                      </button>
+                 <button
+  className={`text-sm underline ${
+    lockEditing ? "text-gray-400 cursor-not-allowed" : "text-red-600"
+  }`}
+  disabled={lockEditing}
+  onClick={async () => {
+    if (lockEditing) return;
+    if (!confirm("Delete this file?")) return;
+
+    await axiosClient.delete(`/files/${file.id}`);
+    await queryClient.invalidateQueries({
+      queryKey: ["declaration", declaration.id],
+    });
+  }}
+>
+  Delete
+</button>
                     </li>
                   ))}
                 </ul>
@@ -242,9 +286,63 @@ export default function Stage1Section({
                 </p>
               )}
             </div>
+            
           );
         })}
       </div>
+      <div className="rounded-xl border bg-white p-4">
+  <div className="flex items-center justify-between gap-4">
+    <div>
+      <div className="text-sm text-gray-500">Step 1 status</div>
+      <div className="font-semibold">
+        {step1Status}
+      </div>
+    </div>
+
+<button
+  className="btn btn-primary"
+  disabled={confirming || lockEditing}  
+  onClick={() => {
+    if (lockEditing) return;             
+    if (!confirm("Confirm Step 1? You will not be able to proceed unless it is complete.")) return;
+    confirmStep1();
+  }}
+>
+      {confirming ? "Confirming..." : "Confirm Step 1"}
+    </button>
+  </div>
+
+  {confirmError && (
+    <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm">
+      <div className="font-semibold text-red-700">
+        {confirmError.message ?? "Step 1 is not ready"}
+      </div>
+
+      {(confirmError.missingDocs?.length ?? 0) > 0 && (
+        <div className="mt-2">
+          <div className="font-medium text-red-700">Missing documents:</div>
+          <ul className="list-disc pl-5">
+            {confirmError.missingDocs!.map((d) => (
+              <li key={d}>{d.replace(/_/g, " ")}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {(confirmError.missingQuestions?.length ?? 0) > 0 && (
+        <div className="mt-2">
+          <div className="font-medium text-red-700">Missing questions:</div>
+          <ul className="list-disc pl-5">
+            {confirmError.missingQuestions!.map((q) => (
+              <li key={q}>{q}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+</div>
+
     </div>
   );
 }

@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation, redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth/AuthContext";
 import logoTaxera from "../assets/Icon.svg";
-
+import { useQueryClient } from "@tanstack/react-query";
 const LANGS: { code: "de" | "fr" | "en"; labelKey: string }[] = [
   { code: "de", labelKey: "topbar.lang.de" },
   { code: "fr", labelKey: "topbar.lang.fr" },
@@ -16,6 +16,7 @@ export default function Topbar() {
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+    const queryClient = useQueryClient();
   // const [open, setOpen] = useState(false);
   const [menuopen, setMenuOpen] = useState(false);
   const currentLang = (i18n.language || "en").slice(0, 2) as "de" | "fr" | "en";
@@ -27,13 +28,12 @@ export default function Topbar() {
   const handleLogout = async () => {
     try {
       await logout();
+        queryClient.clear();
+      navigate("/", { replace: true });
     } catch (err) {
       console.error("Logout failed:", err);
       alert("Logout failed. Please try again.");
     }
-    // finally {
-    //   window.location.href = "https://www.swisstaxonline.ch/";
-    // }
   };
   const fullName = user ? `${user.firstName} ${user.lastName}` : "";
 
