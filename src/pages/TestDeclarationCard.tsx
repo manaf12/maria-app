@@ -2,10 +2,10 @@
 // import { useTranslation } from "react-i18next";
 import TaxDeclarationCard from "../components/TaxDeclarationCard";
 
-import type { TaxDeclaration } from "../components/TaxDeclarationCard";
-
+// import type { TaxDeclaration } from "../components/TaxDeclarationCard";
+import type { TaxDeclarationFull } from "../types/types";
 export default function TestDeclarationCard() {
-  const testDecl: TaxDeclaration = {
+  const testDecl: TaxDeclarationFull = {
     id: "12345",
     taxYear: 2024,
     clientName: "TAG Solutions SA",

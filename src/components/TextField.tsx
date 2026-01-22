@@ -1,5 +1,5 @@
 // src/components/TextField.tsx
-import React, { forwardRef, InputHTMLAttributes } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 
 type Props = {
   label?: string;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axiosClient from "../api/axiosClient";
-import type { StageId, ViewRequestData } from "../pages/ViewRequestPage";
+import type { StageId, ViewRequestData } from "../types/declaration.types";
 
 export async function fetchDeclaration(declarationId: string) {
   const url = `/orders/${declarationId}`;

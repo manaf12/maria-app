@@ -5,14 +5,14 @@ import { useNavigate, Link } from "react-router-dom";
 import axiosClient from "../api/axiosClient";
 import { useAuth } from "../auth/AuthContext";
 import TaxDeclarationCard from "../components/TaxDeclarationCard";
-import type { TaxDeclaration } from "../components/TaxDeclarationCard";
+import type { TaxDeclarationFull  } from "../types/types";
 
 export default function DashboardPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  const [declarations, setDeclarations] = useState<TaxDeclaration[]>([]);
+  const [declarations, setDeclarations] = useState<TaxDeclarationFull []>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function DashboardPage() {
       try {
         setIsLoading(true);
         const res = await axiosClient.get("/orders/my-declarations");
-        const items = (res.data as TaxDeclaration[])
+        const items = (res.data as TaxDeclarationFull [])
           .slice()
           .sort((a, b) => b.taxYear - a.taxYear);
         setDeclarations(items);

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // src/components/Topbar.tsx
-import { useState, useCallback } from "react";
-import { Link, useNavigate, useLocation, redirect } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth/AuthContext";
 import logoTaxera from "../assets/Icon.svg";
@@ -35,7 +35,6 @@ export default function Topbar() {
       alert("Logout failed. Please try again.");
     }
   };
-  const fullName = user ? `${user.firstName} ${user.lastName}` : "";
 
   return (
     <div className="topbar">

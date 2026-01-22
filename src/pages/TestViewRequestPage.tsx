@@ -1,5 +1,7 @@
-// src/pages/TestViewRequestPage.tsx
-import { ViewRequestContent, type ViewRequestData } from "./ViewRequestPage";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+import ViewRequestContent from "./ViewRequest/ViewRequestContent";
+import type { ViewRequestData, User } from "../types/declaration.types";
 
 export default function TestViewRequestPage() {
   const mockData: ViewRequestData = {
@@ -7,8 +9,8 @@ export default function TestViewRequestPage() {
     taxYear: 2024,
     clientName: "TAG Solutions SA",
     productName: "Comfort package CHF 390.–",
-    currentStage: 3, // جرّبي تبدليها بين 1 و 5
-
+    currentStage: 3,
+    status: "IN_PROGRESS",
     summary: {
       maritalStatus: "Married",
       childrenCount: 2,
@@ -18,75 +20,77 @@ export default function TestViewRequestPage() {
       offerPrice: 390,
       taxYear: 2024,
     },
-
-    step1: {
-      documents: [
-        {
-          id: "salary",
-          label: "Salary certificates",
-          mandatory: true,
-          status: "uploaded",
-        },
-        {
-          id: "bank",
-          label: "Bank statements",
-          mandatory: true,
-          status: "todo",
-        },
-        {
-          id: "pillar3",
-          label: "3rd pillar certificates",
-          mandatory: false,
-          status: "todo",
-        },
-      ],
-    },
-
-    step2: {
-      questions: [
-        {
-          id: "q1",
-          label: "Did you have any foreign income in 2024?",
-        },
-        {
-          id: "q2",
-          label: "Any major medical expenses not covered by insurance?",
-          answer: "No",
-        },
-      ],
-    },
-
-    step5: {
-      date: "18.02.2025",
-      method: "Electronic filing",
-    },
-
+    step1: { documents: [] },
+    step2: { questions: [] },
+    step5: { date: "18.02.2025", method: "Electronic filing" },
     invoice: {
       offerName: "Comfort package – 2024",
       totalAmount: "CHF 390.–",
       invoiceUrl: "https://example.com/invoice.pdf",
     },
+    files: [],
+    steps: [],
   };
+
+  const user: User | null = null;
+
+  const [step2UserComment, setStep2UserComment] = useState("");
+  const [step2AdminComment, setStep2AdminComment] = useState("");
+  const [step4UserComment, setStep4UserComment] = useState("");
+  const [step4AdminComment, setStep4AdminComment] = useState("");
+
+  const [adminDraftFile, setAdminDraftFile] = useState<File | null>(null);
+  const [adminFinalFile, setAdminFinalFile] = useState<File | null>(null);
+  const [userSubmissionFile, setUserSubmissionFile] = useState<File | null>(null);
 
   return (
     <div style={{ maxWidth: 1100, margin: "0 auto" }}>
       <ViewRequestContent
         data={mockData}
+        user={user}
+        isAdmin={true}
         onBackToDashboard={() => alert("Back to dashboard (mock)")}
         onUploadDocuments={() => alert("Upload docs (mock)")}
-        onSubmitStep1={() => alert("Submit step 1 (mock)")}
-        onSubmitStep2={(answers) =>
-          alert("Submit step 2 (mock): " + JSON.stringify(answers, null, 2))
-        }
-        onDownloadDraft={() => alert("Download draft (mock)")}
-        onValidateDeclaration={(comments) =>
-          alert("Validate (mock). Comments: " + comments)
-        }
-        onDownloadFinal={() => alert("Download final (mock)")}
-        onUploadAssessmentNotice={() =>
-          alert("Upload assessment notice (mock)")
-        }
-        onDownloadInvoice={(url) => alert("Download invoice: " + url)}
+
+        // Stage 2
+        onApproveStep2={() => alert("Approve Step2 (mock)")}
+        onAddStep2Comment={async (comment) => alert("Step2 comment: " + comment)}
+        step2UserComment={step2UserComment}
+        setStep2UserComment={setStep2UserComment}
+        step2AdminComment={step2AdminComment}
+        setStep2AdminComment={setStep2AdminComment}
+        isAddingStep2Comment={false}
+
+        // Stage 3
+        onCompleteStep3={() => alert("Complete Step3 (mock)")}
+        onStep3DraftUpload={async () => alert("Upload draft (mock)")}
+        adminDraftFile={adminDraftFile}
+        setAdminDraftFile={setAdminDraftFile}
+        isUploadingDraft={false}
+
+        // Stage 4
+        confirming={false}
+        onConfirmReceipt={async () => alert("Confirm receipt (mock)")}
+        onAddStepComment={async (comment) => alert("Step4 comment: " + comment)}
+        step4UserComment={step4UserComment}
+        setStep4UserComment={setStep4UserComment}
+        step4AdminComment={step4AdminComment}
+        setStep4AdminComment={setStep4AdminComment}
+        isAddingStepComment={false}
+
+        // Stage 5
+        onCompleteStep5={() => alert("Complete Step5 (mock)")}
+        userSubmissionFile={userSubmissionFile}
+        setUserSubmissionFile={setUserSubmissionFile}
+        isUploadingUserSubmission={false}
+        onUserUploadSubmission={async () => alert("User upload submission (mock)")}
+        onAdminUploadFinal={async () => alert("Admin upload final (mock)")}
+        adminFinalFile={adminFinalFile}
+        setAdminFinalFile={setAdminFinalFile}
+        isUploadingFinal={false}
+
+        // Shared
+        onDownloadFile={(fileId) => alert("Download file (mock): " + fileId)}
       />
     </div>
   );

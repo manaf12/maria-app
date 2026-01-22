@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // src/components/MenuBar.tsx
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth/AuthContext";
 import logoTaxera1 from "../assets/Typeface.svg";
@@ -8,7 +8,6 @@ import logoTaxera1 from "../assets/Typeface.svg";
 export default function MenuBar() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const location = useLocation();
 
   // Logo always sends logged-in users to dashboard
   const logoTarget = user ? "/" : "/";

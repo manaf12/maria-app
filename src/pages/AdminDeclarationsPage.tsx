@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/admin/AdminDeclarationsPage.tsx
 import { useEffect, useMemo, useState } from "react";
-import AdminDeclarationAssignCard from "../../components/admin/AdminDeclarationAssignCard";
+import AdminDeclarationAssignCard from "../../src/components/admin/AdminDeclarationAssignCard";
 import {
-  assignDeclarations,
-  getAdminDeclarations,
+  postAssignDeclarations,
+  fetchAdminDeclarations,
   type AdminDeclaration,
-} from "../../services/admin-declarations.service";
-
+} from "../services/admin-declarations.service";
+import { useNavigate } from "react-router-dom";
 export default function AdminDeclarationsPage() {
   const [items, setItems] = useState<AdminDeclaration[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,12 +20,12 @@ export default function AdminDeclarationsPage() {
   const [adminId, setAdminId] = useState("");
   const [note, setNote] = useState("Assigned due to high priority workload");
   const [assigning, setAssigning] = useState(false);
-
+const navigate = useNavigate();
   async function load() {
     setError("");
     setLoading(true);
     try {
-      const res = await getAdminDeclarations();
+      const res = await fetchAdminDeclarations();
       setItems(res.items || []);
     } catch (e: any) {
       setError(e?.message || "Failed to load declarations");
@@ -87,7 +88,7 @@ export default function AdminDeclarationsPage() {
     setError("");
     setAssigning(true);
     try {
-      await assignDeclarations({
+      await postAssignDeclarations({
         declarationIds: selectedIds,
         adminId: adminId.trim(),
         note: note?.trim() || undefined,
@@ -103,11 +104,10 @@ export default function AdminDeclarationsPage() {
     }
   }
 
-  function openRequest(id: string) {
-    // adapt to your admin detail route if you already have it
-    // e.g. /admin/declarations/:id
-    window.location.href = `/admin/declarations/${id}`;
-  }
+function openRequest(id: string) {
+  console.log("Navigating to /declaration/" + id);
+  navigate(`/declaration/${id}`);
+}
 
   return (
     <div className="dashboard-page">
@@ -194,7 +194,7 @@ export default function AdminDeclarationsPage() {
                 declaration={d}
                 checked={!!selected[d.id]}
                 onToggle={toggle}
-                onOpen={openRequest}
+                onOpen={() => openRequest(d.id)}
               />
             ))}
           </div>

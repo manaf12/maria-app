@@ -49,7 +49,6 @@ const step1 = useMemo(() => {
 }, [declaration.steps]);
 
 const step1Status = (step1 as any)?.status ?? "PENDING";
-
 const confirmStep1 = async () => {
   setConfirming(true);
   setConfirmError(null);
@@ -58,7 +57,6 @@ const confirmStep1 = async () => {
     await invalidateDeclaration();
   } catch (e: any) {
     const data = e?.response?.data;
-    // BadRequestException يرجع object
     setConfirmError({
       message: data?.message ?? "Could not confirm Step 1",
       missingDocs: data?.missingDocs ?? [],
@@ -98,18 +96,19 @@ const confirmStep1 = async () => {
     });
   };
 
-  const uploadOne = async (docType: string, file: File) => {
-    const form = new FormData();
-    form.append("file", file);
-    form.append("documentType", docType);
+const uploadOne = async (docType: string, file: File) => {
+  const form = new FormData();
+  form.append("file", file);
+  form.append("documentType", docType);
 
-    await axiosClient.post(`/files/${declaration.id}/upload`, form, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+  await axiosClient.post(`/files/${declaration.id}/upload`, form, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 
-    await invalidateDeclaration();
-    onUploadDocuments?.();
-  };
+  // Ensure Step 1 status stays DONE
+  await invalidateDeclaration();
+  onUploadDocuments?.();
+};
 
   const uploadMultiple = async (docType: string, files: File[]) => {
     const form = new FormData();

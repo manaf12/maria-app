@@ -54,7 +54,7 @@ export default function DeclarationsTableRow({ item, checked, onToggle }: Props)
   const offer = item.questionnaireSnapshot?.offer ?? item.offer ?? "—";
 
   function openDetails() {
-    navigate(`/admin/declarations/${item.id}`);
+    navigate(`/declaration/${item.id}`);
   }
 
   return (

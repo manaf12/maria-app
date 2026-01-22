@@ -39,9 +39,7 @@ const TestDeclarationCard = lazy(() => import("./pages/TestDeclarationCard"));
 const AdminDeclarationsPage = lazy(
   () => import("./pages/admin/AdminDeclarationsPage")
 );
-const AdminDeclarationDetailsPage = lazy(
-  () => import("./pages/admin/AdminDeclarationDetailsPage")
-);
+
 
 function PageLoader() {
   return (
@@ -94,10 +92,7 @@ export default function App() {
               path="/admin/declarations"
               element={<AdminDeclarationsPage />}
             />
-            <Route
-              path="/admin/declarations/:id"
-              element={<AdminDeclarationDetailsPage />}
-            />
+            
           </Route>
 
           <Route path="*" element={<div>Not found</div>} />
