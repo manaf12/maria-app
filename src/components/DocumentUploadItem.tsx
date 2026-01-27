@@ -46,6 +46,7 @@ export default function DocumentUploadItem({
   const onPickFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
     setSelectedFiles(files);
+      e.target.value = "";
   };
 
   const doUpload = async () => {

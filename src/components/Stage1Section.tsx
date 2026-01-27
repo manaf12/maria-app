@@ -3,8 +3,8 @@ import React, { useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
 import DocumentUploadItem, { type FileEntity } from "./DocumentUploadItem";
-import { Step1Questions } from "./Step1Questions";
-
+import { Step1Questions ,type Step1Question} from "./Step1Questions";
+// import type { Step1Question } from "./Step1Questions";
 type Step = { id: string; meta?: any };
 
 type Stage1SectionProps = {
@@ -20,14 +20,14 @@ type Stage1SectionProps = {
 };
 
 const REQUIRED_DOCUMENT_TYPES = [
+  "previous_tax_return",            
   "salary_certificate",
   "bank_statement",
   "pillar_3_certificate",
-  "property_deed_main",
-  "property_deed_rental",
-  "debt_statement",
   "medical_expense_receipt",
+  "taxero_invoice_payment_proof",   
 ];
+
 
 const OPTIONAL_DOCUMENT_TYPES = ["others"];
 
@@ -39,6 +39,30 @@ export default function Stage1Section({
 }: Stage1SectionProps) {
   const queryClient = useQueryClient();
   const [confirming, setConfirming] = React.useState(false);
+  const [step1Questions, setStep1Questions] = React.useState<Step1Question[]>([]);
+const [questionsLoading, setQuestionsLoading] = React.useState(false);
+React.useEffect(() => {
+  let mounted = true;
+  (async () => {
+    setQuestionsLoading(true);
+    try {
+      const res = await axiosClient.get<{ questions: Step1Question[] }>(
+        `/files/${declaration.id}/step1/questions`,
+      );
+      if (!mounted) return;
+      setStep1Questions(res.data.questions ?? []);
+    } catch (e) {
+      console.error("Failed to load Step 1 questions", e);
+      if (!mounted) return;
+      setStep1Questions([]);
+    } finally {
+      if (mounted) setQuestionsLoading(false);
+    }
+  })();
+  return () => {
+    mounted = false;
+  };
+}, [declaration.id]);
 const [confirmError, setConfirmError] = React.useState<{
   missingDocs?: string[];
   missingQuestions?: string[];
@@ -177,23 +201,17 @@ const uploadOne = async (docType: string, file: File) => {
 
       <div className="rounded-xl border bg-white p-4">
         <h4 className="font-semibold mb-3">Additional questions</h4>
-        <Step1Questions
-          declarationId={declaration.id}
-          questions={[
-            {
-              id: "distanceToWork",
-              label: "How far is your home from your workplace?",
-            },
-            {
-              id: "familyMembers",
-              label: "How many family members?",
-              type: "number",
-            },
-          ]}
-          initialAnswers={initialStep1Answers}
-          onSaved={invalidateDeclaration}
-          disabled={lockEditing}
-        />
+        {questionsLoading ? (
+  <div className="text-sm text-gray-500">Loading questions...</div>
+) : (
+  <Step1Questions
+    declarationId={declaration.id}
+    questions={step1Questions}
+    initialAnswers={initialStep1Answers}
+    onSaved={invalidateDeclaration}
+    disabled={lockEditing}
+  />
+)}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">

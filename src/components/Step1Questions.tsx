@@ -4,8 +4,12 @@ import  { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
 
-export type Step1Question = { id: string; label: string; type?: "text" | "number" };
-
+export type Step1Question = {
+  id: string;
+  label: string;
+  type?: "text" | "number" | "select";
+  options?: { value: string; label: string }[];
+};
 export function Step1Questions({
   declarationId,
   initialAnswers,
@@ -14,29 +18,30 @@ export function Step1Questions({
     disabled = false,
 }: {
   declarationId: string;
-  initialAnswers?: Record<string, string>;
+initialAnswers?: Record<string, any>;
   questions: Step1Question[];
   onSaved?: () => void;
     disabled?: boolean;
 }) {
   const queryClient = useQueryClient();
-  const [answers, setAnswers] = useState<Record<string, string>>(initialAnswers ?? {});
+const [answers, setAnswers] = useState<Record<string, any>>(initialAnswers ?? {});
   const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "saved" | "error">>({});
   const [savedAt, setSavedAt] = useState<Record<string, string>>({});
   const timers = useRef<Record<string, number | undefined>>({});
   const controllers = useRef<Record<string, AbortController | undefined>>({});
   const DEBOUNCE_MS = 800;
 const hasLoadedRef = useRef(false);
-  useEffect(() => {
-      if (hasLoadedRef.current) return;
-    if (initialAnswers) setAnswers(initialAnswers);
-  }, [initialAnswers]);
-
+useEffect(() => {
+  setAnswers(initialAnswers ?? {});
+  setStatusMap({});
+  setSavedAt({});
+  hasLoadedRef.current = false;
+}, [declarationId]);
   useEffect(() => {
     let mounted = true;
     (async () => {
       try {
-        const res = await axiosClient.get<{ answers: Record<string, string> }>(
+       const res = await axiosClient.get<{ answers: Record<string, any> }>(
           `/files/${declarationId}/step1/answers`,
         );
         if (!mounted) return;
@@ -137,16 +142,38 @@ const saveSingle = async (qid: string, value: string) => {
             <label className="block text-sm font-medium mb-1" htmlFor={q.id}>
               {q.label}
             </label>
-            <input
-              id={q.id}
-className={
-  "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
-  (disabled ? "bg-gray-100 cursor-not-allowed" : "")
-}              type={q.type === "number" ? "number" : "text"}
-              value={answers[q.id] ?? ""}
-              disabled={disabled}
-              onChange={(e) => handleChange(q.id, e.target.value)}
-            />
+         {q.type === "select" ? (
+  <select
+    id={q.id}
+    className={
+      "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
+      (disabled ? "bg-gray-100 cursor-not-allowed" : "")
+    }
+    value={answers[q.id] ?? ""}
+    disabled={disabled}
+    onChange={(e) => handleChange(q.id, e.target.value)}
+  >
+    <option value="">Select...</option>
+    {(q.options ?? []).map((opt) => (
+      <option key={opt.value} value={opt.value}>
+        {opt.label}
+      </option>
+    ))}
+  </select>
+) : (
+  <input
+    id={q.id}
+    className={
+      "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
+      (disabled ? "bg-gray-100 cursor-not-allowed" : "")
+    }
+    type={q.type === "number" ? "number" : "text"}
+    value={answers[q.id] ?? ""}
+    disabled={disabled}
+    onChange={(e) => handleChange(q.id, e.target.value)}
+  />
+)}
+
             {statusMap[q.id] === "error" && (
               <div className="text-xs text-red-600 mt-1">error</div>
             )}
