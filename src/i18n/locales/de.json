@@ -649,7 +649,38 @@
       "appealIfNecessary": "Einsprache bei Bedarf",
       "ratesAccordingToProfile": "Tarife gemäss Ihrem Profil"
     }
-  }
+  },
+  "common.select": "Auswählen...",
+
+  "step1.title": "Schritt 1 — Dokumente & Fragen",
+  "step1.additionalQuestions": "Zusatzfragen",
+
+  "step1.sections.personalInformation": "Persönliche Angaben",
+  "step1.sections.professionalExpenses": "Berufsauslagen",
+  "step1.sections.housing": "Wohnen",
+  "step1.sections.taxAuthorityNumbers": "Steueramtsnummern",
+
+  "step1.questions.personalChanges": "Änderungen seit dem letzten Jahr (Heirat, Scheidung, Umzug usw.)",
+  "step1.questions.transportMode": "Wie pendeln Sie zur Arbeit?",
+  "step1.questions.distanceToWorkKm": "Distanz Wohnort–Arbeitsort (km, einfache Strecke)",
+  "step1.questions.weeklyTripsToWork": "Wie viele Fahrten zum Arbeitsort pro Woche?",
+  "step1.questions.mealsOutsidePerWeek": "Wie viele auswärtige Mahlzeiten pro Woche (berufsbedingt)?",
+  "step1.questions.netAnnualRentVD_GE": "Nettojahresmiete (VD / GE) (CHF)",
+  "step1.questions.canton": "Kanton",
+  "step1.questions.taxpayerNumber": "Steuerpflichtigen-Nummer",
+  "step1.questions.controlOrDeclarationCode": "Kontroll- / Deklarationscode (falls vorhanden)",
+
+  "step1.options.transportMode.publicTransport": "Öffentlicher Verkehr",
+  "step1.options.transportMode.bicycle": "Fahrrad",
+  "step1.options.transportMode.vehicle": "Auto / Fahrzeug",
+
+  "step1.options.canton.FR": "Freiburg (FR)",
+  "step1.options.canton.BE": "Bern (BE)",
+  "step1.options.canton.VD": "Waadt (VD)",
+  "step1.options.canton.VS": "Wallis (VS)",
+  "step1.options.canton.NE": "Neuenburg (NE)",
+  "step1.options.canton.GE": "Genf (GE)",
+  "step1.options.canton.OTHER": "Andere"
 
 
 }

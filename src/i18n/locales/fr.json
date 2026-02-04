@@ -649,8 +649,37 @@
       "appealIfNecessary": "Recours si nécessaire",
       "ratesAccordingToProfile": "Tarifs selon votre profil"
     }
-  }
+  },
+  "common.select": "Sélectionner...",
 
+  "step1.title": "Étape 1 — Documents & questions",
+  "step1.additionalQuestions": "Questions complémentaires",
 
+  "step1.sections.personalInformation": "Informations personnelles",
+  "step1.sections.professionalExpenses": "Frais professionnels",
+  "step1.sections.housing": "Logement",
+  "step1.sections.taxAuthorityNumbers": "Numéros de l’administration fiscale",
+
+  "step1.questions.personalChanges": "Changements depuis l’année précédente (mariage, divorce, déménagement, etc.)",
+  "step1.questions.transportMode": "Quel est votre mode de transport pour aller au travail ?",
+  "step1.questions.distanceToWorkKm": "Distance domicile–lieu de travail (km, aller simple)",
+  "step1.questions.weeklyTripsToWork": "Combien de trajets vers le lieu de travail par semaine ?",
+  "step1.questions.mealsOutsidePerWeek": "Combien de repas pris à l’extérieur par semaine (liés au travail) ?",
+  "step1.questions.netAnnualRentVD_GE": "Loyer annuel net (VD / GE) (CHF)",
+  "step1.questions.canton": "Canton",
+  "step1.questions.taxpayerNumber": "Numéro de contribuable",
+  "step1.questions.controlOrDeclarationCode": "Code de contrôle / de déclaration (si disponible)",
+
+  "step1.options.transportMode.publicTransport": "Transports publics",
+  "step1.options.transportMode.bicycle": "Vélo",
+  "step1.options.transportMode.vehicle": "Voiture / véhicule",
+
+  "step1.options.canton.FR": "Fribourg (FR)",
+  "step1.options.canton.BE": "Berne (BE)",
+  "step1.options.canton.VD": "Vaud (VD)",
+  "step1.options.canton.VS": "Valais (VS)",
+  "step1.options.canton.NE": "Neuchâtel (NE)",
+  "step1.options.canton.GE": "Genève (GE)",
+  "step1.options.canton.OTHER": "Autre"
 }
 

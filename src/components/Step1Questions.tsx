@@ -3,12 +3,17 @@
 import  { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
+import { useTranslation } from "react-i18next";
 
 export type Step1Question = {
   id: string;
-  label: string;
+  labelKey: string;
   type?: "text" | "number" | "select";
-  options?: { value: string; label: string }[];
+  sectionKey?: string; // إذا عم تستخدمه بالعرض
+  required?: boolean;
+  options?: { value: string; labelKey: string }[];
+  min?: number;
+  max?: number;
 };
 export function Step1Questions({
   declarationId,
@@ -23,6 +28,7 @@ initialAnswers?: Record<string, any>;
   onSaved?: () => void;
     disabled?: boolean;
 }) {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 const [answers, setAnswers] = useState<Record<string, any>>(initialAnswers ?? {});
   const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "saved" | "error">>({});
@@ -140,7 +146,7 @@ const saveSingle = async (qid: string, value: string) => {
         <div key={q.id} className="flex items-start gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium mb-1" htmlFor={q.id}>
-              {q.label}
+              {t(q.labelKey, { defaultValue: q.labelKey })}
             </label>
          {q.type === "select" ? (
   <select
@@ -153,10 +159,10 @@ const saveSingle = async (qid: string, value: string) => {
     disabled={disabled}
     onChange={(e) => handleChange(q.id, e.target.value)}
   >
-    <option value="">Select...</option>
+  <option value="">{t("common.select", { defaultValue: "Select..." })}</option>
     {(q.options ?? []).map((opt) => (
       <option key={opt.value} value={opt.value}>
-        {opt.label}
+        {t(opt.labelKey, { defaultValue: opt.labelKey })}
       </option>
     ))}
   </select>
