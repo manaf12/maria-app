@@ -71,6 +71,19 @@ export default function Stage4Validation({
     else setStep4UserComment(v);
   };
 
+  const formatDateTime = (value: any) => {
+    if (!value) return t("common.unknownTime");
+    const d = new Date(value);
+    return isNaN(d.getTime()) ? t("common.unknownTime") : d.toLocaleString();
+  };
+
+  const downloadedBy = (latest as any)?.meta?.downloadedBy;
+  const hasUserDownloadedLatest =
+    !!latest &&
+    !!user?.id &&
+    (downloadedBy === user.id ||
+      (Array.isArray(downloadedBy) && downloadedBy.includes(user.id)));
+
   return (
     <div className="stage-block">
       <p className="muted">{t("view.step4.description")}</p>
@@ -80,12 +93,14 @@ export default function Stage4Validation({
           <div>
             <strong>{latest.originalName}</strong>
             {latest.uploadedAt && (
-              <div className="muted small">Uploaded: {new Date(latest.uploadedAt).toLocaleString()}</div>
+              <div className="muted small">
+                {t("view.step4.uploadedAt")} {formatDateTime(latest.uploadedAt)}
+              </div>
             )}
             {lastComment && (
               <div className="muted small" style={{ marginTop: 6 }}>
-                Last comment: <strong>{lastComment.text}</strong>{" "}
-                <em>({new Date(lastComment.at).toLocaleString()})</em>
+                {t("view.step4.lastComment")} <strong>{lastComment.text}</strong>{" "}
+                <em>({formatDateTime(lastComment.at)})</em>
               </div>
             )}
           </div>
@@ -98,20 +113,22 @@ export default function Stage4Validation({
         </div>
       ) : (
         <p className="muted" style={{ marginTop: 12 }}>
-          {t("view.step4.noDraftYet", "No draft uploaded yet.")}
+          {t("view.step4.noDraftYet")}
         </p>
       )}
 
       {!isAdmin && !latest && (
         <p className="muted small" style={{ marginTop: 12 }}>
-          {t("view.step4.waitingForAdmin", "Waiting for admin to upload the draft.")}
+          {t("view.step4.waitingForAdmin")}
         </p>
       )}
 
-      {latest && latest.meta?.downloadedBy === user?.id && data.currentStage === 4 && (
+      {latest && hasUserDownloadedLatest && data.currentStage === 4 && (
         <div style={{ marginTop: 12 }}>
           <button className="btn-primary" disabled={!!confirming} onClick={() => onConfirmReceipt(latest.id)}>
-            {confirming ? "Confirming..." : "Confirm you received the draft"}
+            {confirming
+              ? t("view.step4.confirming")
+              : t("view.step4.confirmReceipt")}
           </button>
         </div>
       )}
@@ -119,7 +136,10 @@ export default function Stage4Validation({
       {isCurrent && (
         <div style={{ marginTop: 12 }}>
           <label className="block mb-2 font-medium">
-            Add Comment {isAdmin ? "(for client)" : "(optional)"}
+            {t("view.step4.addComment.label")}{" "}
+            {isAdmin
+              ? t("view.step4.addComment.forClient")
+              : t("view.step4.addComment.optional")}
           </label>
 
           <textarea
@@ -127,7 +147,9 @@ export default function Stage4Validation({
             value={currentCommentValue}
             onChange={(e) => setCurrentCommentValue(e.target.value)}
             placeholder={
-              isAdmin ? "Write a comment for the client..." : "Example: I found an error on page 2, line 5..."
+              isAdmin
+                ? t("view.step4.addComment.placeholderAdmin")
+                : t("view.step4.addComment.placeholderUser")
             }
             rows={4}
           />
@@ -139,7 +161,7 @@ export default function Stage4Validation({
               disabled={isAddingStepComment}
               style={{ marginRight: 8 }}
             >
-              Cancel
+              {t("common.cancel")}
             </button>
 
             <button
@@ -147,21 +169,23 @@ export default function Stage4Validation({
               onClick={() => onAddStepComment(currentCommentValue ?? "")}
               disabled={isAddingStepComment || !currentCommentValue?.trim()}
             >
-              {isAddingStepComment ? "Sending..." : "Add Comment"}
+              {isAddingStepComment ? t("common.sending") : t("view.step4.addComment.submit")}
             </button>
           </div>
         </div>
       )}
 
       <div style={{ marginTop: 16 }}>
-        <h4 className="font-medium">Comments</h4>
+        <h4 className="font-medium">{t("view.step4.comments.title")}</h4>
         {commentHistory.length > 0 ? (
           <ul style={{ marginTop: 8 }}>
             {commentHistory.map((c: any, idx: number) => (
               <li key={idx} className="border rounded p-3 mb-2">
                 <div style={{ fontSize: 12, color: "#666" }}>
-                  <strong>{c.by === user?.id ? "You" : c.byName || c.byEmail}</strong> —{" "}
-                  {c.at ? new Date(c.at).toLocaleString() : "unknown time"}
+                  <strong>
+                    {c.by === user?.id ? t("common.you") : c.byName || c.byEmail || t("common.unknown")}
+                  </strong>{" "}
+                  — {c.at ? formatDateTime(c.at) : t("common.unknownTime")}
                 </div>
                 <div style={{ marginTop: 6 }}>{c.text}</div>
               </li>
@@ -169,7 +193,7 @@ export default function Stage4Validation({
           </ul>
         ) : (
           <p className="muted small" style={{ marginTop: 8 }}>
-            No comments yet.
+            {t("view.step4.comments.empty")}
           </p>
         )}
       </div>

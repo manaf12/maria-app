@@ -3,7 +3,6 @@
   "topbar.lang.de": "Allemand",
   "topbar.lang.fr": "Français",
   "topbar.lang.en": "Anglais",
-
   "auth.login.title": "Connexion",
   "auth.login.email": "E-mail",
   "auth.login.password": "Mot de passe",
@@ -27,7 +26,6 @@
   "auth.signup.haveAccount": "Vous avez déjà un compte ?",
   "auth.signup.signin": "Se connecter",
   "auth.signup.successMsg": "Compte créé ! Veuillez vérifier votre e-mail.",
-
   "auth.signup.verifyTitle": "Vérifiez votre e-mail",
   "auth.signup.verifyMsg": "Nous avons envoyé un code à 6 chiffres à",
   "auth.signup.code": "Code à 6 chiffres",
@@ -35,13 +33,11 @@
   "auth.signup.changeEmail": "Changer l’e-mail",
   "auth.signup.resend": "Renvoyer le code",
   "auth.signup.resendIn": "Renvoyer dans",
-
   "auth.signup.errors.match": "Les mots de passe ne correspondent pas",
   "auth.signup.errors.invalidCode": "Code invalide",
   "auth.signup.errors.mustAgree": "Vous devez accepter pour continuer",
   "auth.signup.errors.failed": "Échec de l'inscription",
   "auth.signup.errors.weak": "Mot de passe trop faible",
-
   "auth.forgot.title": "Mot de passe oublié",
   "auth.forgot.email": "E-mail",
   "auth.forgot.submit": "Envoyer le lien de réinitialisation",
@@ -49,6 +45,7 @@
   "auth.forgot.success": "Si cet e-mail existe, un lien de réinitialisation a été envoyé.",
   "auth.forgot.error": "Impossible d’envoyer le lien. Veuillez réessayer.",
   "topbar.login": "Connexion",
+  "topbar.myAccount": "Mon compte",
   "menu.getOffer": "Obtenir une offre",
   "menu.dashboard": "Tableau de bord",
   "menu.settings": "Paramètres",
@@ -59,24 +56,20 @@
   "footer.privacy": "Politique de confidentialité",
   "home.hero.tagline": "Votre déclaration d’impôts en ligne — simple, rapide et 100 % suisse.",
   "home.hero.title": "Remplissez votre déclaration d’impôts suisse en ligne avec un accompagnement professionnel.",
-
   "home.strengths.title": "Nos principaux atouts",
   "home.strengths.item1": "Équipe basée en Suisse",
   "home.strengths.item2": "Tarifs transparents et fixes",
   "home.strengths.item3": "Assistance humaine en ligne",
   "home.strengths.item4": "Sécurité et confidentialité des données",
-
   "home.price.title": "Votre déclaration d’impôts dès CHF 59.–",
   "home.price.text": "Votre déclaration d’impôts suisse réalisée en ligne, en toute sécurité, avec un prix adapté à votre situation.",
   "home.price.cta": "Obtenir une offre",
   "home.price.note": "Disponible pour des clients dans toute la Suisse.",
-
   "home.reviews.title": "Avis Google",
   "home.reviews.subtitle": "Des avis authentiques de clients qui nous ont confié leur déclaration d’impôts.",
   "home.reviews.score": "Note moyenne : 4.8/5",
   "home.reviews.count": "Basé sur des dizaines d’avis vérifiés sur Google.",
   "home.reviews.placeholder": "Le widget ou des captures d’écran Google Reviews seront intégrés ici pour mettre en avant les retours clients.",
-
   "home.seo.title": "Déclaration d’impôts en ligne – informations utiles",
   "home.seo.intro": "SwissTaxOnline combine la flexibilité d’un outil numérique et la qualité d’un service fiduciaire.",
   "home.seo.text1": "Nous réalisons des déclarations d’impôts pour des particuliers dans toute la Suisse. Notre processus en ligne est conçu pour être simple et efficace, tout en respectant les exigences cantonales.",
@@ -85,7 +78,6 @@
   "home.seo.linkBlog": "Blog",
   "home.seo.linkFaq": "FAQ",
   "home.seo.linkContact": "Contact",
-
   "home.how.title": "Comment ça marche",
   "home.how.step1.title": "1. Remplissez le formulaire",
   "home.how.step1.text": "Répondez à quelques questions pour que nous comprenions votre situation.",
@@ -98,7 +90,6 @@
   "home.how.step5.title": "5. Nous déposons votre déclaration pour vous",
   "home.how.step5.text": "Une fois validée, nous transmettons votre déclaration au fisc compétent.",
   "home.how.learnMore": "En savoir plus dans la FAQ",
-
   "home.guarantees.title": "Nos garanties",
   "home.guarantees.item1.title": "Données hébergées en Suisse",
   "home.guarantees.item1.text": "Vos données sont stockées dans une infrastructure sécurisée en Suisse.",
@@ -108,7 +99,6 @@
   "home.guarantees.item3.text": "Notre équipe est joignable si vous avez des questions sur votre dossier.",
   "home.guarantees.item4.title": "Aucun frais caché",
   "home.guarantees.item4.text": "Le prix est fixe et confirmé avant que nous commencions à travailler sur votre déclaration.",
-
   "home.faq.title": "FAQ courte",
   "home.faq.q1.q": "Combien de temps faut-il pour traiter ma déclaration ?",
   "home.faq.q1.a": "La plupart des déclarations sont traitées en quelques jours ouvrables après la réception de tous vos documents.",
@@ -118,35 +108,29 @@
   "home.faq.q3.a": "Oui. Nous utilisons le chiffrement, un hébergement sécurisé en Suisse et des contrôles d’accès stricts.",
   "product.title": "Obtenez votre offre pour la déclaration d’impôts",
   "product.subtitle": "Répondez à quelques questions afin que nous puissions calculer le prix adapté à votre situation fiscale.",
-
   "product.editRequest": "Modifier ma demande",
-
   "product.sections.profile": "Votre profil",
   "product.taxYear": "Année fiscale",
   "product.maritalStatus": "Statut civil",
   "product.marital.single": "Célibataire",
   "product.marital.married": "Marié·e",
   "product.childrenCount": "Nombre d’enfants",
-
   "product.sections.situation": "Votre situation fiscale",
   "product.incomeSources": "Nombre de sources de revenus",
   "product.incomeHint": "Exemples : salaires, rentes AVS, rentes LPP, activité indépendante.",
   "product.wealthStatements": "Nombre de relevés de fortune / déclarations fiscales",
   "product.wealthHint": "Exemples : relevés bancaires, e-tax, relevés de titres, participations.",
   "product.properties": "Nombre de biens immobiliers",
-
   "product.propertiesDetailsTitle": "Détails des biens immobiliers",
   "product.propertiesCount": "Combien de biens en tout ?",
   "product.newProperties": "Combien sont déclarés pour la première fois ?",
   "product.newPropertiesHint": "Par exemple : un bien acheté durant l’année fiscale.",
-
   "product.sections.billing": "Adresse de facturation",
   "product.billing.firstName": "Prénom",
   "product.billing.lastName": "Nom",
   "product.billing.street": "Rue et numéro",
   "product.billing.postalCode": "NPA",
   "product.billing.city": "Localité",
-
   "product.sections.summary": "Récapitulatif de votre demande",
   "product.summary.taxYear": "Année fiscale : {{year}}",
   "product.summary.marital": "Statut civil : {{status}}",
@@ -154,26 +138,23 @@
   "product.summary.incomes": "Sources de revenus : {{count}}",
   "product.summary.wealth": "Relevés de fortune / fiscaux : {{count}}",
   "product.summary.properties": "Biens immobiliers : {{count}}",
-
   "product.cancel": "Annuler",
   "product.confirm": "Confirmer ma demande",
   "product.confirming": "Confirmation en cours...",
   "product.next": "Suivant",
   "product.back": "Retour",
-
   "product.sections.offers": "Nos offres",
   "product.offersHint": "En fonction de vos réponses, choisissez l’offre qui correspond le mieux à votre situation.",
-  "product.offers.basic": "Basic",
-  "product.offers.basicDesc": "Situations simples. Idéal si vous avez une seule source de revenu et peu de fortune.",
   "product.offers.standard": "Standard",
-  "product.offers.standardDesc": "La plupart des situations courantes. Inclut plusieurs revenus et des placements simples.",
   "product.offers.premium": "Premium",
-  "product.offers.premiumDesc": "Situations complexes avec plusieurs revenus, placements ou biens immobiliers.",
-  "product.recommended": "Recommandée",
+  "product.offers.confort": "Confort",
   "product.goToSummary": "Aller au récapitulatif",
-
+  "product.chooseOffer": "Choisir l’offre",
   "product.errors.noOfferSelected": "Veuillez sélectionner une offre avant de confirmer votre demande.",
   "product.confirmation.mock": "Votre demande a été enregistrée (démo). L’intégration finale enverra ces données au backend.",
+  "product.finalPrice": "Prix final",
+  "product.proceedToBilling": "Passer à la facturation",
+  "product.sections.offer": "Offre sélectionnée",
   "dashboard": {
     "title": "Tableau de bord",
     "subtitle": "Gérez toutes vos déclarations fiscales suisses en un seul endroit.",
@@ -181,11 +162,12 @@
     "myDeclarations": "Mes déclarations fiscales",
     "helpLink": "Besoin d’aide ?",
     "loading": "Chargement…",
+    "welcome": "Bienvenue",
+    "email": "E-mail",
+    "logout": "Se déconnecter",
     "empty": "Vous n’avez encore aucune déclaration fiscale.",
     "startFirst": "Commencer ma première déclaration",
-
     "declarationTitle": "{{year}} – {{name}}",
-
     "steps": {
       "request": "Préparation des documents",
       "documents": "Vérification des documents",
@@ -193,12 +175,10 @@
       "review": "Révision et validation",
       "submission": "Soumission"
     },
-
     "actions": {
       "viewRequest": "Voir la demande",
       "viewDeclaration": "Voir la déclaration"
     },
-
     "banner": {
       "step1": "Nous vérifions si tous les documents requis ont été reçus.",
       "step2": "Nous examinons vos documents.",
@@ -206,7 +186,6 @@
       "step4": "Votre déclaration est prête. Veuillez réviser et confirmer.",
       "step5": "Votre déclaration a été soumise à l’administration fiscale."
     },
-
     "steps1": {
       "1": {
         "title": "Préparation des documents",
@@ -229,17 +208,24 @@
         "time": "Délai indicatif : 1–3 jours"
       }
     },
-
     "defaultStepMessage": "Votre déclaration est actuellement à l’étape {{step}} sur 5.",
     "statusSubmitted": "Soumise"
-  }
-  ,
+  },
   "view": {
     "title": "Voir ma demande",
     "back": "Retour au tableau de bord",
-
+    "loading1": "Chargement...",
+    "back1": "Retour",
+    "notFound1": "Déclaration introuvable.",
+    "errors1": {
+      "loadFailed": "Échec du chargement de la déclaration."
+    },
+    "alerts": {
+      "downloadFailed": "Impossible de télécharger le fichier.",
+      "selectFileFirst": "Veuillez d’abord sélectionner un fichier.",
+      "uploadFailed": "Échec du téléversement."
+    },
     "formSummary": "Résumé du formulaire initial",
-
     "summary": {
       "maritalStatus": "État civil",
       "childrenCount": "Nombre d’enfants",
@@ -249,7 +235,6 @@
       "price": "Prix",
       "taxYear": "Année fiscale"
     },
-
     "sections": {
       "initialUpload": "Téléchargement initial des documents",
       "reviewDocuments": "Vérification des documents et questions complémentaires",
@@ -257,31 +242,26 @@
       "validation": "Relecture et validation de la déclaration",
       "submission": "Dépôt de la déclaration fiscale"
     },
-
     "status": {
       "locked": "Verrouillé",
       "current": "En cours",
       "completed": "Terminé"
     },
-
     "invoice": "Facture",
     "invoice.offer": "Offre",
     "invoice.total": "Montant total",
     "downloadInvoice": "Télécharger la facture",
-
     "loading": "Chargement…",
     "errors": {
       "loadFailed": "Impossible de charger la demande."
     },
     "notFound": "Demande introuvable.",
-
     "doc": {
       "status": {
         "uploaded": "Téléversé",
         "todo": "À compléter"
       }
     },
-
     "step1": {
       "description": "Téléversez vos certificats de salaire, relevés bancaires, attestations de 3ᵉ pilier et autres pièces justificatives.",
       "uploadBtn": "Téléverser des documents (PDF)",
@@ -289,56 +269,117 @@
       "submit": "Soumettre les documents pour vérification",
       "completed": "Vos documents ont été soumis."
     },
-
     "step2": {
       "description": "Nous vérifions vos documents. Si des informations complémentaires sont nécessaires, vous pouvez répondre aux questions ci-dessous.",
       "answerPlaceholder": "Votre réponse ici…",
       "submit": "Soumettre les réponses et documents",
-      "completed": "Vos réponses complémentaires ont été soumises et sont en cours de vérification."
+      "completed": "Vos réponses complémentaires ont été soumises et sont en cours de vérification.",
+      "writeCommentFirst": "Veuillez d’abord écrire un commentaire.",
+      "commentSubmitted": "Commentaire envoyé.",
+      "submitFailed": "Impossible d’envoyer le commentaire.",
+      "approveConfirm": "Êtes-vous sûr de vouloir approuver ces documents ?",
+      "approveSuccess": "Étape 2 approuvée avec succès !",
+      "approveError": "Une erreur s’est produite lors de l’approbation.",
+      "noMissingDocuments": "Aucun document manquant.",
+      "missingDocumentsTitle": "Documents manquants",
+      "commentSectionTitle": "Commentaires",
+      "lastComment": "Dernier commentaire",
+      "addCommentLabelAdmin": "Ajouter un commentaire (pour le client)",
+      "addCommentLabelUser": "Ajouter un commentaire (pour l’administrateur)",
+      "commentPlaceholderAdmin": "Écrire une note pour le client...",
+      "commentPlaceholderUser": "Écrire une question ou une note pour l’administrateur...",
+      "cancel": "Annuler",
+      "sending": "Envoi...",
+      "addCommentBtn": "Ajouter un commentaire",
+      "noComments": "Aucun commentaire pour le moment.",
+      "you": "Vous",
+      "unknown": "Inconnu",
+      "unknownTime": "heure inconnue",
+      "admin": {
+        "description": "Nous examinons les documents téléchargés. Vous pouvez les consulter, les télécharger et demander des informations supplémentaires si nécessaire.",
+        "filesTitle": "Fichiers téléchargés",
+        "downloadBtn": "Télécharger",
+        "approveBtn": "Valider l’étape",
+        "missingReason": "Raison"
+      }
     },
-
     "step3": {
       "text": "Votre déclaration fiscale est en cours de préparation par SwissTaxOnline. Cette étape est entièrement gérée par notre équipe.",
-      "eta": "Délai estimé : environ 2 semaines après la réception de tous les documents."
+      "eta": "Délai estimé : environ 2 semaines après la réception de tous les documents.",
+      "confirmDraftReceipt": "Êtes-vous sûr de vouloir confirmer la réception du brouillon ?",
+      "draftConfirmed": "Confirmé — l’étape sera marquée comme terminée.",
+      "confirmReceiptFailed": "Impossible de confirmer la réception.",
+      "confirmComplete": "Êtes-vous sûr d’avoir terminé la préparation de la déclaration fiscale ?",
+      "completed": "Étape 3 marquée comme terminée !",
+      "completeError": "Une erreur s’est produite.",
+      "draftUploadSuccess": "Brouillon téléversé avec succès.",
+      "admin": {
+        "uploadDraftLabel": "Admin : Télécharger le brouillon de la déclaration fiscale (PDF)",
+        "uploadDraftBtn": "Télécharger le brouillon",
+        "completeBtn": "Marquer comme préparé et terminer l’étape 3",
+        "mustUploadFirst": "Vous devez télécharger le brouillon avant de terminer cette étape."
+      }
     },
-
     "step4": {
-      "description": "Votre projet de déclaration est prêt. Veuillez le relire attentivement et confirmer.",
-      "downloadDraft": "Télécharger le projet de déclaration (PDF)",
-      "comments": "Commentaires ou corrections",
-      "comments.placeholder": "Ajoutez vos commentaires ou corrections ici…",
-      "uploadExtra": "Téléverser des documents supplémentaires",
-      "meetingInfo": "Pour les offres Confort et Premium, vous pouvez demander un rendez-vous pour discuter de votre déclaration.",
-      "bookMeeting": "Prendre rendez-vous",
-      "validate": "Valider et confirmer",
-      "completed": "Vous avez validé votre déclaration."
+      "description": "Le brouillon de votre déclaration fiscale est prêt. Veuillez le vérifier attentivement et confirmer.",
+      "noDraftYet": "Aucun brouillon n’a encore été téléchargé.",
+      "waitingForAdmin": "En attente du téléchargement du brouillon par l’administrateur.",
+      "uploadedAt": "Téléversé :",
+      "lastComment": "Dernier commentaire :",
+      "confirming": "Confirmation en cours...",
+      "confirmReceipt": "Confirmer la réception du brouillon",
+      "addComment": {
+        "label": "Ajouter un commentaire",
+        "forClient": "(pour le client)",
+        "optional": "(facultatif)",
+        "placeholderAdmin": "Rédigez un commentaire pour le client...",
+        "placeholderUser": "Exemple : j’ai trouvé une erreur à la page 2, ligne 5...",
+        "submit": "Ajouter un commentaire"
+      },
+      "comments": {
+        "title": "Commentaires",
+        "empty": "Aucun commentaire pour le moment."
+      }
     },
-
     "step5": {
-      "description": "Votre déclaration fiscale a été déposée auprès de l’administration fiscale.",
-      "date": "Date de dépôt",
-      "method": "Mode de dépôt",
-      "downloadFinal": "Télécharger la déclaration finale",
-      "uploadAssessment": "Téléverser votre décision de taxation (offre Confort uniquement)",
-      "thanks": "Merci ! Ce processus est maintenant terminé. Vous pouvez démarrer une nouvelle déclaration pour l’année suivante à tout moment depuis votre tableau de bord."
+      "description": "Ceci est l’étape finale. Veuillez vérifier les informations de soumission et télécharger les documents nécessaires.",
+      "date": "Date de soumission",
+      "method": "Méthode de soumission",
+      "adminFilesTitle": "Fichiers téléchargés par l’administrateur",
+      "userFilesTitle": "Fichiers téléchargés par l’utilisateur",
+      "uploaded": "Téléversé",
+      "by": "par",
+      "admin1": "administrateur",
+      "user1": "utilisateur",
+      "noAdminFilesYet": "Aucun fichier administrateur pour le moment.",
+      "noUserFilesYet": "Aucun fichier utilisateur pour le moment.",
+      "admin": {
+        "uploadFinalLabel": "Admin : téléverser le fichier final (PDF)",
+        "uploadFinalBtn": "Téléverser le fichier final",
+        "markFullyCompleted": "Marquer comme totalement terminé & finaliser la déclaration"
+      },
+      "user": {
+        "uploadNoticeLabel": "Téléverser l’avis d’imposition (si disponible)",
+        "uploadNoticeBtn": "Téléverser l’avis"
+      },
+      "thanks": "Merci d’avoir complété la soumission."
+    },
+    "submission": {
+      "userUploadSuccess": "Fichier téléversé. L’admin pourra le télécharger."
     }
-  }
-  ,
+  },
   "about": {
     "title": "À propos de SwissTaxOnline",
     "subtitle": "Un service fiscal suisse digital développé par A&G Fiduciaire Sàrl pour rendre vos déclarations d’impôts plus simples, plus claires et plus sécurisées.",
-
     "company": {
       "title": "Qui sommes-nous ?",
       "text1": "SwissTaxOnline est un service en ligne dédié à l’accompagnement des particuliers et des entrepreneurs pour leurs déclarations d’impôts en Suisse. Derrière la plateforme se trouve A&G Fiduciaire Sàrl, une fiduciaire suisse expérimentée en fiscalité, comptabilité et conseil.",
       "text2": "En combinant l’expertise humaine et une plateforme digitale sécurisée, nous proposons un service à la fois efficace et personnalisé – adapté à votre situation, à votre canton et à votre langue."
     },
-
     "mission": {
       "title": "Notre mission",
       "text": "Notre mission est de simplifier le processus de la déclaration d’impôts en Suisse. Nous voulons réduire la complexité, éviter les mauvaises surprises et vous faire gagner du temps. Avec SwissTaxOnline, vous remplissez un questionnaire clair et structuré, vous téléversez vos documents en toute sécurité, et notre équipe se charge de préparer, vérifier et déposer votre déclaration auprès de l’administration fiscale."
     },
-
     "team": {
       "title": "Notre équipe",
       "intro": "SwissTaxOnline est portée par une équipe pluridisciplinaire de spécialistes en fiscalité, fiduciaire et support client, basée en Suisse.",
@@ -360,7 +401,6 @@
         }
       }
     },
-
     "values": {
       "title": "Nos valeurs",
       "intro": "Quatre valeurs guident nos décisions et la façon dont nous accompagnons nos clients.",
@@ -383,7 +423,6 @@
         }
       }
     },
-
     "commitments": {
       "title": "Nos engagements",
       "intro": "Au-delà de la technologie, nous nous engageons sur des garanties concrètes pour vos données et votre expérience.",
@@ -399,7 +438,6 @@
         }
       }
     },
-
     "contact": {
       "title": "Contact et adresse",
       "intro": "Vous avez des questions sur SwissTaxOnline, notre processus ou nos offres ? Vous pouvez nous contacter via les coordonnées ci-dessous.",
@@ -414,12 +452,10 @@
       "emailLabel": "E-mail :",
       "phoneLabel": "Téléphone :"
     }
-  }
-  ,
+  },
   "faq": {
     "title": "Questions fréquentes",
     "subtitle": "Retrouvez ici les réponses aux questions les plus fréquentes sur SwissTaxOnline, le processus de déclaration d’impôts et la gestion de vos données.",
-
     "categories": {
       "general": {
         "title": "Informations générales",
@@ -439,7 +475,6 @@
           }
         }
       },
-
       "process": {
         "title": "Processus de déclaration d’impôts",
         "description": "Comment se déroulent les différentes étapes de la déclaration d’impôts avec SwissTaxOnline.",
@@ -458,7 +493,6 @@
           }
         }
       },
-
       "documents": {
         "title": "Documents requis",
         "description": "Les documents à préparer et à téléverser pour votre déclaration d’impôts suisse.",
@@ -477,7 +511,6 @@
           }
         }
       },
-
       "payment": {
         "title": "Paiement et facturation",
         "description": "Informations sur les tarifs, les modes de paiement et les factures.",
@@ -496,7 +529,6 @@
           }
         }
       },
-
       "security": {
         "title": "Sécurité et confidentialité",
         "description": "Comment nous protégeons vos données personnelles et fiscales.",
@@ -516,82 +548,70 @@
         }
       }
     }
-    
   },
   "verifyEmail": {
-  "title": "Vérifiez votre e-mail",
-  "statusLabel": "Statut du compte :",
-  "statusPending": "En attente de vérification",
-  "statusVerified": "Compte vérifié",
-
-  "instructionsNoToken": "Un lien de confirmation a été envoyé à votre adresse e-mail. Cliquez sur le lien dans le message pour activer votre compte.",
-  "verifying": "Nous vérifions votre e-mail…",
-
-  "verifiedMessage": "Votre e-mail a été vérifié avec succès. Vous allez être redirigé vers votre tableau de bord.",
-  "invalidLinkMessage": "Ce lien de vérification n’est pas valide. Vous pouvez demander un nouveau lien ci-dessous.",
-  "linkExpired": "Ce lien de vérification a expiré. Veuillez demander un nouvel e-mail de confirmation.",
-
-  "resendTitle": "Vous n’avez pas reçu l’e-mail ?",
-  "resendHint": "Vérifiez votre dossier de spam ou cliquez sur le bouton ci-dessous pour renvoyer le lien de vérification.",
-  "resendCta": "Renvoyer l’e-mail de confirmation",
-  "resendLoading": "Envoi…",
-  "resendSuccess": "Un nouvel e-mail de vérification a été envoyé dans votre boîte de réception.",
-  "resendError": "Impossible de renvoyer l’e-mail. Veuillez réessayer plus tard.",
-
-  "goToDashboard": "Aller au tableau de bord",
-  "backToLogin": "Retour à la connexion"
-},
-"accountSettings": {
-  "title": "Paramètres du compte",
-  "subtitle": "Gérez vos informations personnelles, vos préférences de langue et vos options de sécurité.",
-  "loading": "Chargement de vos paramètres de compte…",
-
-  "save": "Enregistrer les modifications",
-  "saving": "Enregistrement…",
-  "saveSuccess": "Vos paramètres de compte ont été mis à jour.",
-  "saveError": "Impossible d’enregistrer vos modifications. Veuillez réessayer.",
-
-  "errors": {
-    "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas."
+    "title": "Vérifiez votre e-mail",
+    "statusLabel": "Statut du compte :",
+    "statusPending": "En attente de vérification",
+    "statusVerified": "Compte vérifié",
+    "instructionsNoToken": "Un lien de confirmation a été envoyé à votre adresse e-mail. Cliquez sur le lien dans le message pour activer votre compte.",
+    "verifying": "Nous vérifions votre e-mail…",
+    "verifiedMessage": "Votre e-mail a été vérifié avec succès. Vous allez être redirigé vers votre tableau de bord.",
+    "invalidLinkMessage": "Ce lien de vérification n’est pas valide. Vous pouvez demander un nouveau lien ci-dessous.",
+    "linkExpired": "Ce lien de vérification a expiré. Veuillez demander un nouvel e-mail de confirmation.",
+    "resendTitle": "Vous n’avez pas reçu l’e-mail ?",
+    "resendHint": "Vérifiez votre dossier de spam ou cliquez sur le bouton ci-dessous pour renvoyer le lien de vérification.",
+    "resendCta": "Renvoyer l’e-mail de confirmation",
+    "resendLoading": "Envoi…",
+    "resendSuccess": "Un nouvel e-mail de vérification a été envoyé dans votre boîte de réception.",
+    "resendError": "Impossible de renvoyer l’e-mail. Veuillez réessayer plus tard.",
+    "goToDashboard": "Aller au tableau de bord",
+    "backToLogin": "Retour à la connexion"
   },
-
-  "personal": {
-    "title": "Informations personnelles",
-    "desc": "Mettez à jour les informations liées à votre compte SwissTaxOnline.",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "email": "E-mail",
-    "phone": "Numéro de téléphone"
+  "accountSettings": {
+    "title": "Paramètres du compte",
+    "subtitle": "Gérez vos informations personnelles, vos préférences de langue et vos options de sécurité.",
+    "loading": "Chargement de vos paramètres de compte…",
+    "save": "Enregistrer les modifications",
+    "saving": "Enregistrement…",
+    "saveSuccess": "Vos paramètres de compte ont été mis à jour.",
+    "saveError": "Impossible d’enregistrer vos modifications. Veuillez réessayer.",
+    "errors": {
+      "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas."
+    },
+    "personal": {
+      "title": "Informations personnelles",
+      "desc": "Mettez à jour les informations liées à votre compte SwissTaxOnline.",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "E-mail",
+      "phone": "Numéro de téléphone"
+    },
+    "language": {
+      "title": "Préférences de langue",
+      "desc": "Choisissez la langue de l’interface. Elle sera utilisée pour vos prochaines connexions.",
+      "label": "Langue d’affichage",
+      "en": "Anglais",
+      "fr": "Français",
+      "de": "Allemand"
+    },
+    "security": {
+      "title": "Sécurité du compte",
+      "desc": "Modifiez votre mot de passe et gérez la double authentification.",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmNewPassword": "Confirmez le nouveau mot de passe",
+      "twoFactorLabel": "Authentification à deux facteurs (2FA)",
+      "twoFactorToggle": "Activer la 2FA pour une sécurité renforcée lors de la connexion."
+    },
+    "delete": {
+      "title": "Supprimer le compte",
+      "desc": "La suppression de votre compte désactivera votre accès et peut entraîner la suppression définitive de vos données conformément à notre politique interne.",
+      "button": "Supprimer mon compte",
+      "confirmQuestion": "Êtes-vous sûr(e) de vouloir supprimer votre compte ? Cette action est irréversible.",
+      "error": "Impossible de supprimer votre compte. Veuillez contacter le support si le problème persiste."
+    }
   },
-
-  "language": {
-    "title": "Préférences de langue",
-    "desc": "Choisissez la langue de l’interface. Elle sera utilisée pour vos prochaines connexions.",
-    "label": "Langue d’affichage",
-    "en": "Anglais",
-    "fr": "Français",
-    "de": "Allemand"
-  },
-
-  "security": {
-    "title": "Sécurité du compte",
-    "desc": "Modifiez votre mot de passe et gérez la double authentification.",
-    "currentPassword": "Mot de passe actuel",
-    "newPassword": "Nouveau mot de passe",
-    "confirmNewPassword": "Confirmez le nouveau mot de passe",
-    "twoFactorLabel": "Authentification à deux facteurs (2FA)",
-    "twoFactorToggle": "Activer la 2FA pour une sécurité renforcée lors de la connexion."
-  },
-
-  "delete": {
-    "title": "Supprimer le compte",
-    "desc": "La suppression de votre compte désactivera votre accès et peut entraîner la suppression définitive de vos données conformément à notre politique interne.",
-    "button": "Supprimer mon compte",
-    "confirmQuestion": "Êtes-vous sûr(e) de vouloir supprimer votre compte ? Cette action est irréversible.",
-    "error": "Impossible de supprimer votre compte. Veuillez contacter le support si le problème persiste."
-  }
-},
-
   "admin.declarations.title": "Déclarations fiscales",
   "admin.declarations.subtitle": "Gérer, filtrer et attribuer les déclarations fiscales.",
   "admin.declarations.searchPlaceholder": "Rechercher par nom, e-mail, ID, année…",
@@ -612,14 +632,11 @@
   "admin.declarations.step": "Étape {{n}}",
   "admin.declarations.results": "Résultats",
   "admin.declarations.count": "Total : {{count}}",
-
   "admin.declarations.filter.unassigned": "Non attribuées",
   "admin.declarations.filter.assigned": "Attribuées",
   "admin.declarations.filter.all": "Toutes",
-
   "admin.declarations.status.all": "Tous les statuts",
   "admin.declarations.year.all": "Toutes les années",
-
   "admin.declarations.columns.client": "Client",
   "admin.declarations.columns.tax": "Année / Offre",
   "admin.declarations.columns.status": "Statut",
@@ -627,9 +644,7 @@
   "admin.declarations.columns.created": "Créé",
   "admin.declarations.columns.updated": "Mis à jour",
   "admin.declarations.columns.assignment": "Attribution",
-
   "admin.declarations.unknownClient": "Client inconnu",
-
   "admin.declarations.errors.loadFailed": "Impossible de charger les déclarations.",
   "admin.declarations.errors.assignFailed": "Échec de l’attribution. Veuillez réessayer.",
   "admin.declarations.errors.adminIdRequired": "L’ID Admin est obligatoire.",
@@ -649,8 +664,102 @@
       "appealIfNecessary": "Recours si nécessaire",
       "ratesAccordingToProfile": "Tarifs selon votre profil"
     }
+  },
+  "common": {
+    "delete": "Supprimer",
+    "optional": "Optionnel",
+    "required": "Obligatoire",
+    "thisFile": "ce fichier",
+    "cancel": "Annuler",
+    "undo": "Annuler",
+    "undoing": "Annulation...",
+    "saving": "Enregistrement…",
+    "saved": "Enregistré",
+    "error": "Erreur",
+    "last": "Dernière",
+    "close": "Fermer",
+    "admin": "ADMIN",
+    "chooseFile": "Choisir un fichier",
+    "noFileChosen": "Aucun fichier sélectionné",
+    "uploading": "Téléchargement en cours...",
+    "sending": "Envoi en cours...",
+    "you": "Vous",
+    "unknown": "Inconnu",
+    "unknownTime": "heure inconnue"
+  },
+  "step1": {
+    "title": "Étape 1 — Documents et Questions",
+    "subtitle": "Téléchargez les documents requis et répondez aux questions supplémentaires.",
+    "progressLabel": "Progression des documents",
+    "lockMessage": "L’étape 1 est verrouillée car l’administrateur a approuvé vos documents (Étape 2).",
+    "additionalQuestions": "Questions supplémentaires",
+    "loadingQuestions": "Chargement des questions...",
+    "confirmDeleteFile": "Supprimer « {{fileName}} » ?",
+    "uploadedCount": "Téléchargé(s) ({{count}})",
+    "notAvailable": "Non disponible",
+    "pending": "En attente",
+    "notEditable": "Cette étape n’est pas modifiable pour le moment.",
+    "stepStatusLabel": "Statut de l’étape 1",
+    "confirmStep1": "Confirmer l’étape 1",
+    "confirming": "Confirmation en cours...",
+    "confirmStep1Prompt": "Confirmer l’étape 1 ? Vous ne pourrez pas continuer tant qu’elle n’est pas complète.",
+    "missingDocuments": "Documents manquants :",
+    "missingQuestions": "Questions manquantes :",
+    "notReady": "L’étape 1 n’est pas prête",
+    "selectPlaceholder": "Sélectionner…"
+  },
+  "documents": {
+    "previous_tax_return": {
+      "title": "Déclaration fiscale précédente"
+    },
+    "salary_certificate": {
+      "title": "Certificat de salaire"
+    },
+    "bank_statement": {
+      "title": "Relevé bancaire"
+    },
+    "pillar_3_certificate": {
+      "title": "Attestation du 3e pilier"
+    },
+    "medical_expense_receipt": {
+      "title": "Reçu de frais médicaux"
+    },
+    "taxero_invoice_payment_proof": {
+      "title": "Preuve de paiement de la facture Taxero"
+    },
+    "others": {
+      "title": "Autres documents"
+    },
+    "upload": {
+      "chooseFile": "Choisir un fichier",
+      "filesSelected_one": "{{count}} fichier sélectionné",
+      "filesSelected_other": "{{count}} fichiers sélectionnés",
+      "upload": "Téléverser",
+      "uploading": "Téléversement..."
+    },
+    "missing": {
+      "cta": "Je n’ai pas ce document",
+      "reasonPlaceholder": "Motif (optionnel)",
+      "confirm": "Confirmer indisponible",
+      "saving": "Enregistrement..."
+    }
+  },
+  "stepStatus": {
+    "PENDING": "En attente",
+    "DONE": "Terminé",
+    "IN_PROGRESS": "En cours"
+  },
+  "filesModal": {
+    "title": "Fichiers téléversés",
+    "subtitle": "Documents pour cette déclaration",
+    "clientFiles": "Fichiers client",
+    "adminFiles": "Fichiers admin",
+    "empty": "Aucun fichier téléversé pour le moment.",
+    "closeAria": "Fermer la fenêtre",
+    "downloadAria": "Télécharger le fichier"
+  },
+  "documentTypes": {
+    "assessment_notice": "Avis d’imposition",
+    "final_file": "Fichier final"
   }
-
-
 }
-

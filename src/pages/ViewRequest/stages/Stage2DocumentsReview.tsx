@@ -48,7 +48,7 @@ export default function Stage2DocumentsReview({
   const commentHistory: any[] = documentsReviewStep?.meta?.commentHistory ?? [];
   const lastComment: any = documentsReviewStep?.meta?.lastComment ?? null;
   const missingDocs = documentsPreparationStep?.meta?.missingDocs ?? [];
-console.log(documentsReviewStep , " manaf ")
+
   const currentCommentValue = isAdmin ? (step2AdminComment ?? "") : (step2UserComment ?? "");
   const setCurrentCommentValue = (v: string) => {
     if (isAdmin) setStep2AdminComment(v);
@@ -68,6 +68,7 @@ console.log(documentsReviewStep , " manaf ")
       </p>
 
       <h3>{t("view.step2.admin.filesTitle")}</h3>
+
       <ul className="doc-list">
         {(data.files ?? []).map((file) => (
           <li key={file.id} className="doc-item-row">
@@ -82,7 +83,8 @@ console.log(documentsReviewStep , " manaf ")
           </li>
         ))}
       </ul>
-  {missingDocs.length > 0 ? (
+
+      {missingDocs.length > 0 ? (
         <div style={{ marginTop: 16 }}>
           <h4>{t("view.step2.missingDocumentsTitle")}</h4>
           <ul className="doc-list">
@@ -90,7 +92,8 @@ console.log(documentsReviewStep , " manaf ")
               <li key={index} className="doc-item-row">
                 <div className="doc-item-main">
                   <span>
-                    {doc.documentType} {doc.reason ? `- Reason: ${doc.reason}` : ""}
+                    {doc.documentType}
+                    {doc.reason ? ` - ${t("view.step2.admin.missingReason")}: ${doc.reason}` : ""}
                   </span>
                 </div>
               </li>
@@ -104,7 +107,11 @@ console.log(documentsReviewStep , " manaf ")
       )}
 
       {isAdmin && isCurrent && (
-        <button className="btn-primary" style={{ marginTop: 12 }} onClick={() => onApproveStep2(adminNote)}>
+        <button
+          className="btn-primary"
+          style={{ marginTop: 12 }}
+          onClick={() => onApproveStep2(adminNote)}
+        >
           {t("view.step2.admin.approveBtn")}
         </button>
       )}
@@ -116,18 +123,18 @@ console.log(documentsReviewStep , " manaf ")
       )}
 
       <div style={{ marginTop: 16 }}>
-        <h4 className="font-medium">Comments</h4>
+        <h4 className="font-medium">{t("view.step2.commentSectionTitle")}</h4>
 
         {lastComment && (
           <div className="muted small" style={{ marginTop: 6 }}>
-            Last comment: <strong>{lastComment.text}</strong>{" "}
+            {t("view.step2.lastComment")}: <strong>{lastComment.text}</strong>{" "}
             <em>({new Date(lastComment.at).toLocaleString()})</em>
           </div>
         )}
 
         <div style={{ marginTop: 12 }}>
           <label className="block mb-2 font-medium">
-            Add Comment {isAdmin ? "(for client)" : "(for admin)"}
+            {isAdmin ? t("view.step2.addCommentLabelAdmin") : t("view.step2.addCommentLabelUser")}
           </label>
 
           <textarea
@@ -136,7 +143,9 @@ console.log(documentsReviewStep , " manaf ")
             onChange={(e) => setCurrentCommentValue(e.target.value)}
             rows={4}
             placeholder={
-              isAdmin ? "Write a note for the client..." : "Write a question or note for the admin..."
+              isAdmin
+                ? t("view.step2.commentPlaceholderAdmin")
+                : t("view.step2.commentPlaceholderUser")
             }
           />
 
@@ -147,7 +156,7 @@ console.log(documentsReviewStep , " manaf ")
               disabled={!!isAddingStep2Comment}
               style={{ marginRight: 8 }}
             >
-              Cancel
+              {t("view.step2.cancel")}
             </button>
 
             <button
@@ -155,7 +164,7 @@ console.log(documentsReviewStep , " manaf ")
               onClick={handleSend}
               disabled={!!isAddingStep2Comment || !currentCommentValue.trim()}
             >
-              {isAddingStep2Comment ? "Sending..." : "Add Comment"}
+              {isAddingStep2Comment ? t("view.step2.sending") : t("view.step2.addCommentBtn")}
             </button>
           </div>
         </div>
@@ -166,8 +175,12 @@ console.log(documentsReviewStep , " manaf ")
               {commentHistory.map((c: any, idx: number) => (
                 <li key={idx} className="border rounded p-3 mb-2">
                   <div style={{ fontSize: 12, color: "#666" }}>
-                    <strong>{c.by === user?.id ? "You" : c.byName || c.byEmail || "Unknown"}</strong>{" "}
-                    — {c.at ? new Date(c.at).toLocaleString() : "unknown time"}
+                    <strong>
+                      {c.by === user?.id
+                        ? t("view.step2.you")
+                        : c.byName || c.byEmail || t("view.step2.unknown")}
+                    </strong>{" "}
+                    — {c.at ? new Date(c.at).toLocaleString() : t("view.step2.unknownTime")}
                   </div>
                   <div style={{ marginTop: 6 }}>{c.text}</div>
                 </li>
@@ -175,7 +188,7 @@ console.log(documentsReviewStep , " manaf ")
             </ul>
           ) : (
             <p className="muted small" style={{ marginTop: 8 }}>
-              No comments yet.
+              {t("view.step2.noComments")}
             </p>
           )}
         </div>

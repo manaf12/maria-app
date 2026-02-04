@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import {type FileEntity } from "../../types/declaration.types";
+import { useTranslation } from "react-i18next";
+import { type FileEntity } from "../../types/declaration.types";
 
 type Props = {
   files: FileEntity[];
@@ -14,6 +15,8 @@ export default function FilesSummaryModal({
   isOpen,
   onClose,
 }: Props) {
+  const { t } = useTranslation(); // ✅ i18n
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -39,17 +42,30 @@ export default function FilesSummaryModal({
       <div className="relative z-10 w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
         <div className="px-6 py-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex justify-between">
           <div>
-            <h2 className="text-lg font-semibold">Uploaded Files</h2>
-            <p className="text-sm text-slate-300">Documents for this declaration</p>
+            <h2 className="text-lg font-semibold">{t("filesModal.title")}</h2>
+            <p className="text-sm text-slate-300">{t("filesModal.subtitle")}</p>
           </div>
-          <button onClick={onClose} className="text-xl hover:opacity-80">
+          <button
+            onClick={onClose}
+            className="text-xl hover:opacity-80"
+            aria-label={t("filesModal.closeAria")}
+          >
             ×
           </button>
         </div>
 
         <div className="p-6 max-h-[65vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FileColumn title="Client Files" files={userFiles} onDownloadFile={onDownloadFile} />
-          <FileColumn title="Admin Files" files={adminFiles} onDownloadFile={onDownloadFile} admin />
+          <FileColumn
+            title={t("filesModal.clientFiles")}
+            files={userFiles}
+            onDownloadFile={onDownloadFile}
+          />
+          <FileColumn
+            title={t("filesModal.adminFiles")}
+            files={adminFiles}
+            onDownloadFile={onDownloadFile}
+            admin
+          />
         </div>
 
         <div className="p-4 border-t bg-slate-50 flex justify-end">
@@ -57,7 +73,7 @@ export default function FilesSummaryModal({
             onClick={onClose}
             className="px-5 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition"
           >
-            Close
+            {t("common.close")}
           </button>
         </div>
       </div>
@@ -76,13 +92,15 @@ function FileColumn({
   onDownloadFile: (id: string) => void;
   admin?: boolean;
 }) {
+  const { t } = useTranslation(); // ✅ i18n
+
   return (
     <div>
       <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
         {title}
         {admin && (
           <span className="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700">
-            ADMIN
+            {t("common.admin")}
           </span>
         )}
       </h3>
@@ -97,13 +115,17 @@ function FileColumn({
               <div className="min-w-0">
                 <div className="font-medium truncate">{file.originalName}</div>
                 <div className="text-sm text-gray-500 capitalize">
-                  {file.documentType.replace(/_/g, " ")}
+                  {/* keep current behavior, but allow translating doc types if you want */}
+                  {t(`documentTypes.${file.documentType}`, {
+                    defaultValue: file.documentType.replace(/_/g, " "),
+                  })}
                 </div>
               </div>
 
               <button
                 onClick={() => onDownloadFile(file.id)}
                 className="ml-4 shrink-0 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                aria-label={t("filesModal.downloadAria")}
               >
                 ⬇
               </button>
@@ -111,7 +133,7 @@ function FileColumn({
           ))}
         </ul>
       ) : (
-        <p className="text-gray-500">No files uploaded yet.</p>
+        <p className="text-gray-500">{t("filesModal.empty")}</p>
       )}
     </div>
   );

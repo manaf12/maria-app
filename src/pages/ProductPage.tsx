@@ -33,9 +33,7 @@ type ServiceRow = {
 type Offer = {
   id: string;
   name: string;
-  description: string;
   price: number;
-  recommended?: boolean;
 };
 
 type QuoteDraft = {
@@ -93,7 +91,7 @@ function StepCard({
       {(onPrev || onNext) && (
         <div className="step-footer">
           {onPrev ? (
-            <button type="button" className="step-back-link" onClick={onPrev}>
+            <button type="button" className="btn-secondary step-back-link" onClick={onPrev}>
               <span aria-hidden="true"></span>
               <span>{t("product.back")}</span>
             </button>
@@ -104,7 +102,7 @@ function StepCard({
           {onNext && (
             <button
               type="button"
-              className="step-next-btn"
+              className="btn-primary step-next-btn"
               onClick={onNext}
               disabled={nextDisabled}
             >
@@ -171,14 +169,6 @@ export default function ProductPage() {
       standard: false,
       premium: false,
       confort: true,
-    },
-
-    // In your screenshot row is blank (no checks). If you want ✓ for all, set all true.
-    {
-      key: "ratesAccordingToProfile",
-      standard: false,
-      premium: false,
-      confort: false,
     },
   ];
 
@@ -267,21 +257,17 @@ const stepFields: Record<number, (keyof FormValues)[]> = {
     () => [
       {
         id: "Standard",
-        name: t("product.offers.basic"),
-        description: t("product.offers.basicDesc"),
+        name: t("product.offers.standard"),
         price: 0,
       },
       {
         id: "Premium",
-        name: t("product.offers.standard"),
-        description: t("product.offers.standardDesc"),
+        name: t("product.offers.premium"),
         price: 0,
-        recommended: true,
       },
       {
         id: "Confort",
-        name: t("product.offers.premium"),
-        description: t("product.offers.premiumDesc"),
+        name: t("product.offers.confort"),
         price: 0,
       },
     ],
@@ -919,9 +905,6 @@ const goNext = async () => {
                                   </div>
 
                                   <div className="pricing-plan-sub">
-                                    <span className="pricing-plan-desc">
-                                      {offer.description}
-                                    </span>
                              
                                   </div>
 
@@ -968,14 +951,12 @@ const goNext = async () => {
                                   : row.confort;
 
                               const isSelected = selectedOffer?.id === offer.id;
-                              const isRecommended = !!offer.recommended;
 
                               return (
                                 <td
                                   key={offer.id}
                                   className={
                                     "pricing-td pricing-plan-col" +
-                                    (isRecommended ? " is-recommended" : "") +
                                     (isSelected ? " is-selected" : "")
                                   }
                                 >

@@ -32,7 +32,7 @@ body {
 .error {
   color: crimson;
   font-size: 0.85rem;
-  margin-top: 6px 0 0;
+  margin: 6px 0 0;
 }
 .link {
   display: inline-block;
@@ -74,13 +74,26 @@ label {
 
 /*  Inputs & Buttons */
 /* Base fields (inputs, selects, and buttons share width & spacing) */
-input, select,button{
+/* Only text-like fields should be full width */
+input:not([type="radio"]):not([type="checkbox"]),
+select,
+textarea {
   width: 100%;
   margin-top: 8px;
   padding: 10px;
-  border-radius: 8px;      
+  border-radius: 8px;
   font-size: 15px;
   border: 1px solid #ccc;
+}
+
+/* Buttons should NOT inherit input sizing */
+button {
+  width: auto;
+  margin-top: 0;
+  padding: initial;
+  border-radius: initial;
+  font-size: inherit;
+  border: none;
 }
 
 /* Inputs */
@@ -94,10 +107,6 @@ input, select {
 input:focus, select:focus {
   border-color: #3182ce;
   box-shadow: 0 0 0 3px rgba(49,130,206,.15);
-}
-input,button:hover{
-  color: #78beff;
-  /* background-color:#0b73ff; */
 }
 
 /* Primary button (submit) */
@@ -207,7 +216,7 @@ input:focus, select:focus {
 .muted { color: #6b7280; }
 .checkbox-row {
   display: flex ;
-  align-items: right ;
+  align-items: center;
   gap: 8px;
   margin-top: 10px;
   user-select: none;
@@ -226,7 +235,7 @@ input:focus, select:focus {
 .checkbox-row span {
   font-size: 15px;
   color: #111;
-  line-height: 1,5;
+  line-height: 1.5;
   vertical-align: middle;
 }
 input[type="checkbox"] {
@@ -293,48 +302,69 @@ input[type="checkbox"] {
 }
 
 .topbar-langs {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  color: #003784;
+  gap: 10px;
+  /* color: #003784; */
 }
 
 .topbar-lang-item {
   display: inline-flex;
   align-items: center;
-  color: #1e4060;
+  gap: 10px;
+  /* color: #1e4060; */
 }
 
 .topbar-lang-btn {
-  border: none;
-  background: none;
-  padding: 0.6em 0.6em;
+  border: 1px solid #e6edf7;
+  background: transparent;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
   margin: 0;
   cursor: pointer;
   font-size: 14px;
-  color: #a7b8c8;
+  color: #94a3b8;
+  font-weight: 500;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+
 }
 
 .topbar-lang-btn:hover {
-  color: #fcfcfc;
+  border-color: #cbd5f5;
+  color: #334155;
+  transform: translateY(-1px);
+
   /* color: #ffffff; */
 }
 
 .topbar-lang-btn.active {
-  font-weight: 600;
   background-color: #163e64;
+  border-color: #163e64;
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(22, 62, 100, 0.18);
+}
+.topbar-lang-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(22, 62, 100, 0.18);
 }
 
 .topbar-lang-separator {
+  color: #cbd5e1;
   margin: 0 4px;
-  color: #163e64;
+  font-weight: 500;
+  /* color: #163e64; */
 }
 
 
 /* Login button */
-.topbar-login-btn {
+.topbar-login-btn,
+.user-menu-trigger {
+  height: 36px;
+  padding: 0 16px;
   border-radius: 999px;
-  border: 1px solid #0f172a;
+  border: 1px solid #e6edf7;
   padding: 4px 18px;
   font-size: 14px;
   text-decoration: none;
@@ -342,11 +372,21 @@ input[type="checkbox"] {
   font-weight: 500;
   background: #ffffff;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, transform 0.05s ease;
+
 }
 
-.topbar-login-btn:hover {
-  background: #0f172a;
-  color: #ffffff;
+.topbar-login-btn:hover,
+.user-menu-trigger:hover {
+  background: #f8fafc;
+  border-color: #cbd5f5;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
 }
 
 /* Responsive */
@@ -362,54 +402,74 @@ input[type="checkbox"] {
 }
 .user-menu {
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 7px;
-  margin-left: 2px;
+  /* background: #163e64;
+  border-color: #163e64; */
+  margin: 0;
 }
-
+.user-menu.is-open .user-menu-trigger {
+  background: #163e64;
+  border-color: #163e64;
+  color: #ffffff;
+}
 .user-menu-trigger {
+  height: 36px;
+  padding: 0 16px;
   border-radius: 999px;
-  border: 1px solid #0f172a;
-  padding: 8px 14px;
-  /* background: #fff; */
+  border: 1px solid #e6edf7;
+  background: #ffffff;
+  color: #0f172a;
   font-size: 14px;
-  cursor: pointer;
-  display: flex;
+  font-weight: 500;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, transform 0.05s ease;
 }
 
-.user-menu-caret {
-  font-size: 11px;
+.user-menu .user-menu-trigger .user-menu-caret {
+  opacity: 0.9;
 }
 
 .user-menu-dropdown {
   position: absolute;
   right: 0;
-  top: calc(100% + 6px);
-  min-width: 160px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.16);
-  padding: 6px 0;
-  z-index: 20;
+  top: calc(100% + 10px);
+  min-width: 200px;
+  background: #ffffff;
+  border: 1px solid #e6edf7;
+  border-radius: 16px;
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
+  padding: 8px;
+  z-index: 1000;
+
+  /* animation لطيف بدون ما يأثر على layout */
+  transform-origin: top right;
+  animation: menuPop 120ms ease-out;
+}
+
+@keyframes menuPop {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .user-menu-item {
   width: 100%;
-  padding: 8px 14px;
-  background: none;
+  padding: 10px 12px;
+  background: transparent;
+  border-radius: 12px;
   border: none;
   text-align: left;
   font-size: 14px;
-  color: black;
+  color: #0f172a;
   cursor: pointer;
 }
 
 .user-menu-item:hover {
-  background: #f3f4f6;
+  background: #f8fafc;
 }
 .menu-bar {
   height: 64px;
@@ -598,7 +658,7 @@ input[type="checkbox"] {
 }
 
 .btn-primary:hover {
-  background: #78beff;
+  background: #ff330a;
 }
 
 .home {
@@ -921,17 +981,33 @@ input[type="checkbox"] {
     color 0.18s ease;
     transform: 0.12s ease;
 }
-
-.pill-choice input {
+ 
+  /* Fix radio sizing inside pill choices */
+.pill-choice input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex: 0 0 auto;
   accent-color: #2563eb;
-
 }
+
 .pill-choice--active,
 .pill-choice:has(input:checked) {
   background: #eff4ff;
   border-color: #163e64;
   color: #0b2b78;
   box-shadow: 0 16px 45px rgba(37, 99, 235, 0.25);
+}
+@media (max-width: 480px) {
+  .choice-row {
+    gap: 12px;
+  }
+
+  .pill-choice {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 10px 16px;
+  }
 }
 /* offers */
 .product-block.sticky {
@@ -1084,6 +1160,7 @@ button.primary:disabled {
     flex-direction: column-reverse;
     align-items: stretch;
   }
+  
 }
 .step-card {
   width: 100vw;
@@ -1091,8 +1168,9 @@ button.primary:disabled {
   border-radius: 24px;
   padding: 28px 28px 24px;
   box-shadow: 0 8px 30px rgba(15, 35, 95, 0.08);
-  /* max-width: 640px; */
-  margin: 0 auto;         
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;         
 }
 .step-header {
   margin-bottom: 20px;
@@ -1186,6 +1264,7 @@ button.primary:disabled {
   padding: 0;
   cursor: pointer;
 }
+
 /* ===== Dashboard layout ===== */
 
 .dashboard-page {
@@ -1287,6 +1366,7 @@ button.primary:disabled {
 .dashboard-empty-btn:hover {
   background: #f3f4f6;
 }
+
 /* ===== Buttons (reusable) ===== */
 
 .btn-primary,
@@ -1438,67 +1518,6 @@ button.primary:disabled {
   color: #ffffff;
   margin-bottom: 6px;
 }
-/* ===== Progress indicator ===== */
-/* 
-.declaration-progress {
-  margin-bottom: 14px;
-}
-
-.progress-bar {
-  height: 6px;
-  border-radius: 999px;
-  background: #e5e7eb;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: #2563eb;
-  transition: width 0.25s ease-in-out;
-}
-
-.progress-steps {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 20px;
-  font-size: 11px;
-  color: #6b7280;
-}
-
-.progress-step {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.progress-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: #d1d5db;
-}
-
-.progress-label {
-  white-space: nowrap;
-}
-
-.progress-step.done .progress-dot {
-  background: #2563eb;
-}
-
-.progress-step.current .progress-dot {
-  background: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
-}
-
-.progress-step.current .progress-label {
-  color: #111827;
-  font-weight: 500;
-} */
 
 /* ===== Banner (current step message + ETA) ===== */
 
@@ -2606,7 +2625,7 @@ button.primary:disabled {
   top: 24px;
   left: 50%;
   background: #22c55e;
-  transform: translateX(-50%);
+  transform: translate(-50%, 0);
   color: white;
   padding: 12px 20px;
   border-radius: 10px;
@@ -2618,8 +2637,8 @@ button.primary:disabled {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-50%,-8px); }
-  to { opacity: 1; transform: translateY(-50%,0); }
+  from { opacity: 0; transform: translate(-50%, -8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 .admin-page {
   font-family: Arial, sans-serif;
@@ -2648,7 +2667,7 @@ button.primary:disabled {
   margin-top: 20px;
 }
 
-button {
+.admin-page button {
   padding: 10px;
   background-color: #163e64;
   color: white;
@@ -2656,7 +2675,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.admin-page button:hover {
   background-color: #163e64;
 }
 /* optional
@@ -2893,142 +2912,108 @@ button:hover {
 }
 /* ===== Pricing Table (Step 8) ===== */
 .pricing-table-card {
+  overflow: hidden;
   width: 100%;
 }
 
 .pricing-table-wrap {
-  overflow-x: auto;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
   border: 1px solid #eef2f7;
   border-radius: 18px;
   background: #ffffff;
+  -webkit-overflow-scrolling: touch;
 }
 
 .pricing-table {
   width: 100%;
-  min-width: 860px;
-  border-collapse: separate;
-  border-spacing: 0;
+  min-width: 0;          /* مهم */
+  table-layout: fixed;   /* مهم: يخلي الأعمدة تتوزع */
+  border-collapse: collapse;
+  /* border-spacing: 0 0; */
 }
 
 .pricing-th,
 .pricing-td {
-  padding: 14px 16px;
-  border-bottom: 1px solid #eef2f7;
-  vertical-align: top;
+  padding: 8px 6px;
+  white-space: normal;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .pricing-feature-col {
-  width: 260px;
+  white-space: normal;
   text-align: left;
-  color: #0f172a;
-  font-weight: 700;
-  background: #ffffff;
-  position: sticky;
-  left: 0;
-  z-index: 2;
-  border-right: 1px solid #eef2f7;
+  width: 45%;
+  font-weight: 650;
 }
 
 .pricing-plan-col {
+  width: 25%;
+  white-space: normal;
   text-align: center;
-  width: 200px;
 }
-
-.pricing-table thead .pricing-th {
-  position: sticky;
-  top: 0;
-  z-index: 3;
-  background: #ffffff;
-}
-
-.pricing-table thead .pricing-feature-col {
-  z-index: 4; /* keep top-left above everything */
-}
-
+/* Plan header layout */
 .pricing-plan-head {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  align-items: stretch;
+  align-items: center;
+  gap: 6px;
 }
 
 .pricing-plan-top {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
-.pricing-plan-name {
-  font-weight: 800;
-  color: #163e64;
-  text-align: left;
-}
-
-.pricing-plan-price {
-  font-weight: 800;
-  color: #0f172a;
+.pricing-plan-name,
+.pricing-plan-price{
   white-space: nowrap;
 }
 
 .pricing-plan-sub {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  margin-top: 2px;
 }
 
-.pricing-plan-desc {
-  font-size: 13px;
-  color: #64748b;
-  line-height: 1.35;
+/* Selected plan highlight */
+.pricing-plan-col.is-selected,
+.pricing-th.is-selected {
+  background: #f1f5f9;
+  border-radius: 12px;
 }
 
-.pricing-badge {
-  align-self: flex-start;
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: #22c55e1a;
-  color: #15803d;
-  font-weight: 700;
-}
-
+/* Choose offer button (clean, no override) */
 .pricing-select-btn {
-  height: 40px;
-  border-radius: 999px;
-  border: 1px solid #e2e8f0;
   background: #163e64;
-  font-weight: 700;
+  color: white;
+  border: none;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 13px;
   cursor: pointer;
+  transition: 0.2s ease;
+  margin-top: 4px;
+  height: 40px;
+  white-space: nowrap;
+
+  font-weight: 600;
+  width: 100%;              /* بدل 100% */
+  max-width: 160px;          /* شيل الحد */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pricing-select-btn:hover {
-  background: #f8fafc;
+  background: #0f2d4a;
 }
-
-.pricing-select-btn.is-primary {
-  height: 40px;
-  border-radius: 999px;
-  border: 1px solid #e2e8f0;
-  background: #163e64;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.pricing-select-btn.is-primary:hover {
-  background: #f8fafc;}
 
 .pricing-select-btn.is-selected {
-  box-shadow: 0 0 0 2px rgba(22, 62, 100, 0.25);
-}
-
-.pricing-plan-col.is-recommended {
-  background: #f5f7ff;
-}
-
-.pricing-plan-col.is-selected {
-  box-shadow: inset 0 0 0 2px rgba(22, 62, 100, 0.35);
+  background: #0f2d4a;
 }
 
 .tick {
@@ -3054,12 +3039,17 @@ button:hover {
 /* Mobile: allow scroll, but keep readability */
 @media (max-width: 900px) {
   .pricing-table {
-    min-width: 780px;
+    min-width: 720px;
   }
 
   .pricing-feature-col {
-    width: 220px;
+    width: 300px;
   }
+  .pricing-plan-col {
+    width: 140px;
+  }
+  .pricing-table-wrap { overflow-x: auto; }
+  .pricing-table { min-width: 860px; }
 }
 /* Simple route loader */
 .page-loader{
@@ -3093,3 +3083,244 @@ button:hover {
   font-size: 0.875rem;
   color: #d32f2f;
 }
+/* =========================
+   Unified Button System
+   ========================= */
+
+/* Base button */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.nav-btn,
+.dashboard-new-btn,
+.dashboard-empty-btn,
+.declaration-action-btn,
+.menu-cta-btn,
+.topbar-login-btn,
+.pricing-select-btn,
+.step-next-btn,
+.step-back-link {
+  height: 42px;
+  border-radius: 999px;
+  padding: 0 22px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, color 0.15s ease, transform 0.05s ease;
+  text-decoration: none;
+}
+
+/* Primary */
+.btn-primary,
+.dashboard-new-btn,
+.menu-cta-btn,
+.step-next-btn {
+  border: none;
+  background: var(--stx-primary);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 97, 255, 0.22);
+}
+
+.btn-primary:hover:not(:disabled),
+.dashboard-new-btn:hover:not(:disabled),
+.menu-cta-btn:hover:not(:disabled),
+.step-next-btn:hover:not(:disabled) {
+  background: var(--stx-primary-dark);
+  box-shadow: 0 16px 40px rgba(0, 80, 212, 0.28);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled,
+.dashboard-new-btn:disabled,
+.menu-cta-btn:disabled,
+.step-next-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Secondary */
+.btn-secondary,
+.declaration-action-btn,
+.topbar-login-btn,
+.dashboard-empty-btn {
+  border: 1px solid var(--stx-border-soft);
+  background: #ffffff;
+  color: var(--stx-text-main);
+  box-shadow: none;
+}
+
+.btn-secondary:hover:not(:disabled),
+.declaration-action-btn:hover:not(:disabled),
+.topbar-login-btn:hover:not(:disabled),
+.dashboard-empty-btn:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #cbd5f5;
+  transform: translateY(-1px);
+}
+
+/* Outline (keep as option) */
+.btn-outline {
+  border: 1px solid var(--stx-border-soft);
+  background: transparent;
+  color: var(--stx-text-main);
+}
+
+/* Pricing select button: primary but compact */
+.pricing-select-btn {
+  width: 100%;
+}
+
+/* Back link in steps: looks like secondary but lighter */
+.step-back-link {
+  border: 1px solid var(--stx-border-soft);
+  background: transparent;
+  color: var(--stx-primary);
+  box-shadow: none;
+}
+
+.step-back-link:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #cbd5f5;
+}
+
+/* Link-like stays link-like (do NOT make it pill) */
+.link-like,
+.edit-request-inline {
+  height: auto;
+  border-radius: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-size: 14px;
+  color: var(--stx-primary);
+  text-decoration: underline;
+}
+.delete-btn {
+  color: #dc2626 !important; /* red-600 */
+  font-size: 14px !important;
+  margin-left: 6px !important;
+  background: none !important;
+  border: none !important;
+  padding: 2px 4px !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+}
+
+.delete-btn:hover {
+  color: #b91c1c !important; /* red-700 */
+  text-decoration: none !important;
+}
+
+.delete-btn:disabled {
+  color: #9ca3af !important; /* gray-400 */
+  cursor: not-allowed !important;
+  text-decoration: none !important;
+}
+/* Document Card */
+.document-card {
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 22px;
+  transition: box-shadow 0.2s ease;
+}
+
+.document-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Header */
+.document-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.document-card-sub {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* Badges */
+.status-badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 50px;
+  border: 1px solid;
+  display: inline-block;
+}
+
+.status-pending {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #374151;
+}
+
+.status-uploaded {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+.status-missing {
+  background: #fefce8;
+  border-color: #fde047;
+  color: #854d0e;
+}
+
+/* File list */
+.file-item {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #374151;
+}
+
+.delete-btn {
+  font-size: 12px;
+  text-decoration: underline;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  color: #b91c1c;
+}
+
+/* Upload row */
+.upload-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* Hide default input */
+input[type="file"] {
+  display: none;
+}
+
+/* Custom file upload button */
+.btn-file {
+  background: #f3f4f6;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+}
+

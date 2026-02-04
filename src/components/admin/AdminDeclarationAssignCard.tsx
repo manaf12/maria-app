@@ -35,24 +35,25 @@ export default function AdminDeclarationAssignCard({
 
   const taxYear = declaration.questionnaireSnapshot?.taxYear ?? "—";
   const email = declaration.clientProfile?.user?.email ?? "—";
-
   const isAssigned = !!declaration.assignedAdminId;
 
   return (
-    <article
+    <button
+      type="button"
       className="declaration-card"
-      role="button"
-      tabIndex={0}
-            onClick={() => {
-        console.log("Card clicked", declaration.id); // أضف السجلات هنا للتحقق
-        onOpen(declaration.id);
+      onClick={() => onOpen(declaration.id)}
+      style={{
+        cursor: "pointer",
+        opacity: isAssigned ? 0.7 : 1,
+        width: "100%",
+        textAlign: "left",
+        background: "white",
+        border: "none",
+        padding: 0,
       }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") onOpen(declaration.id);
-      }}
-      style={{ cursor: "pointer", opacity: isAssigned ? 0.7 : 1 }}
     >
       <div className="declaration-header-row" style={{ alignItems: "center", gap: 12 }}>
+        
         {/* Checkbox */}
         <input
           type="checkbox"
@@ -85,17 +86,30 @@ export default function AdminDeclarationAssignCard({
           </p>
         </div>
 
-        <button
-          type="button"
+        {/* 
+          NOTE: cannot use <button> inside <button> → invalid HTML 
+          so we use <div role="button"> and stopPropagation
+        */}
+        <div
+          role="button"
           className="btn-outline"
           onClick={(e) => {
             e.stopPropagation();
             onOpen(declaration.id);
           }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onOpen(declaration.id);
+            }
+          }}
+          tabIndex={0}
+          style={{ padding: "6px 12px", borderRadius: 6, cursor: "pointer" }}
         >
           {t("admin.declarations.open")}
-        </button>
+        </div>
+
       </div>
-    </article>
+    </button>
   );
 }

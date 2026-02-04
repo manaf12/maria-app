@@ -56,6 +56,42 @@ export default function ViewRequestPage() {
     enabled: !!declarationId,
   });
 
+  // i18n message helpers (so you translate everything once)
+  const msg = {
+    downloadFailed: t("view.alerts.downloadFailed"),
+    selectFileFirst: t("view.alerts.selectFileFirst"),
+    uploadFailed: t("view.alerts.uploadFailed"),
+
+    step2WriteCommentFirst: t("view.step2.writeCommentFirst"),
+    step2CommentSubmitted: t("view.step2.commentSubmitted"),
+    step2SubmitFailed: t("view.step2.submitFailed"),
+    step2ApproveConfirm: t("view.step2.approveConfirm"),
+    step2ApproveSuccess: t("view.step2.approveSuccess"),
+    step2ApproveError: t("view.step2.approveError"),
+
+    step4WriteCommentFirst: t("view.step4.writeCommentFirst"),
+    step4SubmitConfirm: t("view.step4.submitConfirm"),
+    step4CommentSubmitted: t("view.step4.commentSubmitted"),
+    step4SubmitFailed: t("view.step4.submitFailed"),
+
+    confirmDraftReceipt: t("view.step3.confirmDraftReceipt"),
+    draftConfirmed: t("view.step3.draftConfirmed"),
+    confirmReceiptFailed: t("view.step3.confirmReceiptFailed"),
+
+    confirmCompleteStep3: t("view.step3.confirmComplete"),
+    step3Completed: t("view.step3.completed"),
+    step3CompleteError: t("view.step3.completeError"),
+
+    confirmCompleteStep5: t("view.step5.confirmComplete"),
+    step5Completed: t("view.step5.completed"),
+    step5CompleteError: t("view.step5.completeError"),
+
+    draftUploadSuccess: t("view.step3.draftUploadSuccess"),
+    finalUploadSuccess: t("view.step5.finalUploadSuccess"),
+
+    userUploadSuccess: t("view.submission.userUploadSuccess"),
+  };
+
   // ===== helpers =====
   const invalidate = async () => {
     await queryClient.invalidateQueries({ queryKey: ["declaration", declarationId] });
@@ -70,13 +106,13 @@ export default function ViewRequestPage() {
       await refetch?.();
     } catch (err) {
       console.error("Failed to get download URL", err);
-      alert("Could not download file.");
+      alert(msg.downloadFailed);
     }
   };
 
   const handleAddStep2Comment = async (comment: string) => {
     const text = comment.trim();
-    if (!text) return alert("Please write a comment first.");
+    if (!text) return alert(msg.step2WriteCommentFirst);
 
     setIsAddingStep2Comment(true);
     try {
@@ -86,10 +122,10 @@ export default function ViewRequestPage() {
       if (isAdmin) setStep2AdminComment("");
       else setStep2UserComment("");
 
-      alert("Comment submitted.");
+      alert(msg.step2CommentSubmitted);
     } catch (err: any) {
       console.error("Failed to add step2 comment", err);
-      alert(err?.response?.data?.message ?? "Could not submit comment.");
+      alert(err?.response?.data?.message ?? msg.step2SubmitFailed);
     } finally {
       setIsAddingStep2Comment(false);
     }
@@ -97,8 +133,8 @@ export default function ViewRequestPage() {
 
   const handleAddStep4Comment = async (comment: string) => {
     const text = (comment ?? "").trim();
-    if (!text) return alert("Please write a comment before submitting.");
-    if (!confirm("Are you sure you want to submit this comment?")) return;
+    if (!text) return alert(msg.step4WriteCommentFirst);
+    if (!confirm(msg.step4SubmitConfirm)) return;
 
     setIsAddingStepComment(true);
     try {
@@ -108,73 +144,73 @@ export default function ViewRequestPage() {
       if (isAdmin) setStep4AdminComment("");
       else setStep4UserComment("");
 
-      alert("Comment submitted.");
+      alert(msg.step4CommentSubmitted);
     } catch (err: any) {
       console.error("Failed to add comment", err);
-      alert(err?.response?.data?.error ?? "Could not submit comment.");
+      alert(err?.response?.data?.error ?? msg.step4SubmitFailed);
     } finally {
       setIsAddingStepComment(false);
     }
   };
 
   const handleConfirmReceipt = async (fileId?: string) => {
-    if (!confirm("Are you sure you want to confirm receipt of the draft?")) return;
+    if (!confirm(msg.confirmDraftReceipt)) return;
 
     setConfirming(true);
     try {
       await declarationActions.confirmDraftReceipt(declarationId, fileId);
-      alert("Confirmed — step will be marked as completed.");
+      alert(msg.draftConfirmed);
       await refetch?.();
     } catch (err) {
       console.error("Confirm failed", err);
-      alert("Could not confirm receipt.");
+      alert(msg.confirmReceiptFailed);
     } finally {
       setConfirming(false);
     }
   };
 
   const handleApproveStep2 = async (note?: string) => {
-    if (!confirm("Are you sure you want to approve these documents?")) return;
+    if (!confirm(msg.step2ApproveConfirm)) return;
 
     try {
       await declarationActions.approveStep2(declarationId, note);
-      alert("Step 2 approved successfully!");
+      alert(msg.step2ApproveSuccess);
       await invalidate();
     } catch (err) {
       console.error("Failed to approve Step 2", err);
-      alert("An error occurred while approving the step.");
+      alert(msg.step2ApproveError);
     }
   };
 
   const handleCompleteStep3 = async () => {
-    if (!confirm("Are you sure you have finished preparing the tax declaration?")) return;
+    if (!confirm(msg.confirmCompleteStep3)) return;
 
     try {
       await declarationActions.completeStep3(declarationId);
-      alert("Step 3 marked as complete!");
+      alert(msg.step3Completed);
       await refetch?.();
     } catch (err) {
       console.error("Failed to complete Step 3", err);
-      alert("An error occurred.");
+      alert(msg.step3CompleteError);
     }
   };
 
   const handleCompleteStep5 = async () => {
-    if (!confirm("Are you sure you want to mark this declaration as fully completed?")) return;
+    if (!confirm(msg.confirmCompleteStep5)) return;
 
     try {
       await declarationActions.completeStep5(declarationId);
-      alert("Step 5 marked as complete! The declaration is now finished.");
+      alert(msg.step5Completed);
       await refetch?.();
     } catch (err) {
       console.error("Failed to complete Step 5", err);
-      alert("An error occurred while completing the final step.");
+      alert(msg.step5CompleteError);
     }
   };
 
   // uploads
   const handleStep3DraftUpload = async () => {
-    if (!adminDraftFile) return alert("Please select a file first.");
+    if (!adminDraftFile) return alert(msg.selectFileFirst);
     setIsUploadingDraft(true);
     try {
       await uploadFormFile({
@@ -182,18 +218,18 @@ export default function ViewRequestPage() {
         file: adminDraftFile,
       });
       await invalidate();
-      alert("Draft uploaded successfully.");
+      alert(msg.draftUploadSuccess);
       setAdminDraftFile(null);
     } catch (err) {
       console.error("Step 3 draft upload failed", err);
-      alert("Upload failed.");
+      alert(msg.uploadFailed);
     } finally {
       setIsUploadingDraft(false);
     }
   };
 
   const handleAdminUploadFinal = async () => {
-    if (!adminFinalFile) return alert("Please select a file first.");
+    if (!adminFinalFile) return alert(msg.selectFileFirst);
     setIsUploadingFinal(true);
     try {
       await uploadFormFile({
@@ -202,18 +238,18 @@ export default function ViewRequestPage() {
         extra: { documentType: "final_file", stepId: "submission" },
       });
       await invalidate();
-      alert("Final file uploaded successfully.");
+      alert(msg.finalUploadSuccess);
       setAdminFinalFile(null);
     } catch (err) {
       console.error("Admin final upload failed", err);
-      alert("Upload failed.");
+      alert(msg.uploadFailed);
     } finally {
       setIsUploadingFinal(false);
     }
   };
 
   const handleUserUploadSubmission = async () => {
-    if (!userSubmissionFile) return alert("Please select a file first.");
+    if (!userSubmissionFile) return alert(msg.selectFileFirst);
     setIsUploadingUserSubmission(true);
     try {
       await uploadFormFile({
@@ -222,11 +258,11 @@ export default function ViewRequestPage() {
         extra: { documentType: "assessment_notice", deliveredForStep: "submission" },
       });
       await invalidate();
-      alert("File uploaded. Admin will be able to download it.");
+      alert(msg.userUploadSuccess);
       setUserSubmissionFile(null);
     } catch (err) {
       console.error("User upload failed", err);
-      alert("Upload failed.");
+      alert(msg.uploadFailed);
     } finally {
       setIsUploadingUserSubmission(false);
     }
@@ -235,7 +271,7 @@ export default function ViewRequestPage() {
   if (isLoading) {
     return (
       <div className="view-page">
-        <p>{t("view.loading")}</p>
+        <p>{t("view.loading1")}</p>
       </div>
     );
   }
@@ -243,9 +279,9 @@ export default function ViewRequestPage() {
   if (error) {
     return (
       <div className="view-page">
-        <p style={{ color: "red" }}>{error.message || t("view.errors.loadFailed")}</p>
+        <p style={{ color: "red" }}>{error.message || t("view.errors1.loadFailed")}</p>
         <button className="btn-secondary" onClick={backToDashboard}>
-          {t("view.back")}
+          {t("view.back1")}
         </button>
       </div>
     );
@@ -254,9 +290,9 @@ export default function ViewRequestPage() {
   if (!declaration) {
     return (
       <div className="view-page">
-        <p>{t("view.notFound")}</p>
+        <p>{t("view.notFound1")}</p>
         <button className="btn-secondary" onClick={backToDashboard}>
-          {t("view.back")}
+          {t("view.back1")}
         </button>
       </div>
     );
@@ -302,10 +338,9 @@ export default function ViewRequestPage() {
       isUploadingUserSubmission={isUploadingUserSubmission}
       onUserUploadSubmission={handleUserUploadSubmission}
       onAdminUploadFinal={handleAdminUploadFinal}
-  adminFinalFile={adminFinalFile}
-  setAdminFinalFile={setAdminFinalFile}
-  isUploadingFinal={isUploadingFinal}
-   
+      adminFinalFile={adminFinalFile}
+      setAdminFinalFile={setAdminFinalFile}
+      isUploadingFinal={isUploadingFinal}
     />
   );
 }

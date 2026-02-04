@@ -1,34 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // src/components/Topbar.tsx
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth/AuthContext";
 import logoTaxera from "../assets/Icon.svg";
 import { useQueryClient } from "@tanstack/react-query";
+
 const LANGS: { code: "de" | "fr" | "en"; labelKey: string }[] = [
   { code: "de", labelKey: "topbar.lang.de" },
   { code: "fr", labelKey: "topbar.lang.fr" },
-  { code: "en", labelKey: "topbar.lang.en" }
-]
+  { code: "en", labelKey: "topbar.lang.en" },
+];
 
 export default function Topbar() {
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-    const queryClient = useQueryClient();
-  // const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const queryClient = useQueryClient();
+
   const [menuopen, setMenuOpen] = useState(false);
   const currentLang = (i18n.language || "en").slice(0, 2) as "de" | "fr" | "en";
+
+  // Used to close the dropdown when clicking outside
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   const changeLanguage = (lng: "de" | "fr" | "en") => {
     i18n.changeLanguage(lng);
     localStorage.setItem("taxonline_lang", lng);
   };
+
   const handleLogout = async () => {
     try {
       await logout();
-        queryClient.clear();
+      queryClient.clear();
+      setMenuOpen(false);
       navigate("/", { replace: true });
     } catch (err) {
       console.error("Logout failed:", err);
@@ -36,14 +43,44 @@ export default function Topbar() {
     }
   };
 
+  // Close menu on outside click + ESC
+  useEffect(() => {
+    const onMouseDown = (e: MouseEvent) => {
+      if (!menuopen) return;
+      const target = e.target as Node;
+      if (menuRef.current && !menuRef.current.contains(target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+
+    document.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", onMouseDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuopen]);
+
+  // Optional: close menu when user changes route
+  useEffect(() => {
+    setMenuOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
+
   return (
     <div className="topbar">
       <div className="topbar-left">
-        <div className="topbar-flag" >
-          <img 
-            src={logoTaxera} 
+        <div className="topbar-flag">
+          <img
+            src={logoTaxera}
             alt="Taxera Logo"
-            className="topbar-flag-img" />
+            className="topbar-flag-img"
+          />
         </div>
         <span className="topbar-text">{t("topbar.tagline")}</span>
       </div>
@@ -55,13 +92,13 @@ export default function Topbar() {
               <button
                 type="button"
                 className={
-                  "topbar-lang-btn" +
-                  (currentLang === lng.code ? " active" : "")
+                  "topbar-lang-btn" + (currentLang === lng.code ? " active" : "")
                 }
                 onClick={() => changeLanguage(lng.code)}
               >
                 {t(lng.labelKey)}
               </button>
+
               {idx < LANGS.length - 1 && (
                 <span className="topbar-lang-separator">-</span>
               )}
@@ -70,29 +107,35 @@ export default function Topbar() {
         </div>
 
         {!user ? (
-          <Link 
+          <Link
             to="/login"
-            state={{redirectTo: location.pathname}}
-            className="topbar-login-btn">
+            state={{ redirectTo: location.pathname }}
+            className="topbar-login-btn"
+          >
             {t("topbar.login")}
           </Link>
         ) : (
-
-          <div className="user-menu">
+          <div
+            ref={menuRef}
+            className={"user-menu" + (menuopen ? " is-open" : "")}
+          >
             <button
               type="button"
               className="user-menu-trigger"
+              aria-haspopup="menu"
+              aria-expanded={menuopen}
               onClick={() => setMenuOpen((open) => !open)}
             >
-              <span>My Account</span>
+              <span>{t("topbar.myAccount")}</span>
               <span className="user-menu-caret">▾</span>
             </button>
 
             {menuopen && (
-              <div className="user-menu-dropdown">
+              <div className="user-menu-dropdown" role="menu">
                 <button
                   type="button"
                   className="user-menu-item"
+                  role="menuitem"
                   onClick={() => {
                     setMenuOpen(false);
                     navigate("/dashboard");
@@ -100,9 +143,11 @@ export default function Topbar() {
                 >
                   {t("menu.settings")}
                 </button>
+
                 <button
                   type="button"
                   className="user-menu-item"
+                  role="menuitem"
                   onClick={handleLogout}
                 >
                   {t("menu.logout")}
@@ -110,8 +155,8 @@ export default function Topbar() {
               </div>
             )}
           </div>
-       )}
-     </div>
-   </div>
+        )}
+      </div>
+    </div>
   );
 }

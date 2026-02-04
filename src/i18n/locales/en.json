@@ -3,7 +3,6 @@
   "topbar.lang.de": "German",
   "topbar.lang.fr": "French",
   "topbar.lang.en": "English",
-
   "auth.login.title": "Sign in",
   "auth.login.email": "Email",
   "auth.login.password": "Password",
@@ -27,7 +26,6 @@
   "auth.signup.haveAccount": "Already have an account?",
   "auth.signup.signin": "Sign in",
   "auth.signup.successMsg": "Account created! Please verify your email.",
-
   "auth.signup.verifyTitle": "Verify your email",
   "auth.signup.verifyMsg": "We sent a 6-digit code to",
   "auth.signup.code": "6-digit code",
@@ -35,14 +33,11 @@
   "auth.signup.changeEmail": "Change email",
   "auth.signup.resend": "Resend code",
   "auth.signup.resendIn": "Resend in",
-
   "auth.signup.errors.match": "Passwords do not match",
   "auth.signup.errors.invalidCode": "Invalid code",
   "auth.signup.errors.mustAgree": "You must agree to continue",
   "auth.signup.errors.failed": "Sign up failed",
   "auth.signup.errors.weak": "Password is too weak",
-
-
   "auth.forgot.title": "Forgot password",
   "auth.forgot.email": "Email",
   "auth.forgot.submit": "Send reset link",
@@ -50,6 +45,7 @@
   "auth.forgot.success": "If this email exists, a reset link has been sent.",
   "auth.forgot.error": "Could not send reset link. Please try again.",
   "topbar.login": "Login",
+  "topbar.myAccount": "My Account",
   "menu.getOffer": "Get an offer",
   "menu.dashboard": "Dashboard",
   "menu.settings": "Settings",
@@ -60,24 +56,20 @@
   "footer.privacy": "Privacy Policy",
   "home.hero.tagline": "Your online tax declaration — simple, fast, and 100% Swiss.",
   "home.hero.title": "File your Swiss tax return online with professional support.",
-
   "home.strengths.title": "Our key strengths",
   "home.strengths.item1": "Team based in Switzerland",
   "home.strengths.item2": "Transparent and fixed pricing",
   "home.strengths.item3": "Human assistance available online",
   "home.strengths.item4": "Data security and confidentiality",
-
   "home.price.title": "Your tax declaration from CHF 59.–",
   "home.price.text": "Your Swiss tax declaration done securely online, with a price adapted to your situation.",
   "home.price.cta": "Get a quote",
   "home.price.note": "Accessible to all clients throughout Switzerland.",
-
   "home.reviews.title": "Google Reviews",
   "home.reviews.subtitle": "Real feedback from clients who entrusted us with their Swiss tax returns.",
   "home.reviews.score": "Average rating: 4.8/5",
   "home.reviews.count": "Based on dozens of verified Google Reviews.",
   "home.reviews.placeholder": "Google Reviews widget or screenshots will be integrated here to showcase real client feedback.",
-
   "home.seo.title": "Online Swiss tax declaration – useful information",
   "home.seo.intro": "SwissTaxOnline combines the flexibility of a digital tool with the quality of a fiduciary service.",
   "home.seo.text1": "We handle Swiss tax declarations for individuals throughout Switzerland. Our online process is designed to be simple and efficient, while remaining fully compliant with cantonal requirements.",
@@ -86,7 +78,6 @@
   "home.seo.linkBlog": "Blog",
   "home.seo.linkFaq": "FAQ",
   "home.seo.linkContact": "Contact",
-
   "home.how.title": "How it works",
   "home.how.step1.title": "1. Fill out the form",
   "home.how.step1.text": "Answer a few questions so we can understand your situation.",
@@ -99,7 +90,6 @@
   "home.how.step5.title": "5. We submit your declaration for you",
   "home.how.step5.text": "Once validated, we submit your tax declaration to the tax authorities.",
   "home.how.learnMore": "Learn more in the FAQ",
-
   "home.guarantees.title": "Our guarantees",
   "home.guarantees.item1.title": "Data hosted in Switzerland",
   "home.guarantees.item1.text": "Your data is stored in secure Swiss infrastructure.",
@@ -109,7 +99,6 @@
   "home.guarantees.item3.text": "You can contact our team if you have any questions about your file.",
   "home.guarantees.item4.title": "No hidden fees",
   "home.guarantees.item4.text": "The price is fixed and confirmed before we start working on your declaration.",
-
   "home.faq.title": "Short FAQ",
   "home.faq.q1.q": "How long does it take to process my declaration?",
   "home.faq.q1.a": "Most declarations are processed within a few working days after we receive all your documents.",
@@ -119,35 +108,29 @@
   "home.faq.q3.a": "Yes. We use encryption, secure hosting in Switzerland and strict access controls to protect your data.",
   "product.title": "Get your Swiss tax quote",
   "product.subtitle": "Answer a few questions so we can calculate the right price for your online tax declaration.",
-
   "product.editRequest": "Edit my request",
-
   "product.sections.profile": "Your profile",
   "product.taxYear": "Tax year",
   "product.maritalStatus": "Marital status",
   "product.marital.single": "Single",
   "product.marital.married": "Married",
   "product.childrenCount": "Number of children",
-
   "product.sections.situation": "Your tax situation",
   "product.incomeSources": "Number of income sources",
   "product.incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
   "product.wealthStatements": "Number of wealth / tax statements",
   "product.wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
   "product.properties": "Number of real-estate properties",
-
   "product.propertiesDetailsTitle": "Real-estate details",
   "product.propertiesCount": "How many properties?",
   "product.newProperties": "How many are declared for the first time?",
   "product.newPropertiesHint": "For example: a property purchased during the tax year.",
-
   "product.sections.billing": "Billing address",
   "product.billing.firstName": "First name",
   "product.billing.lastName": "Last name",
   "product.billing.street": "Street address",
   "product.billing.postalCode": "Postal code",
   "product.billing.city": "City",
-
   "product.sections.summary": "Summary of your request",
   "product.summary.taxYear": "Tax year: {{year}}",
   "product.summary.marital": "Marital status: {{status}}",
@@ -155,61 +138,56 @@
   "product.summary.incomes": "Income sources: {{count}}",
   "product.summary.wealth": "Wealth / tax statements: {{count}}",
   "product.summary.properties": "Real-estate properties: {{count}}",
-
   "product.cancel": "Cancel",
   "product.confirm": "Confirm my request",
   "product.confirming": "Confirming...",
   "product.next": "Next",
   "product.back": "Back",
-
   "product.sections.offers": "Our offers",
   "product.offersHint": "Based on your answers, choose the offer that best matches your situation.",
-  "product.offers.basic": "Basic",
-  "product.offers.basicDesc": "Simple tax situations. Ideal if you have one income source and limited assets.",
   "product.offers.standard": "Standard",
-  "product.offers.standardDesc": "Most common tax situations. Includes several income sources and basic investments.",
   "product.offers.premium": "Premium",
-  "product.offers.premiumDesc": "Complex situations with several income sources, investments or real estate.",
-  "product.recommended": "Recommended",
+  "product.offers.confort": "Comfort",
   "product.goToSummary": "Go to summary",
-
+  "product.chooseOffer": "Choose offer",
   "product.errors.noOfferSelected": "Please select an offer before confirming your request.",
   "product.confirmation.mock": "Your request has been recorded (demo). The final integration will send this data to the backend.",
+  "product.finalPrice": "Final Price",
+  "product.proceedToBilling": "Proceed to billing",
+  "product.sections.offer": "Your selected offer",
   "dashboard": {
-  "title": "Dashboard",
-  "subtitle": "Manage all your Swiss tax declarations in one place.",
-  "newDeclaration": "New tax declaration",
-  "myDeclarations": "My tax declarations",
-  "helpLink": "Need help?",
-  "loading": "Loading…",
-  "empty": "You don’t have any tax declarations yet.",
-  "startFirst": "Start your first declaration",
-
-  "declarationTitle": "{{year}} – {{name}}",
-
-  "steps": {
-    "request": "Document preparation",
-    "documents": "Document review",
-    "preparation": "Declaration preparation",
-    "review": "Review & validation",
-    "submission": "Submission"
-  },
-
-  "actions": {
-    "viewRequest": "View request",
-    "viewDeclaration": "View declaration"
-  },
-
-  "defaultStepMessage": "Your declaration is currently at step {{step}} out of 5.",
-  "statusSubmitted": "Submitted",
-  "banner": {
-    "step1": "We are checking whether all required documents have been received.",
-    "step2": "We are reviewing your documents.",
-    "step3": "We are preparing your tax declaration.",
-    "step4": "Your declaration is ready. Please review and confirm.",
-    "step5": "Your declaration has been submitted to the tax office."
+    "title": "Dashboard",
+    "subtitle": "Manage all your Swiss tax declarations in one place.",
+    "newDeclaration": "New tax declaration",
+    "myDeclarations": "My tax declarations",
+    "helpLink": "Need help?",
+    "loading": "Loading…",
+    "welcome": "Welcome",
+    "email": "Email",
+    "logout": "Logout",
+    "empty": "You don’t have any tax declarations yet.",
+    "startFirst": "Start your first declaration",
+    "declarationTitle": "{{year}} – {{name}}",
+    "steps": {
+      "request": "Document preparation",
+      "documents": "Document review",
+      "preparation": "Declaration preparation",
+      "review": "Review & validation",
+      "submission": "Submission"
     },
-
+    "actions": {
+      "viewRequest": "View request",
+      "viewDeclaration": "View declaration"
+    },
+    "defaultStepMessage": "Your declaration is currently at step {{step}} out of 5.",
+    "statusSubmitted": "Submitted",
+    "banner": {
+      "step1": "We are checking whether all required documents have been received.",
+      "step2": "We are reviewing your documents.",
+      "step3": "We are preparing your tax declaration.",
+      "step4": "Your declaration is ready. Please review and confirm.",
+      "step5": "Your declaration has been submitted to the tax office."
+    },
     "steps1": {
       "1": {
         "title": "Document preparation",
@@ -232,14 +210,18 @@
         "time": "Indicative time: 1–3 days"
       }
     }
-  }
-  ,
+  },
   "view": {
     "title": "View my request",
+    "download": "Download",
     "back": "Back to dashboard",
-
+    "loading1": "Loading...",
+    "back1": "Back",
+    "notFound1": "Declaration not found.",
+    "errors1": {
+      "loadFailed": "Failed to load the declaration."
+    },
     "formSummary": "Initial form summary",
-
     "summary": {
       "maritalStatus": "Marital status",
       "childrenCount": "Number of children",
@@ -249,7 +231,6 @@
       "price": "Price",
       "taxYear": "Tax year"
     },
-
     "sections": {
       "initialUpload": "Initial document upload",
       "reviewDocuments": "Document review and additional questions",
@@ -257,31 +238,31 @@
       "validation": "Review and validation of the tax declaration",
       "submission": "Submission of the tax declaration"
     },
-
+    "alerts": {
+      "downloadFailed": "Could not download file.",
+      "selectFileFirst": "Please select a file first.",
+      "uploadFailed": "Upload failed."
+    },
     "status": {
       "locked": "Locked",
       "current": "In progress",
       "completed": "Completed"
     },
-
     "invoice": "Invoice",
     "invoice.offer": "Offer",
     "invoice.total": "Total amount",
     "downloadInvoice": "Download invoice",
-
     "loading": "Loading…",
     "errors": {
       "loadFailed": "Could not load request."
     },
     "notFound": "Request not found.",
-
     "doc": {
       "status": {
         "uploaded": "Uploaded",
         "todo": "To complete"
       }
     },
-
     "step1": {
       "description": "Upload your salary certificates, bank statements, 3rd pillar certificates and other supporting documents.",
       "uploadBtn": "Upload documents (PDF)",
@@ -289,56 +270,117 @@
       "submit": "Submit documents for review",
       "completed": "Your documents have been submitted."
     },
-
     "step2": {
       "description": "We are reviewing your documents. If additional information is required, you can answer the questions below.",
       "answerPlaceholder": "Your answer here…",
       "submit": "Submit answers and documents",
-      "completed": "Your additional answers have been submitted and are being reviewed."
+      "completed": "Your additional answers have been submitted and are being reviewed.",
+      "writeCommentFirst": "Please write a comment first.",
+      "commentSubmitted": "Comment submitted.",
+      "submitFailed": "Could not submit comment.",
+      "approveConfirm": "Are you sure you want to approve these documents?",
+      "approveSuccess": "Step 2 approved successfully!",
+      "approveError": "An error occurred while approving the step.",
+      "noMissingDocuments": "No missing documents.",
+      "missingDocumentsTitle": "Missing documents",
+      "commentSectionTitle": "Comments",
+      "lastComment": "Last comment",
+      "addCommentLabelAdmin": "Add Comment (for client)",
+      "addCommentLabelUser": "Add Comment (for admin)",
+      "commentPlaceholderAdmin": "Write a note for the client...",
+      "commentPlaceholderUser": "Write a question or note for the admin...",
+      "cancel": "Cancel",
+      "sending": "Sending...",
+      "addCommentBtn": "Add Comment",
+      "noComments": "No comments yet.",
+      "you": "You",
+      "unknown": "Unknown",
+      "unknownTime": "unknown time",
+      "admin": {
+        "description": "We are reviewing the uploaded documents. You may review, download, and request additional details if required.",
+        "filesTitle": "Uploaded files",
+        "downloadBtn": "Download",
+        "approveBtn": "Approve Step",
+        "missingReason": "Reason"
+      }
     },
-
     "step3": {
       "text": "Your tax declaration is currently being prepared by SwissTaxOnline. This step is handled entirely by our team.",
-      "eta": "Estimated preparation time: around 2 weeks after all documents are complete."
+      "eta": "Estimated preparation time: around 2 weeks after all documents are complete.",
+      "confirmDraftReceipt": "Are you sure you want to confirm receipt of the draft?",
+      "draftConfirmed": "Confirmed — step will be marked as completed.",
+      "confirmReceiptFailed": "Could not confirm receipt.",
+      "confirmComplete": "Are you sure you have finished preparing the tax declaration?",
+      "completed": "Step 3 marked as complete!",
+      "completeError": "An error occurred.",
+      "draftUploadSuccess": "Draft uploaded successfully.",
+      "admin": {
+        "uploadDraftLabel": "Admin: Upload Tax Declaration Draft (PDF)",
+        "uploadDraftBtn": "Upload Draft",
+        "completeBtn": "Mark as Prepared & Complete Step 3",
+        "mustUploadFirst": "You must upload the draft file before completing this step."
+      }
     },
-
     "step4": {
-      "description": "Your draft tax declaration is ready. Please review it carefully and confirm.",
-      "downloadDraft": "Download draft declaration (PDF)",
-      "comments": "Comments or corrections",
-      "comments.placeholder": "Add any comments or corrections here…",
-      "uploadExtra": "Upload additional documents",
-      "meetingInfo": "For Comfort and Premium packages, you can request a meeting to discuss your declaration.",
-      "bookMeeting": "Book a meeting",
-      "validate": "Validate and confirm",
-      "completed": "You have validated your declaration."
+      "description": "Your tax declaration draft is ready. Please review it carefully and confirm.",
+      "noDraftYet": "No draft uploaded yet.",
+      "waitingForAdmin": "Waiting for admin to upload the draft.",
+      "uploadedAt": "Uploaded:",
+      "lastComment": "Last comment:",
+      "confirming": "Confirming...",
+      "confirmReceipt": "Confirm you received the draft",
+      "addComment": {
+        "label": "Add Comment",
+        "forClient": "(for client)",
+        "optional": "(optional)",
+        "placeholderAdmin": "Write a comment for the client...",
+        "placeholderUser": "Example: I found an error on page 2, line 5...",
+        "submit": "Add Comment"
+      },
+      "comments": {
+        "title": "Comments",
+        "empty": "No comments yet."
+      }
     },
-
     "step5": {
-      "description": "Your tax declaration has been submitted to the tax authorities.",
+      "description": "This is the final stage. Please review the submission information and upload any required documents.",
       "date": "Submission date",
       "method": "Submission method",
-      "downloadFinal": "Download final declaration",
-      "uploadAssessment": "Upload your tax assessment notice (Comfort only)",
-      "thanks": "Thank you! This process is now completed. You can start a new declaration for the next year at any time from your dashboard."
+      "adminFilesTitle": "Admin uploaded files",
+      "userFilesTitle": "User uploaded files",
+      "uploaded": "Uploaded",
+      "by": "by",
+      "admin1": "admin",
+      "user1": "user",
+      "noAdminFilesYet": "No admin files yet.",
+      "noUserFilesYet": "No user files yet.",
+      "admin": {
+        "uploadFinalLabel": "Admin: upload final file (PDF)",
+        "uploadFinalBtn": "Upload final file",
+        "markFullyCompleted": "Mark as Fully Completed & Finish Declaration"
+      },
+      "user": {
+        "uploadNoticeLabel": "Upload assessment notice (if any)",
+        "uploadNoticeBtn": "Upload notice"
+      },
+      "thanks": "Thank you for completing the submission."
+    },
+    "submission": {
+      "userUploadSuccess": "File uploaded. Admin will be able to download it."
     }
-  }
-  ,
+  },
   "about": {
     "title": "About SwissTaxOnline",
     "subtitle": "A digital Swiss tax service developed by A&G Fiduciaire Sàrl to make your tax declarations simpler, clearer, and more secure.",
-
     "company": {
       "title": "Who we are",
       "text1": "SwissTaxOnline is an online service dedicated to helping individuals and entrepreneurs file their Swiss tax declarations with confidence. Behind the platform stands A&G Fiduciaire Sàrl, a Swiss fiduciary firm with experience in taxation, accounting and advisory services.",
       "text2": "By combining human expertise with a secure digital platform, we offer a service that is both efficient and personal – adapted to your situation, your canton and your preferred language."
     },
-
     "mission": {
       "title": "Our mission",
       "text": "Our mission is to simplify the Swiss tax declaration process. We want to remove complexity, avoid unpleasant surprises and save you time. With SwissTaxOnline, you answer a clear and structured questionnaire, upload your documents securely, and our team takes care of preparing, reviewing and filing your declaration with the tax office."
     },
-
     "team": {
       "title": "Our team",
       "intro": "SwissTaxOnline is powered by a multidisciplinary team of tax experts, fiduciary specialists and support staff based in Switzerland.",
@@ -360,7 +402,6 @@
         }
       }
     },
-
     "values": {
       "title": "Our values",
       "intro": "Four values guide all our decisions and the way we support our clients.",
@@ -383,7 +424,6 @@
         }
       }
     },
-
     "commitments": {
       "title": "Our commitments",
       "intro": "Beyond technology, we commit to concrete guarantees for your data and your experience.",
@@ -399,7 +439,6 @@
         }
       }
     },
-
     "contact": {
       "title": "Contact and address",
       "intro": "Do you have questions about SwissTaxOnline, our process or our offers? You can contact us using the details below.",
@@ -414,12 +453,10 @@
       "emailLabel": "Email:",
       "phoneLabel": "Phone:"
     }
-  }
-  ,
+  },
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Find the most common questions about SwissTaxOnline, the online tax declaration process and how we handle your data.",
-
     "categories": {
       "general": {
         "title": "General information",
@@ -439,7 +476,6 @@
           }
         }
       },
-
       "process": {
         "title": "Tax declaration process",
         "description": "How the different stages of the tax declaration work with SwissTaxOnline.",
@@ -458,7 +494,6 @@
           }
         }
       },
-
       "documents": {
         "title": "Required documents",
         "description": "What documents you should prepare and upload for your Swiss tax declaration.",
@@ -477,7 +512,6 @@
           }
         }
       },
-
       "payment": {
         "title": "Payment and invoicing",
         "description": "Information about pricing, payment methods and invoices.",
@@ -496,7 +530,6 @@
           }
         }
       },
-
       "security": {
         "title": "Security and confidentiality",
         "description": "How we protect your personal and tax data.",
@@ -518,78 +551,68 @@
     }
   },
   "verifyEmail": {
-  "title": "Verify your email",
-  "statusLabel": "Account status:",
-  "statusPending": "Pending verification",
-  "statusVerified": "Account verified",
-
-  "instructionsNoToken": "A confirmation link has been sent to your email address. Please click the link in the message to activate your account.",
-  "verifying": "We are verifying your email…",
-
-  "verifiedMessage": "Your email has been successfully verified. You will be redirected to your dashboard.",
-  "invalidLinkMessage": "This verification link is invalid. You can request a new link below.",
-  "linkExpired": "This verification link has expired. Please request a new confirmation email.",
-
-  "resendTitle": "Didn’t receive the email?",
-  "resendHint": "Check your spam folder, or click the button below to resend the verification link.",
-  "resendCta": "Resend confirmation email",
-  "resendLoading": "Sending…",
-  "resendSuccess": "A new verification email has been sent to your inbox.",
-  "resendError": "We could not resend the email. Please try again later.",
-
-  "goToDashboard": "Go to dashboard",
-  "backToLogin": "Back to login"
-},
-"accountSettings": {
-  "title": "Account Settings",
-  "subtitle": "Manage your personal information, language preferences and security options.",
-  "loading": "Loading your account settings…",
-
-  "save": "Save changes",
-  "saving": "Saving…",
-  "saveSuccess": "Your account settings have been updated.",
-  "saveError": "We could not save your changes. Please try again.",
-
-  "errors": {
-    "passwordMismatch": "The new passwords do not match."
+    "title": "Verify your email",
+    "statusLabel": "Account status:",
+    "statusPending": "Pending verification",
+    "statusVerified": "Account verified",
+    "instructionsNoToken": "A confirmation link has been sent to your email address. Please click the link in the message to activate your account.",
+    "verifying": "We are verifying your email…",
+    "verifiedMessage": "Your email has been successfully verified. You will be redirected to your dashboard.",
+    "invalidLinkMessage": "This verification link is invalid. You can request a new link below.",
+    "linkExpired": "This verification link has expired. Please request a new confirmation email.",
+    "resendTitle": "Didn’t receive the email?",
+    "resendHint": "Check your spam folder, or click the button below to resend the verification link.",
+    "resendCta": "Resend confirmation email",
+    "resendLoading": "Sending…",
+    "resendSuccess": "A new verification email has been sent to your inbox.",
+    "resendError": "We could not resend the email. Please try again later.",
+    "goToDashboard": "Go to dashboard",
+    "backToLogin": "Back to login"
   },
-
-  "personal": {
-    "title": "Personal information",
-    "desc": "Update the details linked to your SwissTaxOnline account.",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "email": "Email",
-    "phone": "Phone number"
+  "accountSettings": {
+    "title": "Account Settings",
+    "subtitle": "Manage your personal information, language preferences and security options.",
+    "loading": "Loading your account settings…",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "saveSuccess": "Your account settings have been updated.",
+    "saveError": "We could not save your changes. Please try again.",
+    "errors": {
+      "passwordMismatch": "The new passwords do not match."
+    },
+    "personal": {
+      "title": "Personal information",
+      "desc": "Update the details linked to your SwissTaxOnline account.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone number"
+    },
+    "language": {
+      "title": "Language preferences",
+      "desc": "Choose the language of the interface. It will be used for your future logins.",
+      "label": "Display language",
+      "en": "English",
+      "fr": "French",
+      "de": "German"
+    },
+    "security": {
+      "title": "Account security",
+      "desc": "Change your password and manage two-factor authentication.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "twoFactorLabel": "Two-factor authentication (2FA)",
+      "twoFactorToggle": "Enable 2FA for additional security when signing in."
+    },
+    "delete": {
+      "title": "Delete account",
+      "desc": "Deleting your account will deactivate your access and may permanently remove your data according to our internal policy.",
+      "button": "Delete my account",
+      "confirmQuestion": "Are you sure you want to delete your account? This action cannot be undone.",
+      "error": "We could not delete your account. Please contact support if the problem persists."
+    }
   },
-
-  "language": {
-    "title": "Language preferences",
-    "desc": "Choose the language of the interface. It will be used for your future logins.",
-    "label": "Display language",
-    "en": "English",
-    "fr": "French",
-    "de": "German"
-  },
-
-  "security": {
-    "title": "Account security",
-    "desc": "Change your password and manage two-factor authentication.",
-    "currentPassword": "Current password",
-    "newPassword": "New password",
-    "confirmNewPassword": "Confirm new password",
-    "twoFactorLabel": "Two-factor authentication (2FA)",
-    "twoFactorToggle": "Enable 2FA for additional security when signing in."
-  },
-
-  "delete": {
-    "title": "Delete account",
-    "desc": "Deleting your account will deactivate your access and may permanently remove your data according to our internal policy.",
-    "button": "Delete my account",
-    "confirmQuestion": "Are you sure you want to delete your account? This action cannot be undone.",
-    "error": "We could not delete your account. Please contact support if the problem persists."
-  }
-},
   "admin.declarations.title": "Tax Declarations",
   "admin.declarations.subtitle": "Manage, filter, and assign tax declarations.",
   "admin.declarations.searchPlaceholder": "Search by name, email, ID, year…",
@@ -610,14 +633,11 @@
   "admin.declarations.step": "Step {{n}}",
   "admin.declarations.results": "Results",
   "admin.declarations.count": "Total: {{count}}",
-
   "admin.declarations.filter.unassigned": "Unassigned only",
   "admin.declarations.filter.assigned": "Assigned only",
   "admin.declarations.filter.all": "All",
-
   "admin.declarations.status.all": "All statuses",
   "admin.declarations.year.all": "All years",
-
   "admin.declarations.columns.client": "Client",
   "admin.declarations.columns.tax": "Tax year / Offer",
   "admin.declarations.columns.status": "Status",
@@ -625,9 +645,7 @@
   "admin.declarations.columns.created": "Created",
   "admin.declarations.columns.updated": "Updated",
   "admin.declarations.columns.assignment": "Assignment",
-
   "admin.declarations.unknownClient": "Unknown client",
-
   "admin.declarations.errors.loadFailed": "Failed to load declarations.",
   "admin.declarations.errors.assignFailed": "Assignment failed. Please try again.",
   "admin.declarations.errors.adminIdRequired": "Admin ID is required.",
@@ -647,7 +665,102 @@
       "appealIfNecessary": "Appeal if necessary",
       "ratesAccordingToProfile": "Rates according to your profile"
     }
+  },
+  "common": {
+    "delete": "Delete",
+    "optional": "Optional",
+    "required": "Required",
+    "thisFile": "this file",
+    "cancel": "Cancel",
+    "undo": "Undo",
+    "undoing": "Undo...",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "error": "Error",
+    "last": "Last",
+    "close": "Close",
+    "admin": "ADMIN",
+    "chooseFile": "Choose file",
+    "noFileChosen": "No file chosen",
+    "uploading": "Uploading...",
+    "sending": "Sending...",
+    "you": "You",
+    "unknown": "Unknown",
+    "unknownTime": "unknown time"
+  },
+  "step1": {
+    "title": "Step 1 — Documents & Questions",
+    "subtitle": "Upload required documents and answer the additional questions.",
+    "progressLabel": "Documents progress",
+    "lockMessage": "Step 1 is locked because the admin approved your documents (Step 2).",
+    "additionalQuestions": "Additional questions",
+    "loadingQuestions": "Loading questions...",
+    "confirmDeleteFile": "Delete “{{fileName}}”?",
+    "uploadedCount": "Uploaded ({{count}})",
+    "notAvailable": "Not available",
+    "pending": "Pending",
+    "notEditable": "This step is not currently editable.",
+    "stepStatusLabel": "Step 1 status",
+    "confirmStep1": "Confirm Step 1",
+    "confirming": "Confirming...",
+    "confirmStep1Prompt": "Confirm Step 1? You will not be able to proceed unless it is complete.",
+    "missingDocuments": "Missing documents:",
+    "missingQuestions": "Missing questions:",
+    "notReady": "Step 1 is not ready",
+    "selectPlaceholder": "Select…"
+  },
+  "documents": {
+    "previous_tax_return": {
+      "title": "Previous tax return"
+    },
+    "salary_certificate": {
+      "title": "Salary certificate"
+    },
+    "bank_statement": {
+      "title": "Bank statement"
+    },
+    "pillar_3_certificate": {
+      "title": "Pillar 3 certificate"
+    },
+    "medical_expense_receipt": {
+      "title": "Medical expense receipt"
+    },
+    "taxero_invoice_payment_proof": {
+      "title": "Taxero invoice payment proof"
+    },
+    "others": {
+      "title": "Other documents"
+    },
+    "upload": {
+      "chooseFile": "Choose file",
+      "filesSelected_one": "{{count}} file selected",
+      "filesSelected_other": "{{count}} files selected",
+      "upload": "Upload",
+      "uploading": "Uploading..."
+    },
+    "missing": {
+      "cta": "I don’t have this document",
+      "reasonPlaceholder": "Reason (optional)",
+      "confirm": "Confirm not available",
+      "saving": "Saving..."
+    }
+  },
+  "stepStatus": {
+    "PENDING": "Pending",
+    "DONE": "Done",
+    "IN_PROGRESS": "In progress"
+  },
+  "filesModal": {
+    "title": "Uploaded Files",
+    "subtitle": "Documents for this declaration",
+    "clientFiles": "Client Files",
+    "adminFiles": "Admin Files",
+    "empty": "No files uploaded yet.",
+    "closeAria": "Close modal",
+    "downloadAria": "Download file"
+  },
+  "documentTypes": {
+    "assessment_notice": "Assessment notice",
+    "final_file": "Final file"
   }
-
 }
-
