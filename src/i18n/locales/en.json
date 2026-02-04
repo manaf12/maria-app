@@ -763,4 +763,36 @@
     "assessment_notice": "Assessment notice",
     "final_file": "Final file"
   }
-}
+,
+  "common.select": "Select...",
+
+  "step1.title": "Step 1 — Documents & Questions",
+  "step1.additionalQuestions": "Additional questions",
+
+  "step1.sections.personalInformation": "Personal information",
+  "step1.sections.professionalExpenses": "Professional expenses",
+  "step1.sections.housing": "Housing",
+  "step1.sections.taxAuthorityNumbers": "Tax authority numbers",
+
+  "step1.questions.personalChanges": "Personal changes since last year (marriage, divorce, move, etc.)",
+  "step1.questions.transportMode": "How do you commute to work?",
+  "step1.questions.distanceToWorkKm": "Distance from home to workplace (km, one-way)",
+  "step1.questions.weeklyTripsToWork": "How many trips to the workplace per week?",
+  "step1.questions.mealsOutsidePerWeek": "How many meals outside per week (work-related)?",
+  "step1.questions.netAnnualRentVD_GE": "Net annual rent (VD / GE) (CHF)",
+  "step1.questions.canton": "Canton",
+  "step1.questions.taxpayerNumber": "Taxpayer number",
+  "step1.questions.controlOrDeclarationCode": "Control / declaration code (if available)",
+
+  "step1.options.transportMode.publicTransport": "Public transport",
+  "step1.options.transportMode.bicycle": "Bicycle",
+  "step1.options.transportMode.vehicle": "Car / vehicle",
+
+  "step1.options.canton.FR": "Fribourg (FR)",
+  "step1.options.canton.BE": "Bern (BE)",
+  "step1.options.canton.VD": "Vaud (VD)",
+  "step1.options.canton.VS": "Valais (VS)",
+  "step1.options.canton.NE": "Neuchâtel (NE)",
+  "step1.options.canton.GE": "Geneva (GE)",
+  "step1.options.canton.OTHER": "Other"
+} 

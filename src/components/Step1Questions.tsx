@@ -7,9 +7,13 @@ import { useTranslation } from "react-i18next";
 
 export type Step1Question = {
   id: string;
-  label: string;
+  labelKey: string;
   type?: "text" | "number" | "select";
-  options?: { value: string; label: string }[];
+  sectionKey?: string; // إذا عم تستخدمه بالعرض
+  required?: boolean;
+  options?: { value: string; labelKey: string }[];
+  min?: number;
+  max?: number;
 };
 
 export function Step1Questions({
@@ -25,7 +29,11 @@ export function Step1Questions({
   onSaved?: () => void;
   disabled?: boolean;
 }) {
+<<<<<<< HEAD
   const { t, i18n } = useTranslation(); 
+=======
+  const { t } = useTranslation();
+>>>>>>> 164eeec025b1bad7649daa1e72cbda319e322620
   const queryClient = useQueryClient();
 
   const [answers, setAnswers] = useState<Record<string, any>>(initialAnswers ?? {});
@@ -153,40 +161,39 @@ export function Step1Questions({
         <div key={q.id} className="flex items-start gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium mb-1" htmlFor={q.id}>
-              {tr(q.label)} 
+              {t(q.labelKey, { defaultValue: q.labelKey })}
             </label>
-
-            {q.type === "select" ? (
-              <select
-                id={q.id}
-                className={
-                  "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
-                  (disabled ? "bg-gray-100 cursor-not-allowed" : "")
-                }
-                value={answers[q.id] ?? ""}
-                disabled={disabled}
-                onChange={(e) => handleChange(q.id, e.target.value)}
-              >
-                <option value="">{t("step1.selectPlaceholder")}</option> 
-                {(q.options ?? []).map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {tr(opt.label)} 
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                id={q.id}
-                className={
-                  "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
-                  (disabled ? "bg-gray-100 cursor-not-allowed" : "")
-                }
-                type={q.type === "number" ? "number" : "text"}
-                value={answers[q.id] ?? ""}
-                disabled={disabled}
-                onChange={(e) => handleChange(q.id, e.target.value)}
-              />
-            )}
+         {q.type === "select" ? (
+  <select
+    id={q.id}
+    className={
+      "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
+      (disabled ? "bg-gray-100 cursor-not-allowed" : "")
+    }
+    value={answers[q.id] ?? ""}
+    disabled={disabled}
+    onChange={(e) => handleChange(q.id, e.target.value)}
+  >
+  <option value="">{t("common.select", { defaultValue: "Select..." })}</option>
+    {(q.options ?? []).map((opt) => (
+      <option key={opt.value} value={opt.value}>
+        {t(opt.labelKey, { defaultValue: opt.labelKey })}
+      </option>
+    ))}
+  </select>
+) : (
+  <input
+    id={q.id}
+    className={
+      "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
+      (disabled ? "bg-gray-100 cursor-not-allowed" : "")
+    }
+    type={q.type === "number" ? "number" : "text"}
+    value={answers[q.id] ?? ""}
+    disabled={disabled}
+    onChange={(e) => handleChange(q.id, e.target.value)}
+  />
+)}
 
             {statusMap[q.id] === "error" && (
               <div className="text-xs text-red-600 mt-1">
