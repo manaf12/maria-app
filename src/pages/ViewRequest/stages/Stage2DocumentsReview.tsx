@@ -48,7 +48,6 @@ export default function Stage2DocumentsReview({
   const commentHistory: any[] = documentsReviewStep?.meta?.commentHistory ?? [];
   const lastComment: any = documentsReviewStep?.meta?.lastComment ?? null;
   const missingDocs = documentsPreparationStep?.meta?.missingDocs ?? [];
-console.log(documentsReviewStep , " manaf ")
   const currentCommentValue = isAdmin ? (step2AdminComment ?? "") : (step2UserComment ?? "");
   const setCurrentCommentValue = (v: string) => {
     if (isAdmin) setStep2AdminComment(v);
