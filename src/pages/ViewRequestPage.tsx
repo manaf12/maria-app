@@ -21,8 +21,9 @@ export default function ViewRequestPage() {
 
   const navigate = useNavigate();
   const { user } = useAuth();
-  const isAdmin = user?.roles?.includes("admin") ?? false;
-
+const roles = user?.roles ?? [];
+const isAdmin =
+  roles.includes("admin") || roles.includes("SUPER_ADMIN"); // treat super admin as admin UI
   const queryClient = useQueryClient();
 
   // UI state
