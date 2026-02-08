@@ -8,12 +8,12 @@ export default function AboutPage() {
     {
       key: "founder",
     },
-    {
-      key: "partner",
-    },
-    {
-      key: "taxExpert",
-    },
+    // {
+    //   key: "partner",
+    // },
+    // {
+    //   key: "taxExpert",
+    // },
   ];
 
   const values = ["transparency", "reliability", "confidentiality", "proximity"] as const;
@@ -160,13 +160,13 @@ export default function AboutPage() {
                 </h3>
                 <p>
                   <strong>{t("about.contact.emailLabel")} </strong>
-                  <a href="mailto:info@swisstaxonline.ch">
-                    info@swisstaxonline.ch
+                  <a href="mailto:contact@taxero.ch">
+                    contact@taxero.ch
                   </a>
                 </p>
                 <p>
                   <strong>{t("about.contact.phoneLabel")} </strong>
-                  <a href="tel:+41000000000">+41 (0)00 000 00 00</a>
+                  <a href="tel:+41263030409">+41 26 303 04 09</a>
                 </p>
               </div>
             </div>

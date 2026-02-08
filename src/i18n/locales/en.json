@@ -71,10 +71,10 @@
   "home.reviews.count": "Based on dozens of verified Google Reviews.",
   "home.reviews.placeholder": "Google Reviews widget or screenshots will be integrated here to showcase real client feedback.",
   "home.seo.title": "Online Swiss tax declaration – useful information",
-  "home.seo.intro": "SwissTaxOnline combines the flexibility of a digital tool with the quality of a fiduciary service.",
+  "home.seo.intro": "Taxero combines the flexibility of a digital tool with the quality of a fiduciary service.",
   "home.seo.text1": "We handle Swiss tax declarations for individuals throughout Switzerland. Our online process is designed to be simple and efficient, while remaining fully compliant with cantonal requirements.",
   "home.seo.text2": "From Fribourg to Vaud and Geneva, we help you prepare and optimise your tax declaration while respecting local tax regulations.",
-  "home.seo.linkAbout": "About SwissTaxOnline",
+  "home.seo.linkAbout": "About Taxero",
   "home.seo.linkBlog": "Blog",
   "home.seo.linkFaq": "FAQ",
   "home.seo.linkContact": "Contact",
@@ -118,7 +118,7 @@
   "product.sections.situation": "Your tax situation",
   "product.incomeSources": "Number of income sources",
   "product.incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
-  "product.wealthStatements": "Number of wealth / tax statements",
+  "product.wealthStatements": "Number of wealth statements",
   "product.wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
   "product.properties": "Number of real-estate properties",
   "product.propertiesDetailsTitle": "Real-estate details",
@@ -144,7 +144,7 @@
   "product.next": "Next",
   "product.back": "Back",
   "product.sections.offers": "Our offers",
-  "product.offersHint": "Based on your answers, choose the offer that best matches your situation.",
+  "product.offersHint": "Based on your answers, here are the service options that fit your declaration.",
   "product.offers.standard": "Standard",
   "product.offers.premium": "Premium",
   "product.offers.confort": "Comfort",
@@ -155,6 +155,8 @@
   "product.finalPrice": "Final Price",
   "product.proceedToBilling": "Proceed to billing",
   "product.sections.offer": "Your selected offer",
+  "pricing.package": "Package",
+
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Manage all your Swiss tax declarations in one place.",
@@ -194,11 +196,11 @@
         "time": "Indicative time: 1 week"
       },
       "2": {
-        "title": "Document review by SwissTaxOnline",
+        "title": "Document review by Taxero",
         "time": "Indicative time: 1 week"
       },
       "3": {
-        "title": "Tax declaration preparation by SwissTaxOnline",
+        "title": "Tax declaration preparation by Taxero",
         "time": "Indicative time: 2 weeks"
       },
       "4": {
@@ -305,7 +307,7 @@
       }
     },
     "step3": {
-      "text": "Your tax declaration is currently being prepared by SwissTaxOnline. This step is handled entirely by our team.",
+      "text": "Your tax declaration is currently being prepared by Taxero. This step is handled entirely by our team.",
       "eta": "Estimated preparation time: around 2 weeks after all documents are complete.",
       "confirmDraftReceipt": "Are you sure you want to confirm receipt of the draft?",
       "draftConfirmed": "Confirmed — step will be marked as completed.",
@@ -370,25 +372,25 @@
     }
   },
   "about": {
-    "title": "About SwissTaxOnline",
+    "title": "About Taxero",
     "subtitle": "A digital Swiss tax service developed by A&G Fiduciaire Sàrl to make your tax declarations simpler, clearer, and more secure.",
     "company": {
       "title": "Who we are",
-      "text1": "SwissTaxOnline is an online service dedicated to helping individuals and entrepreneurs file their Swiss tax declarations with confidence. Behind the platform stands A&G Fiduciaire Sàrl, a Swiss fiduciary firm with experience in taxation, accounting and advisory services.",
+      "text1": "Taxero is an online service dedicated to helping individuals and entrepreneurs file their Swiss tax declarations with confidence. Behind the platform stands A&G Fiduciaire Sàrl, a Swiss fiduciary firm with experience in taxation, accounting and advisory services.",
       "text2": "By combining human expertise with a secure digital platform, we offer a service that is both efficient and personal – adapted to your situation, your canton and your preferred language."
     },
     "mission": {
       "title": "Our mission",
-      "text": "Our mission is to simplify the Swiss tax declaration process. We want to remove complexity, avoid unpleasant surprises and save you time. With SwissTaxOnline, you answer a clear and structured questionnaire, upload your documents securely, and our team takes care of preparing, reviewing and filing your declaration with the tax office."
+      "text": "Our mission is to simplify the Swiss tax declaration process. We want to remove complexity, avoid unpleasant surprises and save you time. With Taxero, you answer a clear and structured questionnaire, upload your documents securely, and our team takes care of preparing, reviewing and filing your declaration with the tax office."
     },
     "team": {
       "title": "Our team",
-      "intro": "SwissTaxOnline is powered by a multidisciplinary team of tax experts, fiduciary specialists and support staff based in Switzerland.",
+      "intro": "Taxero is powered by a multidisciplinary team of tax experts, fiduciary specialists and support staff based in Switzerland.",
       "members": {
         "founder": {
           "initials": "AG",
           "name": "A&G Fiduciaire Sàrl",
-          "role": "Founder and operator of SwissTaxOnline"
+          "role": "Founder and operator of Taxero"
         },
         "partner": {
           "initials": "TP",
@@ -441,13 +443,13 @@
     },
     "contact": {
       "title": "Contact and address",
-      "intro": "Do you have questions about SwissTaxOnline, our process or our offers? You can contact us using the details below.",
+      "intro": "Do you have questions about Taxero, our process or our offers? You can contact us using the details below.",
       "addressLabel": "Postal address",
       "contactLabel": "Contact",
       "addressLines": [
         "A&G Fiduciaire Sàrl",
-        "Street and number",
-        "ZIP – City",
+        "Route de Moncor 14",
+        "1752 Villars sur Glâne",
         "Switzerland"
       ],
       "emailLabel": "Email:",
@@ -456,18 +458,18 @@
   },
   "faq": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Find the most common questions about SwissTaxOnline, the online tax declaration process and how we handle your data.",
+    "subtitle": "Find the most common questions about Taxero, the online tax declaration process and how we handle your data.",
     "categories": {
       "general": {
         "title": "General information",
-        "description": "A quick overview of what SwissTaxOnline is and who it is for.",
+        "description": "A quick overview of what Taxero is and who it is for.",
         "items": {
           "q1": {
-            "question": "What is SwissTaxOnline?",
-            "answer": "SwissTaxOnline is an online service operated by A&G Fiduciaire Sàrl that helps you prepare and file your Swiss tax declaration. You answer a structured questionnaire, upload your documents securely, and our team prepares and submits your declaration to the tax authorities."
+            "question": "What is Taxero?",
+            "answer": "Taxero is an online service operated by A&G Fiduciaire Sàrl that helps you prepare and file your Swiss tax declaration. You answer a structured questionnaire, upload your documents securely, and our team prepares and submits your declaration to the tax authorities."
           },
           "q2": {
-            "question": "Who can use SwissTaxOnline?",
+            "question": "Who can use Taxero?",
             "answer": "The service is designed primarily for individuals who are tax resident in Switzerland. Depending on the canton and your situation, self-employed persons and small business owners may also be eligible. Specific information will be provided in the questionnaire and on our public website."
           },
           "q3": {
@@ -478,7 +480,7 @@
       },
       "process": {
         "title": "Tax declaration process",
-        "description": "How the different stages of the tax declaration work with SwissTaxOnline.",
+        "description": "How the different stages of the tax declaration work with Taxero.",
         "items": {
           "q1": {
             "question": "How does the tax declaration process work?",
@@ -526,7 +528,7 @@
           },
           "q3": {
             "question": "Will I receive an invoice for my records?",
-            "answer": "Yes. An invoice in PDF format is generated automatically and can be downloaded at any time from your client area. It is issued by A&G Fiduciaire Sàrl for the SwissTaxOnline service."
+            "answer": "Yes. An invoice in PDF format is generated automatically and can be downloaded at any time from your client area. It is issued by A&G Fiduciaire Sàrl for the Taxero service."
           }
         }
       },
@@ -582,7 +584,7 @@
     },
     "personal": {
       "title": "Personal information",
-      "desc": "Update the details linked to your SwissTaxOnline account.",
+      "desc": "Update the details linked to your Taxero account.",
       "firstName": "First name",
       "lastName": "Last name",
       "email": "Email",
@@ -629,6 +631,7 @@
   "admin.declarations.selectVisible": "Select visible",
   "admin.declarations.clearSelection": "Clear selection",
   "admin.declarations.selectedCount": "Selected: {{count}}",
+  "admin.declarartions.selectAdmin":"Select Admin",
   "admin.declarations.fileShort": "File #{{id}}",
   "admin.declarations.step": "Step {{n}}",
   "admin.declarations.results": "Results",
@@ -686,7 +689,8 @@
     "sending": "Sending...",
     "you": "You",
     "unknown": "Unknown",
-    "unknownTime": "unknown time"
+    "unknownTime": "unknown time",
+    "mark":"Mark as not available"
   },
   "step1": {
     "title": "Step 1 — Documents & Questions",
@@ -711,22 +715,22 @@
   },
   "documents": {
     "previous_tax_return": {
-      "title": "Previous tax return"
+      "title": "Previous tax return *"
     },
     "salary_certificate": {
-      "title": "Salary certificate"
+      "title": "Salary certificate *"
     },
     "bank_statement": {
-      "title": "Bank statement"
+      "title": "Bank statement *"
     },
     "pillar_3_certificate": {
-      "title": "Pillar 3 certificate"
+      "title": "Pillar 3 certificate *"
     },
     "medical_expense_receipt": {
-      "title": "Medical expense receipt"
+      "title": "Medical expense receipt *"
     },
     "taxero_invoice_payment_proof": {
-      "title": "Taxero invoice payment proof"
+      "title": "Taxero invoice payment proof *"
     },
     "others": {
       "title": "Other documents"
@@ -740,7 +744,7 @@
     },
     "missing": {
       "cta": "I don’t have this document",
-      "reasonPlaceholder": "Reason (optional)",
+      "reasonPlaceholder": "Clear Selection First",
       "confirm": "Confirm not available",
       "saving": "Saving..."
     }
@@ -795,4 +799,5 @@
   "step1.options.canton.NE": "Neuchâtel (NE)",
   "step1.options.canton.GE": "Geneva (GE)",
   "step1.options.canton.OTHER": "Other"
-} 
+}
+ 

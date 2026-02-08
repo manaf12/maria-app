@@ -133,7 +133,7 @@ export default function ProductPage() {
     },
     { key: "prepareTaxReturn", standard: true, premium: true, confort: true },
     { key: "maximizeDeductions", standard: true, premium: true, confort: true },
-    { key: "deadlineExtension", standard: true, premium: true, confort: true },
+    { key: "deadlineExtension", standard: false, premium: true, confort: true },
 
     // Excel shows ✗ for Standard, ✓ for Premium, ✓ for Confort
     {
@@ -210,7 +210,7 @@ export default function ProductPage() {
       taxYear: currentYear - 1,
       maritalStatus: "single",
       childrenCount: 0,
-      incomeSources: 1,
+      incomeSources: 0,
       wealthStatements: 0,
       properties: 0,
       newProperties: 0,
@@ -642,7 +642,7 @@ const goNext = async () => {
 
   const handleCancel = () => {
     clearDraft();
-    window.location.href = "https://www.swisstaxonline.ch";
+    window.location.href = "https://www.taxero.ch/";
   };
 
   return (
@@ -659,9 +659,9 @@ const goNext = async () => {
         <section className="product-main">
           {/* Step 1 */}
           {step === 1 && (
-            <StepCard title={t("product.sections.profile")} onNext={goNext}>
+            <StepCard title={t("product.taxYear")} onNext={goNext}>
               <div className="field-row">
-                <label>{t("product.taxYear")}</label>
+                {/* <label>{t("product.taxYear")}</label> */}
                 <select {...register("taxYear", { valueAsNumber: true , required : "Tax year is required"})}>
                   <option value={currentYear - 1}>{currentYear - 1}</option>
                   <option value={currentYear}>{currentYear}</option>
@@ -731,15 +731,15 @@ const goNext = async () => {
           {/* Step 4 */}
           {step === 4 && (
             <StepCard
-              title={t("product.sections.situation")}
+              title={t("product.incomeSources")}
               onPrev={goPrev}
               onNext={goNext}
             >
               <div className="field-row">
-                <label>{t("product.incomeSources")}</label>
+                {/* <label>{t("product.incomeSources")}</label> */}
          <input
   type="number"
-  min={1}
+  min={0}
   {...register("incomeSources", {
     valueAsNumber: true,
     setValueAs: (v) => (v === "" ? undefined : Number(v)),
@@ -750,7 +750,7 @@ const goNext = async () => {
 {errors.incomeSources?.message && (
   <p className="field-error">{String(errors.incomeSources.message)}</p>
 )}
-                <p className="field-hint">{t("product.incomeHint")}</p>
+                <p className="field-hint"  style={{ fontSize: "1rem" }}>{t("product.incomeHint")}</p>
               </div>
             </StepCard>
           )}
@@ -775,7 +775,7 @@ const goNext = async () => {
 {errors.wealthStatements?.message && (
   <p className="field-error">{String(errors.wealthStatements.message)}</p>
 )}
-                <p className="field-hint">{t("product.wealthHint")}</p>
+                <p className="field-hint" style={{ fontSize: "1rem" }}>{t("product.wealthHint")}</p>
               </div>
             </StepCard>
           )}
@@ -816,12 +816,14 @@ const goNext = async () => {
       <input
         type="number"
         min={1}
+        readOnly
         {...register("properties", {
           setValueAs: (v) => (v === "" ? undefined : Number(v)),
           required: "Properties count is required",
           min: { value: 1, message: "Must be at least 1" },
         })}
       />
+
 
       {errors.properties?.message && (
         <p className="field-error">{String(errors.properties.message)}</p>
@@ -873,7 +875,7 @@ const goNext = async () => {
                       <thead>
                         <tr>
                           <th className="pricing-th pricing-feature-col">
-                            Package
+                            {t("pricing.package")}
                           </th>
 
                           {offers.map((offer) => {
@@ -976,19 +978,20 @@ const goNext = async () => {
 
           {step === 9 && (
             <div className="product-block">
-              <div className="product-block-header">
+              <div className="summary-header">
                 <h2>{t("product.sections.summary")}</h2>
                 <button
-                  type="button"
-                  className="link-like edit-request-inline"
+                  // type="button"
+                  // className="link-like edit-request-inline"
                   onClick={() => setStep(8)}
+                  className="edit-btn"
                 >
                   {t("product.editRequest")}
                 </button>
               </div>
 
               <div className="product-profile-summary">
-                <h3>{t("product.sections.summary")}</h3>
+                {/* <h3>{t("product.sections.summary")}</h3> */}
 
                 <ul>
                   <li>{t("product.summary.taxYear", { year: taxYear })}</li>

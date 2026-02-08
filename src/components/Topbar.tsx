@@ -13,6 +13,20 @@ const LANGS: { code: "de" | "fr" | "en"; labelKey: string }[] = [
   { code: "en", labelKey: "topbar.lang.en" },
 ];
 
+function normalizeRoles(roles?: unknown) {
+  const raw =
+    Array.isArray(roles) ? roles : typeof roles === "string" ? roles.split(",") : [];
+
+  return raw
+    .map((r) => String(r).trim().toUpperCase())
+    .filter(Boolean);
+}
+
+function isAdminRole(roles?: unknown) {
+  const r = normalizeRoles(roles);
+  return r.includes("ADMIN") || r.includes("SUPER_ADMIN");
+}
+
 export default function Topbar() {
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
@@ -21,7 +35,9 @@ export default function Topbar() {
   const queryClient = useQueryClient();
 
   const [menuopen, setMenuOpen] = useState(false);
-  const currentLang = (i18n.language || "en").slice(0, 2) as "de" | "fr" | "en";
+  const currentLang = (["de", "fr", "en"].includes((i18n.language || "fr").slice(0, 2))
+    ? (i18n.language || "fr").slice(0, 2)
+    : "fr") as "de" | "fr" | "en";
 
   // Used to close the dropdown when clicking outside
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -76,11 +92,7 @@ export default function Topbar() {
     <div className="topbar">
       <div className="topbar-left">
         <div className="topbar-flag">
-          <img
-            src={logoTaxera}
-            alt="Taxera Logo"
-            className="topbar-flag-img"
-          />
+          <img src={logoTaxera} alt="Taxera Logo" className="topbar-flag-img" />
         </div>
         <span className="topbar-text">{t("topbar.tagline")}</span>
       </div>
@@ -100,7 +112,7 @@ export default function Topbar() {
               </button>
 
               {idx < LANGS.length - 1 && (
-                <span className="topbar-lang-separator">-</span>
+                <span className="topbar-lang-separator" aria-hidden="true">-</span>
               )}
             </span>
           ))}
@@ -115,10 +127,7 @@ export default function Topbar() {
             {t("topbar.login")}
           </Link>
         ) : (
-          <div
-            ref={menuRef}
-            className={"user-menu" + (menuopen ? " is-open" : "")}
-          >
+          <div ref={menuRef} className={"user-menu" + (menuopen ? " is-open" : "")}>
             <button
               type="button"
               className="user-menu-trigger"
@@ -138,7 +147,10 @@ export default function Topbar() {
                   role="menuitem"
                   onClick={() => {
                     setMenuOpen(false);
-                    navigate("/dashboard");
+                    const target = isAdminRole((user as any)?.roles)
+                      ? "/admin/declarations"
+                      : "/https://www.taxero.ch/";
+                    navigate(target);
                   }}
                 >
                   {t("menu.settings")}

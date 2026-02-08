@@ -73,7 +73,7 @@ const navigate=useNavigate()
           onClick={handleViewRequestClick} 
 
         >
-          View Request
+          {t("dashboard.actions.viewRequest")}
         </button>
       </div>
 

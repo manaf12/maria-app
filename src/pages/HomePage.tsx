@@ -10,42 +10,46 @@ export default function HomePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const isAdmin =
+  user?.roles?.includes("admin") ||
+  user?.roles?.includes("SUPER_ADMIN");
 
-const DRAFT_KEY = "taxonline_quote_draft";
 
-const goToQuote = async () => {
-  // مهم جداً: امسحي الاسترجاع المحلي
-  localStorage.removeItem(DRAFT_KEY);
-  localStorage.removeItem("questionnaireId");
+  const DRAFT_KEY = "taxonline_quote_draft";
 
-  if (user) {
+  const goToQuote = async () => {
+    // مهم جداً: امسحي الاسترجاع المحلي
+    localStorage.removeItem(DRAFT_KEY);
+    localStorage.removeItem("questionnaireId");
+
+    if (user) {
+      try {
+        const res = await axiosClient.post("/questionnaire/start?forceNew=true", {});
+        const questionnaireId = res.data.id;
+        localStorage.setItem("questionnaireId", questionnaireId);
+        navigate(`/product`);
+      } catch (err: any) {
+        if (err?.response?.status === 401) {
+          navigate("/login", { state: { redirectTo: "/product" } });
+        } else {
+          console.error("Error starting questionnaire:", err);
+          alert("Failed to start questionnaire. Please try again later.");
+        }
+      }
+      return;
+    }
+
     try {
-      const res = await axiosClient.post("/questionnaire/start?forceNew=true", {});
-      const questionnaireId = res.data.id;
+      const res = await axiosClient.post("/questionnaire/create-standalone", {});
+      const questionnaireId = res.data.id ?? res.data?.id;
       localStorage.setItem("questionnaireId", questionnaireId);
       navigate(`/product`);
-    } catch (err: any) {
-      if (err?.response?.status === 401) {
-        navigate("/login", { state: { redirectTo: "/product" }});
-      } else {
-        console.error("Error starting questionnaire:", err);
-        alert("Failed to start questionnaire. Please try again later.");
-      }
+    } catch (err) {
+      console.error("Failed to create standalone questionnaire:", err);
+      alert("Failed to start anonymous session. Please try again.");
     }
-    return;
-  }
+  };
 
-  try {
-    const res = await axiosClient.post("/questionnaire/create-standalone", {});
-    const questionnaireId = res.data.id ?? res.data?.id;
-    localStorage.setItem("questionnaireId", questionnaireId);
-    navigate(`/product`);
-  } catch (err) {
-    console.error("Failed to create standalone questionnaire:", err);
-    alert("Failed to start anonymous session. Please try again.");
-  }
-};
-      
 
   return (
     <main className="home">
@@ -62,7 +66,7 @@ const goToQuote = async () => {
           <div className="home-strengths">
             <h2>{t("home.strengths.title")}</h2>
             <ul>
-              <li>{t("home.strengths.item1")}</li>
+              {/* <li>{t("home.strengths.item1")}</li> */}
               <li>{t("home.strengths.item2")}</li>
               <li>{t("home.strengths.item3")}</li>
               <li>{t("home.strengths.item4")}</li>
@@ -70,24 +74,26 @@ const goToQuote = async () => {
           </div>
         </div>
 
-        <div className="home-hero-right">
-          <div className="home-price-card">
-            <h2>{t("home.price.title")}</h2>
-            <p>{t("home.price.text")}</p>
+        {!isAdmin && (
+          <div className="home-hero-right">
+            <div className="home-price-card">
+              <h2>{t("home.price.title")}</h2>
+              <p>{t("home.price.text")}</p>
 
-            <button className="primary" onClick={goToQuote}>
-            {t("home.price.cta")} {/* Get a quote */}
-            </button>
+              <button className="primary" onClick={goToQuote}>
+                {t("home.price.cta")}
+              </button>
 
-            <p className="muted">
-              {t("home.price.note")}
-            </p>
+              <p className="muted">
+                {t("home.price.note")}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* GOOGLE REVIEWS */}
-      <section className="home-section">
+      {/* <section className="home-section">
         <h2>{t("home.reviews.title")}</h2>
         <p className="home-section-intro">
           {t("home.reviews.subtitle")}
@@ -105,7 +111,7 @@ const goToQuote = async () => {
             <p>{t("home.reviews.placeholder")}</p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* SEO / USEFUL INFORMATION */}
       <section className="home-section">
@@ -118,16 +124,16 @@ const goToQuote = async () => {
           <p>{t("home.seo.text2")}</p>
 
           <div className="home-seo-links">
-            <a href="https://www.swisstaxonline.ch/about" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.taxero.ch/about" target="_blank" rel="noopener noreferrer">
               {t("home.seo.linkAbout")}
             </a>
-            <a href="https://www.swisstaxonline.ch/blog" target="_blank" rel="noopener noreferrer">
+            {/* <a href="https://www.swisstaxonline.ch/blog" target="_blank" rel="noopener noreferrer">
               {t("home.seo.linkBlog")}
-            </a>
-            <a href="https://www.swisstaxonline.ch/faq" target="_blank" rel="noopener noreferrer">
+            </a> */}
+            <a href="https://www.taxero.ch/faq" target="_blank" rel="noopener noreferrer">
               {t("home.seo.linkFaq")}
             </a>
-            <a href="https://www.swisstaxonline.ch/contact" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.taxero.ch/contact" target="_blank" rel="noopener noreferrer">
               {t("home.seo.linkContact")}
             </a>
           </div>
@@ -142,7 +148,7 @@ const goToQuote = async () => {
             <strong>{t("home.how.step1.title")}</strong>
             <p>{t("home.how.step1.text")}</p>
             <a
-              href="https://www.swisstaxonline.ch/faq#step1"
+              href="https://www.taxero.ch/faq#step1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -153,7 +159,7 @@ const goToQuote = async () => {
             <strong>{t("home.how.step2.title")}</strong>
             <p>{t("home.how.step2.text")}</p>
             <a
-              href="https://www.swisstaxonline.ch/faq#step2"
+              href="https://www.taxero.ch/faq#step2"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -164,7 +170,7 @@ const goToQuote = async () => {
             <strong>{t("home.how.step3.title")}</strong>
             <p>{t("home.how.step3.text")}</p>
             <a
-              href="https://www.swisstaxonline.ch/faq#step3"
+              href="https://www.taxero.ch/faq#step3"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -175,7 +181,7 @@ const goToQuote = async () => {
             <strong>{t("home.how.step4.title")}</strong>
             <p>{t("home.how.step4.text")}</p>
             <a
-              href="https://www.swisstaxonline.ch/faq#step4"
+              href="https://www.taxero.ch/faq#step4"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -186,7 +192,7 @@ const goToQuote = async () => {
             <strong>{t("home.how.step5.title")}</strong>
             <p>{t("home.how.step5.text")}</p>
             <a
-              href="https://www.swisstaxonline.ch/faq#step5"
+              href="https://www.taxero.ch/faq#step5"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -225,7 +231,7 @@ const goToQuote = async () => {
         <div className="home-faq">
           <div className="home-faq-item">
             <a
-              href="https://www.swisstaxonline.ch/faq#processing-time"
+              href="https://www.taxero.ch/faq#processing-time"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -235,7 +241,7 @@ const goToQuote = async () => {
           </div>
           <div className="home-faq-item">
             <a
-              href="https://www.swisstaxonline.ch/faq#deductions"
+              href="https://www.taxero.ch/faq#deductions"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -245,7 +251,7 @@ const goToQuote = async () => {
           </div>
           <div className="home-faq-item">
             <a
-              href="https://www.swisstaxonline.ch/faq#security"
+              href="https://www.taxero.ch/faq#security"
               target="_blank"
               rel="noopener noreferrer"
             >

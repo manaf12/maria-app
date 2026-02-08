@@ -185,19 +185,28 @@ export default function Stage1Section({
     ...OPTIONAL_DOCUMENT_TYPES,
   ];
 
+  const BadgeBase =
+    "text-xs px-2 py-1 rounded-full border";
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="rounded-xl border bg-white p-4">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <h3 className="font-semibold text-lg">{t("step1.title")}</h3>
-            <p className="mt-1 text-sm text-gray-500">{t("step1.subtitle")}</p>
+            <h3 className="text-base font-semibold text-gray-900">
+              {t("step1.title")}
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              {t("step1.subtitle")}
+            </p>
           </div>
 
           <div className="shrink-0 text-right">
-            <div className="text-sm text-gray-500">{t("step1.progressLabel")}</div>
-            <div className="text-lg font-semibold">
+            <div className="text-xs text-gray-500">
+              {t("step1.progressLabel")}
+            </div>
+            <div className="text-base font-semibold text-gray-900">
               {requiredProgress.done}/{requiredProgress.total}
             </div>
           </div>
@@ -212,9 +221,14 @@ export default function Stage1Section({
 
       {/* Questions */}
       <div className="rounded-xl border bg-white p-4">
-        <h4 className="font-semibold mb-3">{t("step1.additionalQuestions")}</h4>
+        <h4 className="text-sm font-semibold text-gray-900 mb-3">
+          {t("step1.additionalQuestions")}
+        </h4>
+
         {questionsLoading ? (
-          <div className="text-sm text-gray-500">{t("step1.loadingQuestions")}</div>
+          <div className="text-sm text-gray-500">
+            {t("step1.loadingQuestions")}
+          </div>
         ) : (
           <Step1Questions
             declarationId={declaration.id}
@@ -237,60 +251,69 @@ export default function Stage1Section({
           return (
             <div
               key={docType}
-              className="rounded-xl border bg-white p-5 shadow-sm hover:shadow-md transition-shadow"
+              className="rounded-xl border bg-white p-5 hover:bg-gray-50/40 transition-colors"
             >
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <h4 className="font-semibold text-lg capitalize">
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="min-w-0">
+                  <h4 className="text-sm font-semibold text-gray-900">
                     {t(`documents.${docType}.title`)}
                   </h4>
-                  <div className="text-xs text-gray-500">
+                  <div className="mt-0.5 text-xs text-gray-500">
                     {isOthers ? t("common.optional") : t("common.required")}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   {uploadedFiles.length > 0 && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">
+                    <span
+                      className={`${BadgeBase} bg-green-50 text-green-700 border-green-200`}
+                    >
                       {t("step1.uploadedCount", { count: uploadedFiles.length })}
                     </span>
                   )}
+
                   {isMissing && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">
+                    <span
+                      className={`${BadgeBase} bg-yellow-50 text-yellow-700 border-yellow-200`}
+                    >
                       {t("step1.notAvailable")}
                     </span>
                   )}
+
                   {!isMissing && uploadedFiles.length === 0 && !isOthers && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-gray-50 text-gray-700 border">
+                    <span
+                      className={`${BadgeBase} bg-gray-50 text-gray-700 border-gray-200`}
+                    >
                       {t("step1.pending")}
                     </span>
                   )}
                 </div>
               </div>
 
-              {/* Uploaded files list - improved UI */}
+              {/* Uploaded files list - minimal */}
               {uploadedFiles.length > 0 && (
                 <ul className="mb-4 list-none p-0 m-0 space-y-2">
                   {uploadedFiles.map((file) => (
                     <li
                       key={file.id}
-                      className="flex items-center justify-between gap-3 rounded-xl border bg-white px-3 py-2 shadow-sm hover:bg-gray-50 transition"
+                      className="flex items-center justify-between gap-3 rounded-xl border bg-white px-3 py-2 hover:bg-gray-50 transition"
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <span
                           aria-hidden="true"
-                          className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-red-50 text-red-600"
+                          className="inline-flex items-center justify-center w-7 h-7 rounded-lg border bg-gray-50 text-gray-600 text-xs"
                         >
-                          📄
+                          PDF
                         </span>
-                        <span className="truncate font-medium text-gray-800">
+
+                        <span className="truncate text-sm font-medium text-gray-800">
                           {file.originalName}
                         </span>
                       </div>
 
                       <button
                         type="button"
-                        className={`delete-btn ${lockEditing ? "cursor-not-allowed" : ""}`}
+                        className="delete-btn"
                         disabled={lockEditing}
                         onClick={async () => {
                           if (lockEditing) return;
@@ -339,16 +362,18 @@ export default function Stage1Section({
       {/* Step status + confirm */}
       <div className="rounded-xl border bg-white p-4">
         <div className="flex items-center justify-between gap-4">
-          <div>
-            <div className="text-sm text-gray-500">{t("step1.stepStatusLabel")}</div>
-            <div className="font-semibold">
+          <div className="min-w-0 flex flex-col gap-1">
+            <div className="text-xs text-gray-500 leading-tight">
+              {t("step1.stepStatusLabel")}
+            </div>
+            <div className="text-sm font-semibold text-gray-900 leading-tight">
               {String(t(`stepStatus.${step1Status}`, { defaultValue: step1Status }))}
             </div>
           </div>
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-[10px] border border-gray-900 bg-gray-900 px-4 py-[10px] text-sm font-semibold leading-[18px] text-white shadow-sm transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="confirm-step-btn"
             disabled={confirming || lockEditing}
             onClick={() => {
               if (lockEditing) return;
@@ -361,7 +386,7 @@ export default function Stage1Section({
         </div>
 
         {confirmError && (
-          <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm">
+          <div className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm">
             <div className="font-semibold text-red-700">{t("step1.notReady")}</div>
 
             {import.meta.env.MODE === "development" && confirmError.message && (

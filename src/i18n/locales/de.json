@@ -71,10 +71,10 @@
   "home.reviews.count": "Basierend auf Dutzenden verifizierten Google-Bewertungen.",
   "home.reviews.placeholder": "Hier wird ein Google-Reviews-Widget oder Screenshots eingebunden, um echte Kundenmeinungen zu zeigen.",
   "home.seo.title": "Online-Steuererklärung in der Schweiz – nützliche Informationen",
-  "home.seo.intro": "SwissTaxOnline verbindet die Flexibilität eines digitalen Tools mit der Qualität eines Treuhandservices.",
+  "home.seo.intro": "Taxero verbindet die Flexibilität eines digitalen Tools mit der Qualität eines Treuhandservices.",
   "home.seo.text1": "Wir erstellen Steuererklärungen für Privatpersonen in der ganzen Schweiz. Unser Online-Prozess ist einfach und effizient und erfüllt gleichzeitig alle kantonalen Anforderungen.",
   "home.seo.text2": "Von Freiburg über Waadt bis Genf unterstützen wir Sie bei der Erstellung und Optimierung Ihrer Steuererklärung unter Berücksichtigung der lokalen Vorschriften.",
-  "home.seo.linkAbout": "Über SwissTaxOnline",
+  "home.seo.linkAbout": "Über Taxero",
   "home.seo.linkBlog": "Blog",
   "home.seo.linkFaq": "FAQ",
   "home.seo.linkContact": "Kontakt",
@@ -118,7 +118,7 @@
   "product.sections.situation": "Ihre Steuersituation",
   "product.incomeSources": "Anzahl Einkommensquellen",
   "product.incomeHint": "Beispiele: Löhne, AHV-Renten, Pensionskassen-Renten, selbständige Erwerbstätigkeit.",
-  "product.wealthStatements": "Anzahl Vermögens- / Steuerunterlagen",
+  "product.wealthStatements": "Anzahl Vermögensauszüge",
   "product.wealthHint": "Beispiele: Bankauszüge, e-tax Unterlagen, Depotauszüge, Beteiligungen.",
   "product.properties": "Anzahl Liegenschaften",
   "product.propertiesDetailsTitle": "Details zu den Liegenschaften",
@@ -144,7 +144,7 @@
   "product.next": "Weiter",
   "product.back": "Zurück",
   "product.sections.offers": "Unsere Angebote",
-  "product.offersHint": "Basierend auf Ihren Antworten – wählen Sie das Angebot, das am besten zu Ihrer Situation passt.",
+  "product.offersHint": "Basierend auf Ihren Antworten finden Sie hier die passenden Service-Optionen für Ihre Steuererklärung.",
   "product.offers.standard": "Basic",
   "product.offers.premium": "Standard",
   "product.offers.confort": "Confort",
@@ -155,6 +155,7 @@
   "product.finalPrice": "Endpreis",
   "product.proceedToBilling": "Weiter zur Rechnungsadresse",
   "product.sections.offer": "Ihre gewählte Offerte",
+  "pricing.package": "Paket",
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Verwalten Sie alle Ihre Schweizer Steuererklärungen an einem Ort.",
@@ -192,11 +193,11 @@
         "time": "Übliche Dauer: 1 Woche"
       },
       "2": {
-        "title": "Dokumentenprüfung durch SwissTaxOnline",
+        "title": "Dokumentenprüfung durch Taxero",
         "time": "Übliche Dauer: 1 Woche"
       },
       "3": {
-        "title": "Erstellung der Steuererklärung durch SwissTaxOnline",
+        "title": "Erstellung der Steuererklärung durch Taxero",
         "time": "Übliche Dauer: 2 Wochen"
       },
       "4": {
@@ -304,7 +305,7 @@
       }
     },
     "step3": {
-      "text": "Ihre Steuererklärung wird aktuell von SwissTaxOnline vorbereitet. Dieser Schritt wird vollständig durch unser Team erledigt.",
+      "text": "Ihre Steuererklärung wird aktuell von Taxero vorbereitet. Dieser Schritt wird vollständig durch unser Team erledigt.",
       "eta": "Voraussichtliche Dauer: ca. 2 Wochen, nachdem alle Unterlagen vollständig sind.",
       "confirmDraftReceipt": "Möchten Sie den Erhalt des Entwurfs wirklich bestätigen?",
       "draftConfirmed": "Bestätigt — der Schritt wird als abgeschlossen markiert.",
@@ -369,25 +370,25 @@
     }
   },
   "about": {
-    "title": "Über SwissTaxOnline",
+    "title": "Über Taxero",
     "subtitle": "Ein digitales Schweizer Steuerservice, entwickelt von A&G Fiduciaire Sàrl, um Ihre Steuererklärung einfacher, klarer und sicherer zu machen.",
     "company": {
       "title": "Wer wir sind",
-      "text1": "SwissTaxOnline ist ein Online-Dienst, der Privatpersonen und Unternehmer bei ihren Schweizer Steuererklärungen unterstützt. Hinter der Plattform steht A&G Fiduciaire Sàrl, eine Schweizer Treuhandgesellschaft mit Erfahrung in den Bereichen Steuern, Buchhaltung und Beratung.",
+      "text1": "Taxero ist ein Online-Dienst, der Privatpersonen und Unternehmer bei ihren Schweizer Steuererklärungen unterstützt. Hinter der Plattform steht A&G Fiduciaire Sàrl, eine Schweizer Treuhandgesellschaft mit Erfahrung in den Bereichen Steuern, Buchhaltung und Beratung.",
       "text2": "Durch die Kombination von menschlicher Expertise und einer sicheren digitalen Plattform bieten wir einen Service, der sowohl effizient als auch persönlich ist – angepasst an Ihre Situation, Ihren Kanton und Ihre Sprache."
     },
     "mission": {
       "title": "Unsere Mission",
-      "text": "Unsere Mission ist es, den Prozess der Steuererklärung in der Schweiz zu vereinfachen. Wir möchten Komplexität reduzieren, unangenehme Überraschungen vermeiden und Ihnen Zeit sparen. Mit SwissTaxOnline beantworten Sie einen klar strukturierten Fragebogen, laden Ihre Unterlagen sicher hoch und unser Team übernimmt die Vorbereitung, Prüfung und Einreichung Ihrer Steuererklärung beim Steueramt."
+      "text": "Unsere Mission ist es, den Prozess der Steuererklärung in der Schweiz zu vereinfachen. Wir möchten Komplexität reduzieren, unangenehme Überraschungen vermeiden und Ihnen Zeit sparen. Mit Taxero beantworten Sie einen klar strukturierten Fragebogen, laden Ihre Unterlagen sicher hoch und unser Team übernimmt die Vorbereitung, Prüfung und Einreichung Ihrer Steuererklärung beim Steueramt."
     },
     "team": {
       "title": "Unser Team",
-      "intro": "Hinter SwissTaxOnline steht ein multidisziplinäres Team von Steuerspezialisten, Treuhand-Fachleuten und Supportmitarbeitenden mit Sitz in der Schweiz.",
+      "intro": "Hinter Taxero steht ein multidisziplinäres Team von Steuerspezialisten, Treuhand-Fachleuten und Supportmitarbeitenden mit Sitz in der Schweiz.",
       "members": {
         "founder": {
           "initials": "AG",
           "name": "A&G Fiduciaire Sàrl",
-          "role": "Gründerin und Betreiberin von SwissTaxOnline"
+          "role": "Gründerin und Betreiberin von Taxero"
         },
         "partner": {
           "initials": "ST",
@@ -440,13 +441,13 @@
     },
     "contact": {
       "title": "Kontakt und Adresse",
-      "intro": "Haben Sie Fragen zu SwissTaxOnline, zu unserem Prozess oder zu unseren Angeboten? Sie können uns über die folgenden Kontaktdaten erreichen.",
+      "intro": "Haben Sie Fragen zu Taxero, zu unserem Prozess oder zu unseren Angeboten? Sie können uns über die folgenden Kontaktdaten erreichen.",
       "addressLabel": "Postadresse",
       "contactLabel": "Kontakt",
       "addressLines": [
         "A&G Fiduciaire Sàrl",
-        "Strasse und Hausnummer",
-        "PLZ – Ort",
+        "Route de Moncor 14",
+        "1752 Villars sur Glâne",
         "Schweiz"
       ],
       "emailLabel": "E-Mail:",
@@ -455,18 +456,18 @@
   },
   "faq": {
     "title": "Häufig gestellte Fragen",
-    "subtitle": "Hier finden Sie die wichtigsten Fragen und Antworten zu SwissTaxOnline, zum Ablauf der Steuererklärung und zum Umgang mit Ihren Daten.",
+    "subtitle": "Hier finden Sie die wichtigsten Fragen und Antworten zu Taxero, zum Ablauf der Steuererklärung und zum Umgang mit Ihren Daten.",
     "categories": {
       "general": {
         "title": "Allgemeine Informationen",
-        "description": "Ein kurzer Überblick darüber, was SwissTaxOnline ist und für wen der Service gedacht ist.",
+        "description": "Ein kurzer Überblick darüber, was Taxero ist und für wen der Service gedacht ist.",
         "items": {
           "q1": {
-            "question": "Was ist SwissTaxOnline?",
-            "answer": "SwissTaxOnline ist ein Online-Dienst von A&G Fiduciaire Sàrl, der Ihnen hilft, Ihre Schweizer Steuererklärung zu erstellen und einzureichen. Sie beantworten einen strukturierten Fragebogen, laden Ihre Unterlagen sicher hoch, und unser Team bereitet Ihre Steuererklärung vor und reicht sie bei der Steuerbehörde ein."
+            "question": "Was ist Taxero?",
+            "answer": "Taxero ist ein Online-Dienst von A&G Fiduciaire Sàrl, der Ihnen hilft, Ihre Schweizer Steuererklärung zu erstellen und einzureichen. Sie beantworten einen strukturierten Fragebogen, laden Ihre Unterlagen sicher hoch, und unser Team bereitet Ihre Steuererklärung vor und reicht sie bei der Steuerbehörde ein."
           },
           "q2": {
-            "question": "Wer kann SwissTaxOnline nutzen?",
+            "question": "Wer kann Taxero nutzen?",
             "answer": "Der Service richtet sich in erster Linie an Privatpersonen mit Steuerdomizil in der Schweiz. Je nach Kanton und Situation können auch selbständig Erwerbende und kleine Unternehmen in Frage kommen. Genauere Informationen finden Sie im Fragebogen und auf unserer öffentlichen Website."
           },
           "q3": {
@@ -477,7 +478,7 @@
       },
       "process": {
         "title": "Ablauf der Steuererklärung",
-        "description": "Wie die einzelnen Schritte der Steuererklärung mit SwissTaxOnline ablaufen.",
+        "description": "Wie die einzelnen Schritte der Steuererklärung mit Taxero ablaufen.",
         "items": {
           "q1": {
             "question": "Wie funktioniert der Ablauf der Steuererklärung?",
@@ -525,7 +526,7 @@
           },
           "q3": {
             "question": "Erhalte ich eine Rechnung für meine Unterlagen?",
-            "answer": "Ja. Eine Rechnung im PDF-Format wird automatisch erstellt und kann jederzeit aus Ihrem Kundenbereich heruntergeladen werden. Sie wird von A&G Fiduciaire Sàrl für den Dienst SwissTaxOnline ausgestellt."
+            "answer": "Ja. Eine Rechnung im PDF-Format wird automatisch erstellt und kann jederzeit aus Ihrem Kundenbereich heruntergeladen werden. Sie wird von A&G Fiduciaire Sàrl für den Dienst Taxero ausgestellt."
           }
         }
       },
@@ -581,7 +582,7 @@
     },
     "personal": {
       "title": "Persönliche Daten",
-      "desc": "Aktualisieren Sie die Angaben, die mit Ihrem SwissTaxOnline-Konto verbunden sind.",
+      "desc": "Aktualisieren Sie die Angaben, die mit Ihrem Taxero-Konto verbunden sind.",
       "firstName": "Vorname",
       "lastName": "Nachname",
       "email": "E-Mail",
@@ -628,6 +629,7 @@
   "admin.declarations.selectVisible": "Sichtbare auswählen",
   "admin.declarations.clearSelection": "Auswahl löschen",
   "admin.declarations.selectedCount": "Ausgewählt: {{count}}",
+  "admin.declarations.selectAdmin": "Administrator auswählen",
   "admin.declarations.fileShort": "Dossier #{{id}}",
   "admin.declarations.step": "Schritt {{n}}",
   "admin.declarations.count": "{{count}} Dossiers",
@@ -685,7 +687,8 @@
     "sending": "Wird gesendet...",
     "you": "Sie",
     "unknown": "Unbekannt",
-    "unknownTime": "unbekannte Zeit"
+    "unknownTime": "unbekannte Zeit",
+    "mark":"Als nicht verfügbar markieren"
   },
   "step1": {
     "title": "Schritt 1 — Dokumente & Fragen",
@@ -710,22 +713,22 @@
   },
   "documents": {
     "previous_tax_return": {
-      "title": "Steuererklärung des Vorjahres"
+      "title": "Steuererklärung des Vorjahres *"
     },
     "salary_certificate": {
-      "title": "Lohnausweis"
+      "title": "Lohnausweis *"
     },
     "bank_statement": {
-      "title": "Kontoauszug"
+      "title": "Kontoauszug *"
     },
     "pillar_3_certificate": {
-      "title": "Säule 3a-Bestätigung"
+      "title": "Säule 3a-Bestätigung *"
     },
     "medical_expense_receipt": {
-      "title": "Beleg für Krankheitskosten"
+      "title": "Beleg für Krankheitskosten *"
     },
     "taxero_invoice_payment_proof": {
-      "title": "Nachweis der Taxero-Rechnungszahlung"
+      "title": "Nachweis der Taxero-Rechnungszahlung *"
     },
     "others": {
       "title": "Weitere Dokumente"
@@ -739,7 +742,7 @@
     },
     "missing": {
       "cta": "Ich habe dieses Dokument nicht",
-      "reasonPlaceholder": "Grund (optional)",
+      "reasonPlaceholder": "Zuerst Auswahl löschen",
       "confirm": "Als nicht verfügbar bestätigen",
       "saving": "Speichern..."
     }

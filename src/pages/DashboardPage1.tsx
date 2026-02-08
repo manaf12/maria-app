@@ -37,7 +37,7 @@ export default function DashboardPage() {
 
   const handleNewDeclaration = () => {
     localStorage.removeItem("taxonline_quote_draft");
-    navigate("/product");
+    navigate("/");
   };
 
   return (

@@ -212,7 +212,7 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
 
       <div className="view-top-bar">
         <button className="btn-secondary" onClick={() => setFilesModalOpen(true)}>
-          {t("view.filesSummary.open", "Show files summary")}
+          {t("product.sections.summary")}
         </button>
         <button className="btn-secondary" onClick={onBackToDashboard}>
           {t("view.back")}

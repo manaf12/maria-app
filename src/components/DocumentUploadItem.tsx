@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export type FileEntity = {
   id: string;
@@ -31,7 +32,7 @@ export default function DocumentUploadItem({
   allowMultiple = false,
   disableMissing = false,
 }: DocumentUploadItemProps) {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [showMissingBox, setShowMissingBox] = useState(false);
@@ -44,9 +45,9 @@ export default function DocumentUploadItem({
     !disableMissing && uploadedFiles.length === 0 && !isMissing;
 
   const pickLabel = useMemo(() => {
-    if (!selectedFiles.length) return "Choose file";
+    if (!selectedFiles.length) return t("documents.upload.chooseFile");
     if (!allowMultiple) return selectedFiles[0].name;
-    return `${selectedFiles.length} files selected`;
+    return t("documents.upload.filesSelected_one", { count: selectedFiles.length });
   }, [allowMultiple, selectedFiles]);
 
   const onPickFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,19 +111,19 @@ export default function DocumentUploadItem({
       padding: "10px 14px",
       fontSize: 14,
       fontWeight: 600,
-      color: "#111827",
+      color: "#163e64",
       cursor: "pointer",
       lineHeight: "18px",
     } as React.CSSProperties,
     btnPrimary: {
-      border: "1px solid #111827",
-      background: "#111827",
+      border: "1px solid #163e64",
+      background: "#163e64",
       color: "#fff",
     } as React.CSSProperties,
     link: {
       marginLeft: "auto",
       fontSize: 14,
-      color: "#111827",
+      color: "#163e64",
       background: "transparent",
       border: "none",
       textDecoration: "underline",
@@ -176,7 +177,7 @@ export default function DocumentUploadItem({
               disabled={!selectedFiles.length || busy === "upload"}
               onClick={doUpload}
             >
-              {busy === "upload" ? "Uploading…" : "Upload"}
+              {busy === "upload" ? t("documents.upload.uploading") : t("documents.upload.upload") }
             </button>
 
             {canMarkMissing && (
@@ -185,9 +186,9 @@ export default function DocumentUploadItem({
                 style={styles.link}
                 onClick={() => setShowMissingBox(true)}
                 disabled={selectedFiles.length > 0}
-                title={selectedFiles.length ? "Clear selection first" : undefined}
+                title={selectedFiles.length ? t("documents.missing.reasonPlaceholder") : undefined }
               >
-                I don’t have this document
+                {t("documents.missing.cta")}
               </button>
             )}
           </div>
@@ -202,7 +203,7 @@ export default function DocumentUploadItem({
           {showMissingBox && canMarkMissing && (
             <div style={styles.subtleBox}>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#111827" }}>
-                Mark as not available
+                {t("common.mark")}
               </div>
 
               <div style={{ marginTop: 10 }}>
@@ -210,7 +211,7 @@ export default function DocumentUploadItem({
                   style={styles.input}
                   value={missingReason}
                   onChange={(e) => setMissingReason(e.target.value)}
-                  placeholder="Reason (optional)"
+                  placeholder={t("documents.missing.reasonPlaceholder")}
                 />
               </div>
 
@@ -221,7 +222,7 @@ export default function DocumentUploadItem({
                   onClick={() => setShowMissingBox(false)}
                   disabled={busy === "missing"}
                 >
-                  Cancel
+                  {t("common.cancel")}
                 </button>
                 <button
                   type="button"
@@ -229,7 +230,7 @@ export default function DocumentUploadItem({
                   onClick={doMarkMissing}
                   disabled={busy === "missing"}
                 >
-                  {busy === "missing" ? "Saving…" : "Confirm not available"}
+                  {busy === "missing" ? t("documents.missing.saving"): t("documents.missing.confirm")}
                 </button>
               </div>
             </div>
@@ -241,7 +242,7 @@ export default function DocumentUploadItem({
         <div style={styles.card}>
           <div style={styles.row}>
             <div style={{ fontSize: 14, color: "#374151" }}>
-              Marked as not available.
+              {t("common.mark")}
             </div>
             <button
               type="button"
@@ -249,7 +250,7 @@ export default function DocumentUploadItem({
               onClick={doUndo}
               disabled={busy === "undo"}
             >
-              {busy === "undo" ? "Undoing…" : "Undo"}
+              {busy === "undo" ? t("common.undoing") : t("common.undo")}
             </button>
           </div>
         </div>

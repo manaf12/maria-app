@@ -45,7 +45,17 @@ export default function ViewRequestPage() {
   const [step2AdminComment, setStep2AdminComment] = useState("");
   const [isAddingStep2Comment, setIsAddingStep2Comment] = useState(false);
 
-  const backToDashboard = () => navigate("/client-dashboard");
+  const backToDashboard = () => {
+    if (!user || !user.roles) return navigate("/client-dashboard");
+
+    const roles = user.roles;
+
+    if (roles.includes("admin") || roles.includes("SUPER_ADMIN")) {
+      navigate("/admin/declarations");
+    } else {
+      navigate("/client-dashboard");
+    }
+  };
 
   const { data: declaration, refetch, isLoading, error } = useQuery<
     ViewRequestData,

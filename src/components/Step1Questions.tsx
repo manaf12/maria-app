@@ -9,7 +9,7 @@ export type Step1Question = {
   id: string;
   labelKey: string;
   type?: "text" | "number" | "select";
-  sectionKey?: string; // إذا عم تستخدمه بالعرض
+  sectionKey?: string;
   required?: boolean;
   options?: { value: string; labelKey: string }[];
   min?: number;
@@ -29,11 +29,7 @@ export function Step1Questions({
   onSaved?: () => void;
   disabled?: boolean;
 }) {
-<<<<<<< HEAD
   const { t, i18n } = useTranslation(); 
-=======
-  const { t } = useTranslation();
->>>>>>> 164eeec025b1bad7649daa1e72cbda319e322620
   const queryClient = useQueryClient();
 
   const [answers, setAnswers] = useState<Record<string, any>>(initialAnswers ?? {});
@@ -47,8 +43,8 @@ export function Step1Questions({
   const hasLoadedRef = useRef(false);
 
   // ✅ helper: if label is a translation key, translate it; otherwise use as-is
-  const tr = (maybeKeyOrText: string) =>
-    i18n.exists(maybeKeyOrText) ? t(maybeKeyOrText) : maybeKeyOrText;
+  // const tr = (maybeKeyOrText: string) =>
+    // i18n.exists(maybeKeyOrText) ? t(maybeKeyOrText) : maybeKeyOrText;
 
   useEffect(() => {
     setAnswers(initialAnswers ?? {});
@@ -85,7 +81,7 @@ export function Step1Questions({
       clearTimeout(timers.current[qid]);
     }
 
-    const nextValue = value; // ✅ capture value
+    const nextValue = value;
     timers.current[qid] = window.setTimeout(() => {
       void saveSingle(qid, nextValue);
     }, DEBOUNCE_MS);

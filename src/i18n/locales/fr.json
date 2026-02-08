@@ -71,10 +71,10 @@
   "home.reviews.count": "Basé sur des dizaines d’avis vérifiés sur Google.",
   "home.reviews.placeholder": "Le widget ou des captures d’écran Google Reviews seront intégrés ici pour mettre en avant les retours clients.",
   "home.seo.title": "Déclaration d’impôts en ligne – informations utiles",
-  "home.seo.intro": "SwissTaxOnline combine la flexibilité d’un outil numérique et la qualité d’un service fiduciaire.",
+  "home.seo.intro": "Taxero combine la flexibilité d’un outil numérique et la qualité d’un service fiduciaire.",
   "home.seo.text1": "Nous réalisons des déclarations d’impôts pour des particuliers dans toute la Suisse. Notre processus en ligne est conçu pour être simple et efficace, tout en respectant les exigences cantonales.",
   "home.seo.text2": "De Fribourg à Vaud en passant par Genève, nous vous aidons à préparer et optimiser votre déclaration tout en respectant les règles fiscales locales.",
-  "home.seo.linkAbout": "À propos de SwissTaxOnline",
+  "home.seo.linkAbout": "À propos de Taxero",
   "home.seo.linkBlog": "Blog",
   "home.seo.linkFaq": "FAQ",
   "home.seo.linkContact": "Contact",
@@ -118,7 +118,7 @@
   "product.sections.situation": "Votre situation fiscale",
   "product.incomeSources": "Nombre de sources de revenus",
   "product.incomeHint": "Exemples : salaires, rentes AVS, rentes LPP, activité indépendante.",
-  "product.wealthStatements": "Nombre de relevés de fortune / déclarations fiscales",
+  "product.wealthStatements": "Nombre de relevés de fortune fiscales",
   "product.wealthHint": "Exemples : relevés bancaires, e-tax, relevés de titres, participations.",
   "product.properties": "Nombre de biens immobiliers",
   "product.propertiesDetailsTitle": "Détails des biens immobiliers",
@@ -144,7 +144,7 @@
   "product.next": "Suivant",
   "product.back": "Retour",
   "product.sections.offers": "Nos offres",
-  "product.offersHint": "En fonction de vos réponses, choisissez l’offre qui correspond le mieux à votre situation.",
+  "product.offersHint": "Selon vos réponses, voici les options de service adaptées à votre déclaration fiscale.",
   "product.offers.standard": "Standard",
   "product.offers.premium": "Premium",
   "product.offers.confort": "Confort",
@@ -155,6 +155,8 @@
   "product.finalPrice": "Prix final",
   "product.proceedToBilling": "Passer à la facturation",
   "product.sections.offer": "Offre sélectionnée",
+  "pricing.package": "Forfait",
+
   "dashboard": {
     "title": "Tableau de bord",
     "subtitle": "Gérez toutes vos déclarations fiscales suisses en un seul endroit.",
@@ -192,11 +194,11 @@
         "time": "Délai indicatif : 1 semaine"
       },
       "2": {
-        "title": "Vérification des documents par SwissTaxOnline",
+        "title": "Vérification des documents par Taxero",
         "time": "Délai indicatif : 1 semaine"
       },
       "3": {
-        "title": "Préparation de la déclaration par SwissTaxOnline",
+        "title": "Préparation de la déclaration par Taxero",
         "time": "Délai indicatif : 2 semaines"
       },
       "4": {
@@ -304,7 +306,7 @@
       }
     },
     "step3": {
-      "text": "Votre déclaration fiscale est en cours de préparation par SwissTaxOnline. Cette étape est entièrement gérée par notre équipe.",
+      "text": "Votre déclaration fiscale est en cours de préparation par Taxero. Cette étape est entièrement gérée par notre équipe.",
       "eta": "Délai estimé : environ 2 semaines après la réception de tous les documents.",
       "confirmDraftReceipt": "Êtes-vous sûr de vouloir confirmer la réception du brouillon ?",
       "draftConfirmed": "Confirmé — l’étape sera marquée comme terminée.",
@@ -369,25 +371,25 @@
     }
   },
   "about": {
-    "title": "À propos de SwissTaxOnline",
+    "title": "À propos de Taxero",
     "subtitle": "Un service fiscal suisse digital développé par A&G Fiduciaire Sàrl pour rendre vos déclarations d’impôts plus simples, plus claires et plus sécurisées.",
     "company": {
       "title": "Qui sommes-nous ?",
-      "text1": "SwissTaxOnline est un service en ligne dédié à l’accompagnement des particuliers et des entrepreneurs pour leurs déclarations d’impôts en Suisse. Derrière la plateforme se trouve A&G Fiduciaire Sàrl, une fiduciaire suisse expérimentée en fiscalité, comptabilité et conseil.",
+      "text1": "Taxero est un service en ligne dédié à l’accompagnement des particuliers et des entrepreneurs pour leurs déclarations d’impôts en Suisse. Derrière la plateforme se trouve A&G Fiduciaire Sàrl, une fiduciaire suisse expérimentée en fiscalité, comptabilité et conseil.",
       "text2": "En combinant l’expertise humaine et une plateforme digitale sécurisée, nous proposons un service à la fois efficace et personnalisé – adapté à votre situation, à votre canton et à votre langue."
     },
     "mission": {
       "title": "Notre mission",
-      "text": "Notre mission est de simplifier le processus de la déclaration d’impôts en Suisse. Nous voulons réduire la complexité, éviter les mauvaises surprises et vous faire gagner du temps. Avec SwissTaxOnline, vous remplissez un questionnaire clair et structuré, vous téléversez vos documents en toute sécurité, et notre équipe se charge de préparer, vérifier et déposer votre déclaration auprès de l’administration fiscale."
+      "text": "Notre mission est de simplifier le processus de la déclaration d’impôts en Suisse. Nous voulons réduire la complexité, éviter les mauvaises surprises et vous faire gagner du temps. Avec Taxero, vous remplissez un questionnaire clair et structuré, vous téléversez vos documents en toute sécurité, et notre équipe se charge de préparer, vérifier et déposer votre déclaration auprès de l’administration fiscale."
     },
     "team": {
       "title": "Notre équipe",
-      "intro": "SwissTaxOnline est portée par une équipe pluridisciplinaire de spécialistes en fiscalité, fiduciaire et support client, basée en Suisse.",
+      "intro": "Taxero est portée par une équipe pluridisciplinaire de spécialistes en fiscalité, fiduciaire et support client, basée en Suisse.",
       "members": {
         "founder": {
           "initials": "AG",
           "name": "A&G Fiduciaire Sàrl",
-          "role": "Fondatrice et exploitante de SwissTaxOnline"
+          "role": "Fondatrice et exploitante de Taxero"
         },
         "partner": {
           "initials": "PT",
@@ -440,13 +442,13 @@
     },
     "contact": {
       "title": "Contact et adresse",
-      "intro": "Vous avez des questions sur SwissTaxOnline, notre processus ou nos offres ? Vous pouvez nous contacter via les coordonnées ci-dessous.",
+      "intro": "Vous avez des questions sur Taxero, notre processus ou nos offres ? Vous pouvez nous contacter via les coordonnées ci-dessous.",
       "addressLabel": "Adresse postale",
       "contactLabel": "Contact",
       "addressLines": [
         "A&G Fiduciaire Sàrl",
-        "Rue et numéro",
-        "NPA – Ville",
+        "Route de Moncor 14",
+        "1752 Villars sur Glâne",
         "Suisse"
       ],
       "emailLabel": "E-mail :",
@@ -455,18 +457,18 @@
   },
   "faq": {
     "title": "Questions fréquentes",
-    "subtitle": "Retrouvez ici les réponses aux questions les plus fréquentes sur SwissTaxOnline, le processus de déclaration d’impôts et la gestion de vos données.",
+    "subtitle": "Retrouvez ici les réponses aux questions les plus fréquentes sur Taxero, le processus de déclaration d’impôts et la gestion de vos données.",
     "categories": {
       "general": {
         "title": "Informations générales",
-        "description": "Un aperçu rapide de ce qu’est SwissTaxOnline et à qui le service s’adresse.",
+        "description": "Un aperçu rapide de ce qu’est Taxero et à qui le service s’adresse.",
         "items": {
           "q1": {
-            "question": "Qu’est-ce que SwissTaxOnline ?",
-            "answer": "SwissTaxOnline est un service en ligne exploité par A&G Fiduciaire Sàrl qui vous aide à préparer et déposer votre déclaration d’impôts en Suisse. Vous remplissez un questionnaire structuré, téléversez vos documents en toute sécurité et notre équipe prépare et transmet votre déclaration à l’administration fiscale."
+            "question": "Qu’est-ce que Taxero ?",
+            "answer": "Taxero est un service en ligne exploité par A&G Fiduciaire Sàrl qui vous aide à préparer et déposer votre déclaration d’impôts en Suisse. Vous remplissez un questionnaire structuré, téléversez vos documents en toute sécurité et notre équipe prépare et transmet votre déclaration à l’administration fiscale."
           },
           "q2": {
-            "question": "Qui peut utiliser SwissTaxOnline ?",
+            "question": "Qui peut utiliser Taxero ?",
             "answer": "Le service est conçu principalement pour les personnes physiques résidentes fiscales en Suisse. Selon le canton et votre situation, certaines personnes indépendantes ou petites entreprises peuvent également être éligibles. Des informations spécifiques sont indiquées dans le questionnaire et sur notre site public."
           },
           "q3": {
@@ -477,7 +479,7 @@
       },
       "process": {
         "title": "Processus de déclaration d’impôts",
-        "description": "Comment se déroulent les différentes étapes de la déclaration d’impôts avec SwissTaxOnline.",
+        "description": "Comment se déroulent les différentes étapes de la déclaration d’impôts avec Taxero.",
         "items": {
           "q1": {
             "question": "Comment se passe le processus de déclaration ?",
@@ -525,7 +527,7 @@
           },
           "q3": {
             "question": "Est-ce que je reçois une facture pour mes dossiers ?",
-            "answer": "Oui. Une facture au format PDF est générée automatiquement et peut être téléchargée à tout moment depuis votre espace client. Elle est émise par A&G Fiduciaire Sàrl pour le service SwissTaxOnline."
+            "answer": "Oui. Une facture au format PDF est générée automatiquement et peut être téléchargée à tout moment depuis votre espace client. Elle est émise par A&G Fiduciaire Sàrl pour le service Taxero."
           }
         }
       },
@@ -581,7 +583,7 @@
     },
     "personal": {
       "title": "Informations personnelles",
-      "desc": "Mettez à jour les informations liées à votre compte SwissTaxOnline.",
+      "desc": "Mettez à jour les informations liées à votre compte Taxero.",
       "firstName": "Prénom",
       "lastName": "Nom",
       "email": "E-mail",
@@ -628,6 +630,7 @@
   "admin.declarations.selectVisible": "Sélectionner la liste",
   "admin.declarations.clearSelection": "Effacer la sélection",
   "admin.declarations.selectedCount": "Sélection : {{count}}",
+  "admin.declarations.selectAdmin": "Sélectionner un administrateur",
   "admin.declarations.fileShort": "Dossier #{{id}}",
   "admin.declarations.step": "Étape {{n}}",
   "admin.declarations.results": "Résultats",
@@ -685,7 +688,8 @@
     "sending": "Envoi en cours...",
     "you": "Vous",
     "unknown": "Inconnu",
-    "unknownTime": "heure inconnue"
+    "unknownTime": "heure inconnue",
+    "mark":"Marquer comme non disponible"
   },
   "step1": {
     "title": "Étape 1 — Documents et Questions",
@@ -710,22 +714,22 @@
   },
   "documents": {
     "previous_tax_return": {
-      "title": "Déclaration fiscale précédente"
+      "title": "Déclaration fiscale précédente *"
     },
     "salary_certificate": {
-      "title": "Certificat de salaire"
+      "title": "Certificat de salaire *"
     },
     "bank_statement": {
-      "title": "Relevé bancaire"
+      "title": "Relevé bancaire *"
     },
     "pillar_3_certificate": {
-      "title": "Attestation du 3e pilier"
+      "title": "Attestation du 3e pilier *"
     },
     "medical_expense_receipt": {
-      "title": "Reçu de frais médicaux"
+      "title": "Reçu de frais médicaux *"
     },
     "taxero_invoice_payment_proof": {
-      "title": "Preuve de paiement de la facture Taxero"
+      "title": "Preuve de paiement de la facture Taxero *"
     },
     "others": {
       "title": "Autres documents"
@@ -739,7 +743,7 @@
     },
     "missing": {
       "cta": "Je n’ai pas ce document",
-      "reasonPlaceholder": "Motif (optionnel)",
+      "reasonPlaceholder": "Effacer la sélection d’abord",
       "confirm": "Confirmer indisponible",
       "saving": "Enregistrement..."
     }

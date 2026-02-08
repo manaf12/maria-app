@@ -89,16 +89,17 @@ export default function Stage4Validation({
       <p className="muted">{t("view.step4.description")}</p>
 
       {latest ? (
-        <div style={{ marginTop: 12 }} className="flex items-center justify-between">
-          <div>
-            <strong>{latest.originalName}</strong>
+        <div style={{ marginTop: 12 }} className="latest-file-row">
+          <div className="latest-file-meta">
+            <strong className="block">{latest.originalName}</strong>
+
             {latest.uploadedAt && (
-              <div className="muted small">
+              <div className="muted small mt-1">
                 {t("view.step4.uploadedAt")} {formatDateTime(latest.uploadedAt)}
               </div>
             )}
             {lastComment && (
-              <div className="muted small" style={{ marginTop: 6 }}>
+              <div className="muted small mt-2" style={{ marginTop: 6 }}>
                 {t("view.step4.lastComment")} <strong>{lastComment.text}</strong>{" "}
                 <em>({formatDateTime(lastComment.at)})</em>
               </div>
@@ -107,7 +108,7 @@ export default function Stage4Validation({
 
           <div>
             <button className="btn-secondary" onClick={() => onDownloadFile(latest.id)}>
-              {t("view.download")}
+              {t("dashboard.steps.documents")}
             </button>
           </div>
         </div>

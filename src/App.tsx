@@ -13,6 +13,7 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import AdminRoute from "./auth/AdminRoute";
 
 import "./i18n/i18n";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Public
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -57,6 +58,7 @@ export default function App() {
       <MenuBar />
 
       <Suspense fallback={<PageLoader />}>
+        <ScrollToTop />
         <Routes>
           {/* PUBLIC */}
           <Route path="/" element={<HomePage />} />

@@ -77,8 +77,8 @@ export default function Stage2DocumentsReview({
                 {file.originalName} ({file.documentType})
               </span>
             </div>
-            <button className="btn-secondary btn-small" onClick={() => onDownloadFile(file.id)}>
-              {t("view.step2.admin.downloadBtn")}
+            <button className="btn-secondary" onClick={() => onDownloadFile(file.id)}>
+              {t("dashboard.steps.documents")}
             </button>
           </li>
         ))}

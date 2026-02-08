@@ -22,7 +22,9 @@
       "default",
       {
         "ignore": [
-          "-webkit-overflow-scrolling"
+          "-webkit-overflow-scrolling",
+          "scrollbar-width",
+          "scrollbar-width: none"
         ]
       }
     ],

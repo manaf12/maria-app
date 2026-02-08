@@ -1,9 +1,25 @@
 // src/components/Footer.tsx
 import { useTranslation } from "react-i18next";
 import logoTaxera1 from "../assets/Typeface.svg";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 export default function Footer() {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const isAdmin =
+    user?.roles?.includes("admin") ||
+    user?.roles?.includes("SUPER_ADMIN");
+
+  const handleLogoClick = () => {
+    if (isAdmin) {
+      navigate("/"); // أو الصفحة اللي بدّك ياها
+    } else {
+      window.location.href = "https://www.taxero.ch/";
+    }
+  };
 
   return (
     <footer className="footer">
@@ -14,9 +30,8 @@ export default function Footer() {
 
           <a
             className="footer-logo"
-            href="https://www.swisstaxonline.ch/"
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={handleLogoClick}
+            style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
           >
             <img
               src={logoTaxera1}
@@ -26,33 +41,31 @@ export default function Footer() {
           </a>
 
           <p className="footer-address">
-            Taxero AG<br />
-            Bahnhofstrasse 10<br />
-            8001 Zürich<br />
-            Switzerland
+            A&G Fiduciaire Sàrl<br />
+            Route de Moncor 14<br />
+            1752 Villars sur Glâne<br />
           </p>
         </div>
 
         {/* Right side (Links) */}
         <div className="footer-right">
-          <a
+          {/* <a
             href="https://www.swisstaxonline.ch/blog"
             target="_blank"
             rel="noopener noreferrer"
           >
             {t("footer.blog")}
-          </a>
+          </a> */}
 
           <a
-            href="http://localhost:5173/about"
-            target="_blank"
+            href="http://www.taxero.ch/about"
             rel="noopener noreferrer"
           >
             {t("footer.about")}
           </a>
 
           <a
-            href="https://www.swisstaxonline.ch/terms"
+            href="https://www.taxero.ch/terms"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -60,7 +73,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://www.swisstaxonline.ch/privacy"
+            href="https://www.taxero.ch/privacy"
             target="_blank"
             rel="noopener noreferrer"
           >

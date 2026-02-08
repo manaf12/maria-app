@@ -83,11 +83,11 @@ export default function Stage5Submission({
                     {t("view.step5.uploaded")}: {f.uploadedAt ? formatDateTime(f.uploadedAt) : t("common.unknown")}
                   </div>
                   <div className="muted small">
-                    {t("view.step5.by")}: {t("view.step5.admin")}
+                    {t("view.step5.by")}: {t("view.step5.admin1")}
                   </div>
                 </div>
                 <button className="btn-secondary btn-small" onClick={() => onDownloadFile(f.id)}>
-                  {t("view.download")}
+                  {t("dashboard.steps.documents")}
                 </button>
               </li>
             ))}
@@ -109,7 +109,7 @@ export default function Stage5Submission({
                     {t("view.step5.uploaded")}: {f.uploadedAt ? formatDateTime(f.uploadedAt) : t("common.unknown")}
                   </div>
                   <div className="muted small">
-                    {t("view.step5.by")}: {f.meta?.uploadedBy ?? t("view.step5.user")}
+                    {t("view.step5.by")}: {f.meta?.uploadedBy ?? t("view.step5.user1")}
                   </div>
                 </div>
                 <button className="btn-secondary btn-small" onClick={() => onDownloadFile(f.id)}>
