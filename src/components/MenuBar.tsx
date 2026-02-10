@@ -38,7 +38,7 @@ export default function MenuBar() {
   return (
     <header className="menu-bar">
       {/* Left side empty to keep logo centered */}
-      <div className="menu-left"></div>
+      <div className="menu-left">   <span>{user?.email}</span></div>
 
       {/* Centered Logo */}
       <Link to={logoTarget} className="menu-logo">

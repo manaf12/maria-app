@@ -20,6 +20,8 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const FaqPage = lazy(() => import("./pages/FaqPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
+const TermsOfUsePage = lazy(() => import("./pages/TermsOfUsePage"));
+const PrivacyPolicyPage = lazy(() => import("./pages/PrivacyPolicyPage"));
 
 // Auth (Public)
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -65,6 +67,8 @@ export default function App() {
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/product" element={<ProductPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms-of-use" element={<TermsOfUsePage />} />
 
           {/* AUTH (PUBLIC) */}
           <Route path="/login" element={<LoginPage />} />
@@ -94,7 +98,7 @@ export default function App() {
               path="/admin/declarations"
               element={<AdminDeclarationsPage />}
             />
-            
+
           </Route>
 
           <Route path="*" element={<div>Not found</div>} />

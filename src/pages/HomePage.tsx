@@ -18,7 +18,6 @@ export default function HomePage() {
   const DRAFT_KEY = "taxonline_quote_draft";
 
   const goToQuote = async () => {
-    // مهم جداً: امسحي الاسترجاع المحلي
     localStorage.removeItem(DRAFT_KEY);
     localStorage.removeItem("questionnaireId");
 

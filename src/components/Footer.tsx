@@ -15,7 +15,7 @@ export default function Footer() {
 
   const handleLogoClick = () => {
     if (isAdmin) {
-      navigate("/"); // أو الصفحة اللي بدّك ياها
+      navigate("/");
     } else {
       window.location.href = "https://www.taxero.ch/";
     }
@@ -65,7 +65,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://www.taxero.ch/terms"
+            href="/terms-of-use"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -73,7 +73,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://www.taxero.ch/privacy"
+            href="/privacy-policy"
             target="_blank"
             rel="noopener noreferrer"
           >

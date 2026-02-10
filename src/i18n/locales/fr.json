@@ -186,7 +186,12 @@
       "step2": "Nous examinons vos documents.",
       "step3": "Nous préparons votre déclaration fiscale.",
       "step4": "Votre déclaration est prête. Veuillez réviser et confirmer.",
-      "step5": "Votre déclaration a été soumise à l’administration fiscale."
+      "step5": "Votre déclaration a été soumise à l’administration fiscale.",
+      "stepProgress": "Votre déclaration est actuellement à l’étape {{current}} sur {{total}}.",
+      "noStepInfo": "Le statut de votre déclaration est en cours de mise à jour."
+    },
+    "card": {
+      "priceLine": "{{price}} CHF — {{name}}"
     },
     "steps1": {
       "1": {
@@ -249,9 +254,10 @@
       "current": "En cours",
       "completed": "Terminé"
     },
-    "invoice": "Facture",
-    "invoice.offer": "Offre",
-    "invoice.total": "Montant total",
+    "invoice": {
+      "offer": "Offre",
+      "total": "Montant total"
+    },
     "downloadInvoice": "Télécharger la facture",
     "loading": "Chargement…",
     "errors": {
@@ -306,30 +312,31 @@
       }
     },
     "step3": {
-      "text": "Votre déclaration fiscale est en cours de préparation par Taxero. Cette étape est entièrement gérée par notre équipe.",
-      "eta": "Délai estimé : environ 2 semaines après la réception de tous les documents.",
-      "confirmDraftReceipt": "Êtes-vous sûr de vouloir confirmer la réception du brouillon ?",
+      "text": "Votre déclaration d’impôts est actuellement en cours de préparation par Taxero. Cette étape est entièrement prise en charge par notre équipe.",
+      "eta": "Temps de préparation estimé : environ 2 semaines après la réception de tous les documents complets.",
+      "confirmDraftReceipt": "Êtes-vous sûr de vouloir confirmer la réception de la déclaration ?",
       "draftConfirmed": "Confirmé — l’étape sera marquée comme terminée.",
-      "confirmReceiptFailed": "Impossible de confirmer la réception.",
-      "confirmComplete": "Êtes-vous sûr d’avoir terminé la préparation de la déclaration fiscale ?",
+      "confirmReceiptFailed": "La confirmation de réception a échoué.",
+      "confirmComplete": "Êtes-vous sûr d’avoir terminé la préparation de la déclaration d’impôts ?",
       "completed": "Étape 3 marquée comme terminée !",
       "completeError": "Une erreur s’est produite.",
-      "draftUploadSuccess": "Brouillon téléversé avec succès.",
+      "draftUploadSuccess": "La déclaration a été téléversée avec succès.",
+      "submitConfirm": "Êtes-vous sûr de vouloir soumettre la déclaration ?",
       "admin": {
-        "uploadDraftLabel": "Admin : Télécharger le brouillon de la déclaration fiscale (PDF)",
-        "uploadDraftBtn": "Télécharger le brouillon",
-        "completeBtn": "Marquer comme préparé et terminer l’étape 3",
-        "mustUploadFirst": "Vous devez télécharger le brouillon avant de terminer cette étape."
+        "uploadDraftLabel": "Admin : Téléverser la déclaration d’impôts (PDF)",
+        "uploadDraftBtn": "Téléverser la déclaration",
+        "completeBtn": "Marquer comme préparée et terminer l’étape 3",
+        "mustUploadFirst": "Vous devez téléverser le fichier avant de terminer cette étape."
       }
     },
     "step4": {
-      "description": "Le brouillon de votre déclaration fiscale est prêt. Veuillez le vérifier attentivement et confirmer.",
-      "noDraftYet": "Aucun brouillon n’a encore été téléchargé.",
+      "description": "Votre déclaration d’impôts est prête. Veuillez le vérifier attentivement et confirmer.",
+      "noDraftYet": "Aucun fichier  n’a encore été téléchargé.",
       "waitingForAdmin": "En attente du téléchargement du brouillon par l’administrateur.",
       "uploadedAt": "Téléversé :",
       "lastComment": "Dernier commentaire :",
       "confirming": "Confirmation en cours...",
-      "confirmReceipt": "Confirmer la réception du brouillon",
+      "confirmReceipt": "Confirmez la réception de votre déclaration",
       "addComment": {
         "label": "Ajouter un commentaire",
         "forClient": "(pour le client)",
@@ -614,44 +621,6 @@
       "error": "Impossible de supprimer votre compte. Veuillez contacter le support si le problème persiste."
     }
   },
-  "admin.declarations.title": "Déclarations fiscales",
-  "admin.declarations.subtitle": "Gérer, filtrer et attribuer les déclarations fiscales.",
-  "admin.declarations.searchPlaceholder": "Rechercher par nom, e-mail, ID, année…",
-  "admin.declarations.refresh": "Actualiser",
-  "admin.declarations.loading": "Chargement…",
-  "admin.declarations.empty": "Aucun résultat.",
-  "admin.declarations.assigned": "Attribué",
-  "admin.declarations.unassigned": "Non attribué",
-  "admin.declarations.defaultNote": "Attribué en raison d’une charge prioritaire",
-  "admin.declarations.adminIdPlaceholder": "ID Admin (UUID)",
-  "admin.declarations.notePlaceholder": "Note d’attribution (optionnelle)",
-  "admin.declarations.assigning": "Attribution…",
-  "admin.declarations.assignSelected": "Attribuer la sélection",
-  "admin.declarations.selectVisible": "Sélectionner la liste",
-  "admin.declarations.clearSelection": "Effacer la sélection",
-  "admin.declarations.selectedCount": "Sélection : {{count}}",
-  "admin.declarations.selectAdmin": "Sélectionner un administrateur",
-  "admin.declarations.fileShort": "Dossier #{{id}}",
-  "admin.declarations.step": "Étape {{n}}",
-  "admin.declarations.results": "Résultats",
-  "admin.declarations.count": "Total : {{count}}",
-  "admin.declarations.filter.unassigned": "Non attribuées",
-  "admin.declarations.filter.assigned": "Attribuées",
-  "admin.declarations.filter.all": "Toutes",
-  "admin.declarations.status.all": "Tous les statuts",
-  "admin.declarations.year.all": "Toutes les années",
-  "admin.declarations.columns.client": "Client",
-  "admin.declarations.columns.tax": "Année / Offre",
-  "admin.declarations.columns.status": "Statut",
-  "admin.declarations.columns.step": "Étape",
-  "admin.declarations.columns.created": "Créé",
-  "admin.declarations.columns.updated": "Mis à jour",
-  "admin.declarations.columns.assignment": "Attribution",
-  "admin.declarations.unknownClient": "Client inconnu",
-  "admin.declarations.errors.loadFailed": "Impossible de charger les déclarations.",
-  "admin.declarations.errors.assignFailed": "Échec de l’attribution. Veuillez réessayer.",
-  "admin.declarations.errors.adminIdRequired": "L’ID Admin est obligatoire.",
-  "admin.declarations.errors.selectAtLeastOne": "Sélectionnez au moins une déclaration.",
   "product": {
     "services": {
       "requestDocuments": "Demande de documents selon le profil",
@@ -666,7 +635,70 @@
       "verifyAssessmentNotice": "Vérification de l’avis de taxation",
       "appealIfNecessary": "Recours si nécessaire",
       "ratesAccordingToProfile": "Tarifs selon votre profil"
-    }
+    },
+    "title": "Obtenez votre offre pour la déclaration d’impôts",
+    "subtitle": "Répondez à quelques questions afin que nous puissions calculer le prix adapté à votre situation fiscale.",
+    "editRequest": "Modifier ma demande",
+    "sections": {
+      "profile": "Votre profil",
+      "situation": "Votre situation fiscale",
+      "billing": "Adresse de facturation",
+      "summary": "Récapitulatif de votre demande",
+      "offers": "Nos offres",
+      "offer": "Offre sélectionnée"
+    },
+    "taxYear": "Année fiscale",
+    "maritalStatus": "Statut civil",
+    "marital": {
+      "single": "Célibataire",
+      "married": "Marié·e"
+    },
+    "childrenCount": "Nombre d’enfants",
+    "incomeSources": "Nombre de sources de revenus",
+    "incomeHint": "Exemples : salaires, rentes AVS, rentes LPP, activité indépendante.",
+    "wealthStatements": "Nombre de relevés de fortune fiscales",
+    "wealthHint": "Exemples : relevés bancaires, e-tax, relevés de titres, participations.",
+    "properties": "Nombre de biens immobiliers",
+    "propertiesDetailsTitle": "Détails des biens immobiliers",
+    "propertiesCount": "Combien de biens en tout ?",
+    "newProperties": "Combien sont déclarés pour la première fois ?",
+    "newPropertiesHint": "Par exemple : un bien acheté durant l’année fiscale.",
+    "billing": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "street": "Rue et numéro",
+      "postalCode": "NPA",
+      "city": "Localité"
+    },
+    "summary": {
+      "taxYear": "Année fiscale : {{year}}",
+      "marital": "Statut civil : {{status}}",
+      "children": "Enfants : {{count}}",
+      "incomes": "Sources de revenus : {{count}}",
+      "wealth": "Relevés de fortune / fiscaux : {{count}}",
+      "properties": "Biens immobiliers : {{count}}"
+    },
+    "cancel": "Annuler",
+    "confirm": "Confirmer ma demande",
+    "confirming": "Confirmation en cours...",
+    "next": "Suivant",
+    "back": "Retour",
+    "offersHint": "Selon vos réponses, voici les options de service adaptées à votre déclaration fiscale.",
+    "offers": {
+      "standard": "Standard",
+      "premium": "Premium",
+      "confort": "Confort"
+    },
+    "goToSummary": "Aller au récapitulatif",
+    "chooseOffer": "Choisir l’offre",
+    "errors": {
+      "noOfferSelected": "Veuillez sélectionner une offre avant de confirmer votre demande."
+    },
+    "confirmation": {
+      "mock": "Votre demande a été enregistrée (démo). L’intégration finale enverra ces données au backend."
+    },
+    "finalPrice": "Prix final",
+    "proceedToBilling": "Passer à la facturation"
   },
   "common": {
     "delete": "Supprimer",
@@ -689,14 +721,15 @@
     "you": "Vous",
     "unknown": "Inconnu",
     "unknownTime": "heure inconnue",
-    "mark":"Marquer comme non disponible"
+    "mark": "Marquer comme non disponible",
+    "select": "Sélectionner..."
   },
   "step1": {
-    "title": "Étape 1 — Documents et Questions",
+    "title": "Étape 1 — Documents & questions",
     "subtitle": "Téléchargez les documents requis et répondez aux questions supplémentaires.",
     "progressLabel": "Progression des documents",
     "lockMessage": "L’étape 1 est verrouillée car l’administrateur a approuvé vos documents (Étape 2).",
-    "additionalQuestions": "Questions supplémentaires",
+    "additionalQuestions": "Questions complémentaires",
     "loadingQuestions": "Chargement des questions...",
     "confirmDeleteFile": "Supprimer « {{fileName}} » ?",
     "uploadedCount": "Téléchargé(s) ({{count}})",
@@ -710,7 +743,50 @@
     "missingDocuments": "Documents manquants :",
     "missingQuestions": "Questions manquantes :",
     "notReady": "L’étape 1 n’est pas prête",
-    "selectPlaceholder": "Sélectionner…"
+    "selectPlaceholder": "Sélectionner…",
+    "__duplicateKeys__": {
+      "title": [
+        "Étape 1 — Documents et Questions",
+        "Étape 1 — Documents & questions"
+      ],
+      "additionalQuestions": [
+        "Questions supplémentaires",
+        "Questions complémentaires"
+      ]
+    },
+    "sections": {
+      "personalInformation": "Informations personnelles",
+      "professionalExpenses": "Frais professionnels",
+      "housing": "Logement",
+      "taxAuthorityNumbers": "Numéros de l’administration fiscale"
+    },
+    "questions": {
+      "personalChanges": "Changements depuis l’année précédente (mariage, divorce, déménagement, etc.)",
+      "transportMode": "Quel est votre mode de transport pour aller au travail ?",
+      "distanceToWorkKm": "Distance domicile–lieu de travail (km, aller simple)",
+      "weeklyTripsToWork": "Combien de trajets vers le lieu de travail par semaine ?",
+      "mealsOutsidePerWeek": "Combien de repas pris à l’extérieur par semaine (liés au travail) ?",
+      "netAnnualRentVD_GE": "Loyer annuel net (VD / GE) (CHF)",
+      "canton": "Canton",
+      "taxpayerNumber": "Numéro de contribuable",
+      "controlOrDeclarationCode": "Code de contrôle / de déclaration (si disponible)"
+    },
+    "options": {
+      "transportMode": {
+        "publicTransport": "Transports publics",
+        "bicycle": "Vélo",
+        "vehicle": "Voiture / véhicule"
+      },
+      "canton": {
+        "FR": "Fribourg (FR)",
+        "BE": "Berne (BE)",
+        "VD": "Vaud (VD)",
+        "VS": "Valais (VS)",
+        "NE": "Neuchâtel (NE)",
+        "GE": "Genève (GE)",
+        "OTHER": "Autre"
+      }
+    }
   },
   "documents": {
     "previous_tax_return": {
@@ -765,38 +841,671 @@
   "documentTypes": {
     "assessment_notice": "Avis d’imposition",
     "final_file": "Fichier final"
+  },
+  "legal": {
+    "lastUpdated": "Dernière mise à jour : {{date}}",
+    "links": {
+      "terms": "Conditions d’utilisation",
+      "privacy": "Politique de confidentialité"
+    },
+    "terms": {
+      "title": "Conditions Générales d’Utilisation (CGU) – Taxero.ch",
+      "lastUpdated": "05.02.2026",
+      "sections": [
+        {
+          "title": "Objet",
+          "body": [
+            "Les présentes Conditions Générales d’Utilisation (ci-après les « CGU ») régissent l’accès et l’utilisation de la plateforme Taxero.ch, produit exploité par A&G Fiduciaire Sàrl.",
+            "En accédant au site ou en utilisant les services proposés, l’utilisateur reconnaît avoir lu, compris et accepté sans réserve les présentes CGU."
+          ]
+        },
+        {
+          "title": "Exploitant de la plateforme",
+          "body": [
+            "La plateforme Taxero.ch est exploitée par :",
+            "A&G Fiduciaire Sàrl, Impasse du Nouveau-Marché 7, 1723 Marly – Suisse",
+            "Succursale (adresse de correspondance) : Route de Moncor 14, 1752 Villars-sur-Glâne – Suisse",
+            "Email : contact@taxero.ch",
+            "IDE siège : CHE-450.723.829",
+            "IDE succursale : CHE-319.151.111"
+          ]
+        },
+        {
+          "title": "Champ d’application",
+          "body": [
+            "Les services de Taxero.ch s’adressent exclusivement à des personnes physiques, résidant en Suisse ou à l’international.",
+            "Les CGU s’appliquent à toute utilisation du site internet, de la plateforme applicative et des services proposés."
+          ]
+        },
+        {
+          "title": "Description des services",
+          "body": [
+            "Taxero.ch propose une plateforme en ligne permettant notamment :",
+            "la collecte d’informations et de documents fiscaux,",
+            "l’accompagnement dans le cadre de l’établissement de déclarations d’impôt,",
+            "la communication liée au processus fiscal,",
+            "la génération et la gestion de la facturation.",
+            "Les prestations sont fournies sur la base des informations et documents transmis par l’utilisateur."
+          ]
+        },
+        {
+          "title": "Compte utilisateur",
+          "body": [
+            "5.1 Création du compte : L’accès aux services nécessite la création d’un compte personnel. L’utilisateur s’engage à fournir des informations exactes, complètes et à jour.",
+            "5.2 Identifiants : L’utilisateur est responsable de la confidentialité de ses identifiants de connexion. Toute utilisation effectuée via le compte est réputée effectuée par l’utilisateur lui-même."
+          ]
+        },
+        {
+          "title": "Obligations de l’utilisateur",
+          "body": [
+            "L’utilisateur s’engage notamment à : fournir des informations exactes, complètes et sincères ; transmettre l’ensemble des documents nécessaires au traitement de sa demande ; vérifier attentivement les documents préparés avant toute validation ; respecter les lois et réglementations applicables.",
+            "L’utilisateur demeure seul responsable du contenu des informations transmises."
+          ]
+        },
+        {
+          "title": "Limitation de responsabilité",
+          "body": [
+            "A&G Fiduciaire Sàrl met en œuvre tous les moyens raisonnables pour fournir un service de qualité.",
+            "Toutefois, sa responsabilité ne saurait être engagée notamment en cas de : informations erronées, incomplètes ou tardives fournies par l’utilisateur ; refus, rectification ou taxation opérée par l’autorité fiscale compétente ; interruptions temporaires du service pour maintenance ou raisons techniques ; cas de force majeure.",
+            "Les décisions finales appartiennent exclusivement aux autorités fiscales compétentes."
+          ]
+        },
+        {
+          "title": "Prix et facturation",
+          "body": [
+            "Les prix applicables sont ceux affichés sur la plateforme au moment de la commande.",
+            "La validation d’une demande implique l’acceptation du prix et l’émission automatique d’une facture. Le paiement s’effectue sur facture, selon les modalités indiquées."
+          ]
+        },
+        {
+          "title": "Propriété intellectuelle",
+          "body": [
+            "L’ensemble du contenu de la plateforme Taxero.ch (textes, logos, éléments graphiques, structure, logiciels) est protégé par le droit de la propriété intellectuelle.",
+            "Toute reproduction, utilisation ou diffusion non autorisée est interdite."
+          ]
+        },
+        {
+          "title": "Protection des données",
+          "body": [
+            "Le traitement des données personnelles est régi par la Politique de confidentialité de Taxero.ch, laquelle fait partie intégrante des présentes CGU."
+          ]
+        },
+        {
+          "title": "Suppression du compte",
+          "body": [
+            "L’utilisateur peut demander la suppression de son compte à tout moment.",
+            "La suppression entraîne la désactivation du compte et le traitement des données conformément aux obligations légales applicables."
+          ]
+        },
+        {
+          "title": "Modification des CGU",
+          "body": [
+            "A&G Fiduciaire Sàrl se réserve le droit de modifier les présentes CGU à tout moment.",
+            "La version applicable est celle publiée sur la plateforme au moment de l’utilisation."
+          ]
+        },
+        {
+          "title": "Droit applicable et for juridique",
+          "body": [
+            "Les présentes CGU sont régies par le droit suisse.",
+            "Tout litige relatif à leur interprétation ou exécution est soumis aux tribunaux compétents du canton de Fribourg, sous réserve d’un recours au Tribunal fédéral."
+          ]
+        },
+        {
+          "title": "Contact",
+          "body": [
+            "Pour toute question relative aux présentes CGU : contact@taxero.ch"
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Politique de confidentialité – Taxero.ch",
+      "lastUpdated": "05.02.2026",
+      "sections": [
+        {
+          "title": "Introduction",
+          "body": [
+            "La présente Politique de confidentialité décrit la manière dont Taxero.ch, produit exploité par A&G Fiduciaire Sàrl, collecte, utilise, conserve et protège les données personnelles des utilisateurs de la plateforme.",
+            "Nous accordons une importance primordiale à la confidentialité, à la sécurité et au respect des lois applicables, notamment la Loi fédérale sur la protection des données (LPD) et, le cas échéant, le Règlement général sur la protection des données (RGPD)."
+          ]
+        },
+        {
+          "title": "Responsable du traitement",
+          "body": [
+            "Le responsable du traitement des données est :",
+            "A&G Fiduciaire Sàrl, Impasse du Nouveau-Marché 7, 1723 Marly – Suisse",
+            "Succursale (adresse de correspondance) : Route de Moncor 14, 1752 Villars-sur-Glâne – Suisse",
+            "Email de contact : contact@taxero.ch",
+            "IDE siège : CHE-450.723.829",
+            "IDE succursale : CHE-319.151.111",
+            "Taxero.ch agit exclusivement en tant que responsable du traitement."
+          ]
+        },
+        {
+          "title": "Personnes concernées",
+          "body": [
+            "Les services de Taxero.ch s’adressent exclusivement à des personnes physiques, résidant en Suisse ou à l’international, y compris hors Union européenne."
+          ]
+        },
+        {
+          "title": "Données personnelles collectées",
+          "body": [
+            "4.1 Données fournies par l’utilisateur : Nom et prénom ; Adresse postale ; Adresse e-mail.",
+            "4.2 Données fiscales et financières : Revenus (salaires, rentes, activité indépendante) ; Fortune et dettes (comptes bancaires, titres) ; Biens immobiliers ; Situation familiale ; Enfants ou personnes à charge. Ces données sont considérées comme sensibles et font l’objet de mesures de sécurité renforcées.",
+            "4.3 Données techniques : À ce stade, Taxero.ch ne collecte pas activement d’adresses IP à des fins de profilage, de logs de connexion détaillés, ni d’historique comportemental à des fins commerciales. Certaines données techniques minimales peuvent toutefois être générées automatiquement pour des raisons de sécurité, de fonctionnement ou de maintenance."
+          ]
+        },
+        {
+          "title": "Finalités du traitement",
+          "body": [
+            "Les données personnelles sont traitées uniquement pour les finalités suivantes : Création et gestion du compte utilisateur ; Traitement des demandes de déclaration d’impôt ; Communication liée au processus fiscal ; Génération et gestion de la facturation ; Respect des obligations légales et réglementaires ; Sécurité et bon fonctionnement de la plateforme.",
+            "Aucune donnée n’est utilisée à des fins de revente ou de profilage commercial."
+          ]
+        },
+        {
+          "title": "Comptes utilisateurs et sécurité",
+          "body": [
+            "Les utilisateurs disposent d’un compte personnel protégé par : une authentification par email et mot de passe ; des mots de passe jamais accessibles à l’équipe ; un chiffrement des données en transit (HTTPS).",
+            "Les données sont hébergées sur une infrastructure 100 % suisse, auprès du fournisseur Infomaniak."
+          ]
+        },
+        {
+          "title": "Hébergement et sous-traitants",
+          "body": [
+            "Les données sont hébergées exclusivement en Suisse.",
+            "Certains services techniques peuvent être assurés par des prestataires agissant comme sous-traitants, notamment pour : l’envoi d’e-mails (confirmation de compte, notifications) ; l’analyse statistique de fréquentation.",
+            "Aucune donnée fiscale ou sensible n’est transmise par e-mail."
+          ]
+        },
+        {
+          "title": "Cookies et outils de suivi",
+          "body": [
+            "Taxero.ch utilise : des cookies strictement nécessaires au fonctionnement du site, des cookies analytiques (Google Analytics), des cookies marketing.",
+            "Une gestion avancée du consentement est mise en place afin de permettre à l’utilisateur d’accepter ou refuser les cookies non essentiels."
+          ]
+        },
+        {
+          "title": "Durée de conservation",
+          "body": [
+            "Les données personnelles sont conservées : tant que le compte utilisateur est actif ; jusqu’à la suppression du compte à la demande de l’utilisateur ; et au maximum 10 ans, conformément aux obligations légales applicables."
+          ]
+        },
+        {
+          "title": "Droits des utilisateurs",
+          "body": [
+            "Conformément à la législation applicable, chaque utilisateur dispose des droits suivants : droit d’accès à ses données ; droit de rectification ; droit à l’effacement ; droit à la limitation du traitement ; droit d’opposition ; droit à la portabilité des données.",
+            "Toute demande peut être adressée à : contact@taxero.ch"
+          ]
+        },
+        {
+          "title": "Suppression du compte",
+          "body": [
+            "L’utilisateur peut demander la suppression de son compte à tout moment.",
+            "La suppression entraîne la désactivation du compte et l’effacement des données."
+          ]
+        },
+        {
+          "title": "Modifications",
+          "body": [
+            "La présente Politique de confidentialité peut être mise à jour à tout moment.",
+            "La version en vigueur est celle publiée sur le site au moment de la consultation."
+          ]
+        },
+        {
+          "title": "Contact",
+          "body": [
+            "Pour toute question relative à la protection des données : contact@taxero.ch"
+          ]
+        }
+      ]
+    }
+  },
+  "topbar": {
+    "tagline": "Votre partenaire suisse de confiance",
+    "lang": {
+      "de": "Allemand",
+      "fr": "Français",
+      "en": "Anglais"
+    },
+    "login": "Connexion",
+    "myAccount": "Mon compte"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "forgot": "Mot de passe oublié ?",
+      "noAccount": "Vous n’avez pas de compte ?",
+      "signup": "Créer un compte"
+    },
+    "signup": {
+      "title": "Créer un compte",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "confirm": "Confirmer le mot de passe",
+      "strength": "Sécurité",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "street": "Adresse",
+      "postal": "Code postal",
+      "city": "Ville",
+      "terms": "J’accepte les Termes & la Politique de confidentialité",
+      "submit": "Créer un compte",
+      "loading": "Création...",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "signin": "Se connecter",
+      "successMsg": "Compte créé ! Veuillez vérifier votre e-mail.",
+      "verifyTitle": "Vérifiez votre e-mail",
+      "verifyMsg": "Nous avons envoyé un code à 6 chiffres à",
+      "code": "Code à 6 chiffres",
+      "verify": "Vérifier",
+      "changeEmail": "Changer l’e-mail",
+      "resend": "Renvoyer le code",
+      "resendIn": "Renvoyer dans",
+      "errors": {
+        "match": "Les mots de passe ne correspondent pas",
+        "invalidCode": "Code invalide",
+        "mustAgree": "Vous devez accepter pour continuer",
+        "failed": "Échec de l'inscription",
+        "weak": "Mot de passe trop faible"
+      }
+    },
+    "forgot": {
+      "title": "Mot de passe oublié",
+      "email": "E-mail",
+      "submit": "Envoyer le lien de réinitialisation",
+      "loading": "Envoi...",
+      "success": "Si cet e-mail existe, un lien de réinitialisation a été envoyé.",
+      "error": "Impossible d’envoyer le lien. Veuillez réessayer."
+    }
+  },
+  "menu": {
+    "getOffer": "Obtenir une offre",
+    "dashboard": "Tableau de bord",
+    "settings": "Paramètres",
+    "logout": "Se déconnecter"
+  },
+  "footer": {
+    "blog": "Blog",
+    "about": "À propos",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité"
+  },
+  "home": {
+    "hero": {
+      "tagline": "Votre déclaration d’impôts en ligne — simple, rapide et 100 % suisse.",
+      "title": "Remplissez votre déclaration d’impôts suisse en ligne avec un accompagnement professionnel."
+    },
+    "strengths": {
+      "title": "Nos principaux atouts",
+      "item1": "Équipe basée en Suisse",
+      "item2": "Tarifs transparents et fixes",
+      "item3": "Assistance humaine en ligne",
+      "item4": "Sécurité et confidentialité des données"
+    },
+    "price": {
+      "title": "Votre déclaration d’impôts dès CHF 59.–",
+      "text": "Votre déclaration d’impôts suisse réalisée en ligne, en toute sécurité, avec un prix adapté à votre situation.",
+      "cta": "Obtenir une offre",
+      "note": "Disponible pour des clients dans toute la Suisse."
+    },
+    "reviews": {
+      "title": "Avis Google",
+      "subtitle": "Des avis authentiques de clients qui nous ont confié leur déclaration d’impôts.",
+      "score": "Note moyenne : 4.8/5",
+      "count": "Basé sur des dizaines d’avis vérifiés sur Google.",
+      "placeholder": "Le widget ou des captures d’écran Google Reviews seront intégrés ici pour mettre en avant les retours clients."
+    },
+    "seo": {
+      "title": "Déclaration d’impôts en ligne – informations utiles",
+      "intro": "Taxero combine la flexibilité d’un outil numérique et la qualité d’un service fiduciaire.",
+      "text1": "Nous réalisons des déclarations d’impôts pour des particuliers dans toute la Suisse. Notre processus en ligne est conçu pour être simple et efficace, tout en respectant les exigences cantonales.",
+      "text2": "De Fribourg à Vaud en passant par Genève, nous vous aidons à préparer et optimiser votre déclaration tout en respectant les règles fiscales locales.",
+      "linkAbout": "À propos de Taxero",
+      "linkBlog": "Blog",
+      "linkFaq": "FAQ",
+      "linkContact": "Contact"
+    },
+    "how": {
+      "title": "Comment ça marche",
+      "step1": {
+        "title": "1. Remplissez le formulaire",
+        "text": "Répondez à quelques questions pour que nous comprenions votre situation."
+      },
+      "step2": {
+        "title": "2. Téléchargez vos documents",
+        "text": "Téléchargez en toute sécurité certificats de salaire, relevés bancaires et autres justificatifs."
+      },
+      "step3": {
+        "title": "3. Nous préparons votre déclaration",
+        "text": "Nos experts fiscaux suisses préparent votre déclaration et optimisent vos déductions."
+      },
+      "step4": {
+        "title": "4. Vous recevez votre dossier pour validation",
+        "text": "Vous vérifiez la déclaration préparée et posez vos questions si nécessaire."
+      },
+      "step5": {
+        "title": "5. Nous déposons votre déclaration pour vous",
+        "text": "Une fois validée, nous transmettons votre déclaration au fisc compétent."
+      },
+      "learnMore": "En savoir plus dans la FAQ"
+    },
+    "guarantees": {
+      "title": "Nos garanties",
+      "item1": {
+        "title": "Données hébergées en Suisse",
+        "text": "Vos données sont stockées dans une infrastructure sécurisée en Suisse."
+      },
+      "item2": {
+        "title": "Service 100 % en ligne",
+        "text": "De l’inscription à l’envoi, tout se fait en ligne."
+      },
+      "item3": {
+        "title": "Conseillers disponibles pour vous aider",
+        "text": "Notre équipe est joignable si vous avez des questions sur votre dossier."
+      },
+      "item4": {
+        "title": "Aucun frais caché",
+        "text": "Le prix est fixe et confirmé avant que nous commencions à travailler sur votre déclaration."
+      }
+    },
+    "faq": {
+      "title": "FAQ courte",
+      "q1": {
+        "q": "Combien de temps faut-il pour traiter ma déclaration ?",
+        "a": "La plupart des déclarations sont traitées en quelques jours ouvrables après la réception de tous vos documents."
+      },
+      "q2": {
+        "q": "Puis-je déduire mes frais de transport ?",
+        "a": "Oui, dans de nombreux cas les trajets domicile-travail et certains frais professionnels peuvent être déductibles, selon votre canton."
+      },
+      "q3": {
+        "q": "Mes données sont-elles sécurisées ?",
+        "a": "Oui. Nous utilisons le chiffrement, un hébergement sécurisé en Suisse et des contrôles d’accès stricts."
+      }
+    }
+  },
+  "pricing": {
+    "package": "Forfait"
+  },
+  "admin": {
+    "declarations": {
+      "title": "Déclarations fiscales",
+      "subtitle": "Gérer, filtrer et attribuer les déclarations fiscales.",
+      "searchPlaceholder": "Rechercher par nom, e-mail, ID, année…",
+      "refresh": "Actualiser",
+      "loading": "Chargement…",
+      "empty": "Aucun résultat.",
+      "assigned": "Attribué",
+      "unassigned": "Non attribué",
+      "defaultNote": "Attribué en raison d’une charge prioritaire",
+      "adminIdPlaceholder": "ID Admin (UUID)",
+      "notePlaceholder": "Note d’attribution (optionnelle)",
+      "assigning": "Attribution…",
+      "assignSelected": "Attribuer la sélection",
+      "selectVisible": "Sélectionner la liste",
+      "clearSelection": "Effacer la sélection",
+      "selectedCount": "Sélection : {{count}}",
+      "selectAdmin": "Sélectionner un administrateur",
+      "fileShort": "Dossier #{{id}}",
+      "step": "Étape {{n}}",
+      "results": "Résultats",
+      "count": "Total : {{count}}",
+      "filter": {
+        "unassigned": "Non attribuées",
+        "assigned": "Attribuées",
+        "all": "Toutes"
+      },
+      "status": {
+        "all": "Tous les statuts"
+      },
+      "year": {
+        "all": "Toutes les années"
+      },
+      "columns": {
+        "client": "Client",
+        "tax": "Année / Offre",
+        "status": "Statut",
+        "step": "Étape",
+        "created": "Créé",
+        "updated": "Mis à jour",
+        "assignment": "Attribution"
+      },
+      "unknownClient": "Client inconnu",
+      "errors": {
+        "loadFailed": "Impossible de charger les déclarations.",
+        "assignFailed": "Échec de l’attribution. Veuillez réessayer.",
+        "adminIdRequired": "L’ID Admin est obligatoire.",
+        "selectAtLeastOne": "Sélectionnez au moins une déclaration."
+      }
+    }
+  },
+  "__legacyFlatKeys__": {
+    "invoice.offer": "Offre",
+    "invoice.total": "Montant total",
+    "topbar.tagline": "Votre partenaire suisse de confiance",
+    "topbar.lang.de": "Allemand",
+    "topbar.lang.fr": "Français",
+    "topbar.lang.en": "Anglais",
+    "auth.login.title": "Connexion",
+    "auth.login.email": "E-mail",
+    "auth.login.password": "Mot de passe",
+    "auth.login.submit": "Se connecter",
+    "auth.login.forgot": "Mot de passe oublié ?",
+    "auth.login.noAccount": "Vous n’avez pas de compte ?",
+    "auth.login.signup": "Créer un compte",
+    "auth.signup.title": "Créer un compte",
+    "auth.signup.email": "E-mail",
+    "auth.signup.password": "Mot de passe",
+    "auth.signup.confirm": "Confirmer le mot de passe",
+    "auth.signup.strength": "Sécurité",
+    "auth.signup.firstName": "Prénom",
+    "auth.signup.lastName": "Nom",
+    "auth.signup.street": "Adresse",
+    "auth.signup.postal": "Code postal",
+    "auth.signup.city": "Ville",
+    "auth.signup.terms": "J’accepte les Termes & la Politique de confidentialité",
+    "auth.signup.submit": "Créer un compte",
+    "auth.signup.loading": "Création...",
+    "auth.signup.haveAccount": "Vous avez déjà un compte ?",
+    "auth.signup.signin": "Se connecter",
+    "auth.signup.successMsg": "Compte créé ! Veuillez vérifier votre e-mail.",
+    "auth.signup.verifyTitle": "Vérifiez votre e-mail",
+    "auth.signup.verifyMsg": "Nous avons envoyé un code à 6 chiffres à",
+    "auth.signup.code": "Code à 6 chiffres",
+    "auth.signup.verify": "Vérifier",
+    "auth.signup.changeEmail": "Changer l’e-mail",
+    "auth.signup.resend": "Renvoyer le code",
+    "auth.signup.resendIn": "Renvoyer dans",
+    "auth.signup.errors.match": "Les mots de passe ne correspondent pas",
+    "auth.signup.errors.invalidCode": "Code invalide",
+    "auth.signup.errors.mustAgree": "Vous devez accepter pour continuer",
+    "auth.signup.errors.failed": "Échec de l'inscription",
+    "auth.signup.errors.weak": "Mot de passe trop faible",
+    "auth.forgot.title": "Mot de passe oublié",
+    "auth.forgot.email": "E-mail",
+    "auth.forgot.submit": "Envoyer le lien de réinitialisation",
+    "auth.forgot.loading": "Envoi...",
+    "auth.forgot.success": "Si cet e-mail existe, un lien de réinitialisation a été envoyé.",
+    "auth.forgot.error": "Impossible d’envoyer le lien. Veuillez réessayer.",
+    "topbar.login": "Connexion",
+    "topbar.myAccount": "Mon compte",
+    "menu.getOffer": "Obtenir une offre",
+    "menu.dashboard": "Tableau de bord",
+    "menu.settings": "Paramètres",
+    "menu.logout": "Se déconnecter",
+    "footer.blog": "Blog",
+    "footer.about": "À propos",
+    "footer.terms": "Conditions d'utilisation",
+    "footer.privacy": "Politique de confidentialité",
+    "home.hero.tagline": "Votre déclaration d’impôts en ligne — simple, rapide et 100 % suisse.",
+    "home.hero.title": "Remplissez votre déclaration d’impôts suisse en ligne avec un accompagnement professionnel.",
+    "home.strengths.title": "Nos principaux atouts",
+    "home.strengths.item1": "Équipe basée en Suisse",
+    "home.strengths.item2": "Tarifs transparents et fixes",
+    "home.strengths.item3": "Assistance humaine en ligne",
+    "home.strengths.item4": "Sécurité et confidentialité des données",
+    "home.price.title": "Votre déclaration d’impôts dès CHF 59.–",
+    "home.price.text": "Votre déclaration d’impôts suisse réalisée en ligne, en toute sécurité, avec un prix adapté à votre situation.",
+    "home.price.cta": "Obtenir une offre",
+    "home.price.note": "Disponible pour des clients dans toute la Suisse.",
+    "home.reviews.title": "Avis Google",
+    "home.reviews.subtitle": "Des avis authentiques de clients qui nous ont confié leur déclaration d’impôts.",
+    "home.reviews.score": "Note moyenne : 4.8/5",
+    "home.reviews.count": "Basé sur des dizaines d’avis vérifiés sur Google.",
+    "home.reviews.placeholder": "Le widget ou des captures d’écran Google Reviews seront intégrés ici pour mettre en avant les retours clients.",
+    "home.seo.title": "Déclaration d’impôts en ligne – informations utiles",
+    "home.seo.intro": "Taxero combine la flexibilité d’un outil numérique et la qualité d’un service fiduciaire.",
+    "home.seo.text1": "Nous réalisons des déclarations d’impôts pour des particuliers dans toute la Suisse. Notre processus en ligne est conçu pour être simple et efficace, tout en respectant les exigences cantonales.",
+    "home.seo.text2": "De Fribourg à Vaud en passant par Genève, nous vous aidons à préparer et optimiser votre déclaration tout en respectant les règles fiscales locales.",
+    "home.seo.linkAbout": "À propos de Taxero",
+    "home.seo.linkBlog": "Blog",
+    "home.seo.linkFaq": "FAQ",
+    "home.seo.linkContact": "Contact",
+    "home.how.title": "Comment ça marche",
+    "home.how.step1.title": "1. Remplissez le formulaire",
+    "home.how.step1.text": "Répondez à quelques questions pour que nous comprenions votre situation.",
+    "home.how.step2.title": "2. Téléchargez vos documents",
+    "home.how.step2.text": "Téléchargez en toute sécurité certificats de salaire, relevés bancaires et autres justificatifs.",
+    "home.how.step3.title": "3. Nous préparons votre déclaration",
+    "home.how.step3.text": "Nos experts fiscaux suisses préparent votre déclaration et optimisent vos déductions.",
+    "home.how.step4.title": "4. Vous recevez votre dossier pour validation",
+    "home.how.step4.text": "Vous vérifiez la déclaration préparée et posez vos questions si nécessaire.",
+    "home.how.step5.title": "5. Nous déposons votre déclaration pour vous",
+    "home.how.step5.text": "Une fois validée, nous transmettons votre déclaration au fisc compétent.",
+    "home.how.learnMore": "En savoir plus dans la FAQ",
+    "home.guarantees.title": "Nos garanties",
+    "home.guarantees.item1.title": "Données hébergées en Suisse",
+    "home.guarantees.item1.text": "Vos données sont stockées dans une infrastructure sécurisée en Suisse.",
+    "home.guarantees.item2.title": "Service 100 % en ligne",
+    "home.guarantees.item2.text": "De l’inscription à l’envoi, tout se fait en ligne.",
+    "home.guarantees.item3.title": "Conseillers disponibles pour vous aider",
+    "home.guarantees.item3.text": "Notre équipe est joignable si vous avez des questions sur votre dossier.",
+    "home.guarantees.item4.title": "Aucun frais caché",
+    "home.guarantees.item4.text": "Le prix est fixe et confirmé avant que nous commencions à travailler sur votre déclaration.",
+    "home.faq.title": "FAQ courte",
+    "home.faq.q1.q": "Combien de temps faut-il pour traiter ma déclaration ?",
+    "home.faq.q1.a": "La plupart des déclarations sont traitées en quelques jours ouvrables après la réception de tous vos documents.",
+    "home.faq.q2.q": "Puis-je déduire mes frais de transport ?",
+    "home.faq.q2.a": "Oui, dans de nombreux cas les trajets domicile-travail et certains frais professionnels peuvent être déductibles, selon votre canton.",
+    "home.faq.q3.q": "Mes données sont-elles sécurisées ?",
+    "home.faq.q3.a": "Oui. Nous utilisons le chiffrement, un hébergement sécurisé en Suisse et des contrôles d’accès stricts.",
+    "product.title": "Obtenez votre offre pour la déclaration d’impôts",
+    "product.subtitle": "Répondez à quelques questions afin que nous puissions calculer le prix adapté à votre situation fiscale.",
+    "product.editRequest": "Modifier ma demande",
+    "product.sections.profile": "Votre profil",
+    "product.taxYear": "Année fiscale",
+    "product.maritalStatus": "Statut civil",
+    "product.marital.single": "Célibataire",
+    "product.marital.married": "Marié·e",
+    "product.childrenCount": "Nombre d’enfants",
+    "product.sections.situation": "Votre situation fiscale",
+    "product.incomeSources": "Nombre de sources de revenus",
+    "product.incomeHint": "Exemples : salaires, rentes AVS, rentes LPP, activité indépendante.",
+    "product.wealthStatements": "Nombre de relevés de fortune fiscales",
+    "product.wealthHint": "Exemples : relevés bancaires, e-tax, relevés de titres, participations.",
+    "product.properties": "Nombre de biens immobiliers",
+    "product.propertiesDetailsTitle": "Détails des biens immobiliers",
+    "product.propertiesCount": "Combien de biens en tout ?",
+    "product.newProperties": "Combien sont déclarés pour la première fois ?",
+    "product.newPropertiesHint": "Par exemple : un bien acheté durant l’année fiscale.",
+    "product.sections.billing": "Adresse de facturation",
+    "product.billing.firstName": "Prénom",
+    "product.billing.lastName": "Nom",
+    "product.billing.street": "Rue et numéro",
+    "product.billing.postalCode": "NPA",
+    "product.billing.city": "Localité",
+    "product.sections.summary": "Récapitulatif de votre demande",
+    "product.summary.taxYear": "Année fiscale : {{year}}",
+    "product.summary.marital": "Statut civil : {{status}}",
+    "product.summary.children": "Enfants : {{count}}",
+    "product.summary.incomes": "Sources de revenus : {{count}}",
+    "product.summary.wealth": "Relevés de fortune / fiscaux : {{count}}",
+    "product.summary.properties": "Biens immobiliers : {{count}}",
+    "product.cancel": "Annuler",
+    "product.confirm": "Confirmer ma demande",
+    "product.confirming": "Confirmation en cours...",
+    "product.next": "Suivant",
+    "product.back": "Retour",
+    "product.sections.offers": "Nos offres",
+    "product.offersHint": "Selon vos réponses, voici les options de service adaptées à votre déclaration fiscale.",
+    "product.offers.standard": "Standard",
+    "product.offers.premium": "Premium",
+    "product.offers.confort": "Confort",
+    "product.goToSummary": "Aller au récapitulatif",
+    "product.chooseOffer": "Choisir l’offre",
+    "product.errors.noOfferSelected": "Veuillez sélectionner une offre avant de confirmer votre demande.",
+    "product.confirmation.mock": "Votre demande a été enregistrée (démo). L’intégration finale enverra ces données au backend.",
+    "product.finalPrice": "Prix final",
+    "product.proceedToBilling": "Passer à la facturation",
+    "product.sections.offer": "Offre sélectionnée",
+    "pricing.package": "Forfait",
+    "admin.declarations.title": "Déclarations fiscales",
+    "admin.declarations.subtitle": "Gérer, filtrer et attribuer les déclarations fiscales.",
+    "admin.declarations.searchPlaceholder": "Rechercher par nom, e-mail, ID, année…",
+    "admin.declarations.refresh": "Actualiser",
+    "admin.declarations.loading": "Chargement…",
+    "admin.declarations.empty": "Aucun résultat.",
+    "admin.declarations.assigned": "Attribué",
+    "admin.declarations.unassigned": "Non attribué",
+    "admin.declarations.defaultNote": "Attribué en raison d’une charge prioritaire",
+    "admin.declarations.adminIdPlaceholder": "ID Admin (UUID)",
+    "admin.declarations.notePlaceholder": "Note d’attribution (optionnelle)",
+    "admin.declarations.assigning": "Attribution…",
+    "admin.declarations.assignSelected": "Attribuer la sélection",
+    "admin.declarations.selectVisible": "Sélectionner la liste",
+    "admin.declarations.clearSelection": "Effacer la sélection",
+    "admin.declarations.selectedCount": "Sélection : {{count}}",
+    "admin.declarations.selectAdmin": "Sélectionner un administrateur",
+    "admin.declarations.fileShort": "Dossier #{{id}}",
+    "admin.declarations.step": "Étape {{n}}",
+    "admin.declarations.results": "Résultats",
+    "admin.declarations.count": "Total : {{count}}",
+    "admin.declarations.filter.unassigned": "Non attribuées",
+    "admin.declarations.filter.assigned": "Attribuées",
+    "admin.declarations.filter.all": "Toutes",
+    "admin.declarations.status.all": "Tous les statuts",
+    "admin.declarations.year.all": "Toutes les années",
+    "admin.declarations.columns.client": "Client",
+    "admin.declarations.columns.tax": "Année / Offre",
+    "admin.declarations.columns.status": "Statut",
+    "admin.declarations.columns.step": "Étape",
+    "admin.declarations.columns.created": "Créé",
+    "admin.declarations.columns.updated": "Mis à jour",
+    "admin.declarations.columns.assignment": "Attribution",
+    "admin.declarations.unknownClient": "Client inconnu",
+    "admin.declarations.errors.loadFailed": "Impossible de charger les déclarations.",
+    "admin.declarations.errors.assignFailed": "Échec de l’attribution. Veuillez réessayer.",
+    "admin.declarations.errors.adminIdRequired": "L’ID Admin est obligatoire.",
+    "admin.declarations.errors.selectAtLeastOne": "Sélectionnez au moins une déclaration.",
+    "common.select": "Sélectionner...",
+    "step1.title": "Étape 1 — Documents & questions",
+    "step1.additionalQuestions": "Questions complémentaires",
+    "step1.sections.personalInformation": "Informations personnelles",
+    "step1.sections.professionalExpenses": "Frais professionnels",
+    "step1.sections.housing": "Logement",
+    "step1.sections.taxAuthorityNumbers": "Numéros de l’administration fiscale",
+    "step1.questions.personalChanges": "Changements depuis l’année précédente (mariage, divorce, déménagement, etc.)",
+    "step1.questions.transportMode": "Quel est votre mode de transport pour aller au travail ?",
+    "step1.questions.distanceToWorkKm": "Distance domicile–lieu de travail (km, aller simple)",
+    "step1.questions.weeklyTripsToWork": "Combien de trajets vers le lieu de travail par semaine ?",
+    "step1.questions.mealsOutsidePerWeek": "Combien de repas pris à l’extérieur par semaine (liés au travail) ?",
+    "step1.questions.netAnnualRentVD_GE": "Loyer annuel net (VD / GE) (CHF)",
+    "step1.questions.canton": "Canton",
+    "step1.questions.taxpayerNumber": "Numéro de contribuable",
+    "step1.questions.controlOrDeclarationCode": "Code de contrôle / de déclaration (si disponible)",
+    "step1.options.transportMode.publicTransport": "Transports publics",
+    "step1.options.transportMode.bicycle": "Vélo",
+    "step1.options.transportMode.vehicle": "Voiture / véhicule",
+    "step1.options.canton.FR": "Fribourg (FR)",
+    "step1.options.canton.BE": "Berne (BE)",
+    "step1.options.canton.VD": "Vaud (VD)",
+    "step1.options.canton.VS": "Valais (VS)",
+    "step1.options.canton.NE": "Neuchâtel (NE)",
+    "step1.options.canton.GE": "Genève (GE)",
+    "step1.options.canton.OTHER": "Autre"
   }
-,
-  "common.select": "Sélectionner...",
-
-  "step1.title": "Étape 1 — Documents & questions",
-  "step1.additionalQuestions": "Questions complémentaires",
-
-  "step1.sections.personalInformation": "Informations personnelles",
-  "step1.sections.professionalExpenses": "Frais professionnels",
-  "step1.sections.housing": "Logement",
-  "step1.sections.taxAuthorityNumbers": "Numéros de l’administration fiscale",
-
-  "step1.questions.personalChanges": "Changements depuis l’année précédente (mariage, divorce, déménagement, etc.)",
-  "step1.questions.transportMode": "Quel est votre mode de transport pour aller au travail ?",
-  "step1.questions.distanceToWorkKm": "Distance domicile–lieu de travail (km, aller simple)",
-  "step1.questions.weeklyTripsToWork": "Combien de trajets vers le lieu de travail par semaine ?",
-  "step1.questions.mealsOutsidePerWeek": "Combien de repas pris à l’extérieur par semaine (liés au travail) ?",
-  "step1.questions.netAnnualRentVD_GE": "Loyer annuel net (VD / GE) (CHF)",
-  "step1.questions.canton": "Canton",
-  "step1.questions.taxpayerNumber": "Numéro de contribuable",
-  "step1.questions.controlOrDeclarationCode": "Code de contrôle / de déclaration (si disponible)",
-
-  "step1.options.transportMode.publicTransport": "Transports publics",
-  "step1.options.transportMode.bicycle": "Vélo",
-  "step1.options.transportMode.vehicle": "Voiture / véhicule",
-
-  "step1.options.canton.FR": "Fribourg (FR)",
-  "step1.options.canton.BE": "Berne (BE)",
-  "step1.options.canton.VD": "Vaud (VD)",
-  "step1.options.canton.VS": "Valais (VS)",
-  "step1.options.canton.NE": "Neuchâtel (NE)",
-  "step1.options.canton.GE": "Genève (GE)",
-  "step1.options.canton.OTHER": "Autre"
 }
-

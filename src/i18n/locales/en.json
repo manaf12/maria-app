@@ -188,7 +188,12 @@
       "step2": "We are reviewing your documents.",
       "step3": "We are preparing your tax declaration.",
       "step4": "Your declaration is ready. Please review and confirm.",
-      "step5": "Your declaration has been submitted to the tax office."
+      "step5": "Your declaration has been submitted to the tax office.",
+      "stepProgress": "Your declaration is currently at step {{current}} out of {{total}}.",
+      "noStepInfo": "Your declaration status is being updated."
+    },
+    "card": {
+      "priceLine": "{{price}} CHF — {{name}}"
     },
     "steps1": {
       "1": {
@@ -250,9 +255,10 @@
       "current": "In progress",
       "completed": "Completed"
     },
-    "invoice": "Invoice",
-    "invoice.offer": "Offer",
-    "invoice.total": "Total amount",
+    "invoice": {
+      "offer": "Offer",
+      "total": "Total amount"
+    },
     "downloadInvoice": "Download invoice",
     "loading": "Loading…",
     "errors": {
@@ -309,28 +315,29 @@
     "step3": {
       "text": "Your tax declaration is currently being prepared by Taxero. This step is handled entirely by our team.",
       "eta": "Estimated preparation time: around 2 weeks after all documents are complete.",
-      "confirmDraftReceipt": "Confirm your tax declaration is correct and ready to be sent?",
+      "confirmDraftReceipt": "Are you sure you want to confirm receipt of the declaration?",
       "draftConfirmed": "Confirmed — step will be marked as completed.",
       "confirmReceiptFailed": "Could not confirm receipt.",
       "confirmComplete": "Are you sure you have finished preparing the tax declaration?",
       "completed": "Step 3 marked as complete!",
       "completeError": "An error occurred.",
-      "draftUploadSuccess": "Draft uploaded successfully.",
+      "draftUploadSuccess": "The declaration was uploaded successfully.",
       "admin": {
-        "uploadDraftLabel": "Admin: Upload Tax Declaration Draft (PDF)",
-        "uploadDraftBtn": "Upload Draft",
+        "uploadDraftLabel": "Admin: Upload the Tax Declaration (PDF)",
+        "uploadDraftBtn": "Upload Declaration",
         "completeBtn": "Mark as Prepared & Complete Step 3",
-        "mustUploadFirst": "You must upload the draft file before completing this step."
+        "mustUploadFirst": "You must upload the file before completing this step."
       }
     },
     "step4": {
-      "description": "Your tax declaration draft is ready. Please review it carefully and confirm.",
-      "noDraftYet": "No draft uploaded yet.",
+      "description": "Your tax declaration is ready. Please review it carefully and confirm.",
+      "noDraftYet": "No file uploaded yet.",
       "waitingForAdmin": "Waiting for admin to upload the draft.",
       "uploadedAt": "Uploaded:",
       "lastComment": "Last comment:",
       "confirming": "Confirming...",
-      "confirmReceipt": "Confirm your tax declaration is correct and ready to be sent",
+      "confirmReceipt": "Confirm you received the declaration",
+      "submitConfirm": "Are you sure you want to submit the declaration?",
       "addComment": {
         "label": "Add Comment",
         "forClient": "(for client)",
@@ -615,44 +622,6 @@
       "error": "We could not delete your account. Please contact support if the problem persists."
     }
   },
-  "admin.declarations.title": "Tax Declarations",
-  "admin.declarations.subtitle": "Manage, filter, and assign tax declarations.",
-  "admin.declarations.searchPlaceholder": "Search by name, email, ID, year…",
-  "admin.declarations.refresh": "Refresh",
-  "admin.declarations.loading": "Loading…",
-  "admin.declarations.empty": "No results found.",
-  "admin.declarations.assigned": "Assigned",
-  "admin.declarations.unassigned": "Unassigned",
-  "admin.declarations.defaultNote": "Assigned due to high priority workload",
-  "admin.declarations.adminIdPlaceholder": "Admin ID (UUID)",
-  "admin.declarations.notePlaceholder": "Assignment note (optional)",
-  "admin.declarations.assigning": "Assigning…",
-  "admin.declarations.assignSelected": "Assign selected",
-  "admin.declarations.selectVisible": "Select visible",
-  "admin.declarations.clearSelection": "Clear selection",
-  "admin.declarations.selectedCount": "Selected: {{count}}",
-  "admin.declarartions.selectAdmin":"Select Admin",
-  "admin.declarations.fileShort": "File #{{id}}",
-  "admin.declarations.step": "Step {{n}}",
-  "admin.declarations.results": "Results",
-  "admin.declarations.count": "Total: {{count}}",
-  "admin.declarations.filter.unassigned": "Unassigned only",
-  "admin.declarations.filter.assigned": "Assigned only",
-  "admin.declarations.filter.all": "All",
-  "admin.declarations.status.all": "All statuses",
-  "admin.declarations.year.all": "All years",
-  "admin.declarations.columns.client": "Client",
-  "admin.declarations.columns.tax": "Tax year / Offer",
-  "admin.declarations.columns.status": "Status",
-  "admin.declarations.columns.step": "Step",
-  "admin.declarations.columns.created": "Created",
-  "admin.declarations.columns.updated": "Updated",
-  "admin.declarations.columns.assignment": "Assignment",
-  "admin.declarations.unknownClient": "Unknown client",
-  "admin.declarations.errors.loadFailed": "Failed to load declarations.",
-  "admin.declarations.errors.assignFailed": "Assignment failed. Please try again.",
-  "admin.declarations.errors.adminIdRequired": "Admin ID is required.",
-  "admin.declarations.errors.selectAtLeastOne": "Select at least one declaration.",
   "product": {
     "services": {
       "requestDocuments": "Request of documents according to profile",
@@ -667,7 +636,70 @@
       "verifyAssessmentNotice": "Verification of the tax assessment notice",
       "appealIfNecessary": "Appeal if necessary",
       "ratesAccordingToProfile": "Rates according to your profile"
-    }
+    },
+    "title": "Get your Swiss tax quote",
+    "subtitle": "Answer a few questions so we can calculate the right price for your online tax declaration.",
+    "editRequest": "Edit my request",
+    "sections": {
+      "profile": "Your profile",
+      "situation": "Your tax situation",
+      "billing": "Billing address",
+      "summary": "Summary of your request",
+      "offers": "Our offers",
+      "offer": "Your selected offer"
+    },
+    "taxYear": "Tax year",
+    "maritalStatus": "Marital status",
+    "marital": {
+      "single": "Single",
+      "married": "Married"
+    },
+    "childrenCount": "Number of children",
+    "incomeSources": "Number of income sources",
+    "incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
+    "wealthStatements": "Number of wealth statements",
+    "wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
+    "properties": "Number of real-estate properties",
+    "propertiesDetailsTitle": "Real-estate details",
+    "propertiesCount": "How many properties?",
+    "newProperties": "How many are declared for the first time?",
+    "newPropertiesHint": "For example: a property purchased during the tax year.",
+    "billing": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "street": "Street address",
+      "postalCode": "Postal code",
+      "city": "City"
+    },
+    "summary": {
+      "taxYear": "Tax year: {{year}}",
+      "marital": "Marital status: {{status}}",
+      "children": "Children: {{count}}",
+      "incomes": "Income sources: {{count}}",
+      "wealth": "Wealth / tax statements: {{count}}",
+      "properties": "Real-estate properties: {{count}}"
+    },
+    "cancel": "Cancel",
+    "confirm": "Confirm my request",
+    "confirming": "Confirming...",
+    "next": "Next",
+    "back": "Back",
+    "offersHint": "Based on your answers, here are the service options that fit your declaration.",
+    "offers": {
+      "standard": "Standard",
+      "premium": "Premium",
+      "confort": "Comfort"
+    },
+    "goToSummary": "Go to summary",
+    "chooseOffer": "Choose offer",
+    "errors": {
+      "noOfferSelected": "Please select an offer before confirming your request."
+    },
+    "confirmation": {
+      "mock": "Your request has been recorded (demo). The final integration will send this data to the backend."
+    },
+    "finalPrice": "Final Price",
+    "proceedToBilling": "Proceed to billing"
   },
   "common": {
     "delete": "Delete",
@@ -690,7 +722,8 @@
     "you": "You",
     "unknown": "Unknown",
     "unknownTime": "unknown time",
-    "mark":"Mark as not available"
+    "mark": "Mark as not available",
+    "select": "Select..."
   },
   "step1": {
     "title": "Step 1 — Documents & Questions",
@@ -711,7 +744,40 @@
     "missingDocuments": "Missing documents:",
     "missingQuestions": "Missing questions:",
     "notReady": "Step 1 is not ready",
-    "selectPlaceholder": "Select…"
+    "selectPlaceholder": "Select…",
+    "sections": {
+      "personalInformation": "Personal information",
+      "professionalExpenses": "Professional expenses",
+      "housing": "Housing",
+      "taxAuthorityNumbers": "Tax authority numbers"
+    },
+    "questions": {
+      "personalChanges": "Personal changes since last year (marriage, divorce, move, etc.)",
+      "transportMode": "How do you commute to work?",
+      "distanceToWorkKm": "Distance from home to workplace (km, one-way)",
+      "weeklyTripsToWork": "How many trips to the workplace per week?",
+      "mealsOutsidePerWeek": "How many meals outside per week (work-related)?",
+      "netAnnualRentVD_GE": "Net annual rent (VD / GE) (CHF)",
+      "canton": "Canton",
+      "taxpayerNumber": "Taxpayer number",
+      "controlOrDeclarationCode": "Control / declaration code (if available)"
+    },
+    "options": {
+      "transportMode": {
+        "publicTransport": "Public transport",
+        "bicycle": "Bicycle",
+        "vehicle": "Car / vehicle"
+      },
+      "canton": {
+        "FR": "Fribourg (FR)",
+        "BE": "Bern (BE)",
+        "VD": "Vaud (VD)",
+        "VS": "Valais (VS)",
+        "NE": "Neuchâtel (NE)",
+        "GE": "Geneva (GE)",
+        "OTHER": "Other"
+      }
+    }
   },
   "documents": {
     "previous_tax_return": {
@@ -766,6 +832,674 @@
   "documentTypes": {
     "assessment_notice": "Assessment notice",
     "final_file": "Final file"
+  },
+  "legal": {
+    "lastUpdated": "Last updated: {{date}}",
+    "links": {
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy"
+    },
+    "terms": {
+      "title": "Terms of Use – Taxero.ch",
+      "lastUpdated": "05.02.2026",
+      "sections": [
+        {
+          "title": "Purpose",
+          "body": [
+            "These Terms of Use (the “Terms”) govern access to and use of the Taxero.ch platform, a product operated by A&G Fiduciaire Sàrl.",
+            "By accessing the website or using the services offered, the user acknowledges having read, understood, and accepted these Terms without reservation."
+          ]
+        },
+        {
+          "title": "Platform operator",
+          "body": [
+            "Taxero.ch is operated by:",
+            "A&G Fiduciaire Sàrl, Impasse du Nouveau-Marché 7, 1723 Marly, Switzerland",
+            "Branch (mailing address): Route de Moncor 14, 1752 Villars-sur-Glâne, Switzerland",
+            "Email: contact@taxero.ch",
+            "UID (head office): CHE-450.723.829",
+            "UID (branch): CHE-319.151.111"
+          ]
+        },
+        {
+          "title": "Scope",
+          "body": [
+            "Taxero.ch services are intended exclusively for natural persons residing in Switzerland or internationally.",
+            "These Terms apply to any use of the website, the application platform, and the services offered."
+          ]
+        },
+        {
+          "title": "Service description",
+          "body": [
+            "Taxero.ch provides an online platform enabling, in particular:",
+            "the collection of tax information and documents,",
+            "assistance in preparing tax returns,",
+            "communication related to the tax process,",
+            "generation and management of invoicing.",
+            "Services are provided based on the information and documents submitted by the user."
+          ]
+        },
+        {
+          "title": "User account",
+          "body": [
+            "5.1 Account creation: Access to services requires creating a personal account. The user undertakes to provide accurate, complete, and up-to-date information.",
+            "5.2 Credentials: The user is responsible for keeping login credentials confidential. Any use via the account is deemed to have been made by the user."
+          ]
+        },
+        {
+          "title": "User obligations",
+          "body": [
+            "The user undertakes in particular to: provide accurate, complete, and truthful information; submit all documents required to process the request; carefully review prepared documents before any validation; comply with applicable laws and regulations.",
+            "The user remains solely responsible for the content of the information provided."
+          ]
+        },
+        {
+          "title": "Limitation of liability",
+          "body": [
+            "A&G Fiduciaire Sàrl uses reasonable means to provide a quality service.",
+            "However, its liability cannot be engaged in particular in cases of: inaccurate, incomplete, or late information provided by the user; refusal, correction, or taxation decided by the competent tax authority; temporary service interruptions for maintenance or technical reasons; force majeure.",
+            "Final decisions belong exclusively to the competent tax authorities."
+          ]
+        },
+        {
+          "title": "Pricing and invoicing",
+          "body": [
+            "Applicable prices are those displayed on the platform at the time of the order.",
+            "Confirming a request implies acceptance of the price and the automatic issuance of an invoice. Payment is made against invoice, according to the stated terms."
+          ]
+        },
+        {
+          "title": "Intellectual property",
+          "body": [
+            "All content of the Taxero.ch platform (texts, logos, graphic elements, structure, software) is protected by intellectual property law.",
+            "Any unauthorized reproduction, use, or distribution is prohibited."
+          ]
+        },
+        {
+          "title": "Data protection",
+          "body": [
+            "The processing of personal data is governed by the Taxero.ch Privacy Policy, which forms an integral part of these Terms."
+          ]
+        },
+        {
+          "title": "Account deletion",
+          "body": [
+            "The user may request deletion of the account at any time.",
+            "Deletion results in account deactivation and the handling of data in accordance with applicable legal obligations."
+          ]
+        },
+        {
+          "title": "Changes to the Terms",
+          "body": [
+            "A&G Fiduciaire Sàrl reserves the right to amend these Terms at any time.",
+            "The applicable version is the one published on the platform at the time of use."
+          ]
+        },
+        {
+          "title": "Governing law and jurisdiction",
+          "body": [
+            "These Terms are governed by Swiss law.",
+            "Any dispute relating to their interpretation or execution is subject to the competent courts of the Canton of Fribourg, subject to appeal to the Federal Supreme Court."
+          ]
+        },
+        {
+          "title": "Contact",
+          "body": [
+            "For any questions regarding these Terms: contact@taxero.ch"
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy – Taxero.ch",
+      "lastUpdated": "05.02.2026",
+      "sections": [
+        {
+          "title": "Introduction",
+          "body": [
+            "This Privacy Policy describes how Taxero.ch, a product operated by A&G Fiduciaire Sàrl, collects, uses, stores, and protects users’ personal data.",
+            "We place the highest importance on confidentiality, security, and compliance with applicable laws, including the Swiss Federal Act on Data Protection (FADP) and, where applicable, the GDPR."
+          ]
+        },
+        {
+          "title": "Data controller",
+          "body": [
+            "The data controller is:",
+            "A&G Fiduciaire Sàrl, Impasse du Nouveau-Marché 7, 1723 Marly, Switzerland",
+            "Branch (mailing address): Route de Moncor 14, 1752 Villars-sur-Glâne, Switzerland",
+            "Contact email: contact@taxero.ch",
+            "UID (head office): CHE-450.723.829",
+            "UID (branch): CHE-319.151.111",
+            "Taxero.ch acts exclusively as the data controller."
+          ]
+        },
+        {
+          "title": "Data subjects",
+          "body": [
+            "Taxero.ch services are intended exclusively for natural persons residing in Switzerland or internationally, including outside the European Union."
+          ]
+        },
+        {
+          "title": "Personal data collected",
+          "body": [
+            "4.1 Data provided by the user: First and last name; Postal address; Email address.",
+            "4.2 Tax and financial data: Income (salary, pensions, self-employment); Assets and debts (bank accounts, securities); Real estate; Family situation; Children or dependents. This data is considered sensitive and is subject to enhanced security measures.",
+            "4.3 Technical data: At this stage, Taxero.ch does not actively collect IP addresses for profiling purposes, detailed connection logs, or behavioral history for commercial purposes. Minimal technical data may nevertheless be generated automatically for security, operational, or maintenance reasons."
+          ]
+        },
+        {
+          "title": "Purposes of processing",
+          "body": [
+            "Personal data is processed only for the following purposes: Creating and managing the user account; Handling tax return requests; Communication related to the tax process; Generating and managing invoicing; Compliance with legal and regulatory obligations; Security and proper operation of the platform.",
+            "No data is used for resale or commercial profiling."
+          ]
+        },
+        {
+          "title": "User accounts and security",
+          "body": [
+            "Users have a personal account protected by: email/password authentication; passwords that are never accessible to the team; encryption of data in transit (HTTPS).",
+            "Data is hosted on a 100% Swiss infrastructure with the provider Infomaniak."
+          ]
+        },
+        {
+          "title": "Hosting and processors",
+          "body": [
+            "Data is hosted exclusively in Switzerland.",
+            "Certain technical services may be provided by vendors acting as processors, in particular for: sending emails (account confirmation, notifications); traffic analytics.",
+            "No tax or sensitive data is transmitted by email."
+          ]
+        },
+        {
+          "title": "Cookies and tracking tools",
+          "body": [
+            "Taxero.ch uses: strictly necessary cookies for website operation; analytics cookies (Google Analytics); marketing cookies.",
+            "Advanced consent management is implemented to allow the user to accept or refuse non-essential cookies."
+          ]
+        },
+        {
+          "title": "Retention period",
+          "body": [
+            "Personal data is retained: as long as the user account is active; until account deletion at the user’s request; and for a maximum of 10 years, in accordance with applicable legal obligations."
+          ]
+        },
+        {
+          "title": "User rights",
+          "body": [
+            "In accordance with applicable law, each user has the following rights: right of access; rectification; erasure; restriction of processing; objection; data portability.",
+            "Requests may be sent to: contact@taxero.ch"
+          ]
+        },
+        {
+          "title": "Account deletion",
+          "body": [
+            "The user may request deletion of the account at any time.",
+            "Deletion results in account deactivation and data erasure."
+          ]
+        },
+        {
+          "title": "Changes",
+          "body": [
+            "This Privacy Policy may be updated at any time.",
+            "The version in force is the one published on the website at the time of consultation."
+          ]
+        },
+        {
+          "title": "Contact",
+          "body": [
+            "For any questions regarding data protection: contact@taxero.ch"
+          ]
+        }
+      ]
+    }
+  },
+  "topbar": {
+    "tagline": "Your trusted Swiss partner",
+    "lang": {
+      "de": "German",
+      "fr": "French",
+      "en": "English"
+    },
+    "login": "Login",
+    "myAccount": "My Account"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgot": "Forgot password?",
+      "noAccount": "Don’t have an account?",
+      "signup": "Sign up"
+    },
+    "signup": {
+      "title": "Create account",
+      "email": "Email",
+      "password": "Password",
+      "confirm": "Confirm password",
+      "strength": "Strength",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "street": "Street address",
+      "postal": "Postal code",
+      "city": "City",
+      "terms": "I agree to the Terms & Privacy",
+      "submit": "Create account",
+      "loading": "Creating...",
+      "haveAccount": "Already have an account?",
+      "signin": "Sign in",
+      "successMsg": "Account created! Please verify your email.",
+      "verifyTitle": "Verify your email",
+      "verifyMsg": "We sent a 6-digit code to",
+      "code": "6-digit code",
+      "verify": "Verify",
+      "changeEmail": "Change email",
+      "resend": "Resend code",
+      "resendIn": "Resend in",
+      "errors": {
+        "match": "Passwords do not match",
+        "invalidCode": "Invalid code",
+        "mustAgree": "You must agree to continue",
+        "failed": "Sign up failed",
+        "weak": "Password is too weak"
+      }
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "email": "Email",
+      "submit": "Send reset link",
+      "loading": "Sending...",
+      "success": "If this email exists, a reset link has been sent.",
+      "error": "Could not send reset link. Please try again."
+    }
+  },
+  "menu": {
+    "getOffer": "Get an offer",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "footer": {
+    "blog": "Blog",
+    "about": "About",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy"
+  },
+  "home": {
+    "hero": {
+      "tagline": "Your online tax declaration — simple, fast, and 100% Swiss.",
+      "title": "File your Swiss tax return online with professional support."
+    },
+    "strengths": {
+      "title": "Our key strengths",
+      "item1": "Team based in Switzerland",
+      "item2": "Transparent and fixed pricing",
+      "item3": "Human assistance available online",
+      "item4": "Data security and confidentiality"
+    },
+    "price": {
+      "title": "Your tax declaration from CHF 59.–",
+      "text": "Your Swiss tax declaration done securely online, with a price adapted to your situation.",
+      "cta": "Get a quote",
+      "note": "Accessible to all clients throughout Switzerland."
+    },
+    "reviews": {
+      "title": "Google Reviews",
+      "subtitle": "Real feedback from clients who entrusted us with their Swiss tax returns.",
+      "score": "Average rating: 4.8/5",
+      "count": "Based on dozens of verified Google Reviews.",
+      "placeholder": "Google Reviews widget or screenshots will be integrated here to showcase real client feedback."
+    },
+    "seo": {
+      "title": "Online Swiss tax declaration – useful information",
+      "intro": "Taxero combines the flexibility of a digital tool with the quality of a fiduciary service.",
+      "text1": "We handle Swiss tax declarations for individuals throughout Switzerland. Our online process is designed to be simple and efficient, while remaining fully compliant with cantonal requirements.",
+      "text2": "From Fribourg to Vaud and Geneva, we help you prepare and optimise your tax declaration while respecting local tax regulations.",
+      "linkAbout": "About Taxero",
+      "linkBlog": "Blog",
+      "linkFaq": "FAQ",
+      "linkContact": "Contact"
+    },
+    "how": {
+      "title": "How it works",
+      "step1": {
+        "title": "1. Fill out the form",
+        "text": "Answer a few questions so we can understand your situation."
+      },
+      "step2": {
+        "title": "2. Upload your documents",
+        "text": "Securely upload salary certificates, bank statements and other documents."
+      },
+      "step3": {
+        "title": "3. We prepare your tax declaration",
+        "text": "Our Swiss tax experts prepare your declaration and optimise your deductions."
+      },
+      "step4": {
+        "title": "4. You receive your file for confirmation",
+        "text": "You review the prepared declaration and ask any questions you may have."
+      },
+      "step5": {
+        "title": "5. We submit your declaration for you",
+        "text": "Once validated, we submit your tax declaration to the tax authorities."
+      },
+      "learnMore": "Learn more in the FAQ"
+    },
+    "guarantees": {
+      "title": "Our guarantees",
+      "item1": {
+        "title": "Data hosted in Switzerland",
+        "text": "Your data is stored in secure Swiss infrastructure."
+      },
+      "item2": {
+        "title": "100% online service",
+        "text": "From registration to submission, everything is done online."
+      },
+      "item3": {
+        "title": "Advisors available for support",
+        "text": "You can contact our team if you have any questions about your file."
+      },
+      "item4": {
+        "title": "No hidden fees",
+        "text": "The price is fixed and confirmed before we start working on your declaration."
+      }
+    },
+    "faq": {
+      "title": "Short FAQ",
+      "q1": {
+        "q": "How long does it take to process my declaration?",
+        "a": "Most declarations are processed within a few working days after we receive all your documents."
+      },
+      "q2": {
+        "q": "Can I deduct my transportation costs?",
+        "a": "Yes, in many cases commuting and certain professional expenses can be deducted, depending on your canton."
+      },
+      "q3": {
+        "q": "Are my data secure?",
+        "a": "Yes. We use encryption, secure hosting in Switzerland and strict access controls to protect your data."
+      }
+    }
+  },
+  "pricing": {
+    "package": "Package"
+  },
+  "admin": {
+    "declarations": {
+      "title": "Tax Declarations",
+      "subtitle": "Manage, filter, and assign tax declarations.",
+      "searchPlaceholder": "Search by name, email, ID, year…",
+      "refresh": "Refresh",
+      "loading": "Loading…",
+      "empty": "No results found.",
+      "assigned": "Assigned",
+      "unassigned": "Unassigned",
+      "defaultNote": "Assigned due to high priority workload",
+      "adminIdPlaceholder": "Admin ID (UUID)",
+      "notePlaceholder": "Assignment note (optional)",
+      "assigning": "Assigning…",
+      "assignSelected": "Assign selected",
+      "selectVisible": "Select visible",
+      "clearSelection": "Clear selection",
+      "selectedCount": "Selected: {{count}}",
+      "fileShort": "File #{{id}}",
+      "step": "Step {{n}}",
+      "results": "Results",
+      "count": "Total: {{count}}",
+      "filter": {
+        "unassigned": "Unassigned only",
+        "assigned": "Assigned only",
+        "all": "All"
+      },
+      "status": {
+        "all": "All statuses"
+      },
+      "year": {
+        "all": "All years"
+      },
+      "columns": {
+        "client": "Client",
+        "tax": "Tax year / Offer",
+        "status": "Status",
+        "step": "Step",
+        "created": "Created",
+        "updated": "Updated",
+        "assignment": "Assignment"
+      },
+      "unknownClient": "Unknown client",
+      "errors": {
+        "loadFailed": "Failed to load declarations.",
+        "assignFailed": "Assignment failed. Please try again.",
+        "adminIdRequired": "Admin ID is required.",
+        "selectAtLeastOne": "Select at least one declaration."
+      }
+    },
+    "declarartions": {
+      "selectAdmin": "Select Admin"
+    }
+  },
+  "__legacyFlatKeys__": {
+    "invoice.offer": "Offer",
+    "invoice.total": "Total amount",
+    "topbar.tagline": "Your trusted Swiss partner",
+    "topbar.lang.de": "German",
+    "topbar.lang.fr": "French",
+    "topbar.lang.en": "English",
+    "auth.login.title": "Sign in",
+    "auth.login.email": "Email",
+    "auth.login.password": "Password",
+    "auth.login.submit": "Sign in",
+    "auth.login.forgot": "Forgot password?",
+    "auth.login.noAccount": "Don’t have an account?",
+    "auth.login.signup": "Sign up",
+    "auth.signup.title": "Create account",
+    "auth.signup.email": "Email",
+    "auth.signup.password": "Password",
+    "auth.signup.confirm": "Confirm password",
+    "auth.signup.strength": "Strength",
+    "auth.signup.firstName": "First name",
+    "auth.signup.lastName": "Last name",
+    "auth.signup.street": "Street address",
+    "auth.signup.postal": "Postal code",
+    "auth.signup.city": "City",
+    "auth.signup.terms": "I agree to the Terms & Privacy",
+    "auth.signup.submit": "Create account",
+    "auth.signup.loading": "Creating...",
+    "auth.signup.haveAccount": "Already have an account?",
+    "auth.signup.signin": "Sign in",
+    "auth.signup.successMsg": "Account created! Please verify your email.",
+    "auth.signup.verifyTitle": "Verify your email",
+    "auth.signup.verifyMsg": "We sent a 6-digit code to",
+    "auth.signup.code": "6-digit code",
+    "auth.signup.verify": "Verify",
+    "auth.signup.changeEmail": "Change email",
+    "auth.signup.resend": "Resend code",
+    "auth.signup.resendIn": "Resend in",
+    "auth.signup.errors.match": "Passwords do not match",
+    "auth.signup.errors.invalidCode": "Invalid code",
+    "auth.signup.errors.mustAgree": "You must agree to continue",
+    "auth.signup.errors.failed": "Sign up failed",
+    "auth.signup.errors.weak": "Password is too weak",
+    "auth.forgot.title": "Forgot password",
+    "auth.forgot.email": "Email",
+    "auth.forgot.submit": "Send reset link",
+    "auth.forgot.loading": "Sending...",
+    "auth.forgot.success": "If this email exists, a reset link has been sent.",
+    "auth.forgot.error": "Could not send reset link. Please try again.",
+    "topbar.login": "Login",
+    "topbar.myAccount": "My Account",
+    "menu.getOffer": "Get an offer",
+    "menu.dashboard": "Dashboard",
+    "menu.settings": "Settings",
+    "menu.logout": "Logout",
+    "footer.blog": "Blog",
+    "footer.about": "About",
+    "footer.terms": "Terms of Use",
+    "footer.privacy": "Privacy Policy",
+    "home.hero.tagline": "Your online tax declaration — simple, fast, and 100% Swiss.",
+    "home.hero.title": "File your Swiss tax return online with professional support.",
+    "home.strengths.title": "Our key strengths",
+    "home.strengths.item1": "Team based in Switzerland",
+    "home.strengths.item2": "Transparent and fixed pricing",
+    "home.strengths.item3": "Human assistance available online",
+    "home.strengths.item4": "Data security and confidentiality",
+    "home.price.title": "Your tax declaration from CHF 59.–",
+    "home.price.text": "Your Swiss tax declaration done securely online, with a price adapted to your situation.",
+    "home.price.cta": "Get a quote",
+    "home.price.note": "Accessible to all clients throughout Switzerland.",
+    "home.reviews.title": "Google Reviews",
+    "home.reviews.subtitle": "Real feedback from clients who entrusted us with their Swiss tax returns.",
+    "home.reviews.score": "Average rating: 4.8/5",
+    "home.reviews.count": "Based on dozens of verified Google Reviews.",
+    "home.reviews.placeholder": "Google Reviews widget or screenshots will be integrated here to showcase real client feedback.",
+    "home.seo.title": "Online Swiss tax declaration – useful information",
+    "home.seo.intro": "Taxero combines the flexibility of a digital tool with the quality of a fiduciary service.",
+    "home.seo.text1": "We handle Swiss tax declarations for individuals throughout Switzerland. Our online process is designed to be simple and efficient, while remaining fully compliant with cantonal requirements.",
+    "home.seo.text2": "From Fribourg to Vaud and Geneva, we help you prepare and optimise your tax declaration while respecting local tax regulations.",
+    "home.seo.linkAbout": "About Taxero",
+    "home.seo.linkBlog": "Blog",
+    "home.seo.linkFaq": "FAQ",
+    "home.seo.linkContact": "Contact",
+    "home.how.title": "How it works",
+    "home.how.step1.title": "1. Fill out the form",
+    "home.how.step1.text": "Answer a few questions so we can understand your situation.",
+    "home.how.step2.title": "2. Upload your documents",
+    "home.how.step2.text": "Securely upload salary certificates, bank statements and other documents.",
+    "home.how.step3.title": "3. We prepare your tax declaration",
+    "home.how.step3.text": "Our Swiss tax experts prepare your declaration and optimise your deductions.",
+    "home.how.step4.title": "4. You receive your file for confirmation",
+    "home.how.step4.text": "You review the prepared declaration and ask any questions you may have.",
+    "home.how.step5.title": "5. We submit your declaration for you",
+    "home.how.step5.text": "Once validated, we submit your tax declaration to the tax authorities.",
+    "home.how.learnMore": "Learn more in the FAQ",
+    "home.guarantees.title": "Our guarantees",
+    "home.guarantees.item1.title": "Data hosted in Switzerland",
+    "home.guarantees.item1.text": "Your data is stored in secure Swiss infrastructure.",
+    "home.guarantees.item2.title": "100% online service",
+    "home.guarantees.item2.text": "From registration to submission, everything is done online.",
+    "home.guarantees.item3.title": "Advisors available for support",
+    "home.guarantees.item3.text": "You can contact our team if you have any questions about your file.",
+    "home.guarantees.item4.title": "No hidden fees",
+    "home.guarantees.item4.text": "The price is fixed and confirmed before we start working on your declaration.",
+    "home.faq.title": "Short FAQ",
+    "home.faq.q1.q": "How long does it take to process my declaration?",
+    "home.faq.q1.a": "Most declarations are processed within a few working days after we receive all your documents.",
+    "home.faq.q2.q": "Can I deduct my transportation costs?",
+    "home.faq.q2.a": "Yes, in many cases commuting and certain professional expenses can be deducted, depending on your canton.",
+    "home.faq.q3.q": "Are my data secure?",
+    "home.faq.q3.a": "Yes. We use encryption, secure hosting in Switzerland and strict access controls to protect your data.",
+    "product.title": "Get your Swiss tax quote",
+    "product.subtitle": "Answer a few questions so we can calculate the right price for your online tax declaration.",
+    "product.editRequest": "Edit my request",
+    "product.sections.profile": "Your profile",
+    "product.taxYear": "Tax year",
+    "product.maritalStatus": "Marital status",
+    "product.marital.single": "Single",
+    "product.marital.married": "Married",
+    "product.childrenCount": "Number of children",
+    "product.sections.situation": "Your tax situation",
+    "product.incomeSources": "Number of income sources",
+    "product.incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
+    "product.wealthStatements": "Number of wealth statements",
+    "product.wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
+    "product.properties": "Number of real-estate properties",
+    "product.propertiesDetailsTitle": "Real-estate details",
+    "product.propertiesCount": "How many properties?",
+    "product.newProperties": "How many are declared for the first time?",
+    "product.newPropertiesHint": "For example: a property purchased during the tax year.",
+    "product.sections.billing": "Billing address",
+    "product.billing.firstName": "First name",
+    "product.billing.lastName": "Last name",
+    "product.billing.street": "Street address",
+    "product.billing.postalCode": "Postal code",
+    "product.billing.city": "City",
+    "product.sections.summary": "Summary of your request",
+    "product.summary.taxYear": "Tax year: {{year}}",
+    "product.summary.marital": "Marital status: {{status}}",
+    "product.summary.children": "Children: {{count}}",
+    "product.summary.incomes": "Income sources: {{count}}",
+    "product.summary.wealth": "Wealth / tax statements: {{count}}",
+    "product.summary.properties": "Real-estate properties: {{count}}",
+    "product.cancel": "Cancel",
+    "product.confirm": "Confirm my request",
+    "product.confirming": "Confirming...",
+    "product.next": "Next",
+    "product.back": "Back",
+    "product.sections.offers": "Our offers",
+    "product.offersHint": "Based on your answers, here are the service options that fit your declaration.",
+    "product.offers.standard": "Standard",
+    "product.offers.premium": "Premium",
+    "product.offers.confort": "Comfort",
+    "product.goToSummary": "Go to summary",
+    "product.chooseOffer": "Choose offer",
+    "product.errors.noOfferSelected": "Please select an offer before confirming your request.",
+    "product.confirmation.mock": "Your request has been recorded (demo). The final integration will send this data to the backend.",
+    "product.finalPrice": "Final Price",
+    "product.proceedToBilling": "Proceed to billing",
+    "product.sections.offer": "Your selected offer",
+    "pricing.package": "Package",
+    "admin.declarations.title": "Tax Declarations",
+    "admin.declarations.subtitle": "Manage, filter, and assign tax declarations.",
+    "admin.declarations.searchPlaceholder": "Search by name, email, ID, year…",
+    "admin.declarations.refresh": "Refresh",
+    "admin.declarations.loading": "Loading…",
+    "admin.declarations.empty": "No results found.",
+    "admin.declarations.assigned": "Assigned",
+    "admin.declarations.unassigned": "Unassigned",
+    "admin.declarations.defaultNote": "Assigned due to high priority workload",
+    "admin.declarations.adminIdPlaceholder": "Admin ID (UUID)",
+    "admin.declarations.notePlaceholder": "Assignment note (optional)",
+    "admin.declarations.assigning": "Assigning…",
+    "admin.declarations.assignSelected": "Assign selected",
+    "admin.declarations.selectVisible": "Select visible",
+    "admin.declarations.clearSelection": "Clear selection",
+    "admin.declarations.selectedCount": "Selected: {{count}}",
+    "admin.declarartions.selectAdmin": "Select Admin",
+    "admin.declarations.fileShort": "File #{{id}}",
+    "admin.declarations.step": "Step {{n}}",
+    "admin.declarations.results": "Results",
+    "admin.declarations.count": "Total: {{count}}",
+    "admin.declarations.filter.unassigned": "Unassigned only",
+    "admin.declarations.filter.assigned": "Assigned only",
+    "admin.declarations.filter.all": "All",
+    "admin.declarations.status.all": "All statuses",
+    "admin.declarations.year.all": "All years",
+    "admin.declarations.columns.client": "Client",
+    "admin.declarations.columns.tax": "Tax year / Offer",
+    "admin.declarations.columns.status": "Status",
+    "admin.declarations.columns.step": "Step",
+    "admin.declarations.columns.created": "Created",
+    "admin.declarations.columns.updated": "Updated",
+    "admin.declarations.columns.assignment": "Assignment",
+    "admin.declarations.unknownClient": "Unknown client",
+    "admin.declarations.errors.loadFailed": "Failed to load declarations.",
+    "admin.declarations.errors.assignFailed": "Assignment failed. Please try again.",
+    "admin.declarations.errors.adminIdRequired": "Admin ID is required.",
+    "admin.declarations.errors.selectAtLeastOne": "Select at least one declaration.",
+    "common.select": "Select...",
+    "step1.title": "Step 1 — Documents & Questions",
+    "step1.additionalQuestions": "Additional questions",
+    "step1.sections.personalInformation": "Personal information",
+    "step1.sections.professionalExpenses": "Professional expenses",
+    "step1.sections.housing": "Housing",
+    "step1.sections.taxAuthorityNumbers": "Tax authority numbers",
+    "step1.questions.personalChanges": "Personal changes since last year (marriage, divorce, move, etc.)",
+    "step1.questions.transportMode": "How do you commute to work?",
+    "step1.questions.distanceToWorkKm": "Distance from home to workplace (km, one-way)",
+    "step1.questions.weeklyTripsToWork": "How many trips to the workplace per week?",
+    "step1.questions.mealsOutsidePerWeek": "How many meals outside per week (work-related)?",
+    "step1.questions.netAnnualRentVD_GE": "Net annual rent (VD / GE) (CHF)",
+    "step1.questions.canton": "Canton",
+    "step1.questions.taxpayerNumber": "Taxpayer number",
+    "step1.questions.controlOrDeclarationCode": "Control / declaration code (if available)",
+    "step1.options.transportMode.publicTransport": "Public transport",
+    "step1.options.transportMode.bicycle": "Bicycle",
+    "step1.options.transportMode.vehicle": "Car / vehicle",
+    "step1.options.canton.FR": "Fribourg (FR)",
+    "step1.options.canton.BE": "Bern (BE)",
+    "step1.options.canton.VD": "Vaud (VD)",
+    "step1.options.canton.VS": "Valais (VS)",
+    "step1.options.canton.NE": "Neuchâtel (NE)",
+    "step1.options.canton.GE": "Geneva (GE)",
+    "step1.options.canton.OTHER": "Other"
   }
 ,
   "common.select": "Select...",

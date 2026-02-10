@@ -3363,6 +3363,7 @@ button.primary:disabled {
   background: #f9fafb;
   border-color: #cbd5f5;
   transform: translateY(-1px);
+  color: #000;
 }
 .btn-secondary:hover {
   background: #163e64;
@@ -3617,3 +3618,26 @@ input[type="file"] {
   align-self: flex-start;
   margin-top: 0 !important; /* in case btn-secondary adds top margin */
 }
+.legal-page{
+  width: 100%;
+  padding: 32px 16px;
+}
+
+.legal-card{
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(15, 35, 95, 0.08);
+}
+
+.legal-header{ margin-bottom: 18px; }
+.legal-title{ margin: 0; font-size: 28px; font-weight: 700; }
+.legal-updated{ margin: 8px 0 0; opacity: .75; }
+
+.legal-content{ margin-top: 18px; }
+.legal-section{ margin: 18px 0 22px; }
+.legal-h2{ margin: 0 0 10px; font-size: 18px; font-weight: 700; }
+.legal-p{ margin: 0 0 10px; line-height: 1.65; opacity: .92; }

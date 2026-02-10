@@ -108,8 +108,10 @@ export default function Topbar() {
       <div className="topbar-left">
         <div className="topbar-flag">
           <img src={logoTaxera} alt="Taxera Logo" className="topbar-flag-img" />
+          
         </div>
         <span className="topbar-text">{t("topbar.tagline")}</span>
+     
       </div>
 
       <div className="topbar-right">
