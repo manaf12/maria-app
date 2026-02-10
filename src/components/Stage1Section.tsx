@@ -80,6 +80,15 @@ export default function Stage1Section({
   }, [declaration.steps]);
 
   const step1Status = (step1 as any)?.status ?? "PENDING";
+  const isDone = step1Status === "DONE" || step1Status === "COMPLETED";
+
+  // Step accordion (UI only)
+  const [isOpen, setIsOpen] = React.useState(true);
+
+  // Auto-close when step is done (also closes on first open if already DONE)
+  React.useEffect(() => {
+    if (isDone) setIsOpen(false);
+  }, [isDone]);
 
   const invalidateDeclaration = async () => {
     await queryClient.invalidateQueries({
@@ -185,244 +194,340 @@ export default function Stage1Section({
     ...OPTIONAL_DOCUMENT_TYPES,
   ];
 
-  const BadgeBase =
-    "text-xs px-2 py-1 rounded-full border";
+  const BadgeBase = "text-xs px-2 py-1 rounded-full border";
+  const StatusBadge = () => {
+    if (!isDone) return null;
+
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-xs font-medium text-green-900">
+        <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[10px] leading-none text-white">
+          ✓
+        </span>
+        {String(t(`stepStatus.${step1Status}`, { defaultValue: step1Status }))}
+      </span>
+    );
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="rounded-xl border bg-white p-4">
-        <div className="flex items-start justify-between gap-4">
+    <div className="rounded-2xl border bg-white overflow-hidden">
+      {/* Accordion Header (click to open/close) */}
+   <button
+        type="button"
+        onClick={() => setIsOpen((v) => !v)}
+        aria-expanded={isOpen}
+        className="w-full"
+        style={{
+          // hard reset in case you have global button styling
+          background: "transparent",
+          border: "none",
+          padding: 0,
+          textAlign: "left",
+        }}
+      >
+        <div className="p-4 hover:bg-gray-50/60 transition flex items-start justify-between gap-4">
           <div className="min-w-0">
             <h3 className="text-base font-semibold text-gray-900">
               {t("step1.title")}
             </h3>
+
             <p className="mt-1 text-sm text-gray-500">
               {t("step1.subtitle")}
             </p>
+
+            {/* DOWN + SIMPLE (status + progress) */}
+      <div className="mt-3 flex items-center flex-wrap">
+  <div className="mr-3">
+    <StatusBadge />
+  </div>
+  
+  <div>
+    <span className="text-xs text-gray-500">
+      {t("step1.progressLabel")}{" "}
+      <span className="font-semibold text-gray-900">
+        {requiredProgress.done}/{requiredProgress.total}
+      </span>
+    </span>
+  </div>
+</div>
           </div>
 
-          <div className="shrink-0 text-right">
-            <div className="text-xs text-gray-500">
-              {t("step1.progressLabel")}
-            </div>
-            <div className="text-base font-semibold text-gray-900">
-              {requiredProgress.done}/{requiredProgress.total}
-            </div>
-          </div>
-        </div>
-
-        {lockEditing && (
-          <div className="mt-3 rounded-xl border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-800">
-            {t("step1.lockMessage")}
-          </div>
-        )}
-      </div>
-
-      {/* Questions */}
-      <div className="rounded-xl border bg-white p-4">
-        <h4 className="text-sm font-semibold text-gray-900 mb-3">
-          {t("step1.additionalQuestions")}
-        </h4>
-
-        {questionsLoading ? (
-          <div className="text-sm text-gray-500">
-            {t("step1.loadingQuestions")}
-          </div>
-        ) : (
-          <Step1Questions
-            declarationId={declaration.id}
-            questions={step1Questions}
-            initialAnswers={initialStep1Answers}
-            onSaved={invalidateDeclaration}
-            disabled={lockEditing}
-          />
-        )}
-      </div>
-
-      {/* Documents grid */}
-      <div className="grid gap-6 md:grid-cols-2">
-        {allDocTypesForUI.map((docType) => {
-          const uploadedFiles = filesByType[docType] ?? [];
-          const isMissing = !!declaredMissingMap[docType];
-          const isOthers = docType === "others";
-          const canEditDocType = !lockEditing && (isCurrent || isOthers);
-
-          return (
-            <div
-              key={docType}
-              className="rounded-xl border bg-white p-5 hover:bg-gray-50/40 transition-colors"
-            >
-              <div className="flex items-start justify-between gap-3 mb-3">
-                <div className="min-w-0">
-                  <h4 className="text-sm font-semibold text-gray-900">
-                    {t(`documents.${docType}.title`)}
-                  </h4>
-                  <div className="mt-0.5 text-xs text-gray-500">
-                    {isOthers ? t("common.optional") : t("common.required")}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  {uploadedFiles.length > 0 && (
-                    <span
-                      className={`${BadgeBase} bg-green-50 text-green-700 border-green-200`}
-                    >
-                      {t("step1.uploadedCount", { count: uploadedFiles.length })}
-                    </span>
-                  )}
-
-                  {isMissing && (
-                    <span
-                      className={`${BadgeBase} bg-yellow-50 text-yellow-700 border-yellow-200`}
-                    >
-                      {t("step1.notAvailable")}
-                    </span>
-                  )}
-
-                  {!isMissing && uploadedFiles.length === 0 && !isOthers && (
-                    <span
-                      className={`${BadgeBase} bg-gray-50 text-gray-700 border-gray-200`}
-                    >
-                      {t("step1.pending")}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Uploaded files list - minimal */}
-              {uploadedFiles.length > 0 && (
-                <ul className="mb-4 list-none p-0 m-0 space-y-2">
-                  {uploadedFiles.map((file) => (
-                    <li
-                      key={file.id}
-                      className="flex items-center justify-between gap-3 rounded-xl border bg-white px-3 py-2 hover:bg-gray-50 transition"
-                    >
-                      <div className="flex items-center gap-2 min-w-0">
-                        <span
-                          aria-hidden="true"
-                          className="inline-flex items-center justify-center w-7 h-7 rounded-lg border bg-gray-50 text-gray-600 text-xs"
-                        >
-                          PDF
-                        </span>
-
-                        <span className="truncate text-sm font-medium text-gray-800">
-                          {file.originalName}
-                        </span>
-                      </div>
-
-                      <button
-                        type="button"
-                        className="delete-btn"
-                        disabled={lockEditing}
-                        onClick={async () => {
-                          if (lockEditing) return;
-
-                          const fileName = file.originalName ?? t("common.thisFile");
-                          const msg = String(
-                            t("step1.confirmDeleteFile", { fileName }),
-                          );
-
-                          if (!confirm(msg)) return;
-
-                          await axiosClient.delete(`/files/${file.id}`);
-                          await queryClient.invalidateQueries({
-                            queryKey: ["declaration", declaration.id],
-                          });
-                        }}
-                      >
-                        {t("common.delete")}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {canEditDocType ? (
-                <DocumentUploadItem
-                  declarationId={declaration.id}
-                  documentType={docType}
-                  uploadedFiles={uploadedFiles}
-                  isMissing={isMissing}
-                  allowMultiple={isOthers}
-                  disableMissing={isOthers}
-                  onUpload={(file) => uploadOne(docType, file)}
-                  onUploadMultiple={(files) => uploadMultiple(docType, files)}
-                  onMarkMissing={(reason) => markMissing(docType, reason)}
-                  onUndoMissing={() => undoMissing(docType)}
-                />
-              ) : (
-                <p className="text-sm text-gray-500">{t("step1.notEditable")}</p>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Step status + confirm */}
-      <div className="rounded-xl border bg-white p-4">
-        <div className="flex items-center justify-between gap-4">
-          <div className="min-w-0 flex flex-col gap-1">
-            <div className="text-xs text-gray-500 leading-tight">
-              {t("step1.stepStatusLabel")}
-            </div>
-            <div className="text-sm font-semibold text-gray-900 leading-tight">
-              {String(t(`stepStatus.${step1Status}`, { defaultValue: step1Status }))}
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className="confirm-step-btn"
-            disabled={confirming || lockEditing}
-            onClick={() => {
-              if (lockEditing) return;
-              if (!confirm(String(t("step1.confirmStep1Prompt")))) return;
-              confirmStep1();
-            }}
+          {/* Chevron */}
+          <span
+            aria-hidden="true"
+            className={`inline-flex items-center justify-center w-9 h-9 rounded-xl border bg-white text-gray-600 transition-transform ${
+              isOpen ? "rotate-180" : "rotate-0"
+            }`}
           >
-            {confirming ? t("step1.confirming") : t("step1.confirmStep1")}
-          </button>
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M5 12l5-5 5 5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
         </div>
+      </button>
 
-        {confirmError && (
-          <div className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm">
-            <div className="font-semibold text-red-700">{t("step1.notReady")}</div>
+      {/* Body */}
+      {isOpen && (
+        <div className="p-4 space-y-6 border-t">
+          {/* Lock message (unchanged) */}
+          {lockEditing && (
+            <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-800">
+              {t("step1.lockMessage")}
+            </div>
+          )}
 
-            {import.meta.env.MODE === "development" && confirmError.message && (
-              <div className="mt-1 text-xs text-red-700/80">
-                {String(confirmError.message ?? "")}
+          {/* Questions (unchanged) */}
+          <div className="rounded-xl border bg-white p-4">
+            <h4 className="text-sm font-semibold text-gray-900 mb-3">
+              {t("step1.additionalQuestions")}
+            </h4>
+
+            {questionsLoading ? (
+              <div className="text-sm text-gray-500">
+                {t("step1.loadingQuestions")}
               </div>
+            ) : (
+              <Step1Questions
+                declarationId={declaration.id}
+                questions={step1Questions}
+                initialAnswers={initialStep1Answers}
+                onSaved={invalidateDeclaration}
+                disabled={lockEditing}
+              />
             )}
+          </div>
 
-            {(confirmError.missingDocs?.length ?? 0) > 0 && (
-              <div className="mt-2">
-                <div className="font-medium text-red-700">
-                  {t("step1.missingDocuments")}
+          {/* Documents grid (unchanged) */}
+          <div className="grid gap-6 md:grid-cols-2">
+            {allDocTypesForUI.map((docType) => {
+              const uploadedFiles = filesByType[docType] ?? [];
+              const isMissing = !!declaredMissingMap[docType];
+              const isOthers = docType === "others";
+              const canEditDocType = !lockEditing && (isCurrent || isOthers);
+
+              return (
+                <div
+                  key={docType}
+                  className="rounded-xl border bg-white p-5 hover:bg-gray-50/40 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="min-w-0">
+                      <h4 className="text-sm font-semibold text-gray-900">
+                        {t(`documents.${docType}.title`)}
+                      </h4>
+                      <div className="mt-0.5 text-xs text-gray-500">
+                        {isOthers ? t("common.optional") : t("common.required")}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      {uploadedFiles.length > 0 && (
+                        <span
+                          className={`${BadgeBase} bg-green-50 text-green-700 border-green-200`}
+                        >
+                          {t("step1.uploadedCount", { count: uploadedFiles.length })}
+                        </span>
+                      )}
+
+                      {isMissing && (
+                        <span
+                          className={`${BadgeBase} bg-yellow-50 text-yellow-700 border-yellow-200`}
+                        >
+                          {t("step1.notAvailable")}
+                        </span>
+                      )}
+
+                      {!isMissing && uploadedFiles.length === 0 && !isOthers && (
+                        <span
+                          className={`${BadgeBase} bg-gray-50 text-gray-700 border-gray-200`}
+                        >
+                          {t("step1.pending")}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {uploadedFiles.length > 0 && (
+                    <ul className="mb-4 list-none p-0 m-0 space-y-2">
+                      {uploadedFiles.map((file) => (
+                        <li
+                          key={file.id}
+                          className="flex items-center justify-between gap-3 rounded-xl border bg-white px-3 py-2 hover:bg-gray-50 transition"
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span
+                              aria-hidden="true"
+                              className="inline-flex items-center justify-center w-7 h-7 rounded-lg border bg-gray-50 text-gray-600 text-xs"
+                            >
+                              PDF
+                            </span>
+
+                            <span className="truncate text-sm font-medium text-gray-800">
+                              {file.originalName}
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            className="delete-btn"
+                            disabled={lockEditing}
+                            onClick={async () => {
+                              if (lockEditing) return;
+
+                              const fileName =
+                                file.originalName ?? t("common.thisFile");
+                              const msg = String(
+                                t("step1.confirmDeleteFile", { fileName })
+                              );
+
+                              if (!confirm(msg)) return;
+
+                              await axiosClient.delete(`/files/${file.id}`);
+                              await queryClient.invalidateQueries({
+                                queryKey: ["declaration", declaration.id],
+                              });
+                            }}
+                          >
+                            {t("common.delete")}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {canEditDocType ? (
+                    <DocumentUploadItem
+                      declarationId={declaration.id}
+                      documentType={docType}
+                      uploadedFiles={uploadedFiles}
+                      isMissing={isMissing}
+                      allowMultiple={isOthers}
+                      disableMissing={isOthers}
+                      onUpload={(file) => uploadOne(docType, file)}
+                      onUploadMultiple={(files) => uploadMultiple(docType, files)}
+                      onMarkMissing={(reason) => markMissing(docType, reason)}
+                      onUndoMissing={() => undoMissing(docType)}
+                    />
+                  ) : (
+                    <p className="text-sm text-gray-500">{t("step1.notEditable")}</p>
+                  )}
                 </div>
-                <ul className="list-disc pl-5">
-                  {confirmError.missingDocs!.map((d) => (
-                    <li key={d}>{t(`documents.${d}.title`)}</li>
-                  ))}
-                </ul>
+              );
+            })}
+          </div>
+
+          {/* Step status + confirm (visual upgrade for DONE) */}
+          <div
+            className={`rounded-xl border p-4 ${
+              isDone ? "bg-green-50 border-green-200" : "bg-white"
+            }`}
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div className="min-w-0 flex flex-col gap-1">
+                <div
+                  className={`text-xs leading-tight ${
+                    isDone ? "text-green-800/80" : "text-gray-500"
+                  }`}
+                >
+                  {t("step1.stepStatusLabel")}
+                </div>
+
+                <div
+                  className={`text-sm font-semibold leading-tight ${
+                    isDone ? "text-green-900" : "text-gray-900"
+                  }`}
+                >
+                  {isDone && (
+                    <span className="inline-flex items-center gap-2">
+                      <span
+                        aria-hidden="true"
+                        className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-sm"
+                      >
+                        ✓
+                      </span>
+                      {String(
+                        t(`stepStatus.${step1Status}`, { defaultValue: step1Status })
+                      )}
+                    </span>
+                  )}
+
+                  {!isDone &&
+                    String(
+                      t(`stepStatus.${step1Status}`, { defaultValue: step1Status })
+                    )}
+                </div>
+
+                {isDone && (
+                  <div className="text-xs text-green-800/80">
+                    {t("step1.notEditable")}
+                  </div>
+                )}
               </div>
-            )}
 
-            {(confirmError.missingQuestions?.length ?? 0) > 0 && (
-              <div className="mt-2">
-                <div className="font-medium text-red-700">
-                  {t("step1.missingQuestions")}
-                </div>
-                <ul className="list-disc pl-5">
-                  {confirmError.missingQuestions!.map((q) => (
-                    <li key={q}>{q}</li>
-                  ))}
-                </ul>
+              <button
+                type="button"
+                className="confirm-step-btn"
+                disabled={confirming || lockEditing || isDone}
+                onClick={() => {
+                  if (lockEditing || isDone) return;
+                  if (!confirm(String(t("step1.confirmStep1Prompt")))) return;
+                  confirmStep1();
+                }}
+              >
+                {isDone
+                  ? String(t(`stepStatus.${step1Status}`, { defaultValue: step1Status }))
+                  : confirming
+                  ? t("step1.confirming")
+                  : t("step1.confirmStep1")}
+              </button>
+            </div>
+
+            {confirmError && (
+              <div className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm">
+                <div className="font-semibold text-red-700">{t("step1.notReady")}</div>
+
+                {import.meta.env.MODE === "development" && confirmError.message && (
+                  <div className="mt-1 text-xs text-red-700/80">
+                    {String(confirmError.message ?? "")}
+                  </div>
+                )}
+
+                {(confirmError.missingDocs?.length ?? 0) > 0 && (
+                  <div className="mt-2">
+                    <div className="font-medium text-red-700">
+                      {t("step1.missingDocuments")}
+                    </div>
+                    <ul className="list-disc pl-5">
+                      {confirmError.missingDocs!.map((d) => (
+                        <li key={d}>{t(`documents.${d}.title`)}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {(confirmError.missingQuestions?.length ?? 0) > 0 && (
+                  <div className="mt-2">
+                    <div className="font-medium text-red-700">
+                      {t("step1.missingQuestions")}
+                    </div>
+                    <ul className="list-disc pl-5">
+                      {confirmError.missingQuestions!.map((q) => (
+                        <li key={q}>{q}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
+
 }

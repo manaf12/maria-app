@@ -744,7 +744,7 @@ const goNext = async () => {
     valueAsNumber: true,
     setValueAs: (v) => (v === "" ? undefined : Number(v)),
     required: "Income sources is required",
-    min: { value: 1, message: "Must be at least 1" },
+    min: { value: 0, message: "Must be at least 1" },
   })}
 />
 {errors.incomeSources?.message && (

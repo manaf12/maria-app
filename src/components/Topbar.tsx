@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // src/components/Topbar.tsx
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// src/components/Topbar.tsx
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -35,9 +37,10 @@ export default function Topbar() {
   const queryClient = useQueryClient();
 
   const [menuopen, setMenuOpen] = useState(false);
-  const currentLang = (["de", "fr", "en"].includes((i18n.language || "fr").slice(0, 2))
-    ? (i18n.language || "fr").slice(0, 2)
-    : "fr") as "de" | "fr" | "en";
+
+  // FIX: Always fall back to "fr" if the detected language is not in the supported list
+  const rawLang = (i18n.language || "fr").slice(0, 2);
+  const currentLang = (["de", "fr", "en"].includes(rawLang) ? rawLang : "fr") as "de" | "fr" | "en";
 
   // Used to close the dropdown when clicking outside
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -46,6 +49,18 @@ export default function Topbar() {
     i18n.changeLanguage(lng);
     localStorage.setItem("taxonline_lang", lng);
   };
+
+  // FIX: On first load, if no saved language preference exists, default to French
+  useEffect(() => {
+    const saved = localStorage.getItem("taxonline_lang");
+    if (!saved) {
+      i18n.changeLanguage("fr");
+      localStorage.setItem("taxonline_lang", "fr");
+    } else {
+      i18n.changeLanguage(saved as "de" | "fr" | "en");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -141,7 +156,7 @@ export default function Topbar() {
 
             {menuopen && (
               <div className="user-menu-dropdown" role="menu">
-                <button
+                {/* <button
                   type="button"
                   className="user-menu-item"
                   role="menuitem"
@@ -154,7 +169,7 @@ export default function Topbar() {
                   }}
                 >
                   {t("menu.settings")}
-                </button>
+                </button> */}
 
                 <button
                   type="button"

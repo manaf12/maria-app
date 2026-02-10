@@ -181,8 +181,11 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
         <dl className="summary-grid">
           <div>
             <dt>{t("view.summary.maritalStatus")}</dt>
-            <dd>{data.summary.maritalStatus}</dd>
-          </div>
+<dd>
+    {t(`product.marital.${String(data.summary.maritalStatus ?? "").toLowerCase()}`, {
+      defaultValue: String(data.summary.maritalStatus ?? "-"),
+    })}
+  </dd>          </div>
           <div>
             <dt>{t("view.summary.childrenCount")}</dt>
             <dd>{data.summary.childrenCount}</dd>

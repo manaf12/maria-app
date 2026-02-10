@@ -61,7 +61,7 @@
   "home.strengths.item2": "Transparent and fixed pricing",
   "home.strengths.item3": "Human assistance available online",
   "home.strengths.item4": "Data security and confidentiality",
-  "home.price.title": "Your tax declaration from CHF 59.–",
+  "home.price.title": "Your tax declaration from CHF 49.–",
   "home.price.text": "Your Swiss tax declaration done securely online, with a price adapted to your situation.",
   "home.price.cta": "Get a quote",
   "home.price.note": "Accessible to all clients throughout Switzerland.",
@@ -309,7 +309,7 @@
     "step3": {
       "text": "Your tax declaration is currently being prepared by Taxero. This step is handled entirely by our team.",
       "eta": "Estimated preparation time: around 2 weeks after all documents are complete.",
-      "confirmDraftReceipt": "Are you sure you want to confirm receipt of the draft?",
+      "confirmDraftReceipt": "Confirm your tax declaration is correct and ready to be sent?",
       "draftConfirmed": "Confirmed — step will be marked as completed.",
       "confirmReceiptFailed": "Could not confirm receipt.",
       "confirmComplete": "Are you sure you have finished preparing the tax declaration?",
@@ -330,7 +330,7 @@
       "uploadedAt": "Uploaded:",
       "lastComment": "Last comment:",
       "confirming": "Confirming...",
-      "confirmReceipt": "Confirm you received the draft",
+      "confirmReceipt": "Confirm your tax declaration is correct and ready to be sent",
       "addComment": {
         "label": "Add Comment",
         "forClient": "(for client)",
@@ -744,7 +744,7 @@
     },
     "missing": {
       "cta": "I don’t have this document",
-      "reasonPlaceholder": "Clear Selection First",
+      "reasonPlaceholder": "You may leave a comment",
       "confirm": "Confirm not available",
       "saving": "Saving..."
     }
@@ -799,5 +799,6 @@
   "step1.options.canton.NE": "Neuchâtel (NE)",
   "step1.options.canton.GE": "Geneva (GE)",
   "step1.options.canton.OTHER": "Other"
+  
 }
  
