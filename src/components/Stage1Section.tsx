@@ -5,6 +5,7 @@ import axiosClient from "../api/axiosClient";
 import DocumentUploadItem, { type FileEntity } from "./DocumentUploadItem";
 import { Step1Questions, type Step1Question } from "./Step1Questions";
 import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 
 // import type { Step1Question } from "./Step1Questions";
 type Step = { id: string; meta?: any };
@@ -195,23 +196,29 @@ export default function Stage1Section({
   ];
 
   const BadgeBase = "text-xs px-2 py-1 rounded-full border";
-  const StatusBadge = () => {
-    if (!isDone) return null;
+  type StatusBadgeProps = {
+    status?: string;
+    t: TFunction;
+  };
+
+  function StatusBadge({ status, t }: StatusBadgeProps) {
+    if (status !== "done") return null;
 
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-xs font-medium text-green-900">
         <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[10px] leading-none text-white">
           ✓
         </span>
-        {String(t(`stepStatus.${step1Status}`, { defaultValue: step1Status }))}
+        {t(`stepStatus.${status}`, { defaultValue: status })}
       </span>
     );
-  };
+  }
+
 
   return (
     <div className="rounded-2xl border bg-white overflow-hidden">
       {/* Accordion Header (click to open/close) */}
-   <button
+      <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         aria-expanded={isOpen}
@@ -235,28 +242,27 @@ export default function Stage1Section({
             </p>
 
             {/* DOWN + SIMPLE (status + progress) */}
-      <div className="mt-3 flex items-center flex-wrap">
-  <div className="mr-3">
-    <StatusBadge />
-  </div>
-  
-  <div>
-    <span className="text-xs text-gray-500">
-      {t("step1.progressLabel")}{" "}
-      <span className="font-semibold text-gray-900">
-        {requiredProgress.done}/{requiredProgress.total}
-      </span>
-    </span>
-  </div>
-</div>
+            <div className="mt-3 flex items-center flex-wrap">
+              <div className="mr-3">
+                <StatusBadge status={step1Status} t={t} />
+              </div>
+
+              <div>
+                <span className="text-xs text-gray-500">
+                  {t("step1.progressLabel")}{" "}
+                  <span className="font-semibold text-gray-900">
+                    {requiredProgress.done}/{requiredProgress.total}
+                  </span>
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* Chevron */}
           <span
             aria-hidden="true"
-            className={`inline-flex items-center justify-center w-9 h-9 rounded-xl border bg-white text-gray-600 transition-transform ${
-              isOpen ? "rotate-180" : "rotate-0"
-            }`}
+            className={`inline-flex items-center justify-center w-9 h-9 rounded-xl border bg-white text-gray-600 transition-transform ${isOpen ? "rotate-180" : "rotate-0"
+              }`}
           >
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
               <path
@@ -423,38 +429,23 @@ export default function Stage1Section({
 
           {/* Step status + confirm (visual upgrade for DONE) */}
           <div
-            className={`rounded-xl border p-4 ${
-              isDone ? "bg-green-50 border-green-200" : "bg-white"
-            }`}
+            className={`rounded-xl border p-4 ${isDone ? "bg-green-50 border-green-200" : "bg-white"
+              }`}
           >
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0 flex flex-col gap-1">
                 <div
-                  className={`text-xs leading-tight ${
-                    isDone ? "text-green-800/80" : "text-gray-500"
-                  }`}
+                  className={`text-xs leading-tight ${isDone ? "text-green-800/80" : "text-gray-500"
+                    }`}
                 >
                   {t("step1.stepStatusLabel")}
                 </div>
 
                 <div
-                  className={`text-sm font-semibold leading-tight ${
-                    isDone ? "text-green-900" : "text-gray-900"
-                  }`}
+                  className={`text-sm font-semibold leading-tight ${isDone ? "text-green-900" : "text-gray-900"
+                    }`}
                 >
-                  {isDone && (
-                    <span className="inline-flex items-center gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-600 text-white text-sm"
-                      >
-                        ✓
-                      </span>
-                      {String(
-                        t(`stepStatus.${step1Status}`, { defaultValue: step1Status })
-                      )}
-                    </span>
-                  )}
+                  <StatusBadge status={step1Status} t={t}/>
 
                   {!isDone &&
                     String(
@@ -482,8 +473,8 @@ export default function Stage1Section({
                 {isDone
                   ? String(t(`stepStatus.${step1Status}`, { defaultValue: step1Status }))
                   : confirming
-                  ? t("step1.confirming")
-                  : t("step1.confirmStep1")}
+                    ? t("step1.confirming")
+                    : t("step1.confirmStep1")}
               </button>
             </div>
 

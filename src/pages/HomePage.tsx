@@ -132,7 +132,7 @@ export default function HomePage() {
             <a href="https://www.taxero.ch/faq" target="_blank" rel="noopener noreferrer">
               {t("home.seo.linkFaq")}
             </a>
-            <a href="https://www.taxero.ch/contact" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.taxero.ch/about#contact-section" rel="noopener noreferrer">
               {t("home.seo.linkContact")}
             </a>
           </div>

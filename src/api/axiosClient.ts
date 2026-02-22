@@ -2,7 +2,7 @@
 // src/api/axiosClient.ts
 // (No required changes — optional 401 redirect included below)
 // ==============================
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import axios from "axios";
 
 export const API_BASE_URL =

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useState } from "react";
 import ViewRequestContent from "./ViewRequest/ViewRequestContent";
 import type { ViewRequestData, User } from "../types/declaration.types";

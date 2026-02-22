@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Stage1Section from "../../components/Stage1Section";

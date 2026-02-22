@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 

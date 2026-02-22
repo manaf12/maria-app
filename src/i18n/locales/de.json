@@ -38,6 +38,10 @@
   "auth.signup.errors.mustAgree": "Sie müssen zustimmen, um fortzufahren",
   "auth.signup.errors.failed": "Registrierung fehlgeschlagen",
   "auth.signup.errors.weak": "Passwort ist zu schwach",
+  "auth.signup.iAgree": "Ich stimme den",
+  "auth.signup.termsLink": "Nutzungsbedingungen",
+  "auth.signup.and": "&",
+  "auth.signup.privacyLink": "Datenschutzrichtlinien",
   "auth.forgot.title": "Passwort vergessen",
   "auth.forgot.email": "E-Mail",
   "auth.forgot.submit": "Link zum Zurücksetzen senden",
@@ -795,6 +799,15 @@
     "taxero_invoice_payment_proof": {
       "title": "Nachweis der Taxero-Rechnungszahlung *"
     },
+    "debt_statement": {
+      "title": "Schulden-/Darlehensnachweis"
+    },
+    "property_deed_main": {
+      "title": "Grundbuchauszug (Hauptwohnsitz)"
+    },
+    "property_deed_rental": {
+      "title": "Grundbuchauszug (Mietobjekt)"
+    },
     "others": {
       "title": "Weitere Dokumente"
     },
@@ -1135,7 +1148,7 @@
       "item4": "Datensicherheit und Vertraulichkeit"
     },
     "price": {
-      "title": "Ihre Steuererklärung ab CHF 59.–",
+      "title": "Ihre Steuererklärung ab CHF 49.–",
       "text": "Ihre Schweizer Steuererklärung wird sicher online erledigt – zu einem Preis, der Ihrer Situation entspricht.",
       "cta": "Offerte einholen",
       "note": "Verfügbar für Kundinnen und Kunden in der ganzen Schweiz."

@@ -38,6 +38,10 @@
   "auth.signup.errors.mustAgree": "Vous devez accepter pour continuer",
   "auth.signup.errors.failed": "Échec de l'inscription",
   "auth.signup.errors.weak": "Mot de passe trop faible",
+  "auth.signup.iAgree": "J’accepte les",
+  "auth.signup.termsLink": "Conditions d’utilisation",
+  "auth.signup.and": "&",
+  "auth.signup.privacyLink": "Politique de confidentialité",
   "auth.forgot.title": "Mot de passe oublié",
   "auth.forgot.email": "E-mail",
   "auth.forgot.submit": "Envoyer le lien de réinitialisation",
@@ -156,7 +160,6 @@
   "product.proceedToBilling": "Passer à la facturation",
   "product.sections.offer": "Offre sélectionnée",
   "pricing.package": "Forfait",
-
   "dashboard": {
     "title": "Tableau de bord",
     "subtitle": "Gérez toutes vos déclarations fiscales suisses en un seul endroit.",
@@ -807,6 +810,15 @@
     "taxero_invoice_payment_proof": {
       "title": "Preuve de paiement de la facture Taxero *"
     },
+    "property_deed_main": {
+      "title": "Acte de propriété (résidence principale)"
+    },
+    "property_deed_rental": {
+      "title": "Acte de propriété (bien locatif)"
+    },
+    "debt_statement": {
+      "title": "Relevé de dettes / prêt"
+    },
     "others": {
       "title": "Autres documents"
     },
@@ -1147,7 +1159,7 @@
       "item4": "Sécurité et confidentialité des données"
     },
     "price": {
-      "title": "Votre déclaration d’impôts dès CHF 59.–",
+      "title": "Votre déclaration d’impôts dès CHF 49.–",
       "text": "Votre déclaration d’impôts suisse réalisée en ligne, en toute sécurité, avec un prix adapté à votre situation.",
       "cta": "Obtenir une offre",
       "note": "Disponible pour des clients dans toute la Suisse."
@@ -1348,7 +1360,7 @@
     "home.strengths.item2": "Tarifs transparents et fixes",
     "home.strengths.item3": "Assistance humaine en ligne",
     "home.strengths.item4": "Sécurité et confidentialité des données",
-    "home.price.title": "Votre déclaration d’impôts dès CHF 59.–",
+    "home.price.title": "Votre déclaration d’impôts dès CHF 49.–",
     "home.price.text": "Votre déclaration d’impôts suisse réalisée en ligne, en toute sécurité, avec un prix adapté à votre situation.",
     "home.price.cta": "Obtenir une offre",
     "home.price.note": "Disponible pour des clients dans toute la Suisse.",

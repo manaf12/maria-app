@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 // src/components/MenuBar.tsx
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -38,7 +38,16 @@ export default function MenuBar() {
   return (
     <header className="menu-bar">
       {/* Left side empty to keep logo centered */}
-      <div className="menu-left">   <span>{user?.email}</span></div>
+      <div className="menu-left">
+        {user?.email && (
+          <button type="button" className="email-chip">
+            <span className="email-text">{user.email}</span>
+            <span className="caret">▾</span>
+          </button>
+        )}
+      </div>
+
+
 
       {/* Centered Logo */}
       <Link to={logoTarget} className="menu-logo">

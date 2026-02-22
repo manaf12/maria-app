@@ -3641,3 +3641,35 @@ input[type="file"] {
 .legal-section{ margin: 18px 0 22px; }
 .legal-h2{ margin: 0 0 10px; font-size: 18px; font-weight: 700; }
 .legal-p{ margin: 0 0 10px; line-height: 1.65; opacity: .92; }
+.email-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  
+  background: rgba(22, 62, 100, 0.06); /* خفيف كتير */
+  border-radius: 999px;
+  border: 1px solid rgba(22, 62, 100, 0.12);
+  
+  font-size: 13px;
+  color: #163e64; /* الأزرق الأساسي */
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.email-chip:hover {
+  background: rgba(22, 62, 100, 0.10);
+  border-color: rgba(22, 62, 100, 0.20);
+}
+
+.email-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px; /* ما يخرب الlayout */
+}
+
+.caret {
+  font-size: 11px;
+  opacity: 0.6;
+}

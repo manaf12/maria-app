@@ -17,7 +17,7 @@ export default function FilesSummaryModal({
   isOpen,
   onClose,
 }: Props) {
-  const { t } = useTranslation(); // ✅ i18n
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isOpen) return;

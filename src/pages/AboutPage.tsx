@@ -132,7 +132,7 @@ export default function AboutPage() {
         </section>
 
         {/* Contact & address */}
-        <section className="about-section">
+        <section className="about-section" id="contact-section">
           <h2 className="about-section-title">
             {t("about.contact.title")}
           </h2>

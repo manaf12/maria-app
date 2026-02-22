@@ -39,6 +39,10 @@
   "auth.signup.errors.failed": "Sign up failed",
   "auth.signup.errors.weak": "Password is too weak",
   "auth.forgot.title": "Forgot password",
+  "auth.signup.iAgree": "I agree to the",
+  "auth.signup.termsLink": "Terms of Use",
+  "auth.signup.and": "&",
+  "auth.signup.privacyLink": "Privacy Policy",
   "auth.forgot.email": "Email",
   "auth.forgot.submit": "Send reset link",
   "auth.forgot.loading": "Sending...",
@@ -156,7 +160,6 @@
   "product.proceedToBilling": "Proceed to billing",
   "product.sections.offer": "Your selected offer",
   "pricing.package": "Package",
-
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Manage all your Swiss tax declarations in one place.",
@@ -798,6 +801,15 @@
     "taxero_invoice_payment_proof": {
       "title": "Taxero invoice payment proof *"
     },
+    "property_deed_main": {
+      "title": "Property deed (main residence)"
+    },
+    "property_deed_rental": {
+      "title": "Property deed (rental property)"
+    },
+    "debt_statement": {
+      "title": "Debt / loan statement"
+    },
     "others": {
       "title": "Other documents"
     },
@@ -1138,7 +1150,7 @@
       "item4": "Data security and confidentiality"
     },
     "price": {
-      "title": "Your tax declaration from CHF 59.–",
+      "title": "Your tax declaration from CHF 49.–",
       "text": "Your Swiss tax declaration done securely online, with a price adapted to your situation.",
       "cta": "Get a quote",
       "note": "Accessible to all clients throughout Switzerland."
@@ -1341,7 +1353,7 @@
     "home.strengths.item2": "Transparent and fixed pricing",
     "home.strengths.item3": "Human assistance available online",
     "home.strengths.item4": "Data security and confidentiality",
-    "home.price.title": "Your tax declaration from CHF 59.–",
+    "home.price.title": "Your tax declaration from CHF 49.–",
     "home.price.text": "Your Swiss tax declaration done securely online, with a price adapted to your situation.",
     "home.price.cta": "Get a quote",
     "home.price.note": "Accessible to all clients throughout Switzerland.",
@@ -1500,18 +1512,14 @@
     "step1.options.canton.NE": "Neuchâtel (NE)",
     "step1.options.canton.GE": "Geneva (GE)",
     "step1.options.canton.OTHER": "Other"
-  }
-,
+  },
   "common.select": "Select...",
-
   "step1.title": "Step 1 — Documents & Questions",
   "step1.additionalQuestions": "Additional questions",
-
   "step1.sections.personalInformation": "Personal information",
   "step1.sections.professionalExpenses": "Professional expenses",
   "step1.sections.housing": "Housing",
   "step1.sections.taxAuthorityNumbers": "Tax authority numbers",
-
   "step1.questions.personalChanges": "Personal changes since last year (marriage, divorce, move, etc.)",
   "step1.questions.transportMode": "How do you commute to work?",
   "step1.questions.distanceToWorkKm": "Distance from home to workplace (km, one-way)",
@@ -1521,11 +1529,9 @@
   "step1.questions.canton": "Canton",
   "step1.questions.taxpayerNumber": "Taxpayer number",
   "step1.questions.controlOrDeclarationCode": "Control / declaration code (if available)",
-
   "step1.options.transportMode.publicTransport": "Public transport",
   "step1.options.transportMode.bicycle": "Bicycle",
   "step1.options.transportMode.vehicle": "Car / vehicle",
-
   "step1.options.canton.FR": "Fribourg (FR)",
   "step1.options.canton.BE": "Bern (BE)",
   "step1.options.canton.VD": "Vaud (VD)",
@@ -1533,6 +1539,4 @@
   "step1.options.canton.NE": "Neuchâtel (NE)",
   "step1.options.canton.GE": "Geneva (GE)",
   "step1.options.canton.OTHER": "Other"
-  
 }
- 

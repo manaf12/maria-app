@@ -60,6 +60,13 @@ export default function Stage2DocumentsReview({
     if (!text) return;
     await onAddStep2Comment(text);
   };
+  const docTitle = (type?: string) => {
+    if (!type) return t("documents.unknown.title", { defaultValue: "Unknown document" });
+
+    // يرجّع عنوان الوثيقة (وإذا ما لقى key بيرجع نفس الكود كـ fallback)
+    return t(`documents.${type}.title`, { defaultValue: type });
+  };
+
 
   return (
     <div className="stage-block">
@@ -74,7 +81,8 @@ export default function Stage2DocumentsReview({
           <li key={file.id} className="doc-item-row">
             <div className="doc-item-main">
               <span>
-                {file.originalName} ({file.documentType})
+                {file.originalName} ({docTitle(file.documentType)})
+
               </span>
             </div>
             <button className="btn-secondary" onClick={() => onDownloadFile(file.id)}>
@@ -92,7 +100,8 @@ export default function Stage2DocumentsReview({
               <li key={index} className="doc-item-row">
                 <div className="doc-item-main">
                   <span>
-                    {doc.documentType}
+                    {docTitle(doc.documentType)}
+
                     {doc.reason ? ` - ${t("view.step2.admin.missingReason")}: ${doc.reason}` : ""}
                   </span>
                 </div>

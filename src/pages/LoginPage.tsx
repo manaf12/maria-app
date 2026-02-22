@@ -31,7 +31,7 @@ export default function LoginPage() {
   const from =
     location.state?.from?.pathname ||
     location.state?.redirectTo ||
-    "/dashboard";
+    "/";
 
   const fromAuth = location.state?.fromAuth;
 
@@ -66,7 +66,9 @@ export default function LoginPage() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      const status = await login(data.email, data.password);
+      const emailNormalized = data.email.trim().toLowerCase();
+
+      const status = await login(emailNormalized, data.password);
 
       if (status === "OTP_REQUIRED") {
         setOtpStep(true);
@@ -87,6 +89,7 @@ export default function LoginPage() {
       alert(e?.response?.data?.error ?? "Login failed");
     }
   };
+
 
   if (otpStep) {
     return (
