@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
    const onSubmit = async ({ email }: FormData) => {
     try {
       // await ensureCsrf();
-      await axiosClient.post("/api/auth/forgot-password", { email });
+      await axiosClient.post("/auth/forgot-password", { email });
       alert(t("auth.forgot.success"));
     } catch (e: any){
       alert(e?.response?.data?.error ?? t("auth.forgot.error"));

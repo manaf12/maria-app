@@ -18,7 +18,7 @@ export default function ResetPasswordPage() {
 
   const onSubmit = async ({ newPassword }: { newPassword: string }) => {
     try {
-      await axiosClient.post("/api/auth/reset-password", {
+      await axiosClient.post("/auth/reset-password", {
         token,
         newPassword,
       });
