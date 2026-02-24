@@ -1,24 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // src/pages/HomePage.tsx
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../api/axiosClient";
 import { useAuth } from "../auth/AuthContext";
-
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const isAdmin =
-  user?.roles?.includes("admin") ||
-  user?.roles?.includes("SUPER_ADMIN");
+    user?.roles?.includes("admin") ||
+    user?.roles?.includes("SUPER_ADMIN");
 
 
   const DRAFT_KEY = "taxonline_quote_draft";
 
   const goToQuote = async () => {
-    // مهم جداً: امسحي الاسترجاع المحلي
     localStorage.removeItem(DRAFT_KEY);
     localStorage.removeItem("questionnaireId");
 
@@ -133,9 +132,9 @@ export default function HomePage() {
             <a href="https://www.taxero.ch/faq" target="_blank" rel="noopener noreferrer">
               {t("home.seo.linkFaq")}
             </a>
-            <a href="https://www.taxero.ch/contact" target="_blank" rel="noopener noreferrer">
+            <Link to="/about#contact-section">
               {t("home.seo.linkContact")}
-            </a>
+            </Link>
           </div>
         </div>
       </section>

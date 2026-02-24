@@ -1,6 +1,6 @@
-/* eslint-disable no-empty */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+ 
+ 
 // src/pages/ProductPage.tsx
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
@@ -752,7 +752,7 @@ const goNext = async () => {
     valueAsNumber: true,
     setValueAs: (v) => (v === "" ? undefined : Number(v)),
     required: "Income sources is required",
-    min: { value: 0, message: "Must be at least 1" },
+    min: { value: 0, message: "Must be at least 0" },
   })}
 />
 {errors.incomeSources?.message && (

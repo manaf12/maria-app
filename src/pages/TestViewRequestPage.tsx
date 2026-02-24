@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useState } from "react";
 import ViewRequestContent from "./ViewRequest/ViewRequestContent";
 import type { ViewRequestData, User } from "../types/declaration.types";
@@ -11,6 +11,7 @@ export default function TestViewRequestPage() {
     productName: "Comfort package CHF 390.–",
     currentStage: 3,
     status: "IN_PROGRESS",
+    wealthStatements: 0,
     summary: {
       maritalStatus: "Married",
       childrenCount: 2,
@@ -19,6 +20,7 @@ export default function TestViewRequestPage() {
       offerName: "Comfort package",
       offerPrice: 390,
       taxYear: 2024,
+      wealthStatements:0
     },
     step1: { documents: [] },
     step2: { questions: [] },

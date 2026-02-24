@@ -1,41 +1,47 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useTranslation } from "react-i18next";
 import type { TaxDeclarationFull } from "../types/types";
-import {  useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 type Props = {
   declaration: TaxDeclarationFull;
   onActionClick?: (decl: TaxDeclarationFull) => void;
 };
 
-function computeCurrentFromSteps(steps?: { id: string; order: number; status: string }[]) {
+function computeCurrentFromSteps(
+  steps?: { id: string; order: number; status: string; name?: string }[]
+) {
   if (!Array.isArray(steps) || steps.length === 0) return 0;
+
   const inProgress = steps.find((s) => s.status === "IN_PROGRESS");
   if (inProgress) return inProgress.order;
+
   const firstNotDone = steps.find((s) => s.status !== "DONE");
   if (firstNotDone) return firstNotDone.order;
+
   return steps.length;
 }
 
 export default function TaxDeclarationCard({ declaration }: Props) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const stepsArray = [1, 2, 3, 4, 5] as const;
-const navigate=useNavigate()
+
   const fallback = computeCurrentFromSteps(declaration.steps as any);
-  const current = typeof declaration.currentStep === "number" && declaration.currentStep > 0
-    ? declaration.currentStep
-    : fallback; 
+
+  const current =
+    typeof declaration.currentStep === "number" && declaration.currentStep > 0
+      ? declaration.currentStep
+      : fallback;
+
   const totalSteps = Array.isArray(declaration.steps) ? declaration.steps.length : 5;
-  const bannerText = current > 0
-    ? t("dashboard.banner.stepProgress", {
-        current,
-        total: totalSteps,
-        defaultValue: `we are now in step${current} from  ${totalSteps}`,
-      })
-    : t("dashboard.banner.noStepInfo", { defaultValue: "no step found" });
 
+  const bannerText =
+    current > 0
+      ? t("dashboard.banner.stepProgress", { current, total: totalSteps })
+      : t("dashboard.banner.noStepInfo");
 
-  console.debug("Declaration steps:", declaration.steps, "currentStep (backend):", declaration.currentStep, "computed:", fallback);
   const handleViewRequestClick = () => {
     navigate(`/declaration/${declaration.id}`);
   };
@@ -57,57 +63,70 @@ const navigate=useNavigate()
             {t("dashboard.declarationTitle", {
               year: declaration.questionnaireSnapshot?.taxYear,
               name: declaration.clientProfile?.firstName ?? "",
-              defaultValue: `${declaration.questionnaireSnapshot?.taxYear ?? ""} – ${declaration.clientProfile?.firstName ?? ""}`,
+              defaultValue: `${declaration.questionnaireSnapshot?.taxYear ?? ""} – ${
+                declaration.clientProfile?.firstName ?? ""
+              }`,
             })}
           </h3>
+
           <p className="declaration-subtitle">{declaration.questionnaireSnapshot?.offer}</p>
         </div>
 
         <div>
-          {declaration.pricing?.finalPrice} {declaration.questionnaireSnapshot?.billingFirstName}
+          {t("dashboard.card.priceLine", {
+            price: declaration.pricing?.finalPrice ?? "",
+            name: declaration.questionnaireSnapshot?.billingFirstName ?? "",
+            defaultValue: `${declaration.pricing?.finalPrice ?? ""} ${
+              declaration.questionnaireSnapshot?.billingFirstName ?? ""
+            }`,
+          })}
         </div>
 
         <button
           type="button"
           className="declaration-action-btn"
-          onClick={handleViewRequestClick} 
-
+          onClick={handleViewRequestClick}
         >
           {t("dashboard.actions.viewRequest")}
         </button>
       </div>
 
       {/* Steps row */}
-   <div className="declaration-steps-row">
-  {stepsArray.map((stepNum) => {
-    const isDeclarationCompleted = declaration.status === 'COMPLETED';
-    const isDone = (current > 0 && stepNum < current) || (isDeclarationCompleted && stepNum === 5);
-    const isCurrent = !isDone && stepNum === current;
-    let statusClass: "done" | "current" | "future" = "future";
-    if (isDone) statusClass = "done";
-    else if (isCurrent) statusClass = "current";
+      <div className="declaration-steps-row">
+        {stepsArray.map((stepNum) => {
+          const isDeclarationCompleted = declaration.status === "COMPLETED";
 
-    const stepMeta = Array.isArray(declaration.steps)
-      ? declaration.steps.find((s) => s.order === stepNum)
-      : undefined;
-    const stepTitle = stepMeta?.name
-      ? stepMeta.name
-      : t(`dashboard.steps1.${stepNum}.title`);
-    const stepTime = t(`dashboard.steps1.${stepNum}.time`);
+          const isDone =
+            (current > 0 && stepNum < current) ||
+            (isDeclarationCompleted && stepNum === 5);
 
-    return (
-      <div key={stepNum} className={`decl-step decl-step-${statusClass}`}>
-        <div className="decl-step-circle">
-          {isDone ? "✓" : stepNum}
-        </div>
+          const isCurrent = !isDone && stepNum === current;
 
-        <div className="decl-step-text">
-          <div className="decl-step-title">{stepTitle}</div>
-          <div className="decl-step-time">{stepTime}</div>
-        </div>
-      </div>
-    );
-  })}
+          let statusClass: "done" | "current" | "future" = "future";
+          if (isDone) statusClass = "done";
+          else if (isCurrent) statusClass = "current";
+
+          const stepMeta = Array.isArray(declaration.steps)
+            ? declaration.steps.find((s) => (s as any).order === stepNum)
+            : undefined;
+
+          const stepTitle = stepMeta?.name
+            ? stepMeta.name
+            : t(`dashboard.steps1.${stepNum}.title`);
+
+          const stepTime = t(`dashboard.steps1.${stepNum}.time`);
+
+          return (
+            <div key={stepNum} className={`decl-step decl-step-${statusClass}`}>
+              <div className="decl-step-circle">{isDone ? "✓" : stepNum}</div>
+
+              <div className="decl-step-text">
+                <div className="decl-step-title">{stepTitle}</div>
+                <div className="decl-step-time">{stepTime}</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </article>
   );

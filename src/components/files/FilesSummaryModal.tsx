@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { type FileEntity } from "../../types/declaration.types";
+import { DownloadIcon } from "../Icons";
+
 
 type Props = {
   files: FileEntity[];
@@ -15,7 +17,7 @@ export default function FilesSummaryModal({
   isOpen,
   onClose,
 }: Props) {
-  const { t } = useTranslation(); // ✅ i18n
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -40,19 +42,39 @@ export default function FilesSummaryModal({
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
       <div className="relative z-10 w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="px-6 py-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex justify-between">
+        <div className="px-6 py-4 bg-[#163E64] text-white flex justify-between items-center">
           <div>
             <h2 className="text-lg font-semibold">{t("filesModal.title")}</h2>
-            <p className="text-sm text-slate-300">{t("filesModal.subtitle")}</p>
+            <p className="text-sm text-white/70">{t("filesModal.subtitle")}</p>
           </div>
-          <button
+
+          {/* <button
+            type="button"
             onClick={onClose}
-            className="text-xl hover:opacity-80"
+            className="h-9 w-9 flex items-center justify-center rounded-md
+               hover:bg-white/10 active:bg-white/20 transition"
             aria-label={t("filesModal.closeAria")}
           >
-            ×
+            <CloseIcon size={18} color="#ffffff" />
+          </button> */}
+          
+        <div className="p-4 border-t bg-gray-50 flex justify-end">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-5 py-5 bg-[#163E64] text-white rounded-lg
+               hover:bg-[#0F2A4A] active:scale-[0.98] transition
+               focus:outline-none focus:ring-2 focus:ring-[#163E64]/30 
+               no-underline !no-underline"
+            style={{ textDecoration: "none" , color:"#ffffff",padding:"8px", borderRadius:"4px" }}
+          >
+            {t("common.close")}
           </button>
         </div>
+
+        </div>
+
+
 
         <div className="p-6 max-h-[65vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6">
           <FileColumn
@@ -64,18 +86,9 @@ export default function FilesSummaryModal({
             title={t("filesModal.adminFiles")}
             files={adminFiles}
             onDownloadFile={onDownloadFile}
-            admin
           />
         </div>
 
-        <div className="p-4 border-t bg-slate-50 flex justify-end">
-          <button
-            onClick={onClose}
-            className="px-5 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition"
-          >
-            {t("common.close")}
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -124,10 +137,10 @@ function FileColumn({
 
               <button
                 onClick={() => onDownloadFile(file.id)}
-                className="ml-4 shrink-0 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                className="ml-4 shrink-0 p-2 rounded-lg bg-[#163E64] text-white hover:bg-[#0F2A4A] transition"
                 aria-label={t("filesModal.downloadAria")}
               >
-                ⬇
+                <DownloadIcon size={18} color="#ffffff" />
               </button>
             </li>
           ))}

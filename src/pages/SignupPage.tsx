@@ -1,6 +1,6 @@
 // src/pages/SignupPage.tsx
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+ 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";
@@ -63,101 +63,101 @@ export default function SignupPage() {
     return { score, label: labels[Math.min(score, labels.length) - 1] || "weak" };
   }
   function VerifySignupStep({
-  email,
-  onSuccess,
-  onBack,
-}: {
-  email: string;
-  onSuccess: () => void;
-  onBack: () => void;
-}) {
-  const { verifySignupOtp, resendSignupOtp } = useAuth();
-  const { t } = useTranslation();
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<{ otp: string }>();
-  const [seconds, setSeconds] = useState(60);
+    email,
+    onSuccess,
+    onBack,
+  }: {
+    email: string;
+    onSuccess: () => void;
+    onBack: () => void;
+  }) {
+    const { verifySignupOtp, resendSignupOtp } = useAuth();
+    const { t } = useTranslation();
+    const {
+      register,
+      handleSubmit,
+      formState: { isSubmitting },
+    } = useForm<{ otp: string }>();
+    const [seconds, setSeconds] = useState(60);
 
-  useEffect(() => {
-    setSeconds(60);
-  }, [email]);
-
-  useEffect(() => {
-    if (seconds <= 0) return;
-    const tmr = setTimeout(() => setSeconds((s) => s - 1), 1000);
-    return () => clearTimeout(tmr);
-  }, [seconds]);
-
-  const submit = async ({ otp }: { otp: string }) => {
-    try {
-      await verifySignupOtp(email, otp);
-      onSuccess();
-    } catch (e: any) {
-      alert(e?.response?.data?.error ?? t("auth.signup.errors.invalidCode"));
-    }
-  };
-
-  const resend = async () => {
-    try {
-      await resendSignupOtp(email);
+    useEffect(() => {
       setSeconds(60);
-    } catch (e: any) {
-      alert(e?.response?.data?.error ?? t("auth.signup.errors.failed"));
-    }
-  };
+    }, [email]);
 
-  return (
-    <div className="auth-wrap">
-      <div className="auth-card">
-        <h1>{t("auth.signup.verifyTitle")}</h1>
-        <p className="muted">
-          {t("auth.signup.verifyMsg")} <strong>{email}</strong>
-        </p>
+    useEffect(() => {
+      if (seconds <= 0) return;
+      const tmr = setTimeout(() => setSeconds((s) => s - 1), 1000);
+      return () => clearTimeout(tmr);
+    }, [seconds]);
 
-        <form onSubmit={handleSubmit(submit)} noValidate>
-          <TextField
-            label={t("auth.signup.code")}
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            maxLength={6}
-            {...register("otp", { required: true })}
-          />
+    const submit = async ({ otp }: { otp: string }) => {
+      try {
+        await verifySignupOtp(email, otp);
+        onSuccess();
+      } catch (e: any) {
+        alert(e?.response?.data?.error ?? t("auth.signup.errors.invalidCode"));
+      }
+    };
 
-          <button className="primary" disabled={isSubmitting} type="submit">
-            {isSubmitting
-              ? t("auth.signup.verifying")
-              : t("auth.signup.verify")}
-          </button>
-        </form>
+    const resend = async () => {
+      try {
+        await resendSignupOtp(email);
+        setSeconds(60);
+      } catch (e: any) {
+        alert(e?.response?.data?.error ?? t("auth.signup.errors.failed"));
+      }
+    };
 
-        <div className="verify-actions">
-          <button className="link-like" onClick={onBack}>
-            {t("auth.signup.changeEmail")}
-          </button>
-          <span className="muted">•</span>
-          <button
-            className="link-like"
-            onClick={resend}
-            disabled={seconds > 0}
-          >
-            {seconds > 0
-              ? `${t("auth.signup.resendIn")} ${seconds}s`
-              : t("auth.signup.resend")}
-          </button>
+    return (
+      <div className="auth-wrap">
+        <div className="auth-card">
+          <h1>{t("auth.signup.verifyTitle")}</h1>
+          <p className="muted">
+            {t("auth.signup.verifyMsg")} <strong>{email}</strong>
+          </p>
+
+          <form onSubmit={handleSubmit(submit)} noValidate>
+            <TextField
+              label={t("auth.signup.code")}
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              maxLength={6}
+              {...register("otp", { required: true })}
+            />
+
+            <button className="primary" disabled={isSubmitting} type="submit">
+              {isSubmitting
+                ? t("auth.signup.verifying")
+                : t("auth.signup.verify")}
+            </button>
+          </form>
+
+          <div className="verify-actions">
+            <button className="link-like" onClick={onBack}>
+              {t("auth.signup.changeEmail")}
+            </button>
+            <span className="muted">•</span>
+            <button
+              className="link-like"
+              onClick={resend}
+              disabled={seconds > 0}
+            >
+              {seconds > 0
+                ? `${t("auth.signup.resendIn")} ${seconds}s`
+                : t("auth.signup.resend")}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <p className="muted">
-        {t("auth.signup.haveAccount")}{" "}
-        <Link className="link" to="/login">
-          {t("auth.signup.signin")}
-        </Link>
-      </p>
-    </div>
-  );
-}
+        <p className="muted">
+          {t("auth.signup.haveAccount")}{" "}
+          <Link className="link" to="/login">
+            {t("auth.signup.signin")}
+          </Link>
+        </p>
+      </div>
+    );
+  }
 
 
   const onSubmit = async (data: FormData) => {
@@ -172,8 +172,8 @@ export default function SignupPage() {
         i18n.language.startsWith("fr")
           ? "fr"
           : i18n.language.startsWith("de")
-          ? "de"
-          : "en";
+            ? "de"
+            : "en";
 
       const payload = {
         email: data.email,
@@ -185,8 +185,8 @@ export default function SignupPage() {
         city: data.city,
         locale,
       };
-      
-      
+
+
 
       const res = await registerUser(payload);
       if (res === "OTP_SENT") {
@@ -213,22 +213,22 @@ export default function SignupPage() {
             {successMsg}
           </div>
         )}
-      <VerifySignupStep
-        email={email}
-        onSuccess={() => {
-          setSuccessMsg(t("auth.signup.successMsg"));
-          setTimeout(() => {
-            navigate(redirectTo, {
-              replace: true,
-              state: fromAuth ? { fromAuth } : undefined,
-            });
-          }, 1500);
-        }}
-        onBack={() => setStage("form")}
-      />
-    </div>
-  );
- }
+        <VerifySignupStep
+          email={email}
+          onSuccess={() => {
+            setSuccessMsg(t("auth.signup.successMsg"));
+            setTimeout(() => {
+              navigate(redirectTo, {
+                replace: true,
+                state: fromAuth ? { fromAuth } : undefined,
+              });
+            }, 1500);
+          }}
+          onBack={() => setStage("form")}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="auth-wrap">
@@ -330,13 +330,29 @@ export default function SignupPage() {
 
           <label className="checkbox-row">
             <input type="checkbox" {...register("terms", { required: true })} />
-            <span>{t("auth.signup.terms")}</span>
+
+            <span className="ml-2">
+              {t("auth.signup.iAgree")}{" "}
+              <a
+                href="/terms-of-use"
+                className="text-blue-600 underline hover:text-blue-800"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("auth.signup.termsLink")}
+              </a>{" "}
+              {t("auth.signup.and")}{" "}
+              <a
+                href="/privacy-policy"
+                className="text-blue-600 underline hover:text-blue-800"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("auth.signup.privacyLink")}
+              </a>
+            </span>
+
           </label>
-          {errors.terms && (
-            <div className="error">
-              {t("auth.signup.errors.mustAgree")}
-            </div>
-          )}
 
           <button
             className="primary"
@@ -360,8 +376,8 @@ export default function SignupPage() {
 
 // باقي VerifySignupStep و getStrength نفس ما هو عندك …
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
+ 
 // src/pages/SignupPage.tsx
 // import { useEffect, useState } from "react";
 // import { useForm } from "react-hook-form";

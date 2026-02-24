@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DeclarationsTableRow from "../../components/admin/DeclarationsTableRow";

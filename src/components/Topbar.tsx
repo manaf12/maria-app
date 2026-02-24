@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 // src/components/Topbar.tsx
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 // src/components/Topbar.tsx
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -15,19 +15,7 @@ const LANGS: { code: "de" | "fr" | "en"; labelKey: string }[] = [
   { code: "en", labelKey: "topbar.lang.en" },
 ];
 
-function normalizeRoles(roles?: unknown) {
-  const raw =
-    Array.isArray(roles) ? roles : typeof roles === "string" ? roles.split(",") : [];
 
-  return raw
-    .map((r) => String(r).trim().toUpperCase())
-    .filter(Boolean);
-}
-
-function isAdminRole(roles?: unknown) {
-  const r = normalizeRoles(roles);
-  return r.includes("ADMIN") || r.includes("SUPER_ADMIN");
-}
 
 export default function Topbar() {
   const { t, i18n } = useTranslation();
@@ -100,7 +88,7 @@ export default function Topbar() {
   // Optional: close menu when user changes route
   useEffect(() => {
     setMenuOpen(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [location.pathname]);
 
   return (
@@ -108,8 +96,10 @@ export default function Topbar() {
       <div className="topbar-left">
         <div className="topbar-flag">
           <img src={logoTaxera} alt="Taxera Logo" className="topbar-flag-img" />
+          
         </div>
         <span className="topbar-text">{t("topbar.tagline")}</span>
+     
       </div>
 
       <div className="topbar-right">

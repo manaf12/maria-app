@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 // src/components/admin/AdminDeclarationAssignCard.tsx
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";

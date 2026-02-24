@@ -38,12 +38,23 @@
   "auth.signup.errors.mustAgree": "Sie müssen zustimmen, um fortzufahren",
   "auth.signup.errors.failed": "Registrierung fehlgeschlagen",
   "auth.signup.errors.weak": "Passwort ist zu schwach",
+  "auth.signup.iAgree": "Ich stimme den",
+  "auth.signup.termsLink": "Nutzungsbedingungen",
+  "auth.signup.and": "&",
+  "auth.signup.privacyLink": "Datenschutzrichtlinien",
   "auth.forgot.title": "Passwort vergessen",
   "auth.forgot.email": "E-Mail",
   "auth.forgot.submit": "Link zum Zurücksetzen senden",
   "auth.forgot.loading": "Wird gesendet...",
   "auth.forgot.success": "Falls diese E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.",
   "auth.forgot.error": "Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+
+  "auth.reset_title": "Passwort zurücksetzen",
+  "auth.new_password": "Neues Passwort",
+  "auth.update_password": "Passwort aktualisieren",
+  "auth.reset_success": "Passwort aktualisiert. Bitte einloggen.",
+  "auth.reset_failed": "Passwort zurücksetzen fehlgeschlagen.",
+  
   "topbar.login": "Login",
   "topbar.myAccount": "Mein Konto",
   "menu.getOffer": "Offerte erhalten",
@@ -185,7 +196,12 @@
       "step2": "Wir überprüfen Ihre Dokumente.",
       "step3": "Wir erstellen Ihre Steuererklärung.",
       "step4": "Ihre Erklärung ist bereit. Bitte prüfen und bestätigen.",
-      "step5": "Ihre Steuererklärung wurde beim Steueramt eingereicht."
+      "step5": "Ihre Steuererklärung wurde beim Steueramt eingereicht.",
+      "stepProgress": "Ihre Steuererklärung befindet sich derzeit bei Schritt {{current}} von {{total}}.",
+      "noStepInfo": "Der Status Ihrer Steuererklärung wird aktualisiert."
+    },
+    "card": {
+      "priceLine": "{{price}} CHF — {{name}}"
     },
     "steps1": {
       "1": {
@@ -305,30 +321,31 @@
       }
     },
     "step3": {
-      "text": "Ihre Steuererklärung wird aktuell von Taxero vorbereitet. Dieser Schritt wird vollständig durch unser Team erledigt.",
-      "eta": "Voraussichtliche Dauer: ca. 2 Wochen, nachdem alle Unterlagen vollständig sind.",
-      "confirmDraftReceipt": "Möchten Sie den Erhalt des Entwurfs wirklich bestätigen?",
+      "text": "Ihre Steuererklärung wird derzeit von Taxero vorbereitet. Dieser Schritt wird vollständig von unserem Team übernommen.",
+      "eta": "Voraussichtliche Bearbeitungszeit: ca. 2 Wochen, nachdem alle Dokumente vollständig sind.",
+      "confirmDraftReceipt": "Sind Sie sicher, dass Sie den Erhalt der Erklärung bestätigen möchten?",
       "draftConfirmed": "Bestätigt — der Schritt wird als abgeschlossen markiert.",
-      "confirmReceiptFailed": "Erhalt konnte nicht bestätigt werden.",
-      "confirmComplete": "Sind Sie sicher, dass Sie die Steuererklärung fertig vorbereitet haben?",
-      "completed": "Schritt 3 als abgeschlossen markiert!",
+      "confirmReceiptFailed": "Der Erhalt konnte nicht bestätigt werden.",
+      "confirmComplete": "Sind Sie sicher, dass Sie die Steuererklärung fertiggestellt haben?",
+      "completed": "Schritt 3 wurde als abgeschlossen markiert!",
       "completeError": "Ein Fehler ist aufgetreten.",
-      "draftUploadSuccess": "Entwurf erfolgreich hochgeladen.",
+      "draftUploadSuccess": "Die Erklärung wurde erfolgreich hochgeladen.",
+      "submitConfirm": "Sind Sie sicher, dass Sie die Erklärung einreichen möchten?",
       "admin": {
-        "uploadDraftLabel": "Admin: Entwurf der Steuererklärung hochladen (PDF)",
-        "uploadDraftBtn": "Entwurf hochladen",
+        "uploadDraftLabel": "Admin: Steuererklärung hochladen (PDF)",
+        "uploadDraftBtn": "Erklärung hochladen",
         "completeBtn": "Als vorbereitet markieren & Schritt 3 abschließen",
-        "mustUploadFirst": "Sie müssen den Entwurf hochladen, bevor Sie diesen Schritt abschließen können."
+        "mustUploadFirst": "Sie müssen die Datei hochladen, bevor Sie diesen Schritt abschließen können."
       }
     },
     "step4": {
-      "description": "Der Entwurf Ihrer Steuererklärung ist bereit. Bitte prüfen Sie alles sorgfältig und bestätigen Sie.",
-      "noDraftYet": "Noch kein Entwurf hochgeladen.",
+      "description": "Ihre Steuererklärung ist bereit. Bitte prüfen Sie alles sorgfältig und bestätigen Sie.",
+      "noDraftYet": "Noch kein Datei hochgeladen.",
       "waitingForAdmin": "Warten auf den Upload des Entwurfs durch den Admin.",
       "uploadedAt": "Hochgeladen:",
       "lastComment": "Letzter Kommentar:",
       "confirming": "Wird bestätigt...",
-      "confirmReceipt": "Erhalt des Entwurfs bestätigen",
+      "confirmReceipt": "Bestätigen Sie den Erhalt der Steuererklärung",
       "addComment": {
         "label": "Kommentar hinzufügen",
         "forClient": "(für den Kunden)",
@@ -613,44 +630,6 @@
       "error": "Ihr Konto konnte nicht gelöscht werden. Bitte kontaktieren Sie den Support, falls das Problem bestehen bleibt."
     }
   },
-  "admin.declarations.title": "Steuererklärungen",
-  "admin.declarations.subtitle": "Steuererklärungen verwalten, filtern und zuweisen.",
-  "admin.declarations.searchPlaceholder": "Suche nach Name, E-Mail, ID, Jahr…",
-  "admin.declarations.refresh": "Aktualisieren",
-  "admin.declarations.loading": "Laden…",
-  "admin.declarations.empty": "Keine Ergebnisse.",
-  "admin.declarations.assigned": "Zugewiesen",
-  "admin.declarations.unassigned": "Nicht zugewiesen",
-  "admin.declarations.defaultNote": "Zuweisung wegen hoher Priorität",
-  "admin.declarations.adminIdPlaceholder": "Admin-ID (UUID)",
-  "admin.declarations.notePlaceholder": "Zuweisungsnotiz (optional)",
-  "admin.declarations.assigning": "Wird zugewiesen…",
-  "admin.declarations.assignSelected": "Auswahl zuweisen",
-  "admin.declarations.selectVisible": "Sichtbare auswählen",
-  "admin.declarations.clearSelection": "Auswahl löschen",
-  "admin.declarations.selectedCount": "Ausgewählt: {{count}}",
-  "admin.declarations.selectAdmin": "Administrator auswählen",
-  "admin.declarations.fileShort": "Dossier #{{id}}",
-  "admin.declarations.step": "Schritt {{n}}",
-  "admin.declarations.count": "{{count}} Dossiers",
-  "admin.declarations.results": "Ergebnisse",
-  "admin.declarations.filter.unassigned": "Nur nicht zugewiesen",
-  "admin.declarations.filter.assigned": "Nur zugewiesen",
-  "admin.declarations.filter.all": "Alle",
-  "admin.declarations.status.all": "Alle Status",
-  "admin.declarations.year.all": "Alle Jahre",
-  "admin.declarations.columns.client": "Kunde",
-  "admin.declarations.columns.tax": "Jahr / Angebot",
-  "admin.declarations.columns.status": "Status",
-  "admin.declarations.columns.step": "Schritt",
-  "admin.declarations.columns.created": "Erstellt",
-  "admin.declarations.columns.updated": "Aktualisiert",
-  "admin.declarations.columns.assignment": "Zuweisung",
-  "admin.declarations.unknownClient": "Unbekannter Kunde",
-  "admin.declarations.errors.loadFailed": "Dossiers konnten nicht geladen werden.",
-  "admin.declarations.errors.assignFailed": "Zuweisung fehlgeschlagen. Bitte erneut versuchen.",
-  "admin.declarations.errors.adminIdRequired": "Admin-ID ist erforderlich.",
-  "admin.declarations.errors.selectAtLeastOne": "Bitte mindestens eine Erklärung auswählen.",
   "product": {
     "services": {
       "requestDocuments": "Anforderung von Unterlagen gemäss Profil",
@@ -665,7 +644,70 @@
       "verifyAssessmentNotice": "Überprüfung der Steuerveranlagung",
       "appealIfNecessary": "Einsprache bei Bedarf",
       "ratesAccordingToProfile": "Tarife gemäss Ihrem Profil"
-    }
+    },
+    "title": "Ihre Offerte für die Steuererklärung",
+    "subtitle": "Beantworten Sie einige Fragen, damit wir den passenden Preis für Ihre Online-Steuererklärung berechnen können.",
+    "editRequest": "Anfrage bearbeiten",
+    "sections": {
+      "profile": "Ihr Profil",
+      "situation": "Ihre Steuersituation",
+      "billing": "Rechnungsadresse",
+      "summary": "Zusammenfassung Ihrer Anfrage",
+      "offers": "Unsere Angebote",
+      "offer": "Ihre gewählte Offerte"
+    },
+    "taxYear": "Steuerjahr",
+    "maritalStatus": "Zivilstand",
+    "marital": {
+      "single": "Ledig",
+      "married": "Verheiratet"
+    },
+    "childrenCount": "Anzahl Kinder",
+    "incomeSources": "Anzahl Einkommensquellen",
+    "incomeHint": "Beispiele: Löhne, AHV-Renten, Pensionskassen-Renten, selbständige Erwerbstätigkeit.",
+    "wealthStatements": "Anzahl Vermögensauszüge",
+    "wealthHint": "Beispiele: Bankauszüge, e-tax Unterlagen, Depotauszüge, Beteiligungen.",
+    "properties": "Anzahl Liegenschaften",
+    "propertiesDetailsTitle": "Details zu den Liegenschaften",
+    "propertiesCount": "Wie viele Liegenschaften insgesamt?",
+    "newProperties": "Wie viele werden zum ersten Mal deklariert?",
+    "newPropertiesHint": "Zum Beispiel: eine während des Steuerjahres gekaufte Liegenschaft.",
+    "billing": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "street": "Strasse und Nummer",
+      "postalCode": "PLZ",
+      "city": "Ort"
+    },
+    "summary": {
+      "taxYear": "Steuerjahr: {{year}}",
+      "marital": "Zivilstand: {{status}}",
+      "children": "Kinder: {{count}}",
+      "incomes": "Einkommensquellen: {{count}}",
+      "wealth": "Vermögens- / Steuerunterlagen: {{count}}",
+      "properties": "Liegenschaften: {{count}}"
+    },
+    "cancel": "Abbrechen",
+    "confirm": "Anfrage bestätigen",
+    "confirming": "Wird bestätigt...",
+    "next": "Weiter",
+    "back": "Zurück",
+    "offersHint": "Basierend auf Ihren Antworten finden Sie hier die passenden Service-Optionen für Ihre Steuererklärung.",
+    "offers": {
+      "standard": "Basic",
+      "premium": "Standard",
+      "confort": "Confort"
+    },
+    "goToSummary": "Zur Zusammenfassung",
+    "chooseOffer": "Angebot wählen",
+    "errors": {
+      "noOfferSelected": "Bitte wählen Sie ein Angebot aus, bevor Sie Ihre Anfrage bestätigen."
+    },
+    "confirmation": {
+      "mock": "Ihre Anfrage wurde gespeichert (Demo). In der finalen Version werden die Daten an das Backend gesendet."
+    },
+    "finalPrice": "Endpreis",
+    "proceedToBilling": "Weiter zur Rechnungsadresse"
   },
   "common": {
     "delete": "Löschen",
@@ -688,7 +730,8 @@
     "you": "Sie",
     "unknown": "Unbekannt",
     "unknownTime": "unbekannte Zeit",
-    "mark":"Als nicht verfügbar markieren"
+    "mark": "Als nicht verfügbar markieren",
+    "select": "Auswählen..."
   },
   "step1": {
     "title": "Schritt 1 — Dokumente & Fragen",
@@ -709,7 +752,40 @@
     "missingDocuments": "Fehlende Dokumente:",
     "missingQuestions": "Fehlende Fragen:",
     "notReady": "Schritt 1 ist noch nicht bereit",
-    "selectPlaceholder": "Auswählen…"
+    "selectPlaceholder": "Auswählen…",
+    "sections": {
+      "personalInformation": "Persönliche Angaben",
+      "professionalExpenses": "Berufsauslagen",
+      "housing": "Wohnen",
+      "taxAuthorityNumbers": "Steueramtsnummern"
+    },
+    "questions": {
+      "personalChanges": "Änderungen seit dem letzten Jahr (Heirat, Scheidung, Umzug usw.)",
+      "transportMode": "Wie pendeln Sie zur Arbeit?",
+      "distanceToWorkKm": "Distanz Wohnort–Arbeitsort (km, einfache Strecke)",
+      "weeklyTripsToWork": "Wie viele Fahrten zum Arbeitsort pro Woche?",
+      "mealsOutsidePerWeek": "Wie viele auswärtige Mahlzeiten pro Woche (berufsbedingt)?",
+      "netAnnualRentVD_GE": "Nettojahresmiete (VD / GE) (CHF)",
+      "canton": "Kanton",
+      "taxpayerNumber": "Steuerpflichtigen-Nummer",
+      "controlOrDeclarationCode": "Kontroll- / Deklarationscode (falls vorhanden)"
+    },
+    "options": {
+      "transportMode": {
+        "publicTransport": "Öffentlicher Verkehr",
+        "bicycle": "Fahrrad",
+        "vehicle": "Auto / Fahrzeug"
+      },
+      "canton": {
+        "FR": "Freiburg (FR)",
+        "BE": "Bern (BE)",
+        "VD": "Waadt (VD)",
+        "VS": "Wallis (VS)",
+        "NE": "Neuenburg (NE)",
+        "GE": "Genf (GE)",
+        "OTHER": "Andere"
+      }
+    }
   },
   "documents": {
     "previous_tax_return": {
@@ -729,6 +805,15 @@
     },
     "taxero_invoice_payment_proof": {
       "title": "Nachweis der Taxero-Rechnungszahlung *"
+    },
+    "debt_statement": {
+      "title": "Schulden-/Darlehensnachweis"
+    },
+    "property_deed_main": {
+      "title": "Grundbuchauszug (Hauptwohnsitz)"
+    },
+    "property_deed_rental": {
+      "title": "Grundbuchauszug (Mietobjekt)"
     },
     "others": {
       "title": "Weitere Dokumente"
@@ -764,39 +849,450 @@
   "documentTypes": {
     "assessment_notice": "Veranlagungsverfügung",
     "final_file": "Finale Datei"
+  },
+  "legal": {
+    "lastUpdated": "Letzte Aktualisierung: {{date}}",
+    "links": {
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutzerklärung"
+    },
+    "terms": {
+      "title": "Nutzungsbedingungen – Taxero.ch",
+      "lastUpdated": "05.02.2026",
+      "sections": [
+        {
+          "title": "Zweck",
+          "body": [
+            "Diese Nutzungsbedingungen (die „Bedingungen“) regeln den Zugang zur und die Nutzung der Plattform Taxero.ch, einem Produkt, das von A&G Fiduciaire Sàrl betrieben wird.",
+            "Durch den Zugriff auf die Website oder die Nutzung der angebotenen Dienstleistungen bestätigt der Nutzer, diese Bedingungen gelesen, verstanden und vorbehaltlos akzeptiert zu haben."
+          ]
+        },
+        {
+          "title": "Betreiber der Plattform",
+          "body": [
+            "Taxero.ch wird betrieben von:",
+            "A&G Fiduciaire Sàrl, Impasse du Nouveau-Marché 7, 1723 Marly, Schweiz",
+            "Zweigniederlassung (Korrespondenzadresse): Route de Moncor 14, 1752 Villars-sur-Glâne, Schweiz",
+            "E-Mail: contact@taxero.ch",
+            "UID (Hauptsitz): CHE-450.723.829",
+            "UID (Zweigniederlassung): CHE-319.151.111"
+          ]
+        },
+        {
+          "title": "Geltungsbereich",
+          "body": [
+            "Die Dienstleistungen von Taxero.ch richten sich ausschliesslich an natürliche Personen mit Wohnsitz in der Schweiz oder im Ausland.",
+            "Diese Bedingungen gelten für jede Nutzung der Website, der Applikationsplattform und der angebotenen Dienstleistungen."
+          ]
+        },
+        {
+          "title": "Beschreibung der Dienstleistungen",
+          "body": [
+            "Taxero.ch stellt eine Online-Plattform bereit, die insbesondere Folgendes ermöglicht:",
+            "die Erfassung von Steuerinformationen und -dokumenten,",
+            "die Unterstützung bei der Erstellung von Steuererklärungen,",
+            "die Kommunikation im Zusammenhang mit dem Steuerprozess,",
+            "die Erstellung und Verwaltung der Rechnungsstellung.",
+            "Die Leistungen werden auf Grundlage der vom Nutzer übermittelten Informationen und Dokumente erbracht."
+          ]
+        },
+        {
+          "title": "Benutzerkonto",
+          "body": [
+            "5.1 Kontoerstellung: Der Zugang zu den Dienstleistungen erfordert die Erstellung eines persönlichen Kontos. Der Nutzer verpflichtet sich, korrekte, vollständige und aktuelle Angaben zu machen.",
+            "5.2 Zugangsdaten: Der Nutzer ist für die Vertraulichkeit seiner Zugangsdaten verantwortlich. Jede Nutzung über das Konto gilt als durch den Nutzer selbst erfolgt."
+          ]
+        },
+        {
+          "title": "Pflichten des Nutzers",
+          "body": [
+            "Der Nutzer verpflichtet sich insbesondere: korrekte, vollständige und wahrheitsgemässe Angaben zu machen; alle für die Bearbeitung erforderlichen Dokumente zu übermitteln; die erstellten Unterlagen vor einer Bestätigung sorgfältig zu prüfen; die anwendbaren Gesetze und Vorschriften einzuhalten.",
+            "Der Nutzer bleibt allein verantwortlich für den Inhalt der übermittelten Informationen."
+          ]
+        },
+        {
+          "title": "Haftungsbeschränkung",
+          "body": [
+            "A&G Fiduciaire Sàrl setzt angemessene Mittel ein, um eine qualitativ hochwertige Dienstleistung zu erbringen.",
+            "Eine Haftung ist jedoch insbesondere ausgeschlossen bei: fehlerhaften, unvollständigen oder verspäteten Angaben des Nutzers; Ablehnung, Berichtigung oder Veranlagung durch die zuständige Steuerbehörde; vorübergehenden Unterbrechungen für Wartung oder aus technischen Gründen; höherer Gewalt.",
+            "Die endgültigen Entscheidungen liegen ausschliesslich bei den zuständigen Steuerbehörden."
+          ]
+        },
+        {
+          "title": "Preise und Rechnungsstellung",
+          "body": [
+            "Es gelten die Preise, die zum Zeitpunkt der Bestellung auf der Plattform angezeigt werden.",
+            "Die Bestätigung einer Anfrage beinhaltet die Annahme des Preises und die automatische Ausstellung einer Rechnung. Die Zahlung erfolgt gegen Rechnung gemäss den angegebenen Modalitäten."
+          ]
+        },
+        {
+          "title": "Geistiges Eigentum",
+          "body": [
+            "Sämtliche Inhalte der Plattform Taxero.ch (Texte, Logos, grafische Elemente, Struktur, Software) sind durch das Recht des geistigen Eigentums geschützt.",
+            "Jegliche nicht autorisierte Vervielfältigung, Nutzung oder Verbreitung ist untersagt."
+          ]
+        },
+        {
+          "title": "Datenschutz",
+          "body": [
+            "Die Verarbeitung personenbezogener Daten richtet sich nach der Datenschutzerklärung von Taxero.ch, die integraler Bestandteil dieser Bedingungen ist."
+          ]
+        },
+        {
+          "title": "Löschung des Kontos",
+          "body": [
+            "Der Nutzer kann jederzeit die Löschung seines Kontos verlangen.",
+            "Die Löschung führt zur Deaktivierung des Kontos und zur Behandlung der Daten gemäss den anwendbaren gesetzlichen Pflichten."
+          ]
+        },
+        {
+          "title": "Änderungen der Bedingungen",
+          "body": [
+            "A&G Fiduciaire Sàrl behält sich das Recht vor, diese Bedingungen jederzeit zu ändern.",
+            "Es gilt die Version, die zum Zeitpunkt der Nutzung auf der Plattform veröffentlicht ist."
+          ]
+        },
+        {
+          "title": "Anwendbares Recht und Gerichtsstand",
+          "body": [
+            "Diese Bedingungen unterstehen dem Schweizer Recht.",
+            "Streitigkeiten im Zusammenhang mit deren Auslegung oder Erfüllung unterliegen den zuständigen Gerichten des Kantons Freiburg, vorbehaltlich einer Beschwerde an das Bundesgericht."
+          ]
+        },
+        {
+          "title": "Kontakt",
+          "body": [
+            "Bei Fragen zu diesen Bedingungen: contact@taxero.ch"
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Datenschutzerklärung – Taxero.ch",
+      "lastUpdated": "05.02.2026",
+      "sections": [
+        {
+          "title": "Einleitung",
+          "body": [
+            "Diese Datenschutzerklärung beschreibt, wie Taxero.ch, ein Produkt von A&G Fiduciaire Sàrl, personenbezogene Daten der Nutzer erhebt, verwendet, speichert und schützt.",
+            "Wir legen höchsten Wert auf Vertraulichkeit, Sicherheit und die Einhaltung der anwendbaren Gesetze, insbesondere des Schweizer Datenschutzgesetzes (DSG) und, soweit anwendbar, der DSGVO."
+          ]
+        },
+        {
+          "title": "Verantwortlicher",
+          "body": [
+            "Verantwortlich für die Datenverarbeitung ist:",
+            "A&G Fiduciaire Sàrl, Impasse du Nouveau-Marché 7, 1723 Marly, Schweiz",
+            "Zweigniederlassung (Korrespondenzadresse): Route de Moncor 14, 1752 Villars-sur-Glâne, Schweiz",
+            "Kontakt-E-Mail: contact@taxero.ch",
+            "UID (Hauptsitz): CHE-450.723.829",
+            "UID (Zweigniederlassung): CHE-319.151.111",
+            "Taxero.ch handelt ausschliesslich als Verantwortlicher."
+          ]
+        },
+        {
+          "title": "Betroffene Personen",
+          "body": [
+            "Die Dienstleistungen von Taxero.ch richten sich ausschliesslich an natürliche Personen mit Wohnsitz in der Schweiz oder im Ausland, einschliesslich ausserhalb der Europäischen Union."
+          ]
+        },
+        {
+          "title": "Erhobene personenbezogene Daten",
+          "body": [
+            "4.1 Vom Nutzer bereitgestellte Daten: Vor- und Nachname; Postadresse; E-Mail-Adresse.",
+            "4.2 Steuer- und Finanzdaten: Einkommen (Lohn, Renten, selbständige Tätigkeit); Vermögen und Schulden (Bankkonten, Wertschriften); Immobilien; Familiensituation; Kinder oder unterhaltsberechtigte Personen. Diese Daten gelten als sensibel und unterliegen verstärkten Sicherheitsmassnahmen.",
+            "4.3 Technische Daten: Derzeit erhebt Taxero.ch nicht aktiv IP-Adressen zu Profilingzwecken, keine detaillierten Verbindungsprotokolle und keine Verhaltenshistorie zu kommerziellen Zwecken. Minimale technische Daten können jedoch automatisch aus Sicherheits-, Betriebs- oder Wartungsgründen entstehen."
+          ]
+        },
+        {
+          "title": "Zwecke der Verarbeitung",
+          "body": [
+            "Personenbezogene Daten werden ausschliesslich zu folgenden Zwecken verarbeitet: Erstellung und Verwaltung des Benutzerkontos; Bearbeitung von Steuererklärungsanfragen; Kommunikation im Zusammenhang mit dem Steuerprozess; Erstellung und Verwaltung der Rechnungsstellung; Erfüllung gesetzlicher und regulatorischer Pflichten; Sicherheit und ordnungsgemässer Betrieb der Plattform.",
+            "Es erfolgt keine Nutzung zum Weiterverkauf oder zu kommerziellem Profiling."
+          ]
+        },
+        {
+          "title": "Benutzerkonten und Sicherheit",
+          "body": [
+            "Nutzer verfügen über ein persönliches Konto, geschützt durch: Authentifizierung per E-Mail und Passwort; Passwörter sind für das Team niemals zugänglich; Verschlüsselung der Datenübertragung (HTTPS).",
+            "Die Daten werden auf einer zu 100% Schweizer Infrastruktur beim Anbieter Infomaniak gehostet."
+          ]
+        },
+        {
+          "title": "Hosting und Auftragsverarbeiter",
+          "body": [
+            "Die Daten werden ausschliesslich in der Schweiz gehostet.",
+            "Bestimmte technische Dienstleistungen können durch Dienstleister als Auftragsverarbeiter erbracht werden, insbesondere für: Versand von E-Mails (Kontobestätigung, Benachrichtigungen); statistische Zugriffsauswertung.",
+            "Keine Steuer- oder sensiblen Daten werden per E-Mail übermittelt."
+          ]
+        },
+        {
+          "title": "Cookies und Tracking",
+          "body": [
+            "Taxero.ch verwendet: zwingend erforderliche Cookies für den Betrieb der Website; Analyse-Cookies (Google Analytics); Marketing-Cookies.",
+            "Ein erweitertes Einwilligungsmanagement ermöglicht es dem Nutzer, nicht notwendige Cookies zu akzeptieren oder abzulehnen."
+          ]
+        },
+        {
+          "title": "Speicherdauer",
+          "body": [
+            "Personenbezogene Daten werden gespeichert: solange das Benutzerkonto aktiv ist; bis zur Löschung des Kontos auf Antrag des Nutzers; und maximal 10 Jahre gemäss den anwendbaren gesetzlichen Pflichten."
+          ]
+        },
+        {
+          "title": "Rechte der Nutzer",
+          "body": [
+            "Gemäss anwendbarem Recht hat jeder Nutzer folgende Rechte: Auskunft; Berichtigung; Löschung; Einschränkung der Verarbeitung; Widerspruch; Datenübertragbarkeit.",
+            "Anfragen können gesendet werden an: contact@taxero.ch"
+          ]
+        },
+        {
+          "title": "Löschung des Kontos",
+          "body": [
+            "Der Nutzer kann jederzeit die Löschung seines Kontos verlangen.",
+            "Die Löschung führt zur Deaktivierung des Kontos und zur Löschung der Daten."
+          ]
+        },
+        {
+          "title": "Änderungen",
+          "body": [
+            "Diese Datenschutzerklärung kann jederzeit aktualisiert werden.",
+            "Massgebend ist die Version, die zum Zeitpunkt des Abrufs auf der Website veröffentlicht ist."
+          ]
+        },
+        {
+          "title": "Kontakt",
+          "body": [
+            "Bei Fragen zum Datenschutz: contact@taxero.ch"
+          ]
+        }
+      ]
+    }
+  },
+  "topbar": {
+    "tagline": "Ihr zuverlässiger Schweizer Partner",
+    "lang": {
+      "de": "Deutsch",
+      "fr": "Französisch",
+      "en": "Englisch"
+    },
+    "login": "Login",
+    "myAccount": "Mein Konto"
+  },
+  "auth": {
+    "login": {
+      "title": "Anmelden",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "submit": "Anmelden",
+      "forgot": "Passwort vergessen?",
+      "noAccount": "Sie haben noch kein Konto?",
+      "signup": "Registrieren"
+    },
+    "signup": {
+      "title": "Konto erstellen",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "confirm": "Passwort bestätigen",
+      "strength": "Stärke",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "street": "Adresse",
+      "postal": "Postleitzahl",
+      "city": "Stadt",
+      "terms": "Ich stimme den Bedingungen & Datenschutz zu",
+      "submit": "Konto erstellen",
+      "loading": "Wird erstellt...",
+      "haveAccount": "Sie haben bereits ein Konto?",
+      "signin": "Anmelden",
+      "verifyTitle": "E-Mail bestätigen",
+      "verifyMsg": "Wir haben einen 6-stelligen Code gesendet an",
+      "code": "6-stelliger Code",
+      "verify": "Bestätigen",
+      "changeEmail": "E-Mail ändern",
+      "resend": "Code erneut senden",
+      "resendIn": "Erneut senden in",
+      "successMsg": "Konto erstellt! Bitte bestätigen Sie Ihre E-Mail.",
+      "errors": {
+        "match": "Passwörter stimmen nicht überein",
+        "invalidCode": "Ungültiger Code",
+        "mustAgree": "Sie müssen zustimmen, um fortzufahren",
+        "failed": "Registrierung fehlgeschlagen",
+        "weak": "Passwort ist zu schwach"
+      }
+    },
+    "forgot": {
+      "title": "Passwort vergessen",
+      "email": "E-Mail",
+      "submit": "Link zum Zurücksetzen senden",
+      "loading": "Wird gesendet...",
+      "success": "Falls diese E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.",
+      "error": "Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+    }
+  },
+  "menu": {
+    "getOffer": "Offerte erhalten",
+    "dashboard": "Dashboard",
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
+  },
+  "footer": {
+    "blog": "Blog",
+    "about": "Über uns",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutzbestimmungen"
+  },
+  "home": {
+    "hero": {
+      "tagline": "Ihre Steuererklärung online – einfach, schnell und 100 % schweizerisch.",
+      "title": "Erledigen Sie Ihre Schweizer Steuererklärung online mit professioneller Unterstützung."
+    },
+    "strengths": {
+      "title": "Unsere wichtigsten Stärken",
+      "item1": "Team mit Sitz in der Schweiz",
+      "item2": "Transparente und fixe Preise",
+      "item3": "Persönliche Unterstützung online",
+      "item4": "Datensicherheit und Vertraulichkeit"
+    },
+    "price": {
+      "title": "Ihre Steuererklärung ab CHF 49.–",
+      "text": "Ihre Schweizer Steuererklärung wird sicher online erledigt – zu einem Preis, der Ihrer Situation entspricht.",
+      "cta": "Offerte einholen",
+      "note": "Verfügbar für Kundinnen und Kunden in der ganzen Schweiz."
+    },
+    "reviews": {
+      "title": "Google Reviews",
+      "subtitle": "Echte Rückmeldungen von Kundinnen und Kunden, die uns ihre Steuererklärung anvertrauen.",
+      "score": "Durchschnittliche Bewertung: 4,8/5",
+      "count": "Basierend auf Dutzenden verifizierten Google-Bewertungen.",
+      "placeholder": "Hier wird ein Google-Reviews-Widget oder Screenshots eingebunden, um echte Kundenmeinungen zu zeigen."
+    },
+    "seo": {
+      "title": "Online-Steuererklärung in der Schweiz – nützliche Informationen",
+      "intro": "Taxero verbindet die Flexibilität eines digitalen Tools mit der Qualität eines Treuhandservices.",
+      "text1": "Wir erstellen Steuererklärungen für Privatpersonen in der ganzen Schweiz. Unser Online-Prozess ist einfach und effizient und erfüllt gleichzeitig alle kantonalen Anforderungen.",
+      "text2": "Von Freiburg über Waadt bis Genf unterstützen wir Sie bei der Erstellung und Optimierung Ihrer Steuererklärung unter Berücksichtigung der lokalen Vorschriften.",
+      "linkAbout": "Über Taxero",
+      "linkBlog": "Blog",
+      "linkFaq": "FAQ",
+      "linkContact": "Kontakt"
+    },
+    "how": {
+      "title": "So funktioniert es",
+      "step1": {
+        "title": "1. Formular ausfüllen",
+        "text": "Beantworten Sie einige Fragen, damit wir Ihre Situation verstehen."
+      },
+      "step2": {
+        "title": "2. Unterlagen hochladen",
+        "text": "Laden Sie Lohnabrechnungen, Kontoauszüge und weitere Unterlagen sicher hoch."
+      },
+      "step3": {
+        "title": "3. Wir erstellen Ihre Steuererklärung",
+        "text": "Unsere Schweizer Steuerexpertinnen und -experten bereiten Ihre Erklärung vor und optimieren die Abzüge."
+      },
+      "step4": {
+        "title": "4. Sie erhalten die Unterlagen zur Kontrolle",
+        "text": "Sie prüfen die vorbereitete Erklärung und stellen bei Bedarf Fragen."
+      },
+      "step5": {
+        "title": "5. Wir reichen die Erklärung für Sie ein",
+        "text": "Nach Ihrer Freigabe übermitteln wir die Steuererklärung an die zuständige Behörde."
+      },
+      "learnMore": "Mehr dazu in der FAQ"
+    },
+    "guarantees": {
+      "title": "Unsere Garantien",
+      "item1": {
+        "title": "Daten in der Schweiz gehostet",
+        "text": "Ihre Daten werden in einer sicheren Schweizer Infrastruktur gespeichert."
+      },
+      "item2": {
+        "title": "100 % Online-Service",
+        "text": "Von der Registrierung bis zur Einreichung läuft alles online."
+      },
+      "item3": {
+        "title": "Beraterinnen und Berater für Sie da",
+        "text": "Unser Team ist für Ihre Fragen zu Ihrem Dossier erreichbar."
+      },
+      "item4": {
+        "title": "Keine versteckten Gebühren",
+        "text": "Der Preis ist fix und wird bestätigt, bevor wir mit Ihrer Steuererklärung beginnen."
+      }
+    },
+    "faq": {
+      "title": "Kurze FAQ",
+      "q1": {
+        "q": "Wie lange dauert die Bearbeitung meiner Steuererklärung?",
+        "a": "Die meisten Erklärungen werden innerhalb weniger Arbeitstage nach Eingang aller Unterlagen bearbeitet."
+      },
+      "q2": {
+        "q": "Kann ich meine Fahrtkosten abziehen?",
+        "a": "Ja, in vielen Fällen können Fahrkosten und gewisse Berufsauslagen – je nach Kanton – abgezogen werden."
+      },
+      "q3": {
+        "q": "Sind meine Daten sicher?",
+        "a": "Ja. Wir verwenden Verschlüsselung, sicheres Hosting in der Schweiz und strenge Zugriffskontrollen, um Ihre Daten zu schützen."
+      }
+    }
+  },
+  "pricing": {
+    "package": "Paket"
+  },
+  "admin": {
+    "declarations": {
+      "title": "Steuererklärungen",
+      "subtitle": "Steuererklärungen verwalten, filtern und zuweisen.",
+      "searchPlaceholder": "Suche nach Name, E-Mail, ID, Jahr…",
+      "refresh": "Aktualisieren",
+      "loading": "Laden…",
+      "empty": "Keine Ergebnisse.",
+      "assigned": "Zugewiesen",
+      "unassigned": "Nicht zugewiesen",
+      "defaultNote": "Zuweisung wegen hoher Priorität",
+      "adminIdPlaceholder": "Admin-ID (UUID)",
+      "notePlaceholder": "Zuweisungsnotiz (optional)",
+      "assigning": "Wird zugewiesen…",
+      "assignSelected": "Auswahl zuweisen",
+      "selectVisible": "Sichtbare auswählen",
+      "clearSelection": "Auswahl löschen",
+      "selectedCount": "Ausgewählt: {{count}}",
+      "selectAdmin": "Administrator auswählen",
+      "fileShort": "Dossier #{{id}}",
+      "step": "Schritt {{n}}",
+      "count": "{{count}} Dossiers",
+      "results": "Ergebnisse",
+      "filter": {
+        "unassigned": "Nur nicht zugewiesen",
+        "assigned": "Nur zugewiesen",
+        "all": "Alle"
+      },
+      "status": {
+        "all": "Alle Status"
+      },
+      "year": {
+        "all": "Alle Jahre"
+      },
+      "columns": {
+        "client": "Kunde",
+        "tax": "Jahr / Angebot",
+        "status": "Status",
+        "step": "Schritt",
+        "created": "Erstellt",
+        "updated": "Aktualisiert",
+        "assignment": "Zuweisung",
+        "select": "Auswählen"
+      },
+      "unknownClient": "Unbekannter Kunde",
+      "errors": {
+        "loadFailed": "Dossiers konnten nicht geladen werden.",
+        "assignFailed": "Zuweisung fehlgeschlagen. Bitte erneut versuchen.",
+        "adminIdRequired": "Admin-ID ist erforderlich.",
+        "selectAtLeastOne": "Bitte mindestens eine Erklärung auswählen."
+      }
+    }
+  },
+  "__legacyFlatKeys__": {
+    "step1.additionalQuestions": "Zusatzfragen"
   }
-,
-  "common.select": "Auswählen...",
-
-  "step1.title": "Schritt 1 — Dokumente & Fragen",
-  "step1.additionalQuestions": "Zusatzfragen",
-
-  "step1.sections.personalInformation": "Persönliche Angaben",
-  "step1.sections.professionalExpenses": "Berufsauslagen",
-  "step1.sections.housing": "Wohnen",
-  "step1.sections.taxAuthorityNumbers": "Steueramtsnummern",
-
-  "step1.questions.personalChanges": "Änderungen seit dem letzten Jahr (Heirat, Scheidung, Umzug usw.)",
-  "step1.questions.transportMode": "Wie pendeln Sie zur Arbeit?",
-  "step1.questions.distanceToWorkKm": "Distanz Wohnort–Arbeitsort (km, einfache Strecke)",
-  "step1.questions.weeklyTripsToWork": "Wie viele Fahrten zum Arbeitsort pro Woche?",
-  "step1.questions.mealsOutsidePerWeek": "Wie viele auswärtige Mahlzeiten pro Woche (berufsbedingt)?",
-  "step1.questions.netAnnualRentVD_GE": "Nettojahresmiete (VD / GE) (CHF)",
-  "step1.questions.canton": "Kanton",
-  "step1.questions.taxpayerNumber": "Steuerpflichtigen-Nummer",
-  "step1.questions.controlOrDeclarationCode": "Kontroll- / Deklarationscode (falls vorhanden)",
-
-  "step1.options.transportMode.publicTransport": "Öffentlicher Verkehr",
-  "step1.options.transportMode.bicycle": "Fahrrad",
-  "step1.options.transportMode.vehicle": "Auto / Fahrzeug",
-
-  "step1.options.canton.FR": "Freiburg (FR)",
-  "step1.options.canton.BE": "Bern (BE)",
-  "step1.options.canton.VD": "Waadt (VD)",
-  "step1.options.canton.VS": "Wallis (VS)",
-  "step1.options.canton.NE": "Neuenburg (NE)",
-  "step1.options.canton.GE": "Genf (GE)",
-  "step1.options.canton.OTHER": "Andere"
-
-
 }

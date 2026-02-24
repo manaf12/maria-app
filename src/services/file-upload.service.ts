@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 // src/services/file-upload.service.ts
 import type { AxiosResponse, AxiosProgressEvent } from "axios";
 import axiosClient from "../api/axiosClient";

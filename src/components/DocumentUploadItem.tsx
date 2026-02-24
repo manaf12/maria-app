@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -48,7 +48,7 @@ export default function DocumentUploadItem({
     if (!selectedFiles.length) return t("documents.upload.chooseFile");
     if (!allowMultiple) return selectedFiles[0].name;
     return t("documents.upload.filesSelected_one", { count: selectedFiles.length });
-  }, [allowMultiple, selectedFiles]);
+  }, [t,allowMultiple, selectedFiles]);
 
   const onPickFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);

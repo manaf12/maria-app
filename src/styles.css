@@ -579,7 +579,7 @@ input[type="checkbox"] {
   background: #f8fafc;
 }
 
-.menu-bar {
+/* .menu-bar {
   height: 64px;
   width: 100%;
   display: flex;
@@ -625,12 +625,11 @@ input[type="checkbox"] {
   text-decoration: none;
   border: none;
   white-space: nowrap;
-  /* prevent text break */
 }
 
 .menu-cta-btn:hover {
   background: #163e64;
-}
+} */
 
 .footer {
   background: #f9f9f9;
@@ -995,6 +994,7 @@ input[type="checkbox"] {
   margin-left: 8px;
 
 }
+
 .product-header h1 {
   font-size: 26px;
   margin-bottom: 4px;
@@ -1231,6 +1231,7 @@ button.primary:disabled {
   box-shadow: none;
   cursor: default;
 }
+
 .btn-outline {
   border-radius: 999px;
   height: 40px;
@@ -3363,7 +3364,9 @@ button.primary:disabled {
   background: #f9fafb;
   border-color: #cbd5f5;
   transform: translateY(-1px);
+  color: #000;
 }
+
 .btn-secondary:hover {
   background: #163e64;
   border-color: #7491ef;
@@ -3600,6 +3603,7 @@ input[type="file"] {
   margin-left: 12px;
   opacity: 0.9;
 }
+
 .latest-file-row {
   display: flex;
   align-items: flex-start;
@@ -3615,5 +3619,303 @@ input[type="file"] {
 .latest-file-btn {
   flex-shrink: 0;
   align-self: flex-start;
-  margin-top: 0 !important; /* in case btn-secondary adds top margin */
+  margin-top: 0 !important;
+  /* in case btn-secondary adds top margin */
+}
+
+.legal-page {
+  width: 100%;
+  padding: 32px 16px;
+}
+
+.legal-card {
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(15, 35, 95, 0.08);
+}
+
+.legal-header {
+  margin-bottom: 18px;
+}
+
+.legal-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.legal-updated {
+  margin: 8px 0 0;
+  opacity: .75;
+}
+
+.legal-content {
+  margin-top: 18px;
+}
+
+.legal-section {
+  margin: 18px 0 22px;
+}
+
+.legal-h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.legal-p {
+  margin: 0 0 10px;
+  line-height: 1.65;
+  opacity: .92;
+}
+
+.email-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+
+  background: rgba(22, 62, 100, 0.06);
+  /* خفيف كتير */
+  border-radius: 999px;
+  border: 1px solid rgba(22, 62, 100, 0.12);
+
+  font-size: 13px;
+  color: #163e64;
+  /* الأزرق الأساسي */
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.email-chip:hover {
+  background: rgba(22, 62, 100, 0.10);
+  border-color: rgba(22, 62, 100, 0.20);
+}
+
+.email-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  /* ما يخرب الlayout */
+}
+
+.caret {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+/* DESKTOP NAVBAR */
+.menu-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: linear-gradient(to bottom, #ffffff, #f3f7fb);
+  border-bottom: 1px solid #eef1f5;
+}
+
+/* left (email) */
+.menu-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* centered logo (desktop) */
+.menu-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-logo-img {
+  max-height: 40px;
+}
+
+/* right (phone + dashboard) */
+.menu-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+/* email chip */
+.email-chip {
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+}
+
+.email-text {
+  font-size: 0.9rem;
+  color: #163d64;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.caret {
+  font-size: 0.7rem;
+  color: #7a8ca3;
+}
+
+/* phone */
+.menu-phone-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.menu-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.menu-phone-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(40%)
+          saturate(1732%) hue-rotate(181deg) brightness(95%)
+          contrast(92%);
+}
+
+.menu-phone-number {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #163d64;
+  white-space: nowrap;
+}
+
+.menu-phone:hover .menu-phone-number,
+.menu-phone:hover .menu-phone-icon {
+  opacity: 0.75;
+}
+
+/* dashboard link as button */
+.menu-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 26px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 999px;
+  border: none;
+  text-decoration: none;
+  background-color: #163d64;
+  color: #ffffff;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.menu-cta-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+}
+
+/* ============ MOBILE ============ */
+
+@media (max-width: 768px) {
+
+  /* MAIN MOBILE BAR – كل شي داخله */
+  .menu-bar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    /* safe area تحت شريط اللغات */
+    padding-top: 60px;
+    padding-bottom: 12px;
+    padding-inline: 16px;
+
+    background: linear-gradient(to bottom, #ffffff, #f3f7fb);
+  }
+
+  /* logo يدخل بالـ flow بدل absolute */
+  .menu-logo {
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .menu-logo-img {
+    max-height: 32px;
+  }
+
+  /* EMAIL ROW */
+  .menu-left {
+    order: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 2px 0 2px;
+  }
+
+  .email-chip {
+    max-width: 90%;
+    font-size: 0.8rem;
+  }
+
+  /* PHONE + DASHBOARD ROW */
+  .menu-right {
+    order: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .menu-phone-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-phone-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .menu-phone-number {
+    font-size: 0.9rem;
+  }
+
+  .menu-cta-btn {
+    padding: 6px 20px;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
 }

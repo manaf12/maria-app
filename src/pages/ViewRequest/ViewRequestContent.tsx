@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
+
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Stage1Section from "../../components/Stage1Section";
@@ -22,6 +22,7 @@ export type ViewRequestContentProps = {
   data: ViewRequestData;
   user: User | null;
   isAdmin: boolean;
+
 
   // navigation
   onBackToDashboard: () => void;
@@ -114,7 +115,7 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
     isUploadingUserSubmission,
     onUserUploadSubmission,
     onAdminUploadFinal,
-        adminFinalFile,
+    adminFinalFile,
     setAdminFinalFile,
     isUploadingFinal,
 
@@ -125,10 +126,8 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
   const { t } = useTranslation();
   const [adminNote] = useState("");
   const [isFilesModalOpen, setFilesModalOpen] = useState(false);
-
   const { currentStage, status: declarationStatus, steps } = data;
   const isStep5Done = (steps ?? []).find((s: any) => s.id === "submission")?.status === "DONE";
-
   const stages: { id: StageId; titleKey: string; status: StageStatus }[] = [
     {
       id: 1,
@@ -157,13 +156,14 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
         declarationStatus === "COMPLETED" || isStep5Done
           ? "completed"
           : currentStage === 5
-          ? "current"
-          : "locked",
+            ? "current"
+            : "locked",
     },
   ];
 
   const documentsReviewStep = getDocumentsReviewStep(data.steps);
   const isStep2Approved = documentsReviewStep?.status === "DONE";
+
 
   return (
     <div className="view-page">
@@ -181,11 +181,11 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
         <dl className="summary-grid">
           <div>
             <dt>{t("view.summary.maritalStatus")}</dt>
-<dd>
-    {t(`product.marital.${String(data.summary.maritalStatus ?? "").toLowerCase()}`, {
-      defaultValue: String(data.summary.maritalStatus ?? "-"),
-    })}
-  </dd>          </div>
+            <dd>
+              {t(`product.marital.${String(data.summary.maritalStatus ?? "").toLowerCase()}`, {
+                defaultValue: String(data.summary.maritalStatus ?? "-"),
+              })}
+            </dd>          </div>
           <div>
             <dt>{t("view.summary.childrenCount")}</dt>
             <dd>{data.summary.childrenCount}</dd>
@@ -210,6 +210,11 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
             <dt>{t("view.summary.taxYear")}</dt>
             <dd>{data.summary.taxYear}</dd>
           </div>
+          <div>
+            <dt>{t("product.wealthStatements")}</dt>
+            <dd>{data.summary.wealthStatements}</dd>
+          </div>
+
         </dl>
       </section>
 
@@ -325,22 +330,22 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
 
                 {stage.id === 5 && (
                   <Stage5Submission
-  data={data}
-  isAdmin={isAdmin}
-  isCurrent={isCurrent}
-  isCompleted={isCompleted}
-  t={t}
-  adminFinalFile={adminFinalFile}
-  setAdminFinalFile={setAdminFinalFile}
-  isUploadingFinal={isUploadingFinal}
-  userSubmissionFile={userSubmissionFile}
-  setUserSubmissionFile={setUserSubmissionFile}
-  isUploadingUserSubmission={isUploadingUserSubmission}
-  onDownloadFile={onDownloadFile}
-  onAdminUploadFinal={onAdminUploadFinal}
-  onUserUploadSubmission={onUserUploadSubmission}
-  onCompleteStep5={onCompleteStep5}
-/>
+                    data={data}
+                    isAdmin={isAdmin}
+                    isCurrent={isCurrent}
+                    isCompleted={isCompleted}
+                    t={t}
+                    adminFinalFile={adminFinalFile}
+                    setAdminFinalFile={setAdminFinalFile}
+                    isUploadingFinal={isUploadingFinal}
+                    userSubmissionFile={userSubmissionFile}
+                    setUserSubmissionFile={setUserSubmissionFile}
+                    isUploadingUserSubmission={isUploadingUserSubmission}
+                    onDownloadFile={onDownloadFile}
+                    onAdminUploadFinal={onAdminUploadFinal}
+                    onUserUploadSubmission={onUserUploadSubmission}
+                    onCompleteStep5={onCompleteStep5}
+                  />
                 )}
               </div>
             </details>
