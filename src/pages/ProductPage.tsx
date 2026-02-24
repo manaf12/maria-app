@@ -1,6 +1,6 @@
  
  
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 // src/pages/ProductPage.tsx
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";

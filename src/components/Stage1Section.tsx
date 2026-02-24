@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import React, { useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";

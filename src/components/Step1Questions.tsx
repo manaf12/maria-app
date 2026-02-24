@@ -1,5 +1,5 @@
 /* eslint-disable no-empty */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
@@ -51,7 +51,7 @@ export function Step1Questions({
     setStatusMap({});
     setSavedAt({});
     hasLoadedRef.current = false;
-  }, [declarationId]);
+  }, [declarationId,initialAnswers]);
 
   useEffect(() => {
     let mounted = true;

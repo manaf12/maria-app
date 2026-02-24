@@ -1,5 +1,7 @@
 // src/pages/AboutPage.tsx
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 export default function AboutPage() {
   const { t } = useTranslation();
@@ -15,6 +17,16 @@ export default function AboutPage() {
     //   key: "taxExpert",
     // },
   ];
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === "#contact-section") {
+      const el = document.getElementById("contact-section");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   const values = ["transparency", "reliability", "confidentiality", "proximity"] as const;
 

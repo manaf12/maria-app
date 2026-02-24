@@ -1,6 +1,6 @@
 // src/pages/SignupPage.tsx
  
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";

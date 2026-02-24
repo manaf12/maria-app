@@ -48,6 +48,13 @@
   "auth.forgot.loading": "Wird gesendet...",
   "auth.forgot.success": "Falls diese E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.",
   "auth.forgot.error": "Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+
+  "auth.reset_title": "Passwort zurücksetzen",
+  "auth.new_password": "Neues Passwort",
+  "auth.update_password": "Passwort aktualisieren",
+  "auth.reset_success": "Passwort aktualisiert. Bitte einloggen.",
+  "auth.reset_failed": "Passwort zurücksetzen fehlgeschlagen.",
+  
   "topbar.login": "Login",
   "topbar.myAccount": "Mein Konto",
   "menu.getOffer": "Offerte erhalten",
@@ -1273,7 +1280,8 @@
         "step": "Schritt",
         "created": "Erstellt",
         "updated": "Aktualisiert",
-        "assignment": "Zuweisung"
+        "assignment": "Zuweisung",
+        "select": "Auswählen"
       },
       "unknownClient": "Unbekannter Kunde",
       "errors": {

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 // src/pages/admin/AdminDeclarationsPage.tsx
 import { useEffect, useMemo, useState } from "react";
 import AdminDeclarationAssignCard from "../../src/components/admin/AdminDeclarationAssignCard";

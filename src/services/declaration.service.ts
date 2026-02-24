@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import axiosClient from "../api/axiosClient";
 import type { StageId, ViewRequestData } from "../types/declaration.types";
 
@@ -14,6 +14,7 @@ export async function fetchDeclaration(declarationId: string) {
     clientName: `${payload.clientProfile?.firstName ?? ""} ${payload.clientProfile?.lastName ?? ""}`.trim() || "—",
     productName: payload.offer ?? "—",
     currentStage: (payload.currentStep ?? payload.currentStage ?? 1) as StageId,
+    wealthStatements: payload.questionnaireSnapshot?.wealthStatements ?? 0,
 status: payload.status,
     summary: {
       maritalStatus: payload.questionnaireSnapshot?.maritalStatus ?? "—",
@@ -21,8 +22,9 @@ status: payload.status,
       incomes: String(payload.questionnaireSnapshot?.incomeSources ?? payload.questionnaireSnapshot?.incomes ?? "—"),
       properties: String(payload.questionnaireSnapshot?.properties ?? "—"),
       offerName: payload.questionnaireSnapshot?.offer ?? payload.offer ?? "—",
-  offerPrice: Number(payload.pricing?.finalPrice ?? 0),
+      offerPrice: Number(payload.pricing?.finalPrice ?? 0),
       taxYear: payload.questionnaireSnapshot?.taxYear ?? new Date().getFullYear(),
+      wealthStatements: payload.questionnaireSnapshot?.wealthStatements ?? 0,
     },
 
     step1: {

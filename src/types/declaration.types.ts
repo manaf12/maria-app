@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 export type StageId = 1 | 2 | 3 | 4 | 5;
 export type StageStatus = "completed" | "current" | "locked";
 
@@ -10,6 +10,7 @@ export type SummaryBlock = {
   offerName: string;
   offerPrice: number;
   taxYear: number;
+  wealthStatements: number;
 };
 
 export type RequiredDocument = {
@@ -67,6 +68,7 @@ export type ViewRequestData = {
   step5?: SubmissionInfo;
   steps?: any[];
   invoice: InvoiceBlock;
+  wealthStatements: number;
 };
 
 export type User = {

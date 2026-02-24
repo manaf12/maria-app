@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import type { TFunction } from "i18next";
 import type { ViewRequestData } from "../../../types/declaration.types";
 

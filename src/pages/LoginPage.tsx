@@ -2,7 +2,7 @@
 // src/pages/LoginPage.tsx
 // (Updated to support ProtectedRoute redirect via state.from.pathname)
 // ==============================
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import TextField from "../components/TextField";

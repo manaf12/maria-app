@@ -2,7 +2,7 @@
 // src/auth/AuthContext.tsx
 // (Updated init loading logic + consistent token handling)
 // ==============================
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from "react";
 import axiosClient, { setAccessToken } from "../api/axiosClient";
