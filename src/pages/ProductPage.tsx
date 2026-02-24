@@ -17,6 +17,8 @@ type FormValues = {
   wealthStatements: number;
   properties: number;
   newProperties: number;
+  movedAddress: boolean;
+  propertiesWithEffectiveCost: number;
   billingFirstName: string;
   billingLastName: string;
   billingStreet: string;
@@ -214,6 +216,8 @@ export default function ProductPage() {
       wealthStatements: 0,
       properties: 0,
       newProperties: 0,
+      movedAddress: false,
+      propertiesWithEffectiveCost: 0,
       billingFirstName: "",
       billingLastName: "",
       billingStreet: "",
@@ -226,9 +230,9 @@ const stepFields: Record<number, (keyof FormValues)[]> = {
   2: ["maritalStatus"],
   3: ["childrenCount"],
   4: ["incomeSources"],
-  5: ["wealthStatements"],
+  5: ["wealthStatements", "movedAddress"],
   6: ["properties"],
-  7: ["properties", "newProperties"],
+  7: ["properties", "newProperties", "propertiesWithEffectiveCost"],
   10: [
     "billingFirstName",
     "billingLastName",
@@ -252,7 +256,8 @@ const stepFields: Record<number, (keyof FormValues)[]> = {
   const wealthStatements = watch("wealthStatements");
   const properties = watch("properties");
   const newProperties = watch("newProperties");
-
+const movedAddress = watch("movedAddress");
+const propertiesWithEffectiveCost = watch("propertiesWithEffectiveCost");
   const offers: Offer[] = useMemo(
     () => [
       {
@@ -278,9 +283,12 @@ const stepFields: Record<number, (keyof FormValues)[]> = {
       setValue("newProperties", 0);
     }
   }, [properties, setValue]);
-  const canGoFrom7 =
-    properties > 0 && newProperties >= 0 && newProperties <= properties;
-useEffect(() => {
+const canGoFrom7 =
+  properties > 0 &&
+  newProperties >= 0 &&
+  newProperties <= properties &&
+  propertiesWithEffectiveCost >= 0 &&
+  propertiesWithEffectiveCost <= properties;useEffect(() => {
   let mounted = true;
 
   const loadState = async () => {
@@ -764,18 +772,38 @@ const goNext = async () => {
             >
               <div className="field-row">
                 <input
-  type="number"
-  min={0}
-  {...register("wealthStatements", {
-    valueAsNumber: true,
-    required: "Wealth statements is required",
-    min: { value: 0, message: "Must be 0 or more" },
-  })}
-/>
-{errors.wealthStatements?.message && (
-  <p className="field-error">{String(errors.wealthStatements.message)}</p>
-)}
-                <p className="field-hint" style={{ fontSize: "1rem" }}>{t("product.wealthHint")}</p>
+                  type="number"
+                  min={0}
+                  {...register("wealthStatements", {
+                    valueAsNumber: true,
+                    required: "Wealth statements is required",
+                    min: { value: 0, message: "Must be 0 or more" },
+                  })}
+                />
+                {errors.wealthStatements?.message && (
+                  <p className="field-error">
+                    {String(errors.wealthStatements.message)}
+                  </p>
+                )}
+                <p
+                  className="field-hint"
+                  style={{ fontSize: "1rem" }}
+                >
+                  {t("product.wealthHint")}
+                </p>
+              </div>
+
+              <div className="field-row">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    {...register("movedAddress")}
+                  />
+                  <span>{t("product.movedAddressQuestion")}</span>
+                </label>
+                <p className="field-hint" style={{ fontSize: "0.9rem" }}>
+                  {t("product.movedAddressHint")}
+                </p>
               </div>
             </StepCard>
           )}
@@ -788,73 +816,104 @@ const goNext = async () => {
               onNext={goNext}
             >
               <div className="field-row">
-              <input
-  type="number"
-  min={0}
-  {...register("properties", {
-    valueAsNumber: true,
-    required: "Properties is required",
-    min: { value: 0, message: "Must be 0 or more" },
-  })}
-/>
-{errors.properties?.message && (
-  <p className="field-error">{String(errors.properties.message)}</p>
-)}
+                <input
+                  type="number"
+                  min={0}
+                  {...register("properties", {
+                    valueAsNumber: true,
+                    required: "Properties is required",
+                    min: { value: 0, message: "Must be 0 or more" },
+                  })}
+                />
+                {errors.properties?.message && (
+                  <p className="field-error">
+                    {String(errors.properties.message)}
+                  </p>
+                )}
+                <p className="field-hint">
+                  {t("product.propertiesHint")}
+                </p>
               </div>
             </StepCard>
           )}
 
           {/* Step 7 */}
-    {step === 7 && (
-  <StepCard
-    title={t("product.propertiesDetailsTitle")}
-    onPrev={goPrev}
-    onNext={canGoFrom7 ? goNext : undefined}
-  >
-    <div className="field-row">
-      <label>{t("product.propertiesCount")}</label>
-      <input
-        type="number"
-        min={1}
-        readOnly
-        {...register("properties", {
-          setValueAs: (v) => (v === "" ? undefined : Number(v)),
-          required: "Properties count is required",
-          min: { value: 1, message: "Must be at least 1" },
-        })}
-      />
+          {step === 7 && (
+            <StepCard
+              title={t("product.propertiesDetailsTitle")}
+              onPrev={goPrev}
+              onNext={canGoFrom7 ? goNext : undefined}
+            >
+              <div className="field-row">
+                <label>{t("product.propertiesCount")}</label>
+                <input
+                  type="number"
+                  min={1}
+                  readOnly
+                  {...register("properties", {
+                    setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    required: "Properties count is required",
+                    min: { value: 1, message: "Must be at least 1" },
+                  })}
+                />
+                {errors.properties?.message && (
+                  <p className="field-error">
+                    {String(errors.properties.message)}
+                  </p>
+                )}
+              </div>
 
+              <div className="field-row">
+                <label>{t("product.newProperties")}</label>
+                <input
+                  type="number"
+                  min={0}
+                  max={properties}
+                  {...register("newProperties", {
+                    setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    required: "New properties is required",
+                    min: { value: 0, message: "Must be 0 or more" },
+                    validate: (v) =>
+                      v <= getValues("properties") ||
+                      "New properties cannot exceed properties",
+                  })}
+                />
+                {errors.newProperties?.message && (
+                  <p className="field-error">
+                    {String(errors.newProperties.message)}
+                  </p>
+                )}
+                <p className="field-hint">
+                  {t("product.newPropertiesHint")}
+                </p>
+              </div>
 
-      {errors.properties?.message && (
-        <p className="field-error">{String(errors.properties.message)}</p>
-      )}
-    </div>
-
-    <div className="field-row">
-      <label>{t("product.newProperties")}</label>
-      <input
-        type="number"
-        min={0}
-        max={properties}
-        {...register("newProperties", {
-          setValueAs: (v) => (v === "" ? undefined : Number(v)),
-          required: "New properties is required",
-          min: { value: 0, message: "Must be 0 or more" },
-          validate: (v) =>
-            v <= getValues("properties") ||
-            "New properties cannot exceed properties",
-        })}
-      />
-
-      {errors.newProperties?.message && (
-        <p className="field-error">{String(errors.newProperties.message)}</p>
-      )}
-
-      <p className="field-hint">{t("product.newPropertiesHint")}</p>
-    </div>
-  </StepCard>
-)}
-
+              <div className="field-row">
+                <label>{t("product.propertiesWithEffectiveCost")}</label>
+                <input
+                  type="number"
+                  min={0}
+                  max={properties}
+                  {...register("propertiesWithEffectiveCost", {
+                    setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    required: "Properties with effective cost is required",
+                    min: { value: 0, message: "Must be 0 or more" },
+                    validate: (v) =>
+                      v <= getValues("properties") ||
+                      "Properties with effective cost cannot exceed properties",
+                  })}
+                />
+                {errors.propertiesWithEffectiveCost?.message && (
+                  <p className="field-error">
+                    {String(errors.propertiesWithEffectiveCost.message)}
+                  </p>
+                )}
+                <p className="field-hint">
+                  {t("product.propertiesWithEffectiveCostHint")}
+                </p>
+              </div>
+            </StepCard>
+          )}
           {/* Step 8 */}
           {step === 8 && (
             <StepCard
@@ -993,35 +1052,50 @@ const goNext = async () => {
               <div className="product-profile-summary">
                 {/* <h3>{t("product.sections.summary")}</h3> */}
 
-                <ul>
-                  <li>{t("product.summary.taxYear", { year: taxYear })}</li>
-                  <li>
-                    {t("product.summary.marital", {
-                      status:
-                        maritalStatus === "single"
-                          ? t("product.marital.single")
-                          : t("product.marital.married"),
-                    })}
-                  </li>
-                  <li>
-                    {t("product.summary.children", { count: childrenCount })}
-                  </li>
-                  <li>
-                    {t("product.summary.incomes", { count: incomeSources })}
-                  </li>
-                  <li>
-                    {t("product.summary.wealth", { count: wealthStatements })}
-                  </li>
-                  <li>
-                    {t("product.summary.properties", { count: properties })}
-                  </li>
-                  {selectedOffer && (
-                    <li>
-                      <strong>{t("product.sections.offer")}:</strong>{" "}
-                      {selectedOffer.name}
-                    </li>
-                  )}
-                </ul>
+               <ul>
+  <li>{t("product.summary.taxYear", { year: taxYear })}</li>
+  <li>
+    {t("product.summary.marital", {
+      status:
+        maritalStatus === "single"
+          ? t("product.marital.single")
+          : t("product.marital.married"),
+    })}
+  </li>
+  <li>
+    {t("product.summary.children", { count: childrenCount })}
+  </li>
+  <li>
+    {t("product.summary.incomes", { count: incomeSources })}
+  </li>
+  <li>
+    {t("product.summary.wealth", { count: wealthStatements })}
+  </li>
+  <li>
+    {t("product.summary.properties", { count: properties })}
+  </li>
+  <li>
+    {t("product.summary.movedAddress", {
+      status: movedAddress ? t("common.yes") : t("common.no"),
+    })}
+  </li>
+  <li>
+    {t("product.summary.propertiesWithEffectiveCost", {
+      count: propertiesWithEffectiveCost,
+    })}
+  </li>
+  <li>
+    {t("product.summary.newProperties", {
+      count: newProperties,
+    })}
+  </li>
+  {selectedOffer && (
+    <li>
+      <strong>{t("product.sections.offer")}:</strong>{" "}
+      {selectedOffer.name}
+    </li>
+  )}
+</ul>
                 {selectedOffer && (
                   <p className="product-final-price">
                     <strong>{t("product.finalPrice")}:</strong> CHF{" "}
