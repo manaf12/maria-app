@@ -25,7 +25,6 @@ export default function ForgotPasswordPage() {
     }
   };
   return (
-    <div className="auth-wrap">
       <div className="auth-card">
         <h1>{t("auth.forgot.title")}</h1>
 
@@ -44,6 +43,5 @@ export default function ForgotPasswordPage() {
           </button>
         </form>
       </div>
-    </div>
   );
 }

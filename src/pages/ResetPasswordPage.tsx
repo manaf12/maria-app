@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
           })}
         />
 
-        <button disabled={isSubmitting} type="submit">
+        <button className="primary" disabled={isSubmitting} type="submit">
           {t("auth.update_password")}
         </button>
       </form>

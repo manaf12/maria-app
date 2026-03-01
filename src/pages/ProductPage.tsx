@@ -1,6 +1,6 @@
- 
- 
- 
+
+
+
 // src/pages/ProductPage.tsx
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
@@ -24,6 +24,8 @@ type FormValues = {
   billingStreet: string;
   billingPostalCode: string;
   billingCity: string;
+  referralSource?: string;
+  referralOtherText: string;
 };
 type ServiceRow = {
   key: string;
@@ -205,8 +207,8 @@ export default function ProductPage() {
     setValue,
     reset,
     getValues,
-      trigger,
-    formState: { isSubmitting , errors },
+    trigger,
+    formState: { isSubmitting, errors },
   } = useForm<FormValues>({
     defaultValues: {
       taxYear: currentYear - 1,
@@ -223,24 +225,35 @@ export default function ProductPage() {
       billingStreet: "",
       billingPostalCode: "",
       billingCity: "",
+      referralSource: "",
     },
   });
-const stepFields: Record<number, (keyof FormValues)[]> = {
-  1: ["taxYear"],
-  2: ["maritalStatus"],
-  3: ["childrenCount"],
-  4: ["incomeSources"],
-  5: ["wealthStatements", "movedAddress"],
-  6: ["properties"],
-  7: ["properties", "newProperties", "propertiesWithEffectiveCost"],
-  10: [
-    "billingFirstName",
-    "billingLastName",
-    "billingStreet",
-    "billingPostalCode",
-    "billingCity",
-  ],
-};
+  const stepFields: Record<number, (keyof FormValues)[]> = {
+    1: ["taxYear"],
+    2: ["maritalStatus"],
+    3: ["childrenCount"],
+    4: ["incomeSources"],
+
+    // Step 5: only wealth
+    5: ["wealthStatements"],
+
+    // NEW Step 6: moved address
+    6: ["movedAddress"],
+
+    // Shift the old ones by +1
+    7: ["properties"],
+    8: ["properties", "newProperties", "propertiesWithEffectiveCost"],
+    9: ["referralSource", "referralOtherText"],
+
+    // Billing step moves from 10 -> 11
+    12: [
+      "billingFirstName",
+      "billingLastName",
+      "billingStreet",
+      "billingPostalCode",
+      "billingCity",
+    ],
+  };
 
   const [step, setStep] = useState<number>(1);
   const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
@@ -256,8 +269,9 @@ const stepFields: Record<number, (keyof FormValues)[]> = {
   const wealthStatements = watch("wealthStatements");
   const properties = watch("properties");
   const newProperties = watch("newProperties");
-const movedAddress = watch("movedAddress");
-const propertiesWithEffectiveCost = watch("propertiesWithEffectiveCost");
+  const movedAddress = watch("movedAddress");
+  const propertiesWithEffectiveCost = watch("propertiesWithEffectiveCost");
+  const referral = watch("referralSource");
   const offers: Offer[] = useMemo(
     () => [
       {
@@ -283,106 +297,51 @@ const propertiesWithEffectiveCost = watch("propertiesWithEffectiveCost");
       setValue("newProperties", 0);
     }
   }, [properties, setValue]);
-const canGoFrom7 =
-  properties > 0 &&
-  newProperties >= 0 &&
-  newProperties <= properties &&
-  propertiesWithEffectiveCost >= 0 &&
-  propertiesWithEffectiveCost <= properties;useEffect(() => {
-  let mounted = true;
+  const canGoFrom7 =
+    properties > 0 &&
+    newProperties >= 0 &&
+    newProperties <= properties &&
+    propertiesWithEffectiveCost >= 0 &&
+    propertiesWithEffectiveCost <= properties; useEffect(() => {
+      let mounted = true;
 
-  const loadState = async () => {
-    const draft = loadDraft();
-    const questionnaireId = localStorage.getItem("questionnaireId");
-    const fromAuth = (location.state as any)?.fromAuth;
+      const loadState = async () => {
+        const draft = loadDraft();
+        const questionnaireId = localStorage.getItem("questionnaireId");
+        const fromAuth = (location.state as any)?.fromAuth;
 
-    // Helper: build Offer with dynamic price using offerPrices
-    const buildOfferWithPrice = (
-      offerId: string,
-      prices: { standard: number; premium: number; confort: number },
-    ) => {
-      const base = offers.find((o) => o.id === offerId) ?? null;
-      if (!base) return null;
+        // Helper: build Offer with dynamic price using offerPrices
+        const buildOfferWithPrice = (
+          offerId: string,
+          prices: { standard: number; premium: number; confort: number },
+        ) => {
+          const base = offers.find((o) => o.id === offerId) ?? null;
+          if (!base) return null;
 
-      const price =
-        base.id === "Standard"
-          ? prices.standard
-          : base.id === "Premium"
-          ? prices.premium
-          : prices.confort;
+          const price =
+            base.id === "Standard"
+              ? prices.standard
+              : base.id === "Premium"
+                ? prices.premium
+                : prices.confort;
 
-      return { ...base, price };
-    };
+          return { ...base, price };
+        };
 
-    // 1) Restore from local draft first
-    if (draft && draft.form) {
-      if (!mounted) return;
-
-      reset(draft.form);
-
-      // Default restore (no price yet)
-      let restoredOffer =
-        draft.selectedOfferId
-          ? offers.find((o) => o.id === draft.selectedOfferId) ?? null
-          : null;
-
-      // If we have selectedOfferId + questionnaireId => fetch dynamic prices and fix the price
-      if (draft.selectedOfferId && questionnaireId) {
-        try {
-          const pricesRes = await axiosClient.get(
-            `/pricing/calculate-all/${questionnaireId}`,
-          );
-          const prices = pricesRes.data as {
-            standard: number;
-            premium: number;
-            confort: number;
-          };
-
+        // 1) Restore from local draft first
+        if (draft && draft.form) {
           if (!mounted) return;
 
-          setOfferPrices(prices);
+          reset(draft.form);
 
-          const withPrice = buildOfferWithPrice(draft.selectedOfferId, prices);
-          if (withPrice) restoredOffer = withPrice;
-        } catch (e) {
-          console.error("Failed to restore offer price from pricing:", e);
-          // keep restoredOffer as fallback (might be 0)
-        }
-      }
+          // Default restore (no price yet)
+          let restoredOffer =
+            draft.selectedOfferId
+              ? offers.find((o) => o.id === draft.selectedOfferId) ?? null
+              : null;
 
-      if (!mounted) return;
-      setSelectedOffer(restoredOffer);
-
-      // Important: after restoring offer and price, decide step
-      if (user && draft.selectedOfferId) {
-        setStep(9);
-      } else {
-        setStep(draft.step ?? 1);
-      }
-
-      setRestored(true);
-      return;
-    }
-
-    // 2) Restore from server questionnaire (if exists)
-    if (questionnaireId) {
-      try {
-        const res = await axiosClient.get(`/questionnaire/${questionnaireId}`);
-        const serverForm = res.data?.data;
-
-        if (serverForm) {
-          if (!mounted) return;
-
-          reset(serverForm as any);
-
-          // restore selected offer if exists (but fix price)
-          const serverOfferIdRaw = res.data?.data?.offer;
-          const serverOfferId = serverOfferIdRaw
-            ? String(serverOfferIdRaw)
-            : null;
-
-          if (serverOfferId) {
-            // Fetch prices once, then set both offerPrices and selectedOffer with correct price
+          // If we have selectedOfferId + questionnaireId => fetch dynamic prices and fix the price
+          if (draft.selectedOfferId && questionnaireId) {
             try {
               const pricesRes = await axiosClient.get(
                 `/pricing/calculate-all/${questionnaireId}`,
@@ -397,68 +356,123 @@ const canGoFrom7 =
 
               setOfferPrices(prices);
 
-              // Match offer id case-insensitively
-              const normalizedId =
-                serverOfferId.toLowerCase() === "standard"
-                  ? "Standard"
-                  : serverOfferId.toLowerCase() === "premium"
-                  ? "Premium"
-                  : serverOfferId.toLowerCase() === "confort"
-                  ? "Confort"
-                  : null;
-
-              if (normalizedId) {
-                const withPrice = buildOfferWithPrice(normalizedId, prices);
-                if (withPrice) setSelectedOffer(withPrice);
-              } else {
-                // fallback: try old logic (may become 0)
-                const offerFound = offers.find(
-                  (o) =>
-                    o.id.toLowerCase() === serverOfferId.toLowerCase(),
-                );
-                if (offerFound) setSelectedOffer(offerFound);
-              }
+              const withPrice = buildOfferWithPrice(draft.selectedOfferId, prices);
+              if (withPrice) restoredOffer = withPrice;
             } catch (e) {
-              console.error("Failed to calculate prices (server restore):", e);
-              // fallback to old logic (price might be 0)
-              const offerFound = offers.find(
-                (o) =>
-                  o.id.toLowerCase() === serverOfferId.toLowerCase(),
-              );
-              if (offerFound) setSelectedOffer(offerFound);
+              console.error("Failed to restore offer price from pricing:", e);
+              // keep restoredOffer as fallback (might be 0)
             }
-          } else {
-            setSelectedOffer(null);
           }
 
-          const serverStep = Number(
-            res.data?.currentStep ?? res.data?.data?.currentStep ?? 1,
-          );
+          if (!mounted) return;
+          setSelectedOffer(restoredOffer);
 
-          setStep(
-            Number.isFinite(serverStep) && serverStep >= 1 ? serverStep : 1,
-          );
+          // Important: after restoring offer and price, decide step
+          if (user && draft.selectedOfferId) {
+            setStep(10);
+          } else {
+            setStep(draft.step ?? 1);
+          }
 
           setRestored(true);
           return;
         }
-      } catch (e) {
-        console.error("Failed to load questionnaire:", e);
-      }
-    }
 
-    // 3) Default initial step
-    if (!mounted) return;
-    setStep(fromAuth && user ? 8 : 1);
-    setRestored(true);
-  };
+        // 2) Restore from server questionnaire (if exists)
+        if (questionnaireId) {
+          try {
+            const res = await axiosClient.get(`/questionnaire/${questionnaireId}`);
+            const serverForm = res.data?.data;
 
-  loadState();
+            if (serverForm) {
+              if (!mounted) return;
 
-  return () => {
-    mounted = false;
-  };
-}, [location.state, reset, user, offers]);
+              reset(serverForm as any);
+
+              // restore selected offer if exists (but fix price)
+              const serverOfferIdRaw = res.data?.data?.offer;
+              const serverOfferId = serverOfferIdRaw
+                ? String(serverOfferIdRaw)
+                : null;
+
+              if (serverOfferId) {
+                // Fetch prices once, then set both offerPrices and selectedOffer with correct price
+                try {
+                  const pricesRes = await axiosClient.get(
+                    `/pricing/calculate-all/${questionnaireId}`,
+                  );
+                  const prices = pricesRes.data as {
+                    standard: number;
+                    premium: number;
+                    confort: number;
+                  };
+
+                  if (!mounted) return;
+
+                  setOfferPrices(prices);
+
+                  // Match offer id case-insensitively
+                  const normalizedId =
+                    serverOfferId.toLowerCase() === "standard"
+                      ? "Standard"
+                      : serverOfferId.toLowerCase() === "premium"
+                        ? "Premium"
+                        : serverOfferId.toLowerCase() === "confort"
+                          ? "Confort"
+                          : null;
+
+                  if (normalizedId) {
+                    const withPrice = buildOfferWithPrice(normalizedId, prices);
+                    if (withPrice) setSelectedOffer(withPrice);
+                  } else {
+                    // fallback: try old logic (may become 0)
+                    const offerFound = offers.find(
+                      (o) =>
+                        o.id.toLowerCase() === serverOfferId.toLowerCase(),
+                    );
+                    if (offerFound) setSelectedOffer(offerFound);
+                  }
+                } catch (e) {
+                  console.error("Failed to calculate prices (server restore):", e);
+                  // fallback to old logic (price might be 0)
+                  const offerFound = offers.find(
+                    (o) =>
+                      o.id.toLowerCase() === serverOfferId.toLowerCase(),
+                  );
+                  if (offerFound) setSelectedOffer(offerFound);
+                }
+              } else {
+                setSelectedOffer(null);
+              }
+
+              const serverStep = Number(
+                res.data?.currentStep ?? res.data?.data?.currentStep ?? 1,
+              );
+
+              setStep(
+                Number.isFinite(serverStep) && serverStep >= 1 ? serverStep : 1,
+              );
+
+              setRestored(true);
+              return;
+            }
+          } catch (e) {
+            console.error("Failed to load questionnaire:", e);
+          }
+        }
+
+        // 3) Default initial step
+        if (!mounted) return;
+        setStep(fromAuth && user ? 9 : 1);
+        setRestored(true);
+      };
+
+      loadState();
+
+      return () => {
+        mounted = false;
+      };
+    }, [location.state, reset, user, offers]);
 
   useEffect(() => {
     if (!restored) return;
@@ -474,7 +488,7 @@ const canGoFrom7 =
     const questionnaireId = localStorage.getItem("questionnaireId");
     if (!restored) return;
 
-    if (step === 8 && questionnaireId && !offerPrices) {
+    if (step === 9 && questionnaireId && !offerPrices) {
       axiosClient
         .get(`/pricing/calculate-all/${questionnaireId}`)
         .then((res) => setOfferPrices(res.data))
@@ -485,73 +499,73 @@ const canGoFrom7 =
   }, [step, offerPrices, restored]);
   const goPrev = () => {
     if (step <= 1) return;
-    if (step === 8 && properties === 0) {
-      setStep(6);
-    } else if (step === 8 && properties > 0) {
+    if (step === 9 && properties === 0) {
       setStep(7);
+    } else if (step === 9 && properties > 0) {
+      setStep(8);
     } else {
       setStep((s) => s - 1);
     }
   };
 
-const goNext = async () => {
-  // 1) validate only current step fields
-  const fields = stepFields[step] ?? [];
-  const ok = fields.length
-    ? await trigger(fields as any, { shouldFocus: true })
-    : true;
+  const goNext = async () => {
+    // 1) validate only current step fields
+    const fields = stepFields[step] ?? [];
+    const ok = fields.length
+      ? await trigger(fields as any, { shouldFocus: true })
+      : true;
 
-  if (!ok) return; // stop here: do NOT go next
+    if (!ok) return; // stop here: do NOT go next
 
-  // 2) save only after validation passes
-  const currentValues = getValues();
-  await saveStepData(currentValues);
+    // 2) save only after validation passes
+    const currentValues = getValues();
+    await saveStepData(currentValues);
 
-  // 3) your existing navigation logic
-  if (step === 7) {
-    if (!canGoFrom7) return;
+    // 3) your existing navigation logic
+    if (step === 8) {
+      if (!canGoFrom7) return;
 
-    const questionnaireId = localStorage.getItem("questionnaireId");
-    if (!questionnaireId) {
-      alert("Session error. Please restart.");
-      return;
-    }
-
-    try {
-      const res = await axiosClient.get(
-        `/pricing/calculate-all/${questionnaireId}`,
-      );
-      setOfferPrices(res.data);
-      setStep(8);
-    } catch (error) {
-      console.error("Failed to calculate prices:", error);
-      alert("Could not calculate offer prices.");
-    }
-    return;
-  }
-
-  if (step === 6) {
-    if (properties === 0) {
       const questionnaireId = localStorage.getItem("questionnaireId");
-      if (!questionnaireId) return;
+      if (!questionnaireId) {
+        alert("Session error. Please restart.");
+        return;
+      }
 
       try {
         const res = await axiosClient.get(
           `/pricing/calculate-all/${questionnaireId}`,
         );
         setOfferPrices(res.data);
-        setStep(8);
+        setStep(9);
       } catch (error) {
-        console.error(error);
+        console.error("Failed to calculate prices:", error);
+        alert("Could not calculate offer prices.");
       }
-    } else {
-      setStep(7);
+      return;
     }
-    return;
-  }
 
-  setStep((s) => s + 1);
-};
+    if (step === 7) {
+      if (properties === 0) {
+        const questionnaireId = localStorage.getItem("questionnaireId");
+        if (!questionnaireId) return;
+
+        try {
+          const res = await axiosClient.get(
+            `/pricing/calculate-all/${questionnaireId}`,
+          );
+          setOfferPrices(res.data);
+          setStep(9);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        setStep(8);
+      }
+      return;
+    }
+
+    setStep((s) => s + 1);
+  };
 
   const handleChooseOffer = async (offer: Offer) => {
     setSelectedOffer(offer);
@@ -563,7 +577,14 @@ const goNext = async () => {
     }
 
     if (user) {
-      setStep(9);
+      // optionally save draft for logged-in users
+      saveDraft({
+        step: 11,
+        form: getValues(),
+        selectedOfferId: offer.id,
+      });
+
+      setStep(11);   // go to summary step
       return;
     }
 
@@ -603,8 +624,8 @@ const goNext = async () => {
   };
 
   const handleOfferGuard = (offer: Offer) => {
-    if (step < 8) {
-      setStep(8);
+    if (step < 9) {
+      setStep(9);
       return;
     }
     handleChooseOffer(offer);
@@ -626,7 +647,7 @@ const goNext = async () => {
       console.log("Billing saved to questionnaire");
       if (!selectedOffer) {
         alert("Please choose an offer first");
-        setStep(8);
+        setStep(9);
         return;
       }
       await axiosClient.post(`/questionnaire/${questionnaireId}/finalize`, {
@@ -670,13 +691,13 @@ const goNext = async () => {
             <StepCard title={t("product.taxYear")} onNext={goNext}>
               <div className="field-row">
                 {/* <label>{t("product.taxYear")}</label> */}
-                <select {...register("taxYear", { valueAsNumber: true , required : "Tax year is required"})}>
+                <select {...register("taxYear", { valueAsNumber: true, required: "Tax year is required" })}>
                   <option value={currentYear - 1}>{currentYear - 1}</option>
                   <option value={currentYear}>{currentYear}</option>
                 </select>
                 {errors.taxYear?.message && (
-  <p className="field-error">{String(errors.taxYear.message)}</p>
-)}
+                  <p className="field-error">{String(errors.taxYear.message)}</p>
+                )}
               </div>
             </StepCard>
           )}
@@ -707,8 +728,8 @@ const goNext = async () => {
                 </label>
               </div>
               {errors.maritalStatus?.message && (
-  <p className="field-error">{String(errors.maritalStatus.message)}</p>
-)}
+                <p className="field-error">{String(errors.maritalStatus.message)}</p>
+              )}
             </StepCard>
           )}
 
@@ -720,18 +741,18 @@ const goNext = async () => {
               onNext={goNext}
             >
               <div className="field-row">
-           <input
-           type="number"
-           min={0}
-           {...register("childrenCount", {
-            valueAsNumber: true,
-            required: "Children count is required",
-        min: { value: 0, message: "Must be 0 or more" },
-  })}
-/>
-{errors.childrenCount?.message && (
-  <p className="field-error">{String(errors.childrenCount.message)}</p>
-)}
+                <input
+                  type="number"
+                  min={0}
+                  {...register("childrenCount", {
+                    valueAsNumber: true,
+                    required: "Children count is required",
+                    min: { value: 0, message: "Must be 0 or more" },
+                  })}
+                />
+                {errors.childrenCount?.message && (
+                  <p className="field-error">{String(errors.childrenCount.message)}</p>
+                )}
               </div>
             </StepCard>
           )}
@@ -745,20 +766,20 @@ const goNext = async () => {
             >
               <div className="field-row">
                 {/* <label>{t("product.incomeSources")}</label> */}
-         <input
-  type="number"
-  min={0}
-  {...register("incomeSources", {
-    valueAsNumber: true,
-    setValueAs: (v) => (v === "" ? undefined : Number(v)),
-    required: "Income sources is required",
-    min: { value: 0, message: "Must be at least 0" },
-  })}
-/>
-{errors.incomeSources?.message && (
-  <p className="field-error">{String(errors.incomeSources.message)}</p>
-)}
-                <p className="field-hint"  style={{ fontSize: "1rem" }}>{t("product.incomeHint")}</p>
+                <input
+                  type="number"
+                  min={0}
+                  {...register("incomeSources", {
+                    valueAsNumber: true,
+                    setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    required: "Income sources is required",
+                    min: { value: 0, message: "Must be at least 0" },
+                  })}
+                />
+                {errors.incomeSources?.message && (
+                  <p className="field-error">{String(errors.incomeSources.message)}</p>
+                )}
+                <p className="field-hint" style={{ fontSize: "1rem" }}>{t("product.incomeHint")}</p>
               </div>
             </StepCard>
           )}
@@ -792,7 +813,16 @@ const goNext = async () => {
                   {t("product.wealthHint")}
                 </p>
               </div>
+            </StepCard>
+          )}
 
+          {/* Step 6 */}
+          {step === 6 && (
+            <StepCard
+              title={t("product.movedAddressStepTitle" /* or reuse wealthStatements if you want */)}
+              onPrev={goPrev}
+              onNext={goNext}
+            >
               <div className="field-row">
                 <label className="checkbox-label">
                   <input
@@ -808,8 +838,8 @@ const goNext = async () => {
             </StepCard>
           )}
 
-          {/* Step 6 */}
-          {step === 6 && (
+          {/* Step 7 */}
+          {step === 7 && (
             <StepCard
               title={t("product.properties")}
               onPrev={goPrev}
@@ -836,9 +866,8 @@ const goNext = async () => {
               </div>
             </StepCard>
           )}
-
-          {/* Step 7 */}
-          {step === 7 && (
+          {/* Step 8 */}
+          {step === 8 && (
             <StepCard
               title={t("product.propertiesDetailsTitle")}
               onPrev={goPrev}
@@ -914,8 +943,42 @@ const goNext = async () => {
               </div>
             </StepCard>
           )}
-          {/* Step 8 */}
-          {step === 8 && (
+
+          {step === 9 && (
+            <StepCard
+              title={t("product.referralTitle")}
+              subtitle={t("product.referralSubtitle")}
+              onPrev={goPrev}
+              onNext={goNext}
+            >
+              <div className="field-row">
+                <select {...register("referralSource")}>
+                  <option value="">{t("product.referralChoose")}</option>
+                  <option value="google">{t("product.refGoogle")}</option>
+                  <option value="facebook">{t("product.refFacebook")}</option>
+                  <option value="instagram">{t("product.refInstagram")}</option>
+                  <option value="friend">{t("product.refFriend")}</option>
+                  <option value="other">{t("product.refOther")}</option>
+                </select>
+              </div>
+
+              {/* Conditional text field */}
+              {referral === "other" && (
+                <div className="field-row">
+                  <input
+                    type="text"
+                    placeholder={t("product.referralOtherPlaceholder")}
+                    {...register("referralOtherText", { required: true })}
+                  />
+                  {errors.referralOtherText && (
+                    <p className="field-error">{t("product.enterValidValue")}</p>
+                  )}
+                </div>
+              )}
+            </StepCard>
+          )}
+
+          {step === 10 && (
             <StepCard
               title={t("product.sections.offers")}
               subtitle={t("product.offersHint")}
@@ -942,8 +1005,8 @@ const goNext = async () => {
                               offer.id === "Standard"
                                 ? offerPrices.standard
                                 : offer.id === "Premium"
-                                ? offerPrices.premium
-                                : offerPrices.confort;
+                                  ? offerPrices.premium
+                                  : offerPrices.confort;
 
                             const isSelected = selectedOffer?.id === offer.id;
                             return (
@@ -966,14 +1029,14 @@ const goNext = async () => {
                                   </div>
 
                                   <div className="pricing-plan-sub">
-                             
+
                                   </div>
 
                                   <button
                                     type="button"
                                     className={
                                       "pricing-select-btn" +
-                                      (isSelected ? " is-selected" : "") 
+                                      (isSelected ? " is-selected" : "")
                                     }
                                     onClick={() =>
                                       handleOfferGuard({
@@ -1008,8 +1071,8 @@ const goNext = async () => {
                                 offer.id === "Standard"
                                   ? row.standard
                                   : offer.id === "Premium"
-                                  ? row.premium
-                                  : row.confort;
+                                    ? row.premium
+                                    : row.confort;
 
                               const isSelected = selectedOffer?.id === offer.id;
 
@@ -1034,15 +1097,14 @@ const goNext = async () => {
               )}
             </StepCard>
           )}
-
-          {step === 9 && (
+          {step === 11 && (
             <div className="product-block">
               <div className="summary-header">
                 <h2>{t("product.sections.summary")}</h2>
                 <button
                   // type="button"
                   // className="link-like edit-request-inline"
-                  onClick={() => setStep(8)}
+                  onClick={() => setStep(9)}
                   className="edit-btn"
                 >
                   {t("product.editRequest")}
@@ -1052,50 +1114,50 @@ const goNext = async () => {
               <div className="product-profile-summary">
                 {/* <h3>{t("product.sections.summary")}</h3> */}
 
-               <ul>
-  <li>{t("product.summary.taxYear", { year: taxYear })}</li>
-  <li>
-    {t("product.summary.marital", {
-      status:
-        maritalStatus === "single"
-          ? t("product.marital.single")
-          : t("product.marital.married"),
-    })}
-  </li>
-  <li>
-    {t("product.summary.children", { count: childrenCount })}
-  </li>
-  <li>
-    {t("product.summary.incomes", { count: incomeSources })}
-  </li>
-  <li>
-    {t("product.summary.wealth", { count: wealthStatements })}
-  </li>
-  <li>
-    {t("product.summary.properties", { count: properties })}
-  </li>
-  <li>
-    {t("product.summary.movedAddress", {
-      status: movedAddress ? t("common.yes") : t("common.no"),
-    })}
-  </li>
-  <li>
-    {t("product.summary.propertiesWithEffectiveCost", {
-      count: propertiesWithEffectiveCost,
-    })}
-  </li>
-  <li>
-    {t("product.summary.newProperties", {
-      count: newProperties,
-    })}
-  </li>
-  {selectedOffer && (
-    <li>
-      <strong>{t("product.sections.offer")}:</strong>{" "}
-      {selectedOffer.name}
-    </li>
-  )}
-</ul>
+                <ul>
+                  <li>{t("product.summary.taxYear", { year: taxYear })}</li>
+                  <li>
+                    {t("product.summary.marital", {
+                      status:
+                        maritalStatus === "single"
+                          ? t("product.marital.single")
+                          : t("product.marital.married"),
+                    })}
+                  </li>
+                  <li>
+                    {t("product.summary.children", { count: childrenCount })}
+                  </li>
+                  <li>
+                    {t("product.summary.incomes", { count: incomeSources })}
+                  </li>
+                  <li>
+                    {t("product.summary.wealth", { count: wealthStatements })}
+                  </li>
+                  <li>
+                    {t("product.summary.properties", { count: properties })}
+                  </li>
+                  <li>
+                    {t("product.summary.movedAddress", {
+                      status: movedAddress ? t("common.yes") : t("common.no"),
+                    })}
+                  </li>
+                  <li>
+                    {t("product.summary.propertiesWithEffectiveCost", {
+                      count: propertiesWithEffectiveCost,
+                    })}
+                  </li>
+                  <li>
+                    {t("product.summary.newProperties", {
+                      count: newProperties,
+                    })}
+                  </li>
+                  {selectedOffer && (
+                    <li>
+                      <strong>{t("product.sections.offer")}:</strong>{" "}
+                      {selectedOffer.name}
+                    </li>
+                  )}
+                </ul>
                 {selectedOffer && (
                   <p className="product-final-price">
                     <strong>{t("product.finalPrice")}:</strong> CHF{" "}
@@ -1115,22 +1177,21 @@ const goNext = async () => {
                 <button
                   type="button"
                   className="btn-primary"
-                  onClick={() => setStep(10)}
+                  onClick={() => setStep(12)}
                 >
                   {t("product.proceedToBilling")}
                 </button>
               </div>
             </div>
           )}
-
-          {step === 10 && (
+          {step === 12 && (
             <div className="product-block">
               <div className="product-block-header">
                 <h2>{t("product.sections.billing")}</h2>
                 <button
                   type="button"
                   className="link-like edit-request-inline"
-                  onClick={() => setStep(9)}
+                  onClick={() => setStep(10)}
                 >
                   {t("product.back")}
                 </button>
@@ -1244,7 +1305,7 @@ const goNext = async () => {
                       console.error("QR-Bill generation error", error);
                       alert(
                         error?.response?.data?.message ||
-                          "Failed to generate QR-Bill.",
+                        "Failed to generate QR-Bill.",
                       );
                     }
                   })}
@@ -1256,6 +1317,7 @@ const goNext = async () => {
               </div>
             </div>
           )}
+
         </section>
       </form>
     </div>

@@ -147,6 +147,21 @@
   "product.summary.incomes": "Sources de revenus : {{count}}",
   "product.summary.wealth": "Relevés de fortune / fiscaux : {{count}}",
   "product.summary.properties": "Biens immobiliers : {{count}}",
+  "product.summary.movedAddress": "Déménagement à une nouvelle adresse",
+  "product.summary.propertiesWithEffectiveCost": "Biens immobiliers avec coût effectif",
+  "product.summary.newProperties": "Nouveaux biens acquis",
+  "product.propertiesHint": "Indiquez tous les biens immobiliers que vous avez possédés en Suisse durant l’année fiscale.",
+  "product.propertiesWithEffectiveCost": "Nombre de biens avec coûts effectifs",
+  "product.propertiesWithEffectiveCostHint": "Indiquez uniquement les biens qui ont généré des dépenses déductibles durant l’année fiscale.",
+  "product.referralTitle": "Comment avez-vous entendu parler de nous ?",
+  "product.referralSubtitle": "Cela nous aide à améliorer notre service.",
+  "product.referralChoose": "Choisissez une option",
+  "product.refGoogle": "Google",
+  "product.refFacebook": "Facebook",
+  "product.refInstagram": "Instagram",
+  "product.refFriend": "Un ami",
+  "product.refOther": "Autre",
+  "product.referralOtherPlaceholder": "Veuillez préciser",
   "product.cancel": "Annuler",
   "product.confirm": "Confirmer ma demande",
   "product.confirming": "Confirmation en cours...",
@@ -164,6 +179,9 @@
   "product.finalPrice": "Prix final",
   "product.proceedToBilling": "Passer à la facturation",
   "product.sections.offer": "Offre sélectionnée",
+  "product.movedAddressStepTitle": "Avez-vous déménagé à une nouvelle adresse ?",
+  "product.movedAddressQuestion": "J’ai changé mon adresse de résidence pendant l’année fiscale",
+  "product.movedAddressHint": "Si vous avez déménagé pendant l’année fiscale, nous pourrions avoir besoin d’informations supplémentaires pour calculer correctement vos obligations fiscales.",
   "pricing.package": "Forfait",
   "dashboard": {
     "title": "Tableau de bord",
@@ -1265,19 +1283,25 @@
       "assignSelected": "Attribuer la sélection",
       "selectVisible": "Sélectionner la liste",
       "clearSelection": "Effacer la sélection",
-      "selectedCount": "Sélection : {{count}}",
+      "selectedCount": "Sélection",
       "selectAdmin": "Sélectionner un administrateur",
       "fileShort": "Dossier #{{id}}",
       "step": "Étape {{n}}",
       "results": "Résultats",
       "count": "Total : {{count}}",
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette déclaration ?",
+      "deleteFailed": "Échec de la suppression de la déclaration.",
       "filter": {
         "unassigned": "Non attribuées",
         "assigned": "Attribuées",
-        "all": "Toutes"
+        "all": "Toutes",
+        "allAdmins": "Tous les administrateurs"
       },
       "status": {
-        "all": "Tous les statuts"
+        "all": "Tous les statuts",
+        "draft": "Brouillon",
+        "pending_pricing": "En attente de tarification",
+        "done": "Terminé"
       },
       "year": {
         "all": "Toutes les années"
@@ -1289,7 +1313,17 @@
         "step": "Étape",
         "created": "Créé",
         "updated": "Mis à jour",
-        "assignment": "Attribution"
+        "assignment": "Attribution",
+        "select": "Sélectionner",
+        "delete": "Supprimer"
+      },
+      "steps": {
+        "all": "Toutes les étapes",
+        "step1": "Étape 1",
+        "step2": "Étape 2",
+        "step3": "Étape 3",
+        "step4": "Étape 4",
+        "step5": "Étape 5"
       },
       "unknownClient": "Client inconnu",
       "errors": {
@@ -1468,14 +1502,12 @@
     "admin.declarations.empty": "Aucun résultat.",
     "admin.declarations.assigned": "Attribué",
     "admin.declarations.unassigned": "Non attribué",
-    "admin.declarations.defaultNote": "Attribué en raison d’une charge prioritaire",
     "admin.declarations.adminIdPlaceholder": "ID Admin (UUID)",
     "admin.declarations.notePlaceholder": "Note d’attribution (optionnelle)",
     "admin.declarations.assigning": "Attribution…",
     "admin.declarations.assignSelected": "Attribuer la sélection",
     "admin.declarations.selectVisible": "Sélectionner la liste",
     "admin.declarations.clearSelection": "Effacer la sélection",
-    "admin.declarations.selectedCount": "Sélection : {{count}}",
     "admin.declarations.selectAdmin": "Sélectionner un administrateur",
     "admin.declarations.fileShort": "Dossier #{{id}}",
     "admin.declarations.step": "Étape {{n}}",
@@ -1493,7 +1525,6 @@
     "admin.declarations.columns.created": "Créé",
     "admin.declarations.columns.updated": "Mis à jour",
     "admin.declarations.columns.assignment": "Attribution",
-    "admin.declarations.columns.select": "Sélectionner",
     "admin.declarations.unknownClient": "Client inconnu",
     "admin.declarations.errors.loadFailed": "Impossible de charger les déclarations.",
     "admin.declarations.errors.assignFailed": "Échec de l’attribution. Veuillez réessayer.",

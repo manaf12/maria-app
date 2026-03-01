@@ -48,13 +48,11 @@
   "auth.forgot.loading": "Wird gesendet...",
   "auth.forgot.success": "Falls diese E-Mail existiert, wurde ein Link zum Zurücksetzen gesendet.",
   "auth.forgot.error": "Link konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
-
   "auth.reset_title": "Passwort zurücksetzen",
   "auth.new_password": "Neues Passwort",
   "auth.update_password": "Passwort aktualisieren",
   "auth.reset_success": "Passwort aktualisiert. Bitte einloggen.",
   "auth.reset_failed": "Passwort zurücksetzen fehlgeschlagen.",
-  
   "topbar.login": "Login",
   "topbar.myAccount": "Mein Konto",
   "menu.getOffer": "Offerte erhalten",
@@ -149,6 +147,21 @@
   "product.summary.incomes": "Einkommensquellen: {{count}}",
   "product.summary.wealth": "Vermögens- / Steuerunterlagen: {{count}}",
   "product.summary.properties": "Liegenschaften: {{count}}",
+  "product.summary.movedAddress": "Umzug an eine neue Adresse",
+  "product.summary.propertiesWithEffectiveCost": "Immobilien mit effektiven Kosten",
+  "product.summary.newProperties": "Neu erworbene Immobilien",
+  "product.propertiesHint": "Geben Sie alle Immobilien an, die Sie im Steuerjahr in der Schweiz besessen haben.",
+  "product.propertiesWithEffectiveCost": "Anzahl der Liegenschaften mit effektiven Kosten",
+  "product.propertiesWithEffectiveCostHint": "Geben Sie nur die Liegenschaften an, für die im Steuerjahr abzugsfähige Ausgaben angefallen sind.",
+  "product.referralTitle": "Wie haben Sie von uns erfahren?",
+  "product.referralSubtitle": "Dies hilft uns, unseren Service zu verbessern.",
+  "product.referralChoose": "Option auswählen",
+  "product.refGoogle": "Google",
+  "product.refFacebook": "Facebook",
+  "product.refInstagram": "Instagram",
+  "product.refFriend": "Ein Freund",
+  "product.refOther": "Andere",
+  "product.referralOtherPlaceholder": "Bitte angeben",
   "product.cancel": "Abbrechen",
   "product.confirm": "Anfrage bestätigen",
   "product.confirming": "Wird bestätigt...",
@@ -166,6 +179,9 @@
   "product.finalPrice": "Endpreis",
   "product.proceedToBilling": "Weiter zur Rechnungsadresse",
   "product.sections.offer": "Ihre gewählte Offerte",
+  "product.movedAddressStepTitle": "Sind Sie an eine neue Adresse umgezogen?",
+  "product.movedAddressQuestion": "Ich habe meine Wohnadresse im Steuerjahr geändert",
+  "product.movedAddressHint": "Falls Sie im Steuerjahr umgezogen sind, benötigen wir möglicherweise zusätzliche Angaben, um Ihre Steuerberechnung korrekt durchzuführen.",
   "pricing.package": "Paket",
   "dashboard": {
     "title": "Dashboard",
@@ -1256,19 +1272,25 @@
       "assignSelected": "Auswahl zuweisen",
       "selectVisible": "Sichtbare auswählen",
       "clearSelection": "Auswahl löschen",
-      "selectedCount": "Ausgewählt: {{count}}",
+      "selectedCount": "Ausgewählt",
       "selectAdmin": "Administrator auswählen",
       "fileShort": "Dossier #{{id}}",
       "step": "Schritt {{n}}",
       "count": "{{count}} Dossiers",
       "results": "Ergebnisse",
+      "confirmDelete": "Sind Sie sicher, dass Sie diese Erklärung löschen möchten?",
+      "deleteFailed": "Löschen der Erklärung fehlgeschlagen.",
       "filter": {
         "unassigned": "Nur nicht zugewiesen",
         "assigned": "Nur zugewiesen",
-        "all": "Alle"
+        "all": "Alle",
+        "allAdmins": "Alle Admins"
       },
       "status": {
-        "all": "Alle Status"
+        "all": "Alle Status",
+        "draft": "Entwurf",
+        "pending_pricing": "Preisberechnung ausstehend",
+        "done": "Abgeschlossen"
       },
       "year": {
         "all": "Alle Jahre"
@@ -1281,7 +1303,16 @@
         "created": "Erstellt",
         "updated": "Aktualisiert",
         "assignment": "Zuweisung",
-        "select": "Auswählen"
+        "select": "Auswählen",
+        "delete": "Löschen"
+      },
+      "steps": {
+        "all": "Alle Schritte",
+        "step1": "Schritt 1",
+        "step2": "Schritt 2",
+        "step3": "Schritt 3",
+        "step4": "Schritt 4",
+        "step5": "Schritt 5"
       },
       "unknownClient": "Unbekannter Kunde",
       "errors": {

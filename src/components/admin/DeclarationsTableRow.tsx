@@ -7,6 +7,7 @@ type Props = {
   item: AdminDeclaration;
   checked: boolean;
   onToggle: (id: string) => void;
+  onDelete?: (id: string) => void;
 };
 
 function shortId(id: string) {
@@ -38,7 +39,7 @@ function StatusBadge({ status }: { status: string }) {
   return <span style={style}>{status}</span>;
 }
 
-export default function DeclarationsTableRow({ item, checked, onToggle }: Props) {
+export default function DeclarationsTableRow({ item, checked, onToggle, onDelete }: Props) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -52,6 +53,7 @@ export default function DeclarationsTableRow({ item, checked, onToggle }: Props)
   const email = item.clientProfile?.user?.email ?? "—";
   const year = item.questionnaireSnapshot?.taxYear ?? "—";
   const offer = item.questionnaireSnapshot?.offer ?? item.offer ?? "—";
+  
 
   function openDetails() {
     navigate(`/declaration/${item.id}`);
@@ -122,6 +124,25 @@ export default function DeclarationsTableRow({ item, checked, onToggle }: Props)
           </span>
         )}
       </td>
+      {onDelete && (
+        <td
+          style={{ padding: "12px 10px" }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            className="btn-soft danger"
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(item.id);
+            }}
+          >
+            {t("admin.declarations.columns.delete", {
+              defaultValue: "Delete",
+            })}
+          </button>
+        </td>
+      )}
     </tr>
   );
 }

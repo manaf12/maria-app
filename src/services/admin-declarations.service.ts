@@ -62,3 +62,8 @@ export async function fetchAdmins(): Promise<AdminUser[]> {
   const res = await axiosClient.get("/admin/declarations/meta/admins");
   return Array.isArray(res.data) ? res.data : [];
 }
+export async function deleteAdminDeclaration(id: string): Promise<void> {
+  // await axiosClient.delete(`/api/admin/declarations/${id}`);
+  // If your backend is mounted without /api, then use:
+  await axiosClient.delete(`/admin/declarations/${id}`);
+}

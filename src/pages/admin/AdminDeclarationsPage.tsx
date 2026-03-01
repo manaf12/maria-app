@@ -1,13 +1,16 @@
- 
+
 import { useEffect, useMemo, useState } from "react";
+import { useAuth } from "../../auth/AuthContext";
 import { useTranslation } from "react-i18next";
 import DeclarationsTableRow from "../../components/admin/DeclarationsTableRow";
+import { isSuperAdminRole } from "../../auth/AdminRoute";
 import {
   fetchAdminDeclarations,
   postAssignDeclarations,
   type AdminDeclaration,
   fetchAdmins,
   type AdminUser,
+  deleteAdminDeclaration,
 } from "../../services/admin-declarations.service";
 
 type AssignMode = "unassigned" | "assigned" | "all";
@@ -23,7 +26,9 @@ function useDebouncedValue<T>(value: T, delayMs: number) {
 
 export default function AdminDeclarationsPage() {
   const { t } = useTranslation();
+  const { user } = useAuth();
 
+  const isSuperAdmin = isSuperAdminRole(user?.roles);
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState<AdminDeclaration[]>([]);
   const [error, setError] = useState("");
@@ -32,6 +37,7 @@ export default function AdminDeclarationsPage() {
   const [mode, setMode] = useState<AssignMode>("unassigned");
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [yearFilter, setYearFilter] = useState<string>("ALL");
+  const [stepFilter, setStepFilter] = useState<"ALL" | "1" | "2" | "3" | "4" | "5">("ALL");
   const [query, setQuery] = useState("");
 
   // bulk assign
@@ -41,6 +47,19 @@ export default function AdminDeclarationsPage() {
   const [assigning, setAssigning] = useState(false);
   const [admins, setAdmins] = useState<AdminUser[]>([]);
   const debouncedQuery = useDebouncedValue(query, 250);
+  const canDelete = isSuperAdminRole(user?.roles);
+  const [assignedAdminFilter, setAssignedAdminFilter] = useState<string>(""); // "" = all admins
+  
+
+  useEffect(() => {
+    fetchAdmins()
+      .then((data) => {
+        setAdmins(data);
+      })
+      .catch((err) => {
+        console.error("Failed to load admins", err);
+      });
+  }, []);
 
   async function load() {
     setError("");
@@ -79,6 +98,7 @@ export default function AdminDeclarationsPage() {
     return Array.from(set).sort((a, b) => Number(b) - Number(a));
   }, [items]);
 
+
   const filtered = useMemo(() => {
     const q = debouncedQuery.trim().toLowerCase();
 
@@ -96,6 +116,18 @@ export default function AdminDeclarationsPage() {
           ? true
           : String(d.questionnaireSnapshot?.taxYear ?? "") === yearFilter,
       )
+      .filter((d) =>
+        stepFilter === "ALL"
+          ? true
+          : d.currentStep === Number(stepFilter)
+      )
+      .filter((d) => {
+        // no admin chosen → keep everything
+        if (!assignedAdminFilter) return true;
+
+        // only declarations assigned to this admin
+        return d.assignedAdminId === assignedAdminFilter;
+      })
       .filter((d) => {
         if (!q) return true;
         const name = `${d.clientProfile?.firstName ?? ""} ${d.clientProfile?.lastName ?? ""
@@ -112,7 +144,7 @@ export default function AdminDeclarationsPage() {
           year.includes(q)
         );
       });
-  }, [items, mode, statusFilter, yearFilter, debouncedQuery]);
+  }, [items, mode, statusFilter, yearFilter, stepFilter, debouncedQuery, assignedAdminFilter]);
 
   const selectedIds = useMemo(
     () =>
@@ -121,6 +153,17 @@ export default function AdminDeclarationsPage() {
         .map(([k]) => k),
     [selected],
   );
+  const handleAdminFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setAssignedAdminFilter(value);
+
+    // 🔴 Fix the logical conflict:
+    // if we were on "unassigned" and user picked an admin,
+    // switch to "assigned" so the filters make sense.
+    if (value && mode === "unassigned") {
+      setMode("assigned");
+    }
+  };
 
   function toggle(id: string) {
     setSelected((p) => ({ ...p, [id]: !p[id] }));
@@ -182,6 +225,30 @@ export default function AdminDeclarationsPage() {
       setAssigning(false);
     }
   }
+  const handleDelete = async (id: string) => {
+    if (!canDelete) return; // extra safety
+
+    if (
+      !window.confirm(
+        t("admin.declarations.confirmDelete")
+      )
+    ) {
+      return;
+    }
+
+    try {
+      await deleteAdminDeclaration(id);
+      // Remove it from UI
+      setItems((prev) => prev.filter((d) => d.id !== id));
+    } catch (err) {
+      console.error(err);
+      alert(
+        t("admin.declarations.deleteFailed")
+      );
+    }
+  };
+
+
 
 
   return (
@@ -223,6 +290,20 @@ export default function AdminDeclarationsPage() {
               {t("admin.declarations.filter.assigned")}
             </option>
           </select>
+          {isSuperAdmin && (
+            <select
+              className="select-base"
+              value={assignedAdminFilter}
+              onChange={handleAdminFilterChange}
+            >
+              <option value="">{t("admin.declarations.filter.allAdmins")}</option>
+              {admins.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.email}
+                </option>
+              ))}
+            </select>
+          )}
 
           <select
             className="select-base"
@@ -230,9 +311,21 @@ export default function AdminDeclarationsPage() {
             onChange={(e) => setStatusFilter(e.target.value)}
           >
             <option value="ALL">{t("admin.declarations.status.all")}</option>
-            <option value="DRAFT">DRAFT</option>
-            <option value="PENDING_PRICING">PENDING_PRICING</option>
-            <option value="DONE">DONE</option>
+            <option value="DRAFT">{t("admin.declarations.status.draft")}</option>
+            <option value="PENDING_PRICING">{t("admin.declarations.status.pending_pricing")}</option>
+            <option value="DONE">{t("admin.declarations.status.done")}</option>
+          </select>
+          <select
+            className="select-base"
+            value={stepFilter}
+            onChange={(e) => setStepFilter(e.target.value as any)}
+          >
+            <option value="ALL">{t("admin.declarations.steps.all")}</option>
+            <option value="1">{t("admin.declarations.steps.step1")}</option>
+            <option value="2">{t("admin.declarations.steps.step2")}</option>
+            <option value="3">{t("admin.declarations.steps.step3")}</option>
+            <option value="4">{t("admin.declarations.steps.step4")}</option>
+            <option value="5">{t("admin.declarations.steps.step5")}</option>
           </select>
 
           <select
@@ -270,46 +363,46 @@ export default function AdminDeclarationsPage() {
       </div>
 
       {/* Bulk Assign */}
-      <div className="bulk-card">
-        <div className="bulk-grid">
-          <div className="muted">
-            {t("admin.declarations.selectedCount", {
-              count: selectedIds.length,
-            })}
+      {isSuperAdmin && (
+        <div className="bulk-card">
+          <div className="bulk-grid">
+            <span>
+              {t("admin.declarations.selectedCount")}: {selectedIds.length}
+            </span>
+
+            <select
+              className="select-base"
+              value={adminId}
+              onChange={(e) => setAdminId(e.target.value)}
+            >
+              <option value="">{t("admin.declarations.selectAdmin")}</option>
+              {admins.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.email} ({a.roles?.join(", ")})
+                </option>
+              ))}
+            </select>
+
+            <input
+              className="input-base"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder={t("admin.declarations.notePlaceholder")}
+            />
+
+            <button
+              className="btn-primary-wide"
+              type="button"
+              disabled={assigning || selectedIds.length === 0 || !adminId.trim()}
+              onClick={assignSelected}
+            >
+              {assigning
+                ? t("admin.declarations.assigning")
+                : t("admin.declarations.assignSelected")}
+            </button>
           </div>
-
-          <select
-            className="select-base"
-            value={adminId}
-            onChange={(e) => setAdminId(e.target.value)}
-          >
-            <option value="">{t("admin.declarations.selectAdmin")}</option>
-            {admins.map((a) => (
-              <option key={a.id} value={a.id}>
-                {a.email} ({a.roles?.join(", ")})
-              </option>
-            ))}
-          </select>
-
-          <input
-            className="input-base"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            placeholder={t("admin.declarations.notePlaceholder")}
-          />
-
-          <button
-            className="btn-primary-wide"
-            type="button"
-            disabled={assigning || selectedIds.length === 0 || !adminId.trim()}
-            onClick={assignSelected}
-          >
-            {assigning
-              ? t("admin.declarations.assigning")
-              : t("admin.declarations.assignSelected")}
-          </button>
         </div>
-      </div>
+      )}
 
       {/* Error */}
       {
@@ -375,6 +468,12 @@ export default function AdminDeclarationsPage() {
                   <th className="table-header-cell">
                     {t("admin.declarations.columns.assignment")}
                   </th>
+                  {canDelete && (
+                    <th className="table-header-cell">
+                      {t("admin.declarations.columns.delete")}
+                    </th>
+                  )}
+
                 </tr>
               </thead>
               <tbody>
@@ -384,13 +483,15 @@ export default function AdminDeclarationsPage() {
                     item={d}
                     checked={!!selected[d.id]}
                     onToggle={toggle}
+                    onDelete={canDelete ? handleDelete : undefined}
                   />
                 ))}
+
               </tbody>
             </table>
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
 }

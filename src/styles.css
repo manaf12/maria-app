@@ -3919,3 +3919,15 @@ input[type="file"] {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 }
+.delete-icon-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+}
+
+.delete-icon-button:hover {
+  opacity: 0.7;
+}
