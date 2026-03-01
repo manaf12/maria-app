@@ -16,6 +16,14 @@ export async function fetchDeclaration(declarationId: string) {
     currentStage: (payload.currentStep ?? payload.currentStage ?? 1) as StageId,
     wealthStatements: payload.questionnaireSnapshot?.wealthStatements ?? 0,
 status: payload.status,
+  clientProfile: {
+    streetAddress: payload.clientProfile?.streetAddress ?? undefined,
+    postalCode: payload.clientProfile?.postalCode ?? undefined,
+    city: payload.clientProfile?.city ?? undefined,
+    user: {
+      email: payload.clientProfile?.user?.email ?? undefined,
+    },
+  },
     summary: {
       maritalStatus: payload.questionnaireSnapshot?.maritalStatus ?? "—",
       childrenCount: payload.questionnaireSnapshot?.childrenCount ?? 0,

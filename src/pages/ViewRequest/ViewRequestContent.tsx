@@ -214,7 +214,24 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
             <dt>{t("product.wealthStatements")}</dt>
             <dd>{data.summary.wealthStatements}</dd>
           </div>
+    <div>
+      <dt>{t("view.summary.address", { defaultValue: "Address" })}</dt>
+      <dd>
+        {[
+          data?.clientProfile?.streetAddress,
+          data?.clientProfile?.postalCode,
+          data?.clientProfile?.city,
+        ]
+          .filter(Boolean)
+          .join(", ") || "—"}
+      </dd>
+    </div>
 
+    {/* ── New: client email ── */}
+    <div>
+      <dt>{t("view.summary.email", { defaultValue: "Email" })}</dt>
+      <dd>{data?.clientProfile?.user?.email ?? "—"}</dd>
+    </div>
         </dl>
       </section>
 

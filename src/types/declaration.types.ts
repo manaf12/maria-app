@@ -69,6 +69,14 @@ export type ViewRequestData = {
   steps?: any[];
   invoice: InvoiceBlock;
   wealthStatements: number;
+  clientProfile?: {         // ← add this
+    streetAddress?: string;
+    postalCode?: string;
+    city?: string;
+    user?: {
+      email?: string;
+    };
+  };
 };
 
 export type User = {

@@ -53,7 +53,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [, setPendingLogin] = useState<boolean>(false);
+const handlePostLoginQuestionnaireClaim = async () => {
+  const questionnaireId = localStorage.getItem("questionnaireId");
+  if (!questionnaireId) return;
 
+  try {
+    await axiosClient.post(`/questionnaire/${questionnaireId}/claim-standalone`);
+    console.log("Questionnaire claimed successfully");
+  } catch (e: any) {
+    // 403 means it belongs to another user — clear it to avoid confusion
+    if (e?.response?.status === 403) {
+      localStorage.removeItem("questionnaireId");
+    }
+    console.error("Failed to claim questionnaire after login:", e);
+  }
+  // Do NOT remove questionnaireId here — ProductPage still needs it to finalize
+};
   // Init: load token then /auth/me
   useEffect(() => {
     (async () => {
@@ -98,34 +113,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   // Login
-  const login = async (email: string, password: string) => {
-    try {
-      const res = await axiosClient.post("auth/login", { email, password });
+const login = async (email: string, password: string) => {
+  try {
+    const res = await axiosClient.post("auth/login", { email, password });
 
-      const token = storeTokenFromResponse(res);
-      if (token) {
-        await refreshMe();
-      } else {
-        throw new Error("Login successful but no token received.");
-      }
-
-      return "OK";
-    } catch (err: any) {
-      if (err?.response?.data?.error === "OTP_REQUIRED") {
-        setPendingLogin(true);
-        return "OTP_REQUIRED";
-      }
-      throw err;
+    const token = storeTokenFromResponse(res);
+    if (token) {
+      await refreshMe();
+      await handlePostLoginQuestionnaireClaim(); // ← add here
+    } else {
+      throw new Error("Login successful but no token received.");
     }
-  };
 
-  const verifyOtp = async (otp: string) => {
-    const res = await axiosClient.post("auth/verify-otp", { otp });
-    storeTokenFromResponse(res);
-    setUser(res.data.user);
-    setPendingLogin(false);
-  };
+    return "OK";
+  } catch (err: any) {
+    if (err?.response?.data?.error === "OTP_REQUIRED") {
+      setPendingLogin(true);
+      return "OTP_REQUIRED";
+    }
+    throw err;
+  }
+};
 
+const verifyOtp = async (otp: string) => {
+  const res = await axiosClient.post("auth/verify-otp", { otp });
+  storeTokenFromResponse(res);
+  setUser(res.data.user);
+  setPendingLogin(false);
+  await handlePostLoginQuestionnaireClaim(); // ← add here
+};
   const registerUser = async (payload: SignupPayload) => {
     const res = await axiosClient.post("auth/register", payload);
 
@@ -140,11 +156,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return "OK";
   };
 
-  const verifySignupOtp = async (email: string, otp: string) => {
-    const res = await axiosClient.post("auth/verify-signup-otp", { email, otp });
-    storeTokenFromResponse(res);
-    setUser(res.data.user);
-  };
+const verifySignupOtp = async (email: string, otp: string) => {
+  const res = await axiosClient.post("auth/verify-signup-otp", { email, otp });
+  storeTokenFromResponse(res);
+  setUser(res.data.user);
+  await handlePostLoginQuestionnaireClaim(); // ← add here
+};
 
   const resendSignupOtp = async (email: string) => {
     await axiosClient.post("auth/resend-signup-otp", { email });

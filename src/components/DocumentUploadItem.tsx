@@ -1,4 +1,3 @@
- 
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -47,8 +46,11 @@ export default function DocumentUploadItem({
   const pickLabel = useMemo(() => {
     if (!selectedFiles.length) return t("documents.upload.chooseFile");
     if (!allowMultiple) return selectedFiles[0].name;
-    return t("documents.upload.filesSelected_one", { count: selectedFiles.length });
-  }, [t,allowMultiple, selectedFiles]);
+    // safer: just show count directly
+    return `${selectedFiles.length} ${t("documents.upload.filesSelected", {
+      defaultValue: "files selected",
+    })}`;
+  }, [t, allowMultiple, selectedFiles]);
 
   const onPickFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
@@ -60,7 +62,8 @@ export default function DocumentUploadItem({
     if (!selectedFiles.length) return;
     setBusy("upload");
     try {
-      if (allowMultiple && onUploadMultiple) await onUploadMultiple(selectedFiles);
+      if (allowMultiple && onUploadMultiple)
+        await onUploadMultiple(selectedFiles);
       else await onUpload(selectedFiles[0]);
       setSelectedFiles([]);
       setShowMissingBox(false);
@@ -173,11 +176,17 @@ export default function DocumentUploadItem({
 
             <button
               type="button"
-              style={{ ...styles.btn, ...styles.btnPrimary, opacity: !selectedFiles.length || busy === "upload" ? 0.5 : 1 }}
+              style={{
+                ...styles.btn,
+                ...styles.btnPrimary,
+                opacity: !selectedFiles.length || busy === "upload" ? 0.5 : 1,
+              }}
               disabled={!selectedFiles.length || busy === "upload"}
               onClick={doUpload}
             >
-              {busy === "upload" ? t("documents.upload.uploading") : t("documents.upload.upload") }
+              {busy === "upload"
+                ? t("documents.upload.uploading")
+                : t("documents.upload.upload")}
             </button>
 
             {canMarkMissing && (
@@ -186,7 +195,11 @@ export default function DocumentUploadItem({
                 style={styles.link}
                 onClick={() => setShowMissingBox(true)}
                 disabled={selectedFiles.length > 0}
-                title={selectedFiles.length ? t("documents.missing.reasonPlaceholder") : undefined }
+                title={
+                  selectedFiles.length
+                    ? t("documents.missing.reasonPlaceholder")
+                    : undefined
+                }
               >
                 {t("documents.missing.cta")}
               </button>
@@ -194,9 +207,17 @@ export default function DocumentUploadItem({
           </div>
 
           {selectedFiles.length > 0 && (
-            <div style={{ marginTop: 12, fontSize: 14, color: "#374151" }}>
-              <strong>Selected:</strong>{" "}
-              {allowMultiple ? `${selectedFiles.length} files` : selectedFiles[0].name}
+            <div style={{ marginTop: 12, fontSize: 13, color: "#374151" }}>
+              <strong>
+                {t("documents.upload.selected", { defaultValue: "Selected" })}:
+              </strong>
+              <ul style={{ margin: "4px 0 0 0", padding: "0 0 0 16px" }}>
+                {selectedFiles.map((f, i) => (
+                  <li key={i} style={{ fontSize: 12, color: "#6B7280" }}>
+                    {f.name}
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
 
@@ -226,11 +247,17 @@ export default function DocumentUploadItem({
                 </button>
                 <button
                   type="button"
-                  style={{ ...styles.btn, ...styles.btnPrimary, opacity: busy === "missing" ? 0.6 : 1 }}
+                  style={{
+                    ...styles.btn,
+                    ...styles.btnPrimary,
+                    opacity: busy === "missing" ? 0.6 : 1,
+                  }}
                   onClick={doMarkMissing}
                   disabled={busy === "missing"}
                 >
-                  {busy === "missing" ? t("documents.missing.saving"): t("documents.missing.confirm")}
+                  {busy === "missing"
+                    ? t("documents.missing.saving")
+                    : t("documents.missing.confirm")}
                 </button>
               </div>
             </div>
@@ -246,7 +273,11 @@ export default function DocumentUploadItem({
             </div>
             <button
               type="button"
-              style={{ ...styles.btn, marginLeft: "auto", opacity: busy === "undo" ? 0.6 : 1 }}
+              style={{
+                ...styles.btn,
+                marginLeft: "auto",
+                opacity: busy === "undo" ? 0.6 : 1,
+              }}
               onClick={doUndo}
               disabled={busy === "undo"}
             >

@@ -567,61 +567,47 @@ export default function ProductPage() {
     setStep((s) => s + 1);
   };
 
-  const handleChooseOffer = async (offer: Offer) => {
-    setSelectedOffer(offer);
+const handleChooseOffer = async (offer: Offer) => {
+  setSelectedOffer(offer);
 
-    const questionnaireId = localStorage.getItem("questionnaireId");
-    if (!questionnaireId) {
-      alert("Session error. Please restart.");
-      return;
-    }
+  const questionnaireId = localStorage.getItem("questionnaireId");
+  if (!questionnaireId) {
+    alert("Session error. Please restart.");
+    return;
+  }
 
-    if (user) {
-      // optionally save draft for logged-in users
-      saveDraft({
-        step: 11,
-        form: getValues(),
-        selectedOfferId: offer.id,
-      });
+  // Save latest answers + offer to draft
+  saveDraft({
+    step: 11,
+    form: getValues(),
+    selectedOfferId: offer.id,
+  });
 
-      setStep(11);   // go to summary step
-      return;
-    }
+  if (user) {
+    setStep(11); // logged in → go to summary
+    return;
+  }
 
-    // NEW: save latest answers before submit-anonymous
-    try {
-      await axiosClient.post(
-        `/questionnaire/${questionnaireId}/save-step-public`,
-        getValues(),
-      );
-    } catch (e) {
-      console.error("Failed to save before submit-anonymous:", e);
-    }
+  // Anonymous → save answers to server, then redirect to login
+  // NO declaration created yet
+  try {
+    await axiosClient.post(
+      `/questionnaire/${questionnaireId}/save-step-public`,
+      { ...getValues(), offer: offer.id }, // save offer in questionnaire data too
+    );
+  } catch (e) {
+    console.error("Failed to save before login redirect:", e);
+  }
 
-    saveDraft({
-      step: 9,
-      form: getValues(),
-      selectedOfferId: offer.id,
-    });
-
-    try {
-      const res = await axiosClient.post(
-        `/questionnaire/${questionnaireId}/submit-anonymous`,
-      );
-
-      const { declarationId, token } = res.data;
-
-      localStorage.setItem("anonymousDeclarationId", declarationId);
-      localStorage.setItem("anonymousToken", token);
-
-      navigate("/login", {
-        state: { redirectTo: "/product", fromAnonymous: true },
-      });
-    } catch (e: any) {
-      console.error("submit-anonymous failed", e);
-      alert("Failed to create temporary quote. Please try again.");
-    }
-  };
+  // Just redirect to login, carry questionnaireId so we can resume
+  navigate("/login", {
+    state: {
+      redirectTo: "/product",
+      fromAnonymous: true,
+      questionnaireId, // ← pass this so after login we resume
+    },
+  });
+};
 
   const handleOfferGuard = (offer: Offer) => {
     if (step < 9) {
@@ -698,7 +684,15 @@ export default function ProductPage() {
                 {errors.taxYear?.message && (
                   <p className="field-error">{String(errors.taxYear.message)}</p>
                 )}
+                
               </div>
+                        <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={handleCancel}
+                >
+                  {t("product.cancel")}
+                </button>
             </StepCard>
           )}
 
@@ -823,8 +817,8 @@ export default function ProductPage() {
               onPrev={goPrev}
               onNext={goNext}
             >
-              <div className="field-row">
-                <label className="checkbox-label">
+              <div className="field-row" >
+                <label className="checkbox-label" style={{display: "flex", justifyContent:"center", alignItems: "center"}} >
                   <input
                     type="checkbox"
                     {...register("movedAddress")}
@@ -1099,15 +1093,14 @@ export default function ProductPage() {
           )}
           {step === 11 && (
             <div className="product-block">
-              <div className="summary-header">
+              <div className="summary-header" style={{display: "flex",alignContent: "center",justifyContent: "center",gap:"8px"}}>
                 <h2>{t("product.sections.summary")}</h2>
-                <button
-                  // type="button"
-                  // className="link-like edit-request-inline"
-                  onClick={() => setStep(9)}
-                  className="edit-btn"
+            <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={handleCancel}
                 >
-                  {t("product.editRequest")}
+                  {t("product.cancel")}
                 </button>
               </div>
 
@@ -1167,12 +1160,14 @@ export default function ProductPage() {
               </div>
 
               <div className="product-actions">
-                <button
-                  type="button"
-                  className="btn-secondary"
-                  onClick={handleCancel}
+       
+                             <button
+                  // type="button"
+                  // className="link-like edit-request-inline"
+                  onClick={() => setStep(9)}
+                  className="edit-btn"
                 >
-                  {t("product.cancel")}
+                  {t("product.editRequest")}
                 </button>
                 <button
                   type="button"

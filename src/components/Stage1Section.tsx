@@ -1,4 +1,3 @@
- 
 import React, { useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
@@ -43,7 +42,7 @@ export default function Stage1Section({
 
   const [confirming, setConfirming] = React.useState(false);
   const [step1Questions, setStep1Questions] = React.useState<Step1Question[]>(
-    [],
+    []
   );
   const [questionsLoading, setQuestionsLoading] = React.useState(false);
 
@@ -53,7 +52,7 @@ export default function Stage1Section({
       setQuestionsLoading(true);
       try {
         const res = await axiosClient.get<{ questions: Step1Question[] }>(
-          `/files/${declaration.id}/step1/questions`,
+          `/files/${declaration.id}/step1/questions`
         );
         if (!mounted) return;
         setStep1Questions(res.data.questions ?? []);
@@ -77,11 +76,14 @@ export default function Stage1Section({
   } | null>(null);
 
   const step1 = useMemo(() => {
-    return (declaration.steps ?? []).find((s) => s.id === "documentsPreparation");
+    return (declaration.steps ?? []).find(
+      (s) => s.id === "documentsPreparation"
+    );
   }, [declaration.steps]);
 
   const step1Status = (step1 as any)?.status ?? "PENDING";
   const isDone = step1Status === "DONE" || step1Status === "COMPLETED";
+  const [uploadError, setUploadError] = React.useState<string | null>(null);
 
   // Step accordion (UI only)
   const [isOpen, setIsOpen] = React.useState(true);
@@ -102,7 +104,7 @@ export default function Stage1Section({
     setConfirmError(null);
     try {
       await axiosClient.post(
-        `/orders/${declaration.id}/steps/documentsPreparation/confirm`,
+        `/orders/${declaration.id}/steps/documentsPreparation/confirm`
       );
       await invalidateDeclaration();
     } catch (e: any) {
@@ -126,7 +128,7 @@ export default function Stage1Section({
 
   const declaredMissingMap = useMemo(() => {
     const documentsStep = (declaration.steps ?? []).find(
-      (s) => s.id === "documentsPreparation",
+      (s) => s.id === "documentsPreparation"
     );
     const missingMeta = documentsStep?.meta?.missingDocs ?? [];
     const map: Record<string, boolean> = {};
@@ -140,42 +142,48 @@ export default function Stage1Section({
     declaration.questionnaireSnapshot?.step1Answers ?? {};
 
   const uploadOne = async (docType: string, file: File) => {
-    const form = new FormData();
-    form.append("file", file);
-    form.append("documentType", docType);
-
-    await axiosClient.post(`/files/${declaration.id}/upload`, form, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    await invalidateDeclaration();
-    onUploadDocuments?.();
+    setUploadError(null);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      form.append("documentType", docType);
+      await axiosClient.post(`/files/${declaration.id}/upload`, form, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      await invalidateDeclaration();
+      onUploadDocuments?.();
+    } catch (e: any) {
+      setUploadError(e?.response?.data?.message ?? t("step1.uploadFailed"));
+    }
   };
 
   const uploadMultiple = async (docType: string, files: File[]) => {
-    const form = new FormData();
-    files.forEach((f) => form.append("files", f));
-    form.append("documentType", docType);
-
-    await axiosClient.post(`/files/${declaration.id}/upload-multiple`, form, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    await invalidateDeclaration();
-    onUploadDocuments?.();
+    setUploadError(null);
+    try {
+      const form = new FormData();
+      files.forEach((f) => form.append("files", f));
+      form.append("documentType", docType);
+      await axiosClient.post(`/files/${declaration.id}/upload-multiple`, form, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      await invalidateDeclaration();
+      onUploadDocuments?.();
+    } catch (e: any) {
+      setUploadError(e?.response?.data?.message ?? t("step1.uploadFailed"));
+    }
   };
 
   const markMissing = async (docType: string, reason?: string) => {
     await axiosClient.post(
       `/files/${declaration.id}/documents/${docType}/missing`,
-      { reason },
+      { reason }
     );
     await invalidateDeclaration();
   };
 
   const undoMissing = async (docType: string) => {
     await axiosClient.delete(
-      `/files/${declaration.id}/documents/${docType}/missing`,
+      `/files/${declaration.id}/documents/${docType}/missing`
     );
     await invalidateDeclaration();
   };
@@ -214,7 +222,6 @@ export default function Stage1Section({
     );
   }
 
-
   return (
     <div className="rounded-2xl border bg-white overflow-hidden">
       {/* Accordion Header (click to open/close) */}
@@ -237,9 +244,7 @@ export default function Stage1Section({
               {t("step1.title")}
             </h3>
 
-            <p className="mt-1 text-sm text-gray-500">
-              {t("step1.subtitle")}
-            </p>
+            <p className="mt-1 text-sm text-gray-500">{t("step1.subtitle")}</p>
 
             {/* DOWN + SIMPLE (status + progress) */}
             <div className="mt-3 flex items-center flex-wrap">
@@ -261,8 +266,9 @@ export default function Stage1Section({
           {/* Chevron */}
           <span
             aria-hidden="true"
-            className={`inline-flex items-center justify-center w-9 h-9 rounded-xl border bg-white text-gray-600 transition-transform ${isOpen ? "rotate-180" : "rotate-0"
-              }`}
+            className={`inline-flex items-center justify-center w-9 h-9 rounded-xl border bg-white text-gray-600 transition-transform ${
+              isOpen ? "rotate-180" : "rotate-0"
+            }`}
           >
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
               <path
@@ -336,7 +342,9 @@ export default function Stage1Section({
                         <span
                           className={`${BadgeBase} bg-green-50 text-green-700 border-green-200`}
                         >
-                          {t("step1.uploadedCount", { count: uploadedFiles.length })}
+                          {t("step1.uploadedCount", {
+                            count: uploadedFiles.length,
+                          })}
                         </span>
                       )}
 
@@ -348,13 +356,15 @@ export default function Stage1Section({
                         </span>
                       )}
 
-                      {!isMissing && uploadedFiles.length === 0 && !isOthers && (
-                        <span
-                          className={`${BadgeBase} bg-gray-50 text-gray-700 border-gray-200`}
-                        >
-                          {t("step1.pending")}
-                        </span>
-                      )}
+                      {!isMissing &&
+                        uploadedFiles.length === 0 &&
+                        !isOthers && (
+                          <span
+                            className={`${BadgeBase} bg-gray-50 text-gray-700 border-gray-200`}
+                          >
+                            {t("step1.pending")}
+                          </span>
+                        )}
                     </div>
                   </div>
 
@@ -372,7 +382,11 @@ export default function Stage1Section({
                             >
                               PDF
                             </span>
-
+                            {uploadError && (
+                              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                                {uploadError}
+                              </div>
+                            )}
                             <span className="truncate text-sm font-medium text-gray-800">
                               {file.originalName}
                             </span>
@@ -412,15 +426,19 @@ export default function Stage1Section({
                       documentType={docType}
                       uploadedFiles={uploadedFiles}
                       isMissing={isMissing}
-                      allowMultiple={isOthers}
+                      allowMultiple={true}
                       disableMissing={isOthers}
                       onUpload={(file) => uploadOne(docType, file)}
-                      onUploadMultiple={(files) => uploadMultiple(docType, files)}
+                      onUploadMultiple={(files) =>
+                        uploadMultiple(docType, files)
+                      }
                       onMarkMissing={(reason) => markMissing(docType, reason)}
                       onUndoMissing={() => undoMissing(docType)}
                     />
                   ) : (
-                    <p className="text-sm text-gray-500">{t("step1.notEditable")}</p>
+                    <p className="text-sm text-gray-500">
+                      {t("step1.notEditable")}
+                    </p>
                   )}
                 </div>
               );
@@ -429,27 +447,32 @@ export default function Stage1Section({
 
           {/* Step status + confirm (visual upgrade for DONE) */}
           <div
-            className={`rounded-xl border p-4 ${isDone ? "bg-green-50 border-green-200" : "bg-white"
-              }`}
+            className={`rounded-xl border p-4 ${
+              isDone ? "bg-green-50 border-green-200" : "bg-white"
+            }`}
           >
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0 flex flex-col gap-1">
                 <div
-                  className={`text-xs leading-tight ${isDone ? "text-green-800/80" : "text-gray-500"
-                    }`}
+                  className={`text-xs leading-tight ${
+                    isDone ? "text-green-800/80" : "text-gray-500"
+                  }`}
                 >
                   {t("step1.stepStatusLabel")}
                 </div>
 
                 <div
-                  className={`text-sm font-semibold leading-tight ${isDone ? "text-green-900" : "text-gray-900"
-                    }`}
+                  className={`text-sm font-semibold leading-tight ${
+                    isDone ? "text-green-900" : "text-gray-900"
+                  }`}
                 >
-                  <StatusBadge status={step1Status} t={t}/>
+                  <StatusBadge status={step1Status} t={t} />
 
                   {!isDone &&
                     String(
-                      t(`stepStatus.${step1Status}`, { defaultValue: step1Status })
+                      t(`stepStatus.${step1Status}`, {
+                        defaultValue: step1Status,
+                      })
                     )}
                 </div>
 
@@ -471,22 +494,29 @@ export default function Stage1Section({
                 }}
               >
                 {isDone
-                  ? String(t(`stepStatus.${step1Status}`, { defaultValue: step1Status }))
+                  ? String(
+                      t(`stepStatus.${step1Status}`, {
+                        defaultValue: step1Status,
+                      })
+                    )
                   : confirming
-                    ? t("step1.confirming")
-                    : t("step1.confirmStep1")}
+                  ? t("step1.confirming")
+                  : t("step1.confirmStep1")}
               </button>
             </div>
 
             {confirmError && (
               <div className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm">
-                <div className="font-semibold text-red-700">{t("step1.notReady")}</div>
+                <div className="font-semibold text-red-700">
+                  {t("step1.notReady")}
+                </div>
 
-                {import.meta.env.MODE === "development" && confirmError.message && (
-                  <div className="mt-1 text-xs text-red-700/80">
-                    {String(confirmError.message ?? "")}
-                  </div>
-                )}
+                {import.meta.env.MODE === "development" &&
+                  confirmError.message && (
+                    <div className="mt-1 text-xs text-red-700/80">
+                      {String(confirmError.message ?? "")}
+                    </div>
+                  )}
 
                 {(confirmError.missingDocs?.length ?? 0) > 0 && (
                   <div className="mt-2">
@@ -520,5 +550,4 @@ export default function Stage1Section({
       )}
     </div>
   );
-
 }
