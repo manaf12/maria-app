@@ -127,8 +127,9 @@
   "product.sections.situation": "Your tax situation",
   "product.incomeSources": "Number of income sources",
   "product.incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
+  "product.childrenHint": "Include all dependent children (up to 18 years old, or up to 25 if still studying).",
   "product.wealthStatements": "Number of wealth statements",
-  "product.wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
+  "product.wealthHint": "Examples: bank statements, e-statements, securities statements, participations.",
   "product.properties": "Number of real-estate properties",
   "product.propertiesDetailsTitle": "Real-estate details",
   "product.propertiesCount": "How many properties?",
@@ -157,9 +158,9 @@
   "product.summary.wealth": "Wealth / tax statements: {{count}}",
   "product.summary.properties": "Real-estate properties: {{count}}",
   "product.summary.movedAddress": "Moved to a new address",
-  "product.summary.propertiesWithEffectiveCost": "Properties with effective cost",
+  "product.summary.propertiesWithEffectiveCost": "Number of properties for which you wish to deduct effective expenses",
   "product.summary.newProperties": "New properties acquired",
-  "product.propertiesHint": "Include all real-estate properties you owned in Switzerland during the tax year.",
+  "product.propertiesHint": "Include all real estate properties owned during the fiscal year (e.g., land, apartments, houses).",
   "product.propertiesWithEffectiveCost": "Number of properties with effective costs",
   "product.propertiesWithEffectiveCostHint": "Include only properties that generated deductible expenses during the tax year.",
   "product.cancel": "Cancel",
@@ -305,7 +306,8 @@
       "completed": "Your documents have been submitted."
     },
     "step2": {
-      "description": "We are reviewing your documents. If additional information is required, you can answer the questions below.",
+      "title":"Step 2 — Documents Review",
+      "description": "We are reviewing your tax declaration documents. If additional information is required, you can write a comment below.",
       "answerPlaceholder": "Your answer here…",
       "submit": "Submit answers and documents",
       "completed": "Your additional answers have been submitted and are being reviewed.",
@@ -330,6 +332,7 @@
       "you": "You",
       "unknown": "Unknown",
       "unknownTime": "unknown time",
+      "filesLabel": "Files uploaded",
       "admin": {
         "description": "We are reviewing the uploaded documents. You may review, download, and request additional details if required.",
         "filesTitle": "Uploaded files",
@@ -339,6 +342,7 @@
       }
     },
     "step3": {
+      "title":"Step 3 — Tax Return Preparation",
       "text": "Your tax declaration is currently being prepared by Taxero. This step is handled entirely by our team.",
       "eta": "Estimated preparation time: around 2 weeks after all documents are complete.",
       "confirmDraftReceipt": "Are you sure you want to confirm receipt of the declaration?",
@@ -356,6 +360,7 @@
       }
     },
     "step4": {
+      "title": "Step 4 — Review & Validation",
       "description": "Your tax declaration is ready. Please review it carefully and confirm.",
       "noDraftYet": "No file uploaded yet.",
       "waitingForAdmin": "Waiting for admin to upload the draft.",
@@ -364,6 +369,8 @@
       "confirming": "Confirming...",
       "confirmReceipt": "Confirm you received the declaration",
       "submitConfirm": "Are you sure you want to submit the declaration?",
+      "commentSubmitted":  "Comment submitted successfully.",
+      "uploadFile": "Upload file",
       "addComment": {
         "label": "Add Comment",
         "forClient": "(for client)",
@@ -378,6 +385,7 @@
       }
     },
     "step5": {
+      "title": "Step 5 — Submission",
       "description": "This is the final stage. Please review the submission information and upload any required documents.",
       "date": "Submission date",
       "method": "Submission method",
@@ -389,10 +397,15 @@
       "user1": "user",
       "noAdminFilesYet": "No admin files yet.",
       "noUserFilesYet": "No user files yet.",
+      "finalUploadSuccess": "Final upload successful",
+      "userFilesCount": "Your files",
+      "adminFilesCount":"Admin files",
       "admin": {
         "uploadFinalLabel": "Admin: upload final file (PDF)",
         "uploadFinalBtn": "Upload final file",
-        "markFullyCompleted": "Mark as Fully Completed & Finish Declaration"
+        "markFullyCompleted": "Mark as Fully Completed & Finish Declaration",
+        "markFullyCompletedHint":"Mark this request as fully completed."
+
       },
       "user": {
         "uploadNoticeLabel": "Upload assessment notice (if any)",
@@ -605,47 +618,73 @@
     "backToLogin": "Back to login"
   },
   "accountSettings": {
-    "title": "Account Settings",
-    "subtitle": "Manage your personal information, language preferences and security options.",
-    "loading": "Loading your account settings…",
-    "save": "Save changes",
-    "saving": "Saving…",
-    "saveSuccess": "Your account settings have been updated.",
-    "saveError": "We could not save your changes. Please try again.",
-    "errors": {
-      "passwordMismatch": "The new passwords do not match."
-    },
+    "title": "Account settings",
+    "subtitle": "Manage your personal information and password.",
+    "loading": "Loading…",
     "personal": {
       "title": "Personal information",
       "desc": "Update the details linked to your Taxero account.",
       "firstName": "First name",
       "lastName": "Last name",
       "email": "Email",
-      "phone": "Phone number"
-    },
-    "language": {
-      "title": "Language preferences",
-      "desc": "Choose the language of the interface. It will be used for your future logins.",
-      "label": "Display language",
-      "en": "English",
-      "fr": "French",
-      "de": "German"
+      "phone": "Phone",
+      "emailNotAvailable": "Not available"
     },
     "security": {
       "title": "Account security",
-      "desc": "Change your password and manage two-factor authentication.",
+      "desc": "Change your password.",
       "currentPassword": "Current password",
       "newPassword": "New password",
-      "confirmNewPassword": "Confirm new password",
-      "twoFactorLabel": "Two-factor authentication (2FA)",
-      "twoFactorToggle": "Enable 2FA for additional security when signing in."
+      "confirmNewPassword": "Confirm new password"
+    },
+    "password": {
+      "show": "Show password",
+      "hide": "Hide password"
+    },
+    "passwordStrength": {
+      "label": "Strength",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong"
     },
     "delete": {
       "title": "Delete account",
-      "desc": "Deleting your account will deactivate your access and may permanently remove your data according to our internal policy.",
+      "desc": "Delete your account and all associated data.",
       "button": "Delete my account",
-      "confirmQuestion": "Are you sure you want to delete your account? This action cannot be undone.",
-      "error": "We could not delete your account. Please contact support if the problem persists."
+      "confirmQuestion": "Are you sure you want to delete your account?",
+      "error": "Failed to delete account."
+    },
+    "reset": "Reset",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "noChanges": "No changes to save.",
+    "saveSuccess": "Saved successfully.",
+    "saveError": "Failed to save settings.",
+    "saveFailed": "Saving failed:",
+    "partialSaved": "Some changes were saved, but not all:",
+    "loadError": "Failed to load settings.",
+    "outcome": {
+      "personalSaved": "Name updated",
+      "passwordSaved": "Password updated"
+    },
+    "errors": {
+      "currentRequired": "Current password is required.",
+      "newRequired": "New password is required.",
+      "confirmRequired": "Please confirm your new password.",
+      "passwordMismatch": "New password and confirmation do not match.",
+      "minLength": "Password must be at least 8 characters.",
+      "mustDiffer": "New password must be different from the current password.",
+      "currentIncorrect": "Current password is incorrect.",
+      "tooWeak": "Password is too weak. Add numbers and symbols."
+    }
+  },
+  "password": {
+    "hints": {
+      "minLength": "Use at least 8 characters",
+      "uppercase": "Add an uppercase letter",
+      "lowercase": "Add a lowercase letter",
+      "number": "Add a number",
+      "symbol": "Add a special character"
     }
   },
   "product": {
@@ -684,7 +723,7 @@
     "incomeSources": "Number of income sources",
     "incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
     "wealthStatements": "Number of wealth statements",
-    "wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
+    "wealthHint": "Examples: bank statements, e-statements, securities statements, participations.",
     "properties": "Number of real-estate properties",
     "propertiesDetailsTitle": "Real-estate details",
     "propertiesCount": "How many properties?",
@@ -775,7 +814,8 @@
       "personalInformation": "Personal information",
       "professionalExpenses": "Professional expenses",
       "housing": "Housing",
-      "taxAuthorityNumbers": "Tax authority numbers"
+      "taxAuthorityNumbers": "Tax authority numbers",
+      "spouseProfessionalExpenses": "Your spouse/partner’s professional expenses"
     },
     "questions": {
       "personalChanges": "Personal changes since last year (marriage, divorce, move, etc.)",
@@ -786,7 +826,11 @@
       "netAnnualRentVD_GE": "Net annual rent (VD / GE) (CHF)",
       "canton": "Canton",
       "taxpayerNumber": "Taxpayer number",
-      "controlOrDeclarationCode": "Control / declaration code (if available)"
+      "controlOrDeclarationCode": "Control / declaration code (if available)",
+      "spouse_transportMode": "How does your spouse/partner commute to work?",
+      "spouse_distanceToWorkKm": "Distance from spouse/partner’s home to workplace (km, one-way)",
+      "spouse_weeklyTripsToWork": "How many trips to the workplace per week for your spouse/partner?",
+      "spouse_mealsOutsidePerWeek": "How many meals outside per week for your spouse/partner (work-related)?"
     },
     "options": {
       "transportMode": {
@@ -810,10 +854,10 @@
       "title": "Previous tax return *"
     },
     "salary_certificate": {
-      "title": "Salary certificate *"
+      "title": "Salary certificates, pension statements, other income *"
     },
     "bank_statement": {
-      "title": "Bank statement *"
+      "title": "Bank statements, E-statements, Securities statements, Participations *"
     },
     "pillar_3_certificate": {
       "title": "Pillar 3 certificate *"
@@ -845,7 +889,7 @@
     },
     "missing": {
       "cta": "I don’t have this document",
-      "reasonPlaceholder": "You may leave a comment",
+      "reasonPlaceholder": "Explanation (optional)",
       "confirm": "Confirm not available",
       "saving": "Saving..."
     }
@@ -853,7 +897,8 @@
   "stepStatus": {
     "PENDING": "Pending",
     "DONE": "Done",
-    "IN_PROGRESS": "In progress"
+    "IN_PROGRESS": "In progress",
+    "done": "Completed"
   },
   "filesModal": {
     "title": "Uploaded Files",
@@ -1451,7 +1496,7 @@
     "product.incomeSources": "Number of income sources",
     "product.incomeHint": "Examples: salaries, AVS pensions, LPP pensions, self-employment.",
     "product.wealthStatements": "Number of wealth statements",
-    "product.wealthHint": "Examples: bank statements, e-tax statements, securities statements, participations.",
+    "product.wealthHint": "Examples: bank statements, e-statements, securities statements, participations.",
     "product.properties": "Number of real-estate properties",
     "product.propertiesDetailsTitle": "Real-estate details",
     "product.propertiesCount": "How many properties?",
@@ -1530,7 +1575,7 @@
     "step1.sections.personalInformation": "Personal information",
     "step1.sections.professionalExpenses": "Professional expenses",
     "step1.sections.housing": "Housing",
-    "step1.sections.taxAuthorityNumbers": "Tax authority numbers",
+    "step1.sections.taxAuthorityNumbers": "Tax IDs",
     "step1.questions.personalChanges": "Personal changes since last year (marriage, divorce, move, etc.)",
     "step1.questions.transportMode": "How do you commute to work?",
     "step1.questions.distanceToWorkKm": "Distance from home to workplace (km, one-way)",
@@ -1552,29 +1597,5 @@
     "step1.options.canton.OTHER": "Other"
   },
   "common.select": "Select...",
-  "step1.title": "Step 1 — Documents & Questions",
-  "step1.additionalQuestions": "Additional questions",
-  "step1.sections.personalInformation": "Personal information",
-  "step1.sections.professionalExpenses": "Professional expenses",
-  "step1.sections.housing": "Housing",
-  "step1.sections.taxAuthorityNumbers": "Tax authority numbers",
-  "step1.questions.personalChanges": "Personal changes since last year (marriage, divorce, move, etc.)",
-  "step1.questions.transportMode": "How do you commute to work?",
-  "step1.questions.distanceToWorkKm": "Distance from home to workplace (km, one-way)",
-  "step1.questions.weeklyTripsToWork": "How many trips to the workplace per week?",
-  "step1.questions.mealsOutsidePerWeek": "How many meals outside per week (work-related)?",
-  "step1.questions.netAnnualRentVD_GE": "Net annual rent (VD / GE) (CHF)",
-  "step1.questions.canton": "Canton",
-  "step1.questions.taxpayerNumber": "Taxpayer number",
-  "step1.questions.controlOrDeclarationCode": "Control / declaration code (if available)",
-  "step1.options.transportMode.publicTransport": "Public transport",
-  "step1.options.transportMode.bicycle": "Bicycle",
-  "step1.options.transportMode.vehicle": "Car / vehicle",
-  "step1.options.canton.FR": "Fribourg (FR)",
-  "step1.options.canton.BE": "Bern (BE)",
-  "step1.options.canton.VD": "Vaud (VD)",
-  "step1.options.canton.VS": "Valais (VS)",
-  "step1.options.canton.NE": "Neuchâtel (NE)",
-  "step1.options.canton.GE": "Geneva (GE)",
-  "step1.options.canton.OTHER": "Other"
+  "common.upload": "Upload"
 }

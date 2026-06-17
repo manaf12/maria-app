@@ -123,12 +123,13 @@
   "product.maritalStatus": "Statut civil",
   "product.marital.single": "Célibataire",
   "product.marital.married": "Marié·e",
-  "product.childrenCount": "Nombre d’enfants",
+  "product.childrenCount": "Nombre d’enfant à charge",
   "product.sections.situation": "Votre situation fiscale",
   "product.incomeSources": "Nombre de sources de revenus",
   "product.incomeHint": "Exemples : salaires, rentes AVS, rentes LPP, activité indépendante.",
+  "product.childrenHint": "Incluez tous les enfants à charge (jusqu’à 18 ans, ou jusqu’à 25 ans s’ils sont encore en formation).",
   "product.wealthStatements": "Nombre de relevés de fortune fiscales",
-  "product.wealthHint": "Exemples : relevés bancaires, e-tax, relevés de titres, participations.",
+  "product.wealthHint": "Exemples : Attestation bancaire, e-relevés, relevés de titres, participations.",
   "product.properties": "Nombre de biens immobiliers",
   "product.propertiesDetailsTitle": "Détails des biens immobiliers",
   "product.propertiesCount": "Combien de biens en tout ?",
@@ -148,9 +149,9 @@
   "product.summary.wealth": "Relevés de fortune / fiscaux : {{count}}",
   "product.summary.properties": "Biens immobiliers : {{count}}",
   "product.summary.movedAddress": "Déménagement à une nouvelle adresse",
-  "product.summary.propertiesWithEffectiveCost": "Biens immobiliers avec coût effectif",
+  "product.summary.propertiesWithEffectiveCost": "Nombre de biens pour lesquels vous souhaitez déduire des coûts effectifs",
   "product.summary.newProperties": "Nouveaux biens acquis",
-  "product.propertiesHint": "Indiquez tous les biens immobiliers que vous avez possédés en Suisse durant l’année fiscale.",
+  "product.propertiesHint": "Incluez tous les biens immobiliers détenus durant l’année fiscale (p. ex. terrains, appartements, maisons).",
   "product.propertiesWithEffectiveCost": "Nombre de biens avec coûts effectifs",
   "product.propertiesWithEffectiveCostHint": "Indiquez uniquement les biens qui ont généré des dépenses déductibles durant l’année fiscale.",
   "product.referralTitle": "Comment avez-vous entendu parler de nous ?",
@@ -261,7 +262,7 @@
     "formSummary": "Résumé du formulaire initial",
     "summary": {
       "maritalStatus": "État civil",
-      "childrenCount": "Nombre d’enfants",
+      "childrenCount": "Nombre d’enfant à charge",
       "incomes": "Détails des revenus",
       "properties": "Biens immobiliers",
       "offer": "Offre sélectionnée",
@@ -304,7 +305,8 @@
       "completed": "Vos documents ont été soumis."
     },
     "step2": {
-      "description": "Nous vérifions vos documents. Si des informations complémentaires sont nécessaires, vous pouvez répondre aux questions ci-dessous.",
+      "title": "Étape 2 — Examen des documents",
+      "description": "Nous examinons vos documents. Si des informations supplémentaires sont requises, vous pouvez écrire un commentaire ci-dessous.",
       "answerPlaceholder": "Votre réponse ici…",
       "submit": "Soumettre les réponses et documents",
       "completed": "Vos réponses complémentaires ont été soumises et sont en cours de vérification.",
@@ -338,6 +340,7 @@
       }
     },
     "step3": {
+      "title": "Étape 3 — Préparation de la déclaration fiscale",
       "text": "Votre déclaration d’impôts est actuellement en cours de préparation par Taxero. Cette étape est entièrement prise en charge par notre équipe.",
       "eta": "Temps de préparation estimé : environ 2 semaines après la réception de tous les documents complets.",
       "confirmDraftReceipt": "Êtes-vous sûr de vouloir confirmer la réception de la déclaration ?",
@@ -356,13 +359,17 @@
       }
     },
     "step4": {
+      "title": "Étape 4 — Révision & Validation",
       "description": "Votre déclaration d’impôts est prête. Veuillez le vérifier attentivement et confirmer.",
       "noDraftYet": "Aucun fichier  n’a encore été téléchargé.",
       "waitingForAdmin": "En attente du téléchargement du brouillon par l’administrateur.",
       "uploadedAt": "Téléversé :",
       "lastComment": "Dernier commentaire :",
       "confirming": "Confirmation en cours...",
+      "submitConfirm": "Êtes-vous sûr de vouloir soumettre la déclaration ?",
       "confirmReceipt": "Confirmez la réception de votre déclaration",
+      "commentSubmitted": "Commentaire envoyé avec succès.",
+      "uploadFile": "Téléverser un fichier",
       "addComment": {
         "label": "Ajouter un commentaire",
         "forClient": "(pour le client)",
@@ -377,6 +384,7 @@
       }
     },
     "step5": {
+      "title": "Étape 5 — Soumission",
       "description": "Ceci est l’étape finale. Veuillez vérifier les informations de soumission et télécharger les documents nécessaires.",
       "date": "Date de soumission",
       "method": "Méthode de soumission",
@@ -388,10 +396,14 @@
       "user1": "utilisateur",
       "noAdminFilesYet": "Aucun fichier administrateur pour le moment.",
       "noUserFilesYet": "Aucun fichier utilisateur pour le moment.",
+      "finalUploadSuccess":"Téléchargement final réussi",
+      "userFilesCount": "Vos fichiers",
+      "adminFilesCount": "Fichiers admin",
       "admin": {
         "uploadFinalLabel": "Admin : téléverser le fichier final (PDF)",
         "uploadFinalBtn": "Téléverser le fichier final",
-        "markFullyCompleted": "Marquer comme totalement terminé & finaliser la déclaration"
+        "markFullyCompleted": "Marquer comme totalement terminé & finaliser la déclaration",
+        "markFullyCompletedHint": "Marquer cette demande comme entièrement complétée."
       },
       "user": {
         "uploadNoticeLabel": "Téléverser l’avis d’imposition (si disponible)",
@@ -605,46 +617,72 @@
   },
   "accountSettings": {
     "title": "Paramètres du compte",
-    "subtitle": "Gérez vos informations personnelles, vos préférences de langue et vos options de sécurité.",
-    "loading": "Chargement de vos paramètres de compte…",
-    "save": "Enregistrer les modifications",
-    "saving": "Enregistrement…",
-    "saveSuccess": "Vos paramètres de compte ont été mis à jour.",
-    "saveError": "Impossible d’enregistrer vos modifications. Veuillez réessayer.",
-    "errors": {
-      "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas."
-    },
+    "subtitle": "Gérez vos informations personnelles et votre mot de passe.",
+    "loading": "Chargement…",
     "personal": {
       "title": "Informations personnelles",
       "desc": "Mettez à jour les informations liées à votre compte Taxero.",
       "firstName": "Prénom",
       "lastName": "Nom",
-      "email": "E-mail",
-      "phone": "Numéro de téléphone"
-    },
-    "language": {
-      "title": "Préférences de langue",
-      "desc": "Choisissez la langue de l’interface. Elle sera utilisée pour vos prochaines connexions.",
-      "label": "Langue d’affichage",
-      "en": "Anglais",
-      "fr": "Français",
-      "de": "Allemand"
+      "email": "Email",
+      "phone": "Téléphone",
+      "emailNotAvailable": "Non disponible"
     },
     "security": {
       "title": "Sécurité du compte",
-      "desc": "Modifiez votre mot de passe et gérez la double authentification.",
+      "desc": "Modifiez votre mot de passe.",
       "currentPassword": "Mot de passe actuel",
       "newPassword": "Nouveau mot de passe",
-      "confirmNewPassword": "Confirmez le nouveau mot de passe",
-      "twoFactorLabel": "Authentification à deux facteurs (2FA)",
-      "twoFactorToggle": "Activer la 2FA pour une sécurité renforcée lors de la connexion."
+      "confirmNewPassword": "Confirmer le nouveau mot de passe"
+    },
+    "password": {
+      "show": "Afficher le mot de passe",
+      "hide": "Masquer le mot de passe"
+    },
+    "passwordStrength": {
+      "label": "Sécurité",
+      "weak": "Faible",
+      "medium": "Moyen",
+      "strong": "Fort"
     },
     "delete": {
       "title": "Supprimer le compte",
-      "desc": "La suppression de votre compte désactivera votre accès et peut entraîner la suppression définitive de vos données conformément à notre politique interne.",
+      "desc": "Supprimez votre compte et toutes les données associées.",
       "button": "Supprimer mon compte",
-      "confirmQuestion": "Êtes-vous sûr(e) de vouloir supprimer votre compte ? Cette action est irréversible.",
-      "error": "Impossible de supprimer votre compte. Veuillez contacter le support si le problème persiste."
+      "confirmQuestion": "Êtes-vous sûr de vouloir supprimer votre compte ?",
+      "error": "Échec de la suppression du compte."
+    },
+    "reset": "Réinitialiser",
+    "save": "Enregistrer les modifications",
+    "saving": "Enregistrement…",
+    "noChanges": "Aucune modification à enregistrer.",
+    "saveSuccess": "Enregistré avec succès.",
+    "saveError": "Impossible d'enregistrer les paramètres.",
+    "saveFailed": "Échec de l'enregistrement :",
+    "partialSaved": "Certaines modifications ont été enregistrées, mais pas toutes :",
+    "loadError": "Impossible de charger les paramètres.",
+    "outcome": {
+      "personalSaved": "Nom mis à jour",
+      "passwordSaved": "Mot de passe mis à jour"
+    },
+    "errors": {
+      "currentRequired": "Le mot de passe actuel est requis.",
+      "newRequired": "Le nouveau mot de passe est requis.",
+      "confirmRequired": "Veuillez confirmer votre nouveau mot de passe.",
+      "passwordMismatch": "Le nouveau mot de passe et la confirmation ne correspondent pas.",
+      "minLength": "Le mot de passe doit contenir au moins 8 caractères.",
+      "mustDiffer": "Le nouveau mot de passe doit être différent de l'actuel.",
+      "currentIncorrect": "Le mot de passe actuel est incorrect.",
+      "tooWeak": "Mot de passe trop faible. Ajoutez des chiffres et des symboles."
+    }
+  },
+  "password": {
+    "hints": {
+      "minLength": "Utilisez au moins 8 caractères",
+      "uppercase": "Ajoutez une lettre majuscule",
+      "lowercase": "Ajoutez une lettre minuscule",
+      "number": "Ajoutez un chiffre",
+      "symbol": "Ajoutez un caractère spécial"
     }
   },
   "product": {
@@ -679,11 +717,11 @@
       "single": "Célibataire",
       "married": "Marié·e"
     },
-    "childrenCount": "Nombre d’enfants",
+    "childrenCount": "Nombre d’enfant à charge",
     "incomeSources": "Nombre de sources de revenus",
     "incomeHint": "Exemples : salaires, rentes AVS, rentes LPP, activité indépendante.",
     "wealthStatements": "Nombre de relevés de fortune fiscales",
-    "wealthHint": "Exemples : relevés bancaires, e-tax, relevés de titres, participations.",
+    "wealthHint": "Exemples : Attestation bancaire, e-relevés, relevés de titres, participations.",
     "properties": "Nombre de biens immobiliers",
     "propertiesDetailsTitle": "Détails des biens immobiliers",
     "propertiesCount": "Combien de biens en tout ?",
@@ -748,7 +786,8 @@
     "unknown": "Inconnu",
     "unknownTime": "heure inconnue",
     "mark": "Marquer comme non disponible",
-    "select": "Sélectionner..."
+    "select": "Sélectionner...",
+    "upload": "Téléverser"
   },
   "step1": {
     "title": "Étape 1 — Documents & questions",
@@ -784,7 +823,8 @@
       "personalInformation": "Informations personnelles",
       "professionalExpenses": "Frais professionnels",
       "housing": "Logement",
-      "taxAuthorityNumbers": "Numéros de l’administration fiscale"
+      "taxAuthorityNumbers": "Identifiants fiscaux",
+      "spouseProfessionalExpenses": "Frais professionnels de votre conjoint/partenaire"
     },
     "questions": {
       "personalChanges": "Changements depuis l’année précédente (mariage, divorce, déménagement, etc.)",
@@ -795,7 +835,11 @@
       "netAnnualRentVD_GE": "Loyer annuel net (VD / GE) (CHF)",
       "canton": "Canton",
       "taxpayerNumber": "Numéro de contribuable",
-      "controlOrDeclarationCode": "Code de contrôle / de déclaration (si disponible)"
+      "controlOrDeclarationCode": "Code de contrôle / de déclaration (si disponible)",
+      "spouse_transportMode": "Comment votre conjoint/partenaire se rend-il au travail ?",
+      "spouse_distanceToWorkKm": "Distance entre le domicile de votre conjoint/partenaire et son lieu de travail (km, aller simple)",
+      "spouse_weeklyTripsToWork": "Combien de trajets domicile–travail par semaine pour votre conjoint/partenaire ?",
+      "spouse_mealsOutsidePerWeek": "Combien de repas pris à l’extérieur par semaine par votre conjoint/partenaire (liés au travail) ?"
     },
     "options": {
       "transportMode": {
@@ -819,10 +863,10 @@
       "title": "Déclaration fiscale précédente *"
     },
     "salary_certificate": {
-      "title": "Certificat de salaire *"
+      "title": "Certificats de salaire, attestations de rente, autres revenus *"
     },
     "bank_statement": {
-      "title": "Relevé bancaire *"
+      "title": "Attestation bancaire, E-relevés, Relevés de titres, Participations *"
     },
     "pillar_3_certificate": {
       "title": "Attestation du 3e pilier *"
@@ -854,7 +898,7 @@
     },
     "missing": {
       "cta": "Je n’ai pas ce document",
-      "reasonPlaceholder": "Effacer la sélection d’abord",
+      "reasonPlaceholder": "Explanation (optional)",
       "confirm": "Confirmer indisponible",
       "saving": "Enregistrement..."
     }
@@ -862,7 +906,8 @@
   "stepStatus": {
     "PENDING": "En attente",
     "DONE": "Terminé",
-    "IN_PROGRESS": "En cours"
+    "IN_PROGRESS": "En cours",
+    "done": "Terminé"
   },
   "filesModal": {
     "title": "Fichiers téléversés",
@@ -1452,12 +1497,13 @@
     "product.maritalStatus": "Statut civil",
     "product.marital.single": "Célibataire",
     "product.marital.married": "Marié·e",
-    "product.childrenCount": "Nombre d’enfants",
+    "product.childrenCount": "Nombre Nombre d’enfant à charge",
     "product.sections.situation": "Votre situation fiscale",
     "product.incomeSources": "Nombre de sources de revenus",
     "product.incomeHint": "Exemples : salaires, rentes AVS, rentes LPP, activité indépendante.",
+    "product.childrenHint": "Incluez tous les enfants à charge (jusqu’à 18 ans, ou jusqu’à 25 ans s’ils sont encore en formation).",
     "product.wealthStatements": "Nombre de relevés de fortune fiscales",
-    "product.wealthHint": "Exemples : relevés bancaires, e-tax, relevés de titres, participations.",
+    "product.wealthHint": "Exemples : Attestation bancaire, e-relevés, relevés de titres, participations.",
     "product.properties": "Nombre de biens immobiliers",
     "product.propertiesDetailsTitle": "Détails des biens immobiliers",
     "product.propertiesCount": "Combien de biens en tout ?",
@@ -1536,7 +1582,7 @@
     "step1.sections.personalInformation": "Informations personnelles",
     "step1.sections.professionalExpenses": "Frais professionnels",
     "step1.sections.housing": "Logement",
-    "step1.sections.taxAuthorityNumbers": "Numéros de l’administration fiscale",
+    "step1.sections.taxAuthorityNumbers": "Identifiants fiscaux",
     "step1.questions.personalChanges": "Changements depuis l’année précédente (mariage, divorce, déménagement, etc.)",
     "step1.questions.transportMode": "Quel est votre mode de transport pour aller au travail ?",
     "step1.questions.distanceToWorkKm": "Distance domicile–lieu de travail (km, aller simple)",

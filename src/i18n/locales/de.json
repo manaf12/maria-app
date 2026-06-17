@@ -127,8 +127,9 @@
   "product.sections.situation": "Ihre Steuersituation",
   "product.incomeSources": "Anzahl Einkommensquellen",
   "product.incomeHint": "Beispiele: Löhne, AHV-Renten, Pensionskassen-Renten, selbständige Erwerbstätigkeit.",
+  "product.childrenHint": "Alle unterhaltsberechtigten Kinder angeben (bis 18 Jahre, bzw. bis 25 Jahre, wenn sie sich noch in Ausbildung befinden).",
   "product.wealthStatements": "Anzahl Vermögensauszüge",
-  "product.wealthHint": "Beispiele: Bankauszüge, e-tax Unterlagen, Depotauszüge, Beteiligungen.",
+  "product.wealthHint": "Beispiele: Bankauszüge, eSteuerauszüge, Depotauszüge, Beteiligungen.",
   "product.properties": "Anzahl Liegenschaften",
   "product.propertiesDetailsTitle": "Details zu den Liegenschaften",
   "product.propertiesCount": "Wie viele Liegenschaften insgesamt?",
@@ -148,9 +149,9 @@
   "product.summary.wealth": "Vermögens- / Steuerunterlagen: {{count}}",
   "product.summary.properties": "Liegenschaften: {{count}}",
   "product.summary.movedAddress": "Umzug an eine neue Adresse",
-  "product.summary.propertiesWithEffectiveCost": "Immobilien mit effektiven Kosten",
+  "product.summary.propertiesWithEffectiveCost": "Anzahl der Immobilien, für die Sie effektive Kosten abziehen möchten",
   "product.summary.newProperties": "Neu erworbene Immobilien",
-  "product.propertiesHint": "Geben Sie alle Immobilien an, die Sie im Steuerjahr in der Schweiz besessen haben.",
+  "product.propertiesHint": "Alle Immobilien angeben, die im Steuerjahr besessen wurden (z. B. Grundstücke, Wohnungen, Häuser).",
   "product.propertiesWithEffectiveCost": "Anzahl der Liegenschaften mit effektiven Kosten",
   "product.propertiesWithEffectiveCostHint": "Geben Sie nur die Liegenschaften an, für die im Steuerjahr abzugsfähige Ausgaben angefallen sind.",
   "product.referralTitle": "Wie haben Sie von uns erfahren?",
@@ -303,7 +304,8 @@
       "completed": "Ihre Unterlagen wurden eingereicht."
     },
     "step2": {
-      "description": "Wir prüfen Ihre Unterlagen. Falls zusätzliche Informationen nötig sind, können Sie die Fragen unten beantworten.",
+      "title":"Schritt 2 — Dokumentenprüfung",
+      "description": "Wir prüfen Ihre Unterlagen. Falls zusätzliche Informationen erforderlich sind, können Sie unten einen Kommentar schreiben.",
       "answerPlaceholder": "Ihre Antwort hier…",
       "submit": "Antworten und Unterlagen einreichen",
       "completed": "Ihre zusätzlichen Antworten wurden eingereicht und werden geprüft.",
@@ -337,6 +339,7 @@
       }
     },
     "step3": {
+      "title": "Schritt 3 — Vorbereitung der Steuererklärung",
       "text": "Ihre Steuererklärung wird derzeit von Taxero vorbereitet. Dieser Schritt wird vollständig von unserem Team übernommen.",
       "eta": "Voraussichtliche Bearbeitungszeit: ca. 2 Wochen, nachdem alle Dokumente vollständig sind.",
       "confirmDraftReceipt": "Sind Sie sicher, dass Sie den Erhalt der Erklärung bestätigen möchten?",
@@ -355,13 +358,17 @@
       }
     },
     "step4": {
+      "title": "Schritt 4 — Überprüfung & Validierung",
       "description": "Ihre Steuererklärung ist bereit. Bitte prüfen Sie alles sorgfältig und bestätigen Sie.",
       "noDraftYet": "Noch kein Datei hochgeladen.",
       "waitingForAdmin": "Warten auf den Upload des Entwurfs durch den Admin.",
       "uploadedAt": "Hochgeladen:",
       "lastComment": "Letzter Kommentar:",
       "confirming": "Wird bestätigt...",
+      "submitConfirm": "Sind Sie sicher, dass Sie die Steuererklärung einreichen möchten?",
       "confirmReceipt": "Bestätigen Sie den Erhalt der Steuererklärung",
+      "uploadFile": "Datei hochladen",
+      "commentSubmitted": "Kommentar erfolgreich gesendet.",
       "addComment": {
         "label": "Kommentar hinzufügen",
         "forClient": "(für den Kunden)",
@@ -376,6 +383,7 @@
       }
     },
     "step5": {
+      "title": "Schritt 5 — Einreichung",
       "description": "Dies ist der letzte Schritt. Bitte überprüfen Sie die Einreichungsinformationen und laden Sie die erforderlichen Dokumente hoch.",
       "date": "Einreichungsdatum",
       "method": "Einreichungsmethode",
@@ -387,10 +395,15 @@
       "user1": "Benutzer",
       "noAdminFilesYet": "Noch keine Administrator-Dateien.",
       "noUserFilesYet": "Noch keine Benutzer-Dateien.",
+      "finalUploadSuccess": "Endgültiger Upload erfolgreich",
+      "userFilesCount": "Ihre Dateien",
+      "adminFilesCount": "Admin-Dateien",
       "admin": {
         "uploadFinalLabel": "Admin: Enddatei hochladen (PDF)",
         "uploadFinalBtn": "Enddatei hochladen",
-        "markFullyCompleted": "Als vollständig abgeschlossen markieren & Erklärung finalisieren"
+        "markFullyCompleted": "Als vollständig abgeschlossen markieren & Erklärung finalisieren",
+        "markFullyCompletedHint": "Diese Anfrage als vollständig abgeschlossen markieren."
+
       },
       "user": {
         "uploadNoticeLabel": "Steuerbescheid hochladen (falls vorhanden)",
@@ -604,46 +617,72 @@
   },
   "accountSettings": {
     "title": "Kontoeinstellungen",
-    "subtitle": "Verwalten Sie Ihre persönlichen Daten, Spracheinstellungen und Sicherheitsoptionen.",
-    "loading": "Kontoeinstellungen werden geladen…",
-    "save": "Änderungen speichern",
-    "saving": "Wird gespeichert…",
-    "saveSuccess": "Ihre Kontoeinstellungen wurden aktualisiert.",
-    "saveError": "Die Änderungen konnten nicht gespeichert werden. Bitte versuchen Sie es erneut.",
-    "errors": {
-      "passwordMismatch": "Die neuen Passwörter stimmen nicht überein."
-    },
+    "subtitle": "Verwalten Sie Ihre persönlichen Informationen und Ihr Passwort.",
+    "loading": "Wird geladen…",
     "personal": {
-      "title": "Persönliche Daten",
-      "desc": "Aktualisieren Sie die Angaben, die mit Ihrem Taxero-Konto verbunden sind.",
+      "title": "Persönliche Informationen",
+      "desc": "Aktualisieren Sie die mit Ihrem Taxero-Konto verknüpften Daten.",
       "firstName": "Vorname",
       "lastName": "Nachname",
       "email": "E-Mail",
-      "phone": "Telefonnummer"
-    },
-    "language": {
-      "title": "Spracheinstellungen",
-      "desc": "Wählen Sie die Sprache der Benutzeroberfläche. Sie wird bei zukünftigen Anmeldungen verwendet.",
-      "label": "Anzeigesprache",
-      "en": "Englisch",
-      "fr": "Französisch",
-      "de": "Deutsch"
+      "phone": "Telefon",
+      "emailNotAvailable": "Nicht verfügbar"
     },
     "security": {
       "title": "Kontosicherheit",
-      "desc": "Ändern Sie Ihr Passwort und verwalten Sie die Zwei-Faktor-Authentifizierung.",
+      "desc": "Ändern Sie Ihr Passwort.",
       "currentPassword": "Aktuelles Passwort",
       "newPassword": "Neues Passwort",
-      "confirmNewPassword": "Neues Passwort bestätigen",
-      "twoFactorLabel": "Zwei-Faktor-Authentifizierung (2FA)",
-      "twoFactorToggle": "2FA für zusätzliche Sicherheit bei der Anmeldung aktivieren."
+      "confirmNewPassword": "Neues Passwort bestätigen"
+    },
+    "password": {
+      "show": "Passwort anzeigen",
+      "hide": "Passwort verbergen"
+    },
+    "passwordStrength": {
+      "label": "Stärke",
+      "weak": "Schwach",
+      "medium": "Mittel",
+      "strong": "Stark"
     },
     "delete": {
       "title": "Konto löschen",
-      "desc": "Durch das Löschen Ihres Kontos wird Ihr Zugang deaktiviert und Ihre Daten können gemäss unserer internen Richtlinie dauerhaft entfernt werden.",
+      "desc": "Löschen Sie Ihr Konto und alle zugehörigen Daten.",
       "button": "Mein Konto löschen",
-      "confirmQuestion": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Dieser Vorgang kann nicht rückgängig gemacht werden.",
-      "error": "Ihr Konto konnte nicht gelöscht werden. Bitte kontaktieren Sie den Support, falls das Problem bestehen bleibt."
+      "confirmQuestion": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten?",
+      "error": "Konto konnte nicht gelöscht werden."
+    },
+    "reset": "Zurücksetzen",
+    "save": "Änderungen speichern",
+    "saving": "Wird gespeichert…",
+    "noChanges": "Keine Änderungen zum Speichern.",
+    "saveSuccess": "Erfolgreich gespeichert.",
+    "saveError": "Einstellungen konnten nicht gespeichert werden.",
+    "saveFailed": "Speichern fehlgeschlagen:",
+    "partialSaved": "Einige Änderungen wurden gespeichert, aber nicht alle:",
+    "loadError": "Einstellungen konnten nicht geladen werden.",
+    "outcome": {
+      "personalSaved": "Name aktualisiert",
+      "passwordSaved": "Passwort aktualisiert"
+    },
+    "errors": {
+      "currentRequired": "Aktuelles Passwort ist erforderlich.",
+      "newRequired": "Neues Passwort ist erforderlich.",
+      "confirmRequired": "Bitte bestätigen Sie Ihr neues Passwort.",
+      "passwordMismatch": "Neues Passwort und Bestätigung stimmen nicht überein.",
+      "minLength": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+      "mustDiffer": "Das neue Passwort muss sich vom aktuellen Passwort unterscheiden.",
+      "currentIncorrect": "Aktuelles Passwort ist falsch.",
+      "tooWeak": "Passwort ist zu schwach. Fügen Sie Zahlen und Symbole hinzu."
+    }
+  },
+  "password": {
+    "hints": {
+      "minLength": "Mindestens 8 Zeichen verwenden",
+      "uppercase": "Einen Großbuchstaben hinzufügen",
+      "lowercase": "Einen Kleinbuchstaben hinzufügen",
+      "number": "Eine Zahl hinzufügen",
+      "symbol": "Ein Sonderzeichen hinzufügen"
     }
   },
   "product": {
@@ -682,7 +721,7 @@
     "incomeSources": "Anzahl Einkommensquellen",
     "incomeHint": "Beispiele: Löhne, AHV-Renten, Pensionskassen-Renten, selbständige Erwerbstätigkeit.",
     "wealthStatements": "Anzahl Vermögensauszüge",
-    "wealthHint": "Beispiele: Bankauszüge, e-tax Unterlagen, Depotauszüge, Beteiligungen.",
+    "wealthHint": "Beispiele: Bankauszüge, eSteuerauszüge, Depotauszüge, Beteiligungen.",
     "properties": "Anzahl Liegenschaften",
     "propertiesDetailsTitle": "Details zu den Liegenschaften",
     "propertiesCount": "Wie viele Liegenschaften insgesamt?",
@@ -747,7 +786,8 @@
     "unknown": "Unbekannt",
     "unknownTime": "unbekannte Zeit",
     "mark": "Als nicht verfügbar markieren",
-    "select": "Auswählen..."
+    "select": "Auswählen...",
+    "upload": "Hochladen"
   },
   "step1": {
     "title": "Schritt 1 — Dokumente & Fragen",
@@ -773,7 +813,8 @@
       "personalInformation": "Persönliche Angaben",
       "professionalExpenses": "Berufsauslagen",
       "housing": "Wohnen",
-      "taxAuthorityNumbers": "Steueramtsnummern"
+      "taxAuthorityNumbers": "Steueramtsnummern",
+      "spouseProfessionalExpenses": "Berufsbedingte Ausgaben Ihres Ehepartners/Ihrer Partnerin"
     },
     "questions": {
       "personalChanges": "Änderungen seit dem letzten Jahr (Heirat, Scheidung, Umzug usw.)",
@@ -784,7 +825,11 @@
       "netAnnualRentVD_GE": "Nettojahresmiete (VD / GE) (CHF)",
       "canton": "Kanton",
       "taxpayerNumber": "Steuerpflichtigen-Nummer",
-      "controlOrDeclarationCode": "Kontroll- / Deklarationscode (falls vorhanden)"
+      "controlOrDeclarationCode": "Kontroll- / Deklarationscode (falls vorhanden)",
+      "spouse_transportMode": "Wie pendelt Ihr Ehepartner/Ihre Partnerin zur Arbeit?",
+      "spouse_distanceToWorkKm": "Entfernung vom Wohnort Ihres Ehepartners/Ihrer Partnerin zum Arbeitsplatz (km, einfache Strecke)",
+      "spouse_weeklyTripsToWork": "Wie viele Arbeitswege pro Woche für Ihren Ehepartner/Ihre Partnerin?",
+      "spouse_mealsOutsidePerWeek": "Wie viele auswärtige Mahlzeiten pro Woche für Ihren Ehepartner/Ihre Partnerin (berufsbedingt)?"
     },
     "options": {
       "transportMode": {
@@ -808,10 +853,10 @@
       "title": "Steuererklärung des Vorjahres *"
     },
     "salary_certificate": {
-      "title": "Lohnausweis *"
+      "title": "Lohnausweise, Rentenbescheinigungen, sonstige Einkommen *"
     },
     "bank_statement": {
-      "title": "Kontoauszug *"
+      "title": "Bankauszüge, eSteuerauszüge, Depotauszüge, Beteiligungen *"
     },
     "pillar_3_certificate": {
       "title": "Säule 3a-Bestätigung *"
@@ -843,7 +888,7 @@
     },
     "missing": {
       "cta": "Ich habe dieses Dokument nicht",
-      "reasonPlaceholder": "Zuerst Auswahl löschen",
+      "reasonPlaceholder": "Begründung (optional)",
       "confirm": "Als nicht verfügbar bestätigen",
       "saving": "Speichern..."
     }
@@ -851,7 +896,9 @@
   "stepStatus": {
     "PENDING": "Ausstehend",
     "DONE": "Erledigt",
-    "IN_PROGRESS": "In Bearbeitung"
+    "IN_PROGRESS": "In Bearbeitung",
+    "done": "Abgeschlossen"
+
   },
   "filesModal": {
     "title": "Hochgeladene Dateien",
@@ -1324,6 +1371,30 @@
     }
   },
   "__legacyFlatKeys__": {
-    "step1.additionalQuestions": "Zusatzfragen"
+    "step1.title": "Schritt 1 — Dokumente & Fragen",
+    "step1.additionalQuestions": "Zusätzliche Fragen",
+    "step1.sections.personalInformation": "Persönliche Informationen",
+    "step1.sections.professionalExpenses": "Berufsausgaben",
+    "step1.sections.housing": "Wohnsituation",
+    "step1.sections.taxAuthorityNumbers": "Steuer-IDs",
+    "step1.questions.personalChanges": "Persönliche Änderungen seit letztem Jahr (Heirat, Scheidung, Umzug usw.)",
+    "step1.questions.transportMode": "Wie pendeln Sie zur Arbeit?",
+    "step1.questions.distanceToWorkKm": "Entfernung zwischen Wohnort und Arbeitsplatz (km, einfache Strecke)",
+    "step1.questions.weeklyTripsToWork": "Wie viele Fahrten zum Arbeitsplatz pro Woche?",
+    "step1.questions.mealsOutsidePerWeek": "Wie viele auswärtige Mahlzeiten pro Woche (arbeitsbedingt)?",
+    "step1.questions.netAnnualRentVD_GE": "Nettojahresmiete (VD / GE) (CHF)",
+    "step1.questions.canton": "Kanton",
+    "step1.questions.taxpayerNumber": "Steuernummer",
+    "step1.questions.controlOrDeclarationCode": "Kontroll- / Deklarationscode (falls verfügbar)",
+    "step1.options.transportMode.publicTransport": "Öffentliche Verkehrsmittel",
+    "step1.options.transportMode.bicycle": "Fahrrad",
+    "step1.options.transportMode.vehicle": "Auto / Fahrzeug",
+    "step1.options.canton.FR": "Freiburg (FR)",
+    "step1.options.canton.BE": "Bern (BE)",
+    "step1.options.canton.VD": "Waadt (VD)",
+    "step1.options.canton.VS": "Wallis (VS)",
+    "step1.options.canton.NE": "Neuenburg (NE)",
+    "step1.options.canton.GE": "Genf (GE)",
+    "step1.options.canton.OTHER": "Andere"
   }
 }

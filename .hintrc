@@ -24,7 +24,8 @@
         "ignore": [
           "-webkit-overflow-scrolling",
           "scrollbar-width",
-          "scrollbar-width: none"
+          "scrollbar-width: none",
+          "backdrop-filter"
         ]
       }
     ],
@@ -33,6 +34,9 @@
       {
         "nested-interactive": "off"
       }
-    ]
+    ],
+    "typescript-config/consistent-casing": "off",
+    "typescript-config/strict": "off",
+    "typescript-config/is-valid": "off"
   }
 }

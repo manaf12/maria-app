@@ -38,11 +38,11 @@ export default function FilesSummaryModal({
   const adminFiles = (files ?? []).filter((f) => f.meta?.uploaderRole === "admin");
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+    <div className="files-modal-overlay">
+      <div className="files-modal-backdrop" onClick={onClose} />
 
-      <div className="relative z-10 w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="px-6 py-4 bg-[#163E64] text-white flex justify-between items-center">
+      <div className="files-modal">
+        <div className="files-modal-header">
           <div>
             <h2 className="text-lg font-semibold">{t("filesModal.title")}</h2>
             <p className="text-sm text-white/70">{t("filesModal.subtitle")}</p>
@@ -57,26 +57,23 @@ export default function FilesSummaryModal({
           >
             <CloseIcon size={18} color="#ffffff" />
           </button> */}
-          
-        <div className="p-4 border-t bg-gray-50 flex justify-end">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-5 py-5 bg-[#163E64] text-white rounded-lg
-               hover:bg-[#0F2A4A] active:scale-[0.98] transition
-               focus:outline-none focus:ring-2 focus:ring-[#163E64]/30 
-               no-underline !no-underline"
-            style={{ textDecoration: "none" , color:"#ffffff",padding:"8px", borderRadius:"4px" }}
-          >
-            {t("common.close")}
-          </button>
-        </div>
+
+          <div className="p-4 border-t bg-gray-50 flex justify-end">
+            <button
+              type="button"
+              onClick={onClose}
+              className="files-modal-close"
+              style={{ textDecoration: "none", color: "#ffffff", padding: "8px", borderRadius: "4px" }}
+            >
+              {t("common.close")}
+            </button>
+          </div>
 
         </div>
 
 
 
-        <div className="p-6 max-h-[65vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="files-modal-body">
           <FileColumn
             title={t("filesModal.clientFiles")}
             files={userFiles}
@@ -123,21 +120,25 @@ function FileColumn({
           {files.map((file) => (
             <li
               key={file.id}
-              className="group flex items-center justify-between p-4 rounded-xl border bg-white shadow-sm hover:shadow-lg transition-all duration-200"
+              className="file-row"
             >
-              <div className="min-w-0">
-                <div className="font-medium truncate">{file.originalName}</div>
-                <div className="text-sm text-gray-500 capitalize">
-                  {/* keep current behavior, but allow translating doc types if you want */}
-                  {t(`documentTypes.${file.documentType}`, {
-                    defaultValue: file.documentType.replace(/_/g, " "),
-                  })}
+              <div className="file-row-left">
+                <span className="file-icon">PDF</span>
+
+                <div className="file-meta">
+                  <div className="file-name">{file.originalName}</div>
+
+                  <div className="file-type">
+                    {t(`documentTypes.${file.documentType}`, {
+                      defaultValue: file.documentType.replace(/_/g, " "),
+                    })}
+                  </div>
                 </div>
               </div>
 
               <button
                 onClick={() => onDownloadFile(file.id)}
-                className="ml-4 shrink-0 p-2 rounded-lg bg-[#163E64] text-white hover:bg-[#0F2A4A] transition"
+                className="file-download-btn"
                 aria-label={t("filesModal.downloadAria")}
               >
                 <DownloadIcon size={18} color="#ffffff" />

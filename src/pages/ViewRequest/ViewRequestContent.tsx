@@ -55,7 +55,10 @@ export type ViewRequestContentProps = {
   step4AdminComment: string;
   setStep4AdminComment: (value: string) => void;
   isAddingStepComment: boolean;
-
+  adminStep4File: File | null;
+  setAdminStep4File: (f: File | null) => void;
+  isUploadingStep4: boolean;
+  onStep4Upload: () => Promise<void>;
   // Stage 5
   onCompleteStep5: () => void;
 
@@ -118,7 +121,10 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
     adminFinalFile,
     setAdminFinalFile,
     isUploadingFinal,
-
+    adminStep4File,
+    setAdminStep4File,
+    isUploadingStep4,
+    onStep4Upload,
     // shared
     onDownloadFile,
   } = props;
@@ -214,24 +220,24 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
             <dt>{t("product.wealthStatements")}</dt>
             <dd>{data.summary.wealthStatements}</dd>
           </div>
-    <div>
-      <dt>{t("view.summary.address", { defaultValue: "Address" })}</dt>
-      <dd>
-        {[
-          data?.clientProfile?.streetAddress,
-          data?.clientProfile?.postalCode,
-          data?.clientProfile?.city,
-        ]
-          .filter(Boolean)
-          .join(", ") || "—"}
-      </dd>
-    </div>
+          <div>
+            <dt>{t("view.summary.address", { defaultValue: "Address" })}</dt>
+            <dd>
+              {[
+                data?.clientProfile?.streetAddress,
+                data?.clientProfile?.postalCode,
+                data?.clientProfile?.city,
+              ]
+                .filter(Boolean)
+                .join(", ") || "—"}
+            </dd>
+          </div>
 
-    {/* ── New: client email ── */}
-    <div>
-      <dt>{t("view.summary.email", { defaultValue: "Email" })}</dt>
-      <dd>{data?.clientProfile?.user?.email ?? "—"}</dd>
-    </div>
+          {/* ── New: client email ── */}
+          <div>
+            <dt>{t("view.summary.email", { defaultValue: "Email" })}</dt>
+            <dd>{data?.clientProfile?.user?.email ?? "—"}</dd>
+          </div>
         </dl>
       </section>
 
@@ -323,7 +329,7 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
                     isUploadingDraft={isUploadingDraft}
                     onUploadDraft={onStep3DraftUpload}
                     onCompleteStep3={onCompleteStep3}
-                  />
+                    isCompleted={isCompleted} />
                 )}
 
                 {stage.id === 4 && (
@@ -342,7 +348,11 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
                     onDownloadFile={onDownloadFile}
                     onConfirmReceipt={onConfirmReceipt}
                     onAddStepComment={onAddStepComment}
-                  />
+                    adminStep4File={adminStep4File}
+                    setAdminStep4File={setAdminStep4File}
+                    isUploadingStep4={isUploadingStep4}
+                    onStep4Upload={onStep4Upload}
+                    isCompleted={isCompleted} />
                 )}
 
                 {stage.id === 5 && (

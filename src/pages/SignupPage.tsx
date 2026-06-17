@@ -32,7 +32,7 @@ export default function SignupPage() {
   const location = useLocation() as {
     state?: { redirectTo?: string; fromAuth?: string };
   };
-  const redirectTo = location.state?.redirectTo ?? "/dashboard";
+  const redirectTo = location.state?.redirectTo ?? "/";
   const fromAuth = location.state?.fromAuth;
 
   const {

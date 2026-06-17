@@ -1,4 +1,4 @@
- 
+
 import { useState } from "react";
 import ViewRequestContent from "./ViewRequest/ViewRequestContent";
 import type { ViewRequestData, User } from "../types/declaration.types";
@@ -20,7 +20,7 @@ export default function TestViewRequestPage() {
       offerName: "Comfort package",
       offerPrice: 390,
       taxYear: 2024,
-      wealthStatements:0
+      wealthStatements: 0
     },
     step1: { documents: [] },
     step2: { questions: [] },
@@ -44,6 +44,7 @@ export default function TestViewRequestPage() {
   const [adminDraftFile, setAdminDraftFile] = useState<File | null>(null);
   const [adminFinalFile, setAdminFinalFile] = useState<File | null>(null);
   const [userSubmissionFile, setUserSubmissionFile] = useState<File | null>(null);
+  const [adminStep4File, setAdminStep4File] = useState<File | null>(null);
 
   return (
     <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -79,6 +80,11 @@ export default function TestViewRequestPage() {
         step4AdminComment={step4AdminComment}
         setStep4AdminComment={setStep4AdminComment}
         isAddingStepComment={false}
+        adminStep4File={adminStep4File}
+        setAdminStep4File={setAdminStep4File}
+        isUploadingStep4={false}
+        onStep4Upload={async () => alert("Step4 upload (mock)")}
+
 
         // Stage 5
         onCompleteStep5={() => alert("Complete Step5 (mock)")}

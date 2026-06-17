@@ -6,8 +6,8 @@ import { Step1Questions, type Step1Question } from "./Step1Questions";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 
-// import type { Step1Question } from "./Step1Questions";
-type Step = { id: string; meta?: any };
+type Step = { id: string; meta?: any; status?: string };
+
 type Stage1SectionProps = {
   declaration: {
     id: string;
@@ -45,9 +45,18 @@ export default function Stage1Section({
     []
   );
   const [questionsLoading, setQuestionsLoading] = React.useState(false);
+  const [uploadError, setUploadError] = React.useState<string | null>(null);
+  const [isOpen, setIsOpen] = React.useState(true);
+
+  const [confirmError, setConfirmError] = React.useState<{
+    missingDocs?: string[];
+    missingQuestions?: string[];
+    message?: string;
+  } | null>(null);
 
   React.useEffect(() => {
     let mounted = true;
+
     (async () => {
       setQuestionsLoading(true);
       try {
@@ -64,16 +73,11 @@ export default function Stage1Section({
         if (mounted) setQuestionsLoading(false);
       }
     })();
+
     return () => {
       mounted = false;
     };
   }, [declaration.id]);
-
-  const [confirmError, setConfirmError] = React.useState<{
-    missingDocs?: string[];
-    missingQuestions?: string[];
-    message?: string;
-  } | null>(null);
 
   const step1 = useMemo(() => {
     return (declaration.steps ?? []).find(
@@ -83,12 +87,7 @@ export default function Stage1Section({
 
   const step1Status = (step1 as any)?.status ?? "PENDING";
   const isDone = step1Status === "DONE" || step1Status === "COMPLETED";
-  const [uploadError, setUploadError] = React.useState<string | null>(null);
 
-  // Step accordion (UI only)
-  const [isOpen, setIsOpen] = React.useState(true);
-
-  // Auto-close when step is done (also closes on first open if already DONE)
   React.useEffect(() => {
     if (isDone) setIsOpen(false);
   }, [isDone]);
@@ -102,6 +101,7 @@ export default function Stage1Section({
   const confirmStep1 = async () => {
     setConfirming(true);
     setConfirmError(null);
+
     try {
       await axiosClient.post(
         `/orders/${declaration.id}/steps/documentsPreparation/confirm`
@@ -132,9 +132,11 @@ export default function Stage1Section({
     );
     const missingMeta = documentsStep?.meta?.missingDocs ?? [];
     const map: Record<string, boolean> = {};
+
     (missingMeta as any[]).forEach((m) => {
       if (m?.documentType) map[m.documentType] = true;
     });
+
     return map;
   }, [declaration.steps]);
 
@@ -147,9 +149,11 @@ export default function Stage1Section({
       const form = new FormData();
       form.append("file", file);
       form.append("documentType", docType);
+
       await axiosClient.post(`/files/${declaration.id}/upload`, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       await invalidateDeclaration();
       onUploadDocuments?.();
     } catch (e: any) {
@@ -163,9 +167,11 @@ export default function Stage1Section({
       const form = new FormData();
       files.forEach((f) => form.append("files", f));
       form.append("documentType", docType);
+
       await axiosClient.post(`/files/${declaration.id}/upload-multiple`, form, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       await invalidateDeclaration();
       onUploadDocuments?.();
     } catch (e: any) {
@@ -190,11 +196,13 @@ export default function Stage1Section({
 
   const requiredProgress = useMemo(() => {
     let done = 0;
+
     REQUIRED_DOCUMENT_TYPES.forEach((docType) => {
       const hasFiles = (filesByType[docType] ?? []).length > 0;
       const isMissing = !!declaredMissingMap[docType];
       if (hasFiles || isMissing) done += 1;
     });
+
     return { done, total: REQUIRED_DOCUMENT_TYPES.length };
   }, [filesByType, declaredMissingMap]);
 
@@ -203,7 +211,6 @@ export default function Stage1Section({
     ...OPTIONAL_DOCUMENT_TYPES,
   ];
 
-  const BadgeBase = "text-xs px-2 py-1 rounded-full border";
   type StatusBadgeProps = {
     status?: string;
     t: TFunction;
@@ -213,49 +220,35 @@ export default function Stage1Section({
     if (status !== "done") return null;
 
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-xs font-medium text-green-900">
-        <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-green-600 text-[10px] leading-none text-white">
-          ✓
-        </span>
+      <span className="stage1-status-badge">
+        <span className="stage1-status-badge-icon">✓</span>
         {t(`stepStatus.${status}`, { defaultValue: status })}
       </span>
     );
   }
 
   return (
-    <div className="rounded-2xl border bg-white overflow-hidden">
-      {/* Accordion Header (click to open/close) */}
+    <div className="stage1-container">
       <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         aria-expanded={isOpen}
-        className="w-full"
-        style={{
-          // hard reset in case you have global button styling
-          background: "transparent",
-          border: "none",
-          padding: 0,
-          textAlign: "left",
-        }}
+        className="stage1-toggle"
       >
-        <div className="p-4 hover:bg-gray-50/60 transition flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <h3 className="text-base font-semibold text-gray-900">
-              {t("step1.title")}
-            </h3>
+        <div className="stage1-header">
+          <div className="stage1-header-content">
+            <h3 className="stage1-title">{t("step1.title")}</h3>
+            <p className="stage1-subtitle">{t("step1.subtitle")}</p>
 
-            <p className="mt-1 text-sm text-gray-500">{t("step1.subtitle")}</p>
-
-            {/* DOWN + SIMPLE (status + progress) */}
-            <div className="mt-3 flex items-center flex-wrap">
-              <div className="mr-3">
+            <div className="stage1-meta-row">
+              <div className="stage1-meta-item">
                 <StatusBadge status={step1Status} t={t} />
               </div>
 
-              <div>
-                <span className="text-xs text-gray-500">
+              <div className="stage1-meta-item">
+                <span className="stage1-progress-text">
                   {t("step1.progressLabel")}{" "}
-                  <span className="font-semibold text-gray-900">
+                  <span className="stage1-progress-value">
                     {requiredProgress.done}/{requiredProgress.total}
                   </span>
                 </span>
@@ -263,12 +256,9 @@ export default function Stage1Section({
             </div>
           </div>
 
-          {/* Chevron */}
           <span
             aria-hidden="true"
-            className={`inline-flex items-center justify-center w-9 h-9 rounded-xl border bg-white text-gray-600 transition-transform ${
-              isOpen ? "rotate-180" : "rotate-0"
-            }`}
+            className={`stage1-chevron ${isOpen ? "is-open" : ""}`}
           >
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
               <path
@@ -283,24 +273,19 @@ export default function Stage1Section({
         </div>
       </button>
 
-      {/* Body */}
       {isOpen && (
-        <div className="p-4 space-y-6 border-t">
-          {/* Lock message (unchanged) */}
+        <div className="stage1-body">
           {lockEditing && (
-            <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-3 text-sm text-yellow-800">
-              {t("step1.lockMessage")}
-            </div>
+            <div className="stage1-lock-message">{t("step1.lockMessage")}</div>
           )}
 
-          {/* Questions (unchanged) */}
-          <div className="rounded-xl border bg-white p-4">
-            <h4 className="text-sm font-semibold text-gray-900 mb-3">
+          <div className="stage1-card">
+            <h4 className="stage1-card-title">
               {t("step1.additionalQuestions")}
             </h4>
 
             {questionsLoading ? (
-              <div className="text-sm text-gray-500">
+              <div className="stage1-loading-text">
                 {t("step1.loadingQuestions")}
               </div>
             ) : (
@@ -314,8 +299,7 @@ export default function Stage1Section({
             )}
           </div>
 
-          {/* Documents grid (unchanged) */}
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="documents-grid">
             {allDocTypesForUI.map((docType) => {
               const uploadedFiles = filesByType[docType] ?? [];
               const isMissing = !!declaredMissingMap[docType];
@@ -323,25 +307,20 @@ export default function Stage1Section({
               const canEditDocType = !lockEditing && (isCurrent || isOthers);
 
               return (
-                <div
-                  key={docType}
-                  className="rounded-xl border bg-white p-5 hover:bg-gray-50/40 transition-colors"
-                >
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="min-w-0">
-                      <h4 className="text-sm font-semibold text-gray-900">
+                <div key={docType} className="document-card">
+                  <div className="document-card-header">
+                    <div className="document-card-info">
+                      <h4 className="document-card-title">
                         {t(`documents.${docType}.title`)}
                       </h4>
-                      <div className="mt-0.5 text-xs text-gray-500">
+                      <div className="document-card-type">
                         {isOthers ? t("common.optional") : t("common.required")}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="document-card-badges">
                       {uploadedFiles.length > 0 && (
-                        <span
-                          className={`${BadgeBase} bg-green-50 text-green-700 border-green-200`}
-                        >
+                        <span className="doc-badge doc-badge-success">
                           {t("step1.uploadedCount", {
                             count: uploadedFiles.length,
                           })}
@@ -349,9 +328,7 @@ export default function Stage1Section({
                       )}
 
                       {isMissing && (
-                        <span
-                          className={`${BadgeBase} bg-yellow-50 text-yellow-700 border-yellow-200`}
-                        >
+                        <span className="doc-badge doc-badge-warning">
                           {t("step1.notAvailable")}
                         </span>
                       )}
@@ -359,9 +336,7 @@ export default function Stage1Section({
                       {!isMissing &&
                         uploadedFiles.length === 0 &&
                         !isOthers && (
-                          <span
-                            className={`${BadgeBase} bg-gray-50 text-gray-700 border-gray-200`}
-                          >
+                          <span className="doc-badge doc-badge-neutral">
                             {t("step1.pending")}
                           </span>
                         )}
@@ -369,25 +344,18 @@ export default function Stage1Section({
                   </div>
 
                   {uploadedFiles.length > 0 && (
-                    <ul className="mb-4 list-none p-0 m-0 space-y-2">
+                    <ul className="uploaded-files-list">
                       {uploadedFiles.map((file) => (
-                        <li
-                          key={file.id}
-                          className="flex items-center justify-between gap-3 rounded-xl border bg-white px-3 py-2 hover:bg-gray-50 transition"
-                        >
-                          <div className="flex items-center gap-2 min-w-0">
+                        <li key={file.id} className="uploaded-file-item">
+                          <div className="uploaded-file-left">
                             <span
                               aria-hidden="true"
-                              className="inline-flex items-center justify-center w-7 h-7 rounded-lg border bg-gray-50 text-gray-600 text-xs"
+                              className="uploaded-file-icon"
                             >
                               PDF
                             </span>
-                            {uploadError && (
-                              <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
-                                {uploadError}
-                              </div>
-                            )}
-                            <span className="truncate text-sm font-medium text-gray-800">
+
+                            <span className="uploaded-file-name">
                               {file.originalName}
                             </span>
                           </div>
@@ -420,6 +388,10 @@ export default function Stage1Section({
                     </ul>
                   )}
 
+                  {uploadError && (
+                    <div className="stage1-upload-error">{uploadError}</div>
+                  )}
+
                   {canEditDocType ? (
                     <DocumentUploadItem
                       declarationId={declaration.id}
@@ -436,7 +408,7 @@ export default function Stage1Section({
                       onUndoMissing={() => undoMissing(docType)}
                     />
                   ) : (
-                    <p className="text-sm text-gray-500">
+                    <p className="stage1-not-editable">
                       {t("step1.notEditable")}
                     </p>
                   )}
@@ -445,27 +417,14 @@ export default function Stage1Section({
             })}
           </div>
 
-          {/* Step status + confirm (visual upgrade for DONE) */}
-          <div
-            className={`rounded-xl border p-4 ${
-              isDone ? "bg-green-50 border-green-200" : "bg-white"
-            }`}
-          >
-            <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0 flex flex-col gap-1">
-                <div
-                  className={`text-xs leading-tight ${
-                    isDone ? "text-green-800/80" : "text-gray-500"
-                  }`}
-                >
+          <div className={`stage1-confirm-card ${isDone ? "is-done" : ""}`}>
+            <div className="stage1-confirm-row">
+              <div className="stage1-confirm-info">
+                <div className="stage1-confirm-label">
                   {t("step1.stepStatusLabel")}
                 </div>
 
-                <div
-                  className={`text-sm font-semibold leading-tight ${
-                    isDone ? "text-green-900" : "text-gray-900"
-                  }`}
-                >
+                <div className="stage1-confirm-status">
                   <StatusBadge status={step1Status} t={t} />
 
                   {!isDone &&
@@ -477,7 +436,7 @@ export default function Stage1Section({
                 </div>
 
                 {isDone && (
-                  <div className="text-xs text-green-800/80">
+                  <div className="stage1-confirm-note">
                     {t("step1.notEditable")}
                   </div>
                 )}
@@ -506,24 +465,24 @@ export default function Stage1Section({
             </div>
 
             {confirmError && (
-              <div className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm">
-                <div className="font-semibold text-red-700">
+              <div className="stage1-error-box">
+                <div className="stage1-error-title">
                   {t("step1.notReady")}
                 </div>
 
                 {import.meta.env.MODE === "development" &&
                   confirmError.message && (
-                    <div className="mt-1 text-xs text-red-700/80">
+                    <div className="stage1-error-dev-message">
                       {String(confirmError.message ?? "")}
                     </div>
                   )}
 
                 {(confirmError.missingDocs?.length ?? 0) > 0 && (
-                  <div className="mt-2">
-                    <div className="font-medium text-red-700">
+                  <div className="stage1-error-section">
+                    <div className="stage1-error-section-title">
                       {t("step1.missingDocuments")}
                     </div>
-                    <ul className="list-disc pl-5">
+                    <ul className="stage1-error-list">
                       {confirmError.missingDocs!.map((d) => (
                         <li key={d}>{t(`documents.${d}.title`)}</li>
                       ))}
@@ -532,11 +491,11 @@ export default function Stage1Section({
                 )}
 
                 {(confirmError.missingQuestions?.length ?? 0) > 0 && (
-                  <div className="mt-2">
-                    <div className="font-medium text-red-700">
+                  <div className="stage1-error-section">
+                    <div className="stage1-error-section-title">
                       {t("step1.missingQuestions")}
                     </div>
-                    <ul className="list-disc pl-5">
+                    <ul className="stage1-error-list">
                       {confirmError.missingQuestions!.map((q) => (
                         <li key={q}>{q}</li>
                       ))}

@@ -131,7 +131,7 @@ export default function DeclarationsTableRow({ item, checked, onToggle, onDelete
         >
           <button
             type="button"
-            className="btn-soft danger"
+            className="btn-danger"
             onClick={(e) => {
               e.stopPropagation();
               onDelete(item.id);

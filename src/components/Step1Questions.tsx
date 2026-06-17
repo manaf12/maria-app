@@ -34,7 +34,7 @@ export function Step1Questions({
   const queryClient = useQueryClient();
 
   const [answers, setAnswers] = useState<Record<string, any>>(initialAnswers ?? {});
-const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "saved" | "error">>({});
+  const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "saved" | "error">>({});
 
   const [savedAt, setSavedAt] = useState<Record<string, string>>({});
   const timers = useRef<Record<string, number | undefined>>({});
@@ -75,7 +75,7 @@ const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "s
     });
     timers.current = {};
     Object.values(controllers.current).forEach((c) => {
-      try { c?.abort(); } catch {}
+      try { c?.abort(); } catch { }
     });
     controllers.current = {};
     setStatusMap({});
@@ -94,7 +94,7 @@ const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "s
   };
 
   const saveSingle = async (qid: string, value: string) => {
-    try { controllers.current[qid]?.abort(); } catch {}
+    try { controllers.current[qid]?.abort(); } catch { }
 
     const controller = new AbortController();
     controllers.current[qid] = controller;
@@ -215,36 +215,26 @@ const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "s
   );
 
   return (
-    <div className="space-y-8">
+    <div className="step1-sections">
       {Object.entries(sections).map(([sectionKey, sectionQuestions]) => {
         const isSpouseSection = sectionQuestions.some((q) => q.spouseQuestion);
 
         return (
-          <div key={sectionKey}>
-            {/* Section header */}
-            <div
-              className={
-                "flex items-center gap-2 mb-4 pb-2 border-b " +
-                (isSpouseSection ? "border-blue-200" : "border-gray-200")
-              }
-            >
-              {isSpouseSection && (
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-100 text-blue-600 text-xs">
-                  S
-                </span>
-              )}
-              <span
-                className={
-                  "text-xs font-semibold uppercase tracking-wide " +
-                  (isSpouseSection ? "text-blue-600" : "text-gray-400")
-                }
-              >
+          <div
+            key={sectionKey}
+            className={
+              "step1-section" + (isSpouseSection ? " step1-section-spouse" : "")
+            }
+          >
+            <div className="step1-section-header">
+              {/* {isSpouseSection && <span className="step1-section-badge">S</span>} */}
+
+              <h3 className="step1-section-title">
                 {t(sectionKey, { defaultValue: sectionKey })}
-              </span>
+              </h3>
             </div>
 
-            {/* Questions in this section */}
-            <div className="space-y-4">
+            <div className="step1-section-body">
               {sectionQuestions.map((q) => renderQuestion(q))}
             </div>
           </div>

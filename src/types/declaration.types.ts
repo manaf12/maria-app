@@ -1,4 +1,4 @@
- 
+
 export type StageId = 1 | 2 | 3 | 4 | 5;
 export type StageStatus = "completed" | "current" | "locked";
 
@@ -69,6 +69,11 @@ export type ViewRequestData = {
   steps?: any[];
   invoice: InvoiceBlock;
   wealthStatements: number;
+  questionnaireSnapshot?: {
+    answers?: Record<string, any>;
+    step1Answers?: Record<string, any>;
+    [key: string]: any;
+  };
   clientProfile?: {         // ← add this
     streetAddress?: string;
     postalCode?: string;

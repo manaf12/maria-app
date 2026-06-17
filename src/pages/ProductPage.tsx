@@ -1,6 +1,4 @@
 
-
-
 // src/pages/ProductPage.tsx
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
@@ -72,6 +70,7 @@ function StepCard({
   children,
   onPrev,
   onNext,
+  onCancel,
   nextDisabled,
 }: {
   title: string;
@@ -79,6 +78,7 @@ function StepCard({
   children: ReactNode;
   onPrev?: () => void;
   onNext?: () => void;
+  onCancel?: () => void;
   nextDisabled?: boolean;
 }) {
   const { t } = useTranslation();
@@ -98,6 +98,14 @@ function StepCard({
             <button type="button" className="btn-secondary step-back-link" onClick={onPrev}>
               <span aria-hidden="true"></span>
               <span>{t("product.back")}</span>
+            </button>
+          ) : onCancel ? (
+            <button
+              type="button"
+              className="btn-primary step-back-link"
+              onClick={onCancel}
+            >
+              <span>{t("product.cancel")}</span>
             </button>
           ) : (
             <span />
@@ -566,48 +574,52 @@ export default function ProductPage() {
 
     setStep((s) => s + 1);
   };
+  const handleCancel = () => {
+    clearDraft();
+    window.location.href = "https://www.taxero.ch/";
+  };
 
-const handleChooseOffer = async (offer: Offer) => {
-  setSelectedOffer(offer);
+  const handleChooseOffer = async (offer: Offer) => {
+    setSelectedOffer(offer);
 
-  const questionnaireId = localStorage.getItem("questionnaireId");
-  if (!questionnaireId) {
-    alert("Session error. Please restart.");
-    return;
-  }
+    const questionnaireId = localStorage.getItem("questionnaireId");
+    if (!questionnaireId) {
+      alert("Session error. Please restart.");
+      return;
+    }
 
-  // Save latest answers + offer to draft
-  saveDraft({
-    step: 11,
-    form: getValues(),
-    selectedOfferId: offer.id,
-  });
+    // Save latest answers + offer to draft
+    saveDraft({
+      step: 11,
+      form: getValues(),
+      selectedOfferId: offer.id,
+    });
 
-  if (user) {
-    setStep(11); // logged in → go to summary
-    return;
-  }
+    if (user) {
+      setStep(11); // logged in → go to summary
+      return;
+    }
 
-  // Anonymous → save answers to server, then redirect to login
-  // NO declaration created yet
-  try {
-    await axiosClient.post(
-      `/questionnaire/${questionnaireId}/save-step-public`,
-      { ...getValues(), offer: offer.id }, // save offer in questionnaire data too
-    );
-  } catch (e) {
-    console.error("Failed to save before login redirect:", e);
-  }
+    // Anonymous → save answers to server, then redirect to login
+    // NO declaration created yet
+    try {
+      await axiosClient.post(
+        `/questionnaire/${questionnaireId}/save-step-public`,
+        { ...getValues(), offer: offer.id }, // save offer in questionnaire data too
+      );
+    } catch (e) {
+      console.error("Failed to save before login redirect:", e);
+    }
 
-  // Just redirect to login, carry questionnaireId so we can resume
-  navigate("/login", {
-    state: {
-      redirectTo: "/product",
-      fromAnonymous: true,
-      questionnaireId, // ← pass this so after login we resume
-    },
-  });
-};
+    // Just redirect to login, carry questionnaireId so we can resume
+    navigate("/login", {
+      state: {
+        redirectTo: "/product",
+        fromAnonymous: true,
+        questionnaireId, // ← pass this so after login we resume
+      },
+    });
+  };
 
   const handleOfferGuard = (offer: Offer) => {
     if (step < 9) {
@@ -655,10 +667,7 @@ const handleChooseOffer = async (offer: Offer) => {
     }
   });
 
-  const handleCancel = () => {
-    clearDraft();
-    window.location.href = "https://www.taxero.ch/";
-  };
+
 
   return (
     <div className="product-page">
@@ -674,7 +683,7 @@ const handleChooseOffer = async (offer: Offer) => {
         <section className="product-main">
           {/* Step 1 */}
           {step === 1 && (
-            <StepCard title={t("product.taxYear")} onNext={goNext}>
+            <StepCard title={t("product.taxYear")} onNext={goNext} onCancel={handleCancel}>
               <div className="field-row">
                 {/* <label>{t("product.taxYear")}</label> */}
                 <select {...register("taxYear", { valueAsNumber: true, required: "Tax year is required" })}>
@@ -684,15 +693,8 @@ const handleChooseOffer = async (offer: Offer) => {
                 {errors.taxYear?.message && (
                   <p className="field-error">{String(errors.taxYear.message)}</p>
                 )}
-                
+
               </div>
-                        <button
-                  type="button"
-                  className="btn-secondary"
-                  onClick={handleCancel}
-                >
-                  {t("product.cancel")}
-                </button>
             </StepCard>
           )}
 
@@ -731,6 +733,7 @@ const handleChooseOffer = async (offer: Offer) => {
           {step === 3 && (
             <StepCard
               title={t("product.childrenCount")}
+              subtitle={t("product.childrenHint")}
               onPrev={goPrev}
               onNext={goNext}
             >
@@ -747,6 +750,7 @@ const handleChooseOffer = async (offer: Offer) => {
                 {errors.childrenCount?.message && (
                   <p className="field-error">{String(errors.childrenCount.message)}</p>
                 )}
+                {/* <p className="field-hint" style={{ fontSize: "1rem" }}>{t("product.childrenHint")}</p> */}
               </div>
             </StepCard>
           )}
@@ -755,6 +759,8 @@ const handleChooseOffer = async (offer: Offer) => {
           {step === 4 && (
             <StepCard
               title={t("product.incomeSources")}
+              subtitle={t("product.incomeHint")}
+
               onPrev={goPrev}
               onNext={goNext}
             >
@@ -773,7 +779,7 @@ const handleChooseOffer = async (offer: Offer) => {
                 {errors.incomeSources?.message && (
                   <p className="field-error">{String(errors.incomeSources.message)}</p>
                 )}
-                <p className="field-hint" style={{ fontSize: "1rem" }}>{t("product.incomeHint")}</p>
+                {/* <p className="field-hint" style={{ fontSize: "1rem" }}>{t("product.incomeHint")}</p> */}
               </div>
             </StepCard>
           )}
@@ -782,6 +788,8 @@ const handleChooseOffer = async (offer: Offer) => {
           {step === 5 && (
             <StepCard
               title={t("product.wealthStatements")}
+              subtitle={t("product.wealthHint")}
+
               onPrev={goPrev}
               onNext={goNext}
             >
@@ -800,12 +808,12 @@ const handleChooseOffer = async (offer: Offer) => {
                     {String(errors.wealthStatements.message)}
                   </p>
                 )}
-                <p
+                {/* <p
                   className="field-hint"
                   style={{ fontSize: "1rem" }}
                 >
                   {t("product.wealthHint")}
-                </p>
+                </p> */}
               </div>
             </StepCard>
           )}
@@ -814,20 +822,22 @@ const handleChooseOffer = async (offer: Offer) => {
           {step === 6 && (
             <StepCard
               title={t("product.movedAddressStepTitle" /* or reuse wealthStatements if you want */)}
+              subtitle={t("product.movedAddressHint")}
+
               onPrev={goPrev}
               onNext={goNext}
             >
               <div className="field-row" >
-                <label className="checkbox-label" style={{display: "flex", justifyContent:"center", alignItems: "center"}} >
+                <label className="checkbox-label" style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "8px" }} >
                   <input
                     type="checkbox"
                     {...register("movedAddress")}
                   />
                   <span>{t("product.movedAddressQuestion")}</span>
                 </label>
-                <p className="field-hint" style={{ fontSize: "0.9rem" }}>
+                {/* <p className="field-hint" style={{ fontSize: "0.9rem" }}>
                   {t("product.movedAddressHint")}
-                </p>
+                </p> */}
               </div>
             </StepCard>
           )}
@@ -836,6 +846,7 @@ const handleChooseOffer = async (offer: Offer) => {
           {step === 7 && (
             <StepCard
               title={t("product.properties")}
+              subtitle={t("product.propertiesHint")}
               onPrev={goPrev}
               onNext={goNext}
             >
@@ -854,9 +865,9 @@ const handleChooseOffer = async (offer: Offer) => {
                     {String(errors.properties.message)}
                   </p>
                 )}
-                <p className="field-hint">
+                {/* <p className="field-hint">
                   {t("product.propertiesHint")}
-                </p>
+                </p> */}
               </div>
             </StepCard>
           )}
@@ -888,6 +899,10 @@ const handleChooseOffer = async (offer: Offer) => {
 
               <div className="field-row">
                 <label>{t("product.newProperties")}</label>
+                <p className="label-subtitle">
+                  {t("product.newPropertiesHint")}
+                </p>
+
                 <input
                   type="number"
                   min={0}
@@ -906,13 +921,17 @@ const handleChooseOffer = async (offer: Offer) => {
                     {String(errors.newProperties.message)}
                   </p>
                 )}
-                <p className="field-hint">
+                {/* <p className="field-hint">
                   {t("product.newPropertiesHint")}
-                </p>
+                </p> */}
               </div>
 
               <div className="field-row">
                 <label>{t("product.propertiesWithEffectiveCost")}</label>
+                <p className="label-subtitle">
+                  {t("product.propertiesWithEffectiveCostHint")}
+                </p>
+
                 <input
                   type="number"
                   min={0}
@@ -931,9 +950,9 @@ const handleChooseOffer = async (offer: Offer) => {
                     {String(errors.propertiesWithEffectiveCost.message)}
                   </p>
                 )}
-                <p className="field-hint">
+                {/* <p className="field-hint">
                   {t("product.propertiesWithEffectiveCostHint")}
-                </p>
+                </p> */}
               </div>
             </StepCard>
           )}
@@ -1039,9 +1058,11 @@ const handleChooseOffer = async (offer: Offer) => {
                                       })
                                     }
                                   >
-                                    {isSelected
+                                    {/* {isSelected
                                       ? t("product.editRequest")
-                                      : t("product.chooseOffer")}
+                                      : t("product.chooseOffer")} */}
+                                    {t("product.chooseOffer")}
+
                                   </button>
                                 </div>
                               </th>
@@ -1087,17 +1108,83 @@ const handleChooseOffer = async (offer: Offer) => {
                       </tbody>
                     </table>
                   </div>
+                  {/* MOBILE – Notion style cards */}
+                  <div className="pricing-cards-notion">
+                    {offers.map((offer) => {
+                      const dynamicPrice =
+                        offer.id === "Standard"
+                          ? offerPrices.standard
+                          : offer.id === "Premium"
+                            ? offerPrices.premium
+                            : offerPrices.confort;
+
+                      const isSelected = selectedOffer?.id === offer.id;
+
+                      return (
+                        <div
+                          key={offer.id}
+                          className={"notion-card" + (isSelected ? " is-selected" : "")}
+                        >
+                          <div className="notion-card-head">
+                            <div className="notion-plan-name">{offer.name}</div>
+                            <div className="notion-plan-price">
+                              CHF {dynamicPrice.toFixed(0)}.–
+                            </div>
+                          </div>
+
+                          <div className="notion-divider" />
+
+                          <ul className="notion-features">
+                            {serviceRows.map((row) => {
+                              const enabled =
+                                offer.id === "Standard"
+                                  ? row.standard
+                                  : offer.id === "Premium"
+                                    ? row.premium
+                                    : row.confort;
+
+                              return (
+                                <li key={row.key} className="notion-feature">
+                                  <span className="notion-feature-text">
+                                    {t(`product.services.${row.key}`)}
+                                  </span>
+                                  <span className={"notion-feature-icon " + (enabled ? "yes" : "no")}>
+                                    {enabled ? "✓" : "—"}
+                                  </span>
+                                </li>
+                              );
+                            })}
+                          </ul>
+
+                          <button
+                            type="button"
+                            className={
+                              "btn-primary" + (isSelected ? " is-selected" : "")
+                            }
+                            onClick={() =>
+                              handleOfferGuard({
+                                ...offer,
+                                price: dynamicPrice,
+                              })
+                            }
+                          >
+                            {t("product.chooseOffer")}
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </StepCard>
           )}
           {step === 11 && (
             <div className="product-block">
-              <div className="summary-header" style={{display: "flex",alignContent: "center",justifyContent: "center",gap:"8px"}}>
+              <div className="summary-header" style={{ display: "flex", alignContent: "center", justifyContent: "center", gap: "8px" }}>
                 <h2>{t("product.sections.summary")}</h2>
-            <button
+                <button
                   type="button"
-                  className="btn-secondary"
+                  className="edit-btn"
                   onClick={handleCancel}
                 >
                   {t("product.cancel")}
@@ -1160,12 +1247,14 @@ const handleChooseOffer = async (offer: Offer) => {
               </div>
 
               <div className="product-actions">
-       
-                             <button
+
+                <button
                   // type="button"
                   // className="link-like edit-request-inline"
                   onClick={() => setStep(9)}
-                  className="edit-btn"
+                  // className="edit-btn"
+                  type="button"
+                  className="btn-primary"
                 >
                   {t("product.editRequest")}
                 </button>

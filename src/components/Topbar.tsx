@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth/AuthContext";
 import logoTaxera from "../assets/Icon.svg";
 import { useQueryClient } from "@tanstack/react-query";
+import { isAdminRole } from "../auth/AdminRoute";
 
 const LANGS: { code: "de" | "fr" | "en"; labelKey: string }[] = [
   { code: "de", labelKey: "topbar.lang.de" },
@@ -146,7 +147,7 @@ export default function Topbar() {
 
             {menuopen && (
               <div className="user-menu-dropdown" role="menu">
-                {/* <button
+                <button
                   type="button"
                   className="user-menu-item"
                   role="menuitem"
@@ -154,12 +155,12 @@ export default function Topbar() {
                     setMenuOpen(false);
                     const target = isAdminRole((user as any)?.roles)
                       ? "/admin/declarations"
-                      : "/https://www.taxero.ch/";
+                      : "/settings";
                     navigate(target);
                   }}
                 >
                   {t("menu.settings")}
-                </button> */}
+                </button>
 
                 <button
                   type="button"

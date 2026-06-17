@@ -1,6 +1,3 @@
- 
- 
-
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -21,9 +18,9 @@ export default function ViewRequestPage() {
 
   const navigate = useNavigate();
   const { user } = useAuth();
-const roles = user?.roles ?? [];
-const isAdmin =
-  roles.includes("admin") || roles.includes("SUPER_ADMIN"); // treat super admin as admin UI
+  const roles = user?.roles ?? [];
+  const isAdmin =
+    roles.includes("admin") || roles.includes("SUPER_ADMIN"); // treat super admin as admin UI
   const queryClient = useQueryClient();
 
   // UI state
@@ -34,7 +31,8 @@ const isAdmin =
 
   const [adminFinalFile, setAdminFinalFile] = useState<File | null>(null);
   const [isUploadingFinal, setIsUploadingFinal] = useState(false);
-
+  const [adminStep4File, setAdminStep4File] = useState<File | null>(null);
+  const [isUploadingStep4, setIsUploadingStep4] = useState(false);
   const [userSubmissionFile, setUserSubmissionFile] = useState<File | null>(null);
   const [isUploadingUserSubmission, setIsUploadingUserSubmission] = useState(false);
 
@@ -66,7 +64,7 @@ const isAdmin =
     queryFn: () => fetchDeclaration(declarationId),
     enabled: !!declarationId,
   });
-
+  console.log("currentStage:", declaration?.currentStage, "steps:", declaration?.steps);
   // i18n message helpers (so you translate everything once)
   const msg = {
     downloadFailed: t("view.alerts.downloadFailed"),
@@ -163,7 +161,25 @@ const isAdmin =
       setIsAddingStepComment(false);
     }
   };
-
+  // Add with the other handlers
+  const handleStep4Upload = async () => {
+    if (!adminStep4File) return alert(msg.selectFileFirst);
+    setIsUploadingStep4(true);
+    try {
+      await uploadFormFile({
+        url: `/files/${declarationId}/upload`,
+        file: adminStep4File,
+        extra: { documentType: "final_draft", deliveredForStep: "reviewAndValidation" },
+      });
+      await invalidate();
+      setAdminStep4File(null);
+    } catch (err) {
+      console.error("Step 4 upload failed", err);
+      alert(msg.uploadFailed);
+    } finally {
+      setIsUploadingStep4(false);
+    }
+  };
   const handleConfirmReceipt = async (fileId?: string) => {
     if (!confirm(msg.confirmDraftReceipt)) return;
 
@@ -352,6 +368,10 @@ const isAdmin =
       adminFinalFile={adminFinalFile}
       setAdminFinalFile={setAdminFinalFile}
       isUploadingFinal={isUploadingFinal}
+      adminStep4File={adminStep4File}
+      setAdminStep4File={setAdminStep4File}
+      isUploadingStep4={isUploadingStep4}
+      onStep4Upload={handleStep4Upload}
     />
   );
 }
