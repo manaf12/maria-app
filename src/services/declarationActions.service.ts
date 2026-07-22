@@ -47,4 +47,11 @@ export const declarationActions = {
       `/admin/declarations/${declarationId}/steps/submission/complete`
     );
   },
+  async downloadAllZip(declarationId: string, files: { id: string; name: string }[]) {
+    return axiosClient.post(
+      `/files/${declarationId}/download-zip`,
+      { files },
+      { responseType: "blob" },
+    );
+  },
 };

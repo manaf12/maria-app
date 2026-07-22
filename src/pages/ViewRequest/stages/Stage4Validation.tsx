@@ -166,6 +166,12 @@ export default function Stage4Validation({
       {/* ── Collapsible body ── */}
       {isOpen && (
         <div className="stage1-body">
+          
+          {!isAdmin && (
+            <div className="stage4-client-note">
+              {t("view.step4.clientNote")}
+            </div>
+          )}
 
           {/* Documents card */}
           <div className="stage4-card">

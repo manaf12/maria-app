@@ -284,7 +284,9 @@
     },
     "invoice": {
       "offer": "Offer",
-      "total": "Total amount"
+      "total": "Total amount",
+      "title": "Invoice",
+      "notAvailable": "Invoice not available yet."
     },
     "downloadInvoice": "Download invoice",
     "loading": "Loading…",
@@ -306,7 +308,7 @@
       "completed": "Your documents have been submitted."
     },
     "step2": {
-      "title":"Step 2 — Documents Review",
+      "title": "Step 2 — Documents Review",
       "description": "We are reviewing your tax declaration documents. If additional information is required, you can write a comment below.",
       "answerPlaceholder": "Your answer here…",
       "submit": "Submit answers and documents",
@@ -342,7 +344,7 @@
       }
     },
     "step3": {
-      "title":"Step 3 — Tax Return Preparation",
+      "title": "Step 3 — Tax Return Preparation",
       "text": "Your tax declaration is currently being prepared by Taxero. This step is handled entirely by our team.",
       "eta": "Estimated preparation time: around 2 weeks after all documents are complete.",
       "confirmDraftReceipt": "Are you sure you want to confirm receipt of the declaration?",
@@ -369,8 +371,9 @@
       "confirming": "Confirming...",
       "confirmReceipt": "Confirm you received the declaration",
       "submitConfirm": "Are you sure you want to submit the declaration?",
-      "commentSubmitted":  "Comment submitted successfully.",
+      "commentSubmitted": "Comment submitted successfully.",
       "uploadFile": "Upload file",
+      "clientNote": "If you selected the Confort or Premium service, please wait for your meeting with our expert before validating this step.",
       "addComment": {
         "label": "Add Comment",
         "forClient": "(for client)",
@@ -399,13 +402,12 @@
       "noUserFilesYet": "No user files yet.",
       "finalUploadSuccess": "Final upload successful",
       "userFilesCount": "Your files",
-      "adminFilesCount":"Admin files",
+      "adminFilesCount": "Admin files",
       "admin": {
         "uploadFinalLabel": "Admin: upload final file (PDF)",
         "uploadFinalBtn": "Upload final file",
         "markFullyCompleted": "Mark as Fully Completed & Finish Declaration",
-        "markFullyCompletedHint":"Mark this request as fully completed."
-
+        "markFullyCompletedHint": "Mark this request as fully completed."
       },
       "user": {
         "uploadNoticeLabel": "Upload assessment notice (if any)",
@@ -788,7 +790,8 @@
     "unknown": "Unknown",
     "unknownTime": "unknown time",
     "mark": "Mark as not available",
-    "select": "Select..."
+    "select": "Select...",
+    "notProvided": "Not provided"
   },
   "step1": {
     "title": "Step 1 — Documents & Questions",
@@ -810,6 +813,7 @@
     "missingQuestions": "Missing questions:",
     "notReady": "Step 1 is not ready",
     "selectPlaceholder": "Select…",
+    "answersSummaryTitle": "Your Step 1 answers",
     "sections": {
       "personalInformation": "Personal information",
       "professionalExpenses": "Professional expenses",
@@ -892,6 +896,10 @@
       "reasonPlaceholder": "Explanation (optional)",
       "confirm": "Confirm not available",
       "saving": "Saving..."
+    },
+    "tax_form_first_page": {
+      "title": "First page of the tax form (with taxpayer code)",
+      "description": "Upload a scan of the first page of your official tax form, including your taxpayer code / identification number."
     }
   },
   "stepStatus": {
@@ -907,7 +915,11 @@
     "adminFiles": "Admin Files",
     "empty": "No files uploaded yet.",
     "closeAria": "Close modal",
-    "downloadAria": "Download file"
+    "downloadAria": "Download file",
+    "downloadAll": "Download all ({{count}})",
+    "downloadingProgress": "Preparing {{completed}}/{{total}}…",
+    "downloadAllFailed": "Could not download the files. Please try again.",
+    "downloadAllPartial": "{{count}} file(s) could not be downloaded."
   },
   "documentTypes": {
     "assessment_notice": "Assessment notice",

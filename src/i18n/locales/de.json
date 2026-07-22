@@ -284,6 +284,8 @@
     "invoice": "Rechnung",
     "invoice.offer": "Leistung",
     "invoice.total": "Gesamtbetrag",
+    "invoice.title": "Rechnung",
+    "invoice.notAvailable": "Rechnung noch nicht verfügbar.",
     "downloadInvoice": "Rechnung herunterladen",
     "loading": "Wird geladen…",
     "errors": {
@@ -304,7 +306,7 @@
       "completed": "Ihre Unterlagen wurden eingereicht."
     },
     "step2": {
-      "title":"Schritt 2 — Dokumentenprüfung",
+      "title": "Schritt 2 — Dokumentenprüfung",
       "description": "Wir prüfen Ihre Unterlagen. Falls zusätzliche Informationen erforderlich sind, können Sie unten einen Kommentar schreiben.",
       "answerPlaceholder": "Ihre Antwort hier…",
       "submit": "Antworten und Unterlagen einreichen",
@@ -369,6 +371,7 @@
       "confirmReceipt": "Bestätigen Sie den Erhalt der Steuererklärung",
       "uploadFile": "Datei hochladen",
       "commentSubmitted": "Kommentar erfolgreich gesendet.",
+      "clientNote": "Wenn Sie das Confort- oder Premium-Paket gewählt haben, warten Sie bitte auf Ihr Gespräch mit unserem Experten, bevor Sie diesen Schritt bestätigen.",
       "addComment": {
         "label": "Kommentar hinzufügen",
         "forClient": "(für den Kunden)",
@@ -403,7 +406,6 @@
         "uploadFinalBtn": "Enddatei hochladen",
         "markFullyCompleted": "Als vollständig abgeschlossen markieren & Erklärung finalisieren",
         "markFullyCompletedHint": "Diese Anfrage als vollständig abgeschlossen markieren."
-
       },
       "user": {
         "uploadNoticeLabel": "Steuerbescheid hochladen (falls vorhanden)",
@@ -778,6 +780,7 @@
     "last": "Zuletzt",
     "close": "Schließen",
     "admin": "ADMIN",
+    "notProvided": "Nicht angegeben",
     "chooseFile": "Datei auswählen",
     "noFileChosen": "Keine Datei ausgewählt",
     "uploading": "Wird hochgeladen...",
@@ -808,6 +811,7 @@
     "missingDocuments": "Fehlende Dokumente:",
     "missingQuestions": "Fehlende Fragen:",
     "notReady": "Schritt 1 ist noch nicht bereit",
+    "answersSummaryTitle": "Ihre Antworten zu Schritt 1",
     "selectPlaceholder": "Auswählen…",
     "sections": {
       "personalInformation": "Persönliche Angaben",
@@ -891,6 +895,10 @@
       "reasonPlaceholder": "Begründung (optional)",
       "confirm": "Als nicht verfügbar bestätigen",
       "saving": "Speichern..."
+    },
+    "tax_form_first_page": {
+      "title": "Erste Seite des Steuerformulars (mit Steuerpflichtigen-Code)",
+      "description": "Laden Sie einen Scan der ersten Seite Ihres offiziellen Steuerformulars hoch, inklusive Ihres Steuerpflichtigen-Codes / Ihrer Identifikationsnummer."
     }
   },
   "stepStatus": {
@@ -898,7 +906,6 @@
     "DONE": "Erledigt",
     "IN_PROGRESS": "In Bearbeitung",
     "done": "Abgeschlossen"
-
   },
   "filesModal": {
     "title": "Hochgeladene Dateien",
@@ -907,7 +914,11 @@
     "adminFiles": "Admin-Dateien",
     "empty": "Noch keine Dateien hochgeladen.",
     "closeAria": "Modal schließen",
-    "downloadAria": "Datei herunterladen"
+    "downloadAria": "Datei herunterladen",
+    "downloadAll": "Alle herunterladen ({{count}})",
+    "downloadingProgress": "Wird vorbereitet {{completed}}/{{total}}…",
+    "downloadAllFailed": "Die Dateien konnten nicht heruntergeladen werden. Bitte versuchen Sie es erneut.",
+    "downloadAllPartial": "{{count}} Datei(en) konnten nicht heruntergeladen werden."
   },
   "documentTypes": {
     "assessment_notice": "Veranlagungsverfügung",

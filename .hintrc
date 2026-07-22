@@ -15,7 +15,8 @@
     "axe/aria": [
       "default",
       {
-        "aria-valid-attr-value": "off"
+        "aria-valid-attr-value": "off",
+        "empty-table-header": "off"
       }
     ],
     "compat-api/css": [

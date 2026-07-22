@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
 import DocumentUploadItem, { type FileEntity } from "./DocumentUploadItem";
 import { Step1Questions, type Step1Question } from "./Step1Questions";
+import { Step1AnswersSummary } from "./Step1AnswersSummary";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 
@@ -31,6 +32,110 @@ const REQUIRED_DOCUMENT_TYPES = [
 
 const OPTIONAL_DOCUMENT_TYPES = ["others"];
 
+// Local fallback used when the backend returns no Step 1 questions.
+// All labelKeys/sectionKeys/option keys already exist in en/fr/de.json.
+const DEFAULT_STEP1_QUESTIONS: Step1Question[] = [
+  {
+    id: "personalChanges",
+    labelKey: "step1.questions.personalChanges",
+    type: "text",
+    required: false,
+    sectionKey: "step1.sections.personalInformation",
+  },
+  {
+    id: "transportMode",
+    labelKey: "step1.questions.transportMode",
+    type: "select",
+    required: true,
+    sectionKey: "step1.sections.professionalExpenses",
+    options: [
+      { value: "publicTransport", labelKey: "step1.options.transportMode.publicTransport" },
+      { value: "bicycle", labelKey: "step1.options.transportMode.bicycle" },
+      { value: "vehicle", labelKey: "step1.options.transportMode.vehicle" },
+    ],
+  },
+  {
+    id: "distanceToWorkKm",
+    labelKey: "step1.questions.distanceToWorkKm",
+    type: "number",
+    required: true,
+    sectionKey: "step1.sections.professionalExpenses",
+    min: 0,
+  },
+  {
+    id: "weeklyTripsToWork",
+    labelKey: "step1.questions.weeklyTripsToWork",
+    type: "number",
+    required: true,
+    sectionKey: "step1.sections.professionalExpenses",
+    min: 0,
+  },
+  {
+    id: "mealsOutsidePerWeek",
+    labelKey: "step1.questions.mealsOutsidePerWeek",
+    type: "number",
+    required: true,
+    sectionKey: "step1.sections.professionalExpenses",
+    min: 0,
+  },
+  {
+    id: "netAnnualRentVD_GE",
+    labelKey: "step1.questions.netAnnualRentVD_GE",
+    type: "number",
+    required: false,
+    sectionKey: "step1.sections.housing",
+    min: 0,
+  },
+  {
+    id: "canton",
+    labelKey: "step1.questions.canton",
+    type: "select",
+    required: true,
+    sectionKey: "step1.sections.taxAuthorityNumbers",
+    options: [
+      { value: "FR", labelKey: "step1.options.canton.FR" },
+      { value: "BE", labelKey: "step1.options.canton.BE" },
+      { value: "VD", labelKey: "step1.options.canton.VD" },
+      { value: "VS", labelKey: "step1.options.canton.VS" },
+      { value: "NE", labelKey: "step1.options.canton.NE" },
+      { value: "GE", labelKey: "step1.options.canton.GE" },
+      { value: "OTHER", labelKey: "step1.options.canton.OTHER" },
+    ],
+  },
+  {
+    id: "taxpayerNumber",
+    labelKey: "step1.questions.taxpayerNumber",
+    type: "text",
+    required: true,
+    sectionKey: "step1.sections.taxAuthorityNumbers",
+  },
+  {
+    id: "controlOrDeclarationCode",
+    labelKey: "step1.questions.controlOrDeclarationCode",
+    type: "text",
+    required: false,
+    sectionKey: "step1.sections.taxAuthorityNumbers",
+  },
+];
+
+// Keep whatever the backend returns, then append any default question whose
+// id is not already present. Guarantees the new fields always render, even if
+// the backend returns a legacy/partial list. Dedupes by id (no duplicates).
+function mergeStep1Questions(
+  backend: Step1Question[],
+  defaults: Step1Question[]
+): Step1Question[] {
+  const seen = new Set(backend.map((q) => q.id));
+  const merged = [...backend];
+  for (const q of defaults) {
+    if (!seen.has(q.id)) {
+      merged.push(q);
+      seen.add(q.id);
+    }
+  }
+  return merged;
+}
+
 export default function Stage1Section({
   declaration,
   isCurrent,
@@ -47,6 +152,7 @@ export default function Stage1Section({
   const [questionsLoading, setQuestionsLoading] = React.useState(false);
   const [uploadError, setUploadError] = React.useState<string | null>(null);
   const [isOpen, setIsOpen] = React.useState(true);
+  const [answersReload, setAnswersReload] = React.useState(0);
 
   const [confirmError, setConfirmError] = React.useState<{
     missingDocs?: string[];
@@ -64,11 +170,13 @@ export default function Stage1Section({
           `/files/${declaration.id}/step1/questions`
         );
         if (!mounted) return;
-        setStep1Questions(res.data.questions ?? []);
+        const fetched = res.data.questions ?? [];
+        console.debug("[Step1] backend questions:", fetched);
+        setStep1Questions(mergeStep1Questions(fetched, DEFAULT_STEP1_QUESTIONS));
       } catch (e) {
         console.error("Failed to load Step 1 questions", e);
         if (!mounted) return;
-        setStep1Questions([]);
+        setStep1Questions(DEFAULT_STEP1_QUESTIONS);
       } finally {
         if (mounted) setQuestionsLoading(false);
       }
@@ -96,6 +204,12 @@ export default function Stage1Section({
     await queryClient.invalidateQueries({
       queryKey: ["declaration", declaration.id],
     });
+  };
+
+  // Called after each Step 1 answer is saved: refresh data + the summary view.
+  const handleStep1Saved = async () => {
+    await invalidateDeclaration();
+    setAnswersReload((k) => k + 1);
   };
 
   const confirmStep1 = async () => {
@@ -293,10 +407,17 @@ export default function Stage1Section({
                 declarationId={declaration.id}
                 questions={step1Questions}
                 initialAnswers={initialStep1Answers}
-                onSaved={invalidateDeclaration}
+                onSaved={handleStep1Saved}
                 disabled={lockEditing}
               />
             )}
+          </div>
+
+          <div className="mt-6">
+            <Step1AnswersSummary
+              declarationId={declaration.id}
+              reloadKey={answersReload}
+            />
           </div>
 
           <div className="documents-grid">

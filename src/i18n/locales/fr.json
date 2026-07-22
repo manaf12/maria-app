@@ -283,7 +283,9 @@
     },
     "invoice": {
       "offer": "Offre",
-      "total": "Montant total"
+      "total": "Montant total",
+      "title": "Facture",
+      "notAvailable": "Facture pas encore disponible."
     },
     "downloadInvoice": "Télécharger la facture",
     "loading": "Chargement…",
@@ -370,6 +372,7 @@
       "confirmReceipt": "Confirmez la réception de votre déclaration",
       "commentSubmitted": "Commentaire envoyé avec succès.",
       "uploadFile": "Téléverser un fichier",
+      "clientNote": "Si vous avez choisi le service Confort ou Premium, veuillez attendre votre rendez-vous avec notre expert avant de valider cette étape.",
       "addComment": {
         "label": "Ajouter un commentaire",
         "forClient": "(pour le client)",
@@ -396,7 +399,7 @@
       "user1": "utilisateur",
       "noAdminFilesYet": "Aucun fichier administrateur pour le moment.",
       "noUserFilesYet": "Aucun fichier utilisateur pour le moment.",
-      "finalUploadSuccess":"Téléchargement final réussi",
+      "finalUploadSuccess": "Téléchargement final réussi",
       "userFilesCount": "Vos fichiers",
       "adminFilesCount": "Fichiers admin",
       "admin": {
@@ -778,6 +781,7 @@
     "last": "Dernière",
     "close": "Fermer",
     "admin": "ADMIN",
+    "notProvided": "Non renseigné",
     "chooseFile": "Choisir un fichier",
     "noFileChosen": "Aucun fichier sélectionné",
     "uploading": "Téléchargement en cours...",
@@ -800,6 +804,7 @@
     "uploadedCount": "Téléchargé(s) ({{count}})",
     "notAvailable": "Non disponible",
     "pending": "En attente",
+    "answersSummaryTitle": "Vos réponses de l’étape 1",
     "notEditable": "Cette étape n’est pas modifiable pour le moment.",
     "stepStatusLabel": "Statut de l’étape 1",
     "confirmStep1": "Confirmer l’étape 1",
@@ -901,6 +906,10 @@
       "reasonPlaceholder": "Explanation (optional)",
       "confirm": "Confirmer indisponible",
       "saving": "Enregistrement..."
+    },
+    "tax_form_first_page": {
+      "title": "Première page du formulaire d'impôt (avec code contribuable)",
+      "description": "Téléchargez un scan de la première page de votre formulaire d'impôt officiel, incluant votre code contribuable / numéro d'identification."
     }
   },
   "stepStatus": {
@@ -916,7 +925,11 @@
     "adminFiles": "Fichiers admin",
     "empty": "Aucun fichier téléversé pour le moment.",
     "closeAria": "Fermer la fenêtre",
-    "downloadAria": "Télécharger le fichier"
+    "downloadAria": "Télécharger le fichier",
+    "downloadAll": "Tout télécharger ({{count}})",
+    "downloadingProgress": "Préparation {{completed}}/{{total}}…",
+    "downloadAllFailed": "Impossible de télécharger les fichiers. Veuillez réessayer.",
+    "downloadAllPartial": "{{count}} fichier(s) n'ont pas pu être téléchargé(s)."
   },
   "documentTypes": {
     "assessment_notice": "Avis d’imposition",

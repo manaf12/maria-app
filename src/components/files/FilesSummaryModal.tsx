@@ -2,13 +2,15 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { type FileEntity } from "../../types/declaration.types";
 import { DownloadIcon } from "../Icons";
-
+import DownloadAllButton from "./DownloadAllButton";
 
 type Props = {
   files: FileEntity[];
   onDownloadFile: (fileId: string) => void;
   isOpen: boolean;
   onClose: () => void;
+  isAdmin?: boolean;
+  declarationId?: string;
 };
 
 export default function FilesSummaryModal({
@@ -16,6 +18,8 @@ export default function FilesSummaryModal({
   onDownloadFile,
   isOpen,
   onClose,
+  isAdmin = false,
+  declarationId,
 }: Props) {
   const { t } = useTranslation();
 
@@ -58,7 +62,14 @@ export default function FilesSummaryModal({
             <CloseIcon size={18} color="#ffffff" />
           </button> */}
 
-          <div className="p-4 border-t bg-gray-50 flex justify-end">
+          <div className="p-4 border-t bg-gray-50 flex justify-end" style={{ gap: 10 }}>
+            {isAdmin && (
+              <DownloadAllButton
+                files={files ?? []}
+                zipName={`declaration-${declarationId ?? "files"}.zip`}
+              />
+            )}
+
             <button
               type="button"
               onClick={onClose}

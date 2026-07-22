@@ -240,7 +240,36 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
           </div>
         </dl>
       </section>
+      <section className="view-block invoice-block">
+        <h2>{t("view.invoice.title", { defaultValue: "Invoice" })}</h2>
 
+        <div className="invoice-line">
+          <span>{t("view.invoice.offer")}</span>
+          <span>{data.invoice.offerName}</span>
+        </div>
+
+        <div className="invoice-line">
+          <span>{t("view.invoice.total")}</span>
+          <span>{data.invoice.totalAmount}</span>
+        </div>
+
+        {data.invoice.invoiceUrl ? (
+          <div style={{ marginTop: 12 }}>
+            <button
+              className="btn-secondary"
+              onClick={() => window.open(data.invoice.invoiceUrl, "_blank")}
+            >
+              {t("view.downloadInvoice")}
+            </button>
+          </div>
+        ) : (
+          <p className="muted small" style={{ marginTop: 8 }}>
+            {t("view.invoice.notAvailable", {
+              defaultValue: "Invoice not available yet.",
+            })}
+          </p>
+        )}
+      </section>
       <div className="view-top-bar">
         <button className="btn-secondary" onClick={() => setFilesModalOpen(true)}>
           {t("product.sections.summary")}
@@ -255,6 +284,8 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
         onDownloadFile={onDownloadFile}
         isOpen={isFilesModalOpen}
         onClose={() => setFilesModalOpen(false)}
+        isAdmin={isAdmin}
+        declarationId={data.id}
       />
 
       <section className="view-stages">
