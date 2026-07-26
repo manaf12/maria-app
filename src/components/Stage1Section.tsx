@@ -22,6 +22,8 @@ type Stage1SectionProps = {
 };
 
 const REQUIRED_DOCUMENT_TYPES = [
+  // Required identification document for Step 1.
+  "tax_form_first_page",
   "previous_tax_return",
   "salary_certificate",
   "bank_statement",
@@ -29,6 +31,41 @@ const REQUIRED_DOCUMENT_TYPES = [
   "medical_expense_receipt",
   "taxero_invoice_payment_proof",
 ];
+
+// These cards must always be visible, but they only apply to declarations
+// involving the relevant property or debt situation. They are deliberately
+// excluded from REQUIRED_DOCUMENT_TYPES so they do not block every user.
+const CONDITIONAL_DOCUMENT_TYPES = [
+  "property_deed_main_residence",
+  "property_deed_rental_property",
+  "debt_loan_statement",
+];
+
+// Backend/storage document IDs do not match the shorter i18n keys.
+// Keep the backend IDs for uploads and existing files, and map only
+// the translation lookup used for labels.
+const DOCUMENT_TRANSLATION_TYPE_MAP: Record<string, string> = {
+  property_deed_main_residence: "property_deed_main",
+  property_deed_rental_property: "property_deed_rental",
+  debt_loan_statement: "debt_statement",
+};
+
+function getDocumentTranslationType(documentType: string): string {
+  return DOCUMENT_TRANSLATION_TYPE_MAP[documentType] ?? documentType;
+}
+
+function getDocumentTitle(
+  documentType: string,
+  t: TFunction
+): string {
+  const translationType = getDocumentTranslationType(documentType);
+
+  return String(
+    t(`documents.${translationType}.title`, {
+      defaultValue: documentType,
+    })
+  );
+}
 
 const OPTIONAL_DOCUMENT_TYPES = ["others"];
 
@@ -309,19 +346,38 @@ export default function Stage1Section({
   };
 
   const requiredProgress = useMemo(() => {
+    // Display progress for all 11 visible document cards.
+    // "others" remains optional and is counted only when a file is uploaded.
+    const progressDocumentTypes = Array.from(
+      new Set([
+        ...REQUIRED_DOCUMENT_TYPES,
+        ...CONDITIONAL_DOCUMENT_TYPES,
+        ...OPTIONAL_DOCUMENT_TYPES,
+      ])
+    );
+
     let done = 0;
 
-    REQUIRED_DOCUMENT_TYPES.forEach((docType) => {
+    progressDocumentTypes.forEach((docType) => {
       const hasFiles = (filesByType[docType] ?? []).length > 0;
       const isMissing = !!declaredMissingMap[docType];
-      if (hasFiles || isMissing) done += 1;
+
+      if (hasFiles || isMissing) {
+        done += 1;
+      }
     });
 
-    return { done, total: REQUIRED_DOCUMENT_TYPES.length };
+    return {
+      done,
+      total: progressDocumentTypes.length,
+    };
   }, [filesByType, declaredMissingMap]);
 
   const allDocTypesForUI = [
-    ...REQUIRED_DOCUMENT_TYPES,
+    ...REQUIRED_DOCUMENT_TYPES.filter(
+      (docType) => docType !== "tax_form_first_page"
+    ),
+    ...CONDITIONAL_DOCUMENT_TYPES,
     ...OPTIONAL_DOCUMENT_TYPES,
   ];
 
@@ -420,10 +476,135 @@ export default function Stage1Section({
             />
           </div>
 
+          {(() => {
+            const docType = "tax_form_first_page";
+            const uploadedFiles = filesByType[docType] ?? [];
+            const isMissing = !!declaredMissingMap[docType];
+            const canEditDocType = !lockEditing && isCurrent;
+
+            return (
+              <div className="document-card">
+                <div className="document-card-header">
+                  <div className="document-card-info">
+                    <h4 className="document-card-title">
+                      {getDocumentTitle(docType, t)}
+                    </h4>
+
+                    <p className="stage1-subtitle">
+                      {t("documents.tax_form_first_page.description", {
+                        defaultValue:
+                          "Upload a scan of the first page of your official tax form, including your taxpayer code / identification number.",
+                      })}
+                    </p>
+
+                    <div className="document-card-type">
+                      {t("common.required")}
+                    </div>
+                  </div>
+
+                  <div className="document-card-badges">
+                    {uploadedFiles.length > 0 && (
+                      <span className="doc-badge doc-badge-success">
+                        {t("step1.uploadedCount", {
+                          count: uploadedFiles.length,
+                        })}
+                      </span>
+                    )}
+
+                    {isMissing && (
+                      <span className="doc-badge doc-badge-warning">
+                        {t("step1.notAvailable")}
+                      </span>
+                    )}
+
+                    {!isMissing && uploadedFiles.length === 0 && (
+                      <span className="doc-badge doc-badge-neutral">
+                        {t("step1.pending")}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {uploadedFiles.length > 0 && (
+                  <ul className="uploaded-files-list">
+                    {uploadedFiles.map((file) => (
+                      <li key={file.id} className="uploaded-file-item">
+                        <div className="uploaded-file-left">
+                          <span
+                            aria-hidden="true"
+                            className="uploaded-file-icon"
+                          >
+                            PDF
+                          </span>
+
+                          <span className="uploaded-file-name">
+                            {file.originalName}
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          className="delete-btn"
+                          disabled={lockEditing}
+                          onClick={async () => {
+                            if (lockEditing) return;
+
+                            const fileName =
+                              file.originalName ?? t("common.thisFile");
+                            const msg = String(
+                              t("step1.confirmDeleteFile", { fileName })
+                            );
+
+                            if (!confirm(msg)) return;
+
+                            await axiosClient.delete(`/files/${file.id}`);
+                            await queryClient.invalidateQueries({
+                              queryKey: ["declaration", declaration.id],
+                            });
+                          }}
+                        >
+                          {t("common.delete")}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {uploadError && (
+                  <div className="stage1-upload-error">{uploadError}</div>
+                )}
+
+                {canEditDocType ? (
+                  <DocumentUploadItem
+                    declarationId={declaration.id}
+                    documentType={docType}
+                    uploadedFiles={uploadedFiles}
+                    isMissing={isMissing}
+                    allowMultiple={true}
+                    disableMissing={false}
+                    onUpload={(file) => uploadOne(docType, file)}
+                    onUploadMultiple={(files) =>
+                      uploadMultiple(docType, files)
+                    }
+                    onMarkMissing={(reason) =>
+                      markMissing(docType, reason)
+                    }
+                    onUndoMissing={() => undoMissing(docType)}
+                  />
+                ) : (
+                  <p className="stage1-not-editable">
+                    {t("step1.notEditable")}
+                  </p>
+                )}
+              </div>
+            );
+          })()}
+
           <div className="documents-grid">
             {allDocTypesForUI.map((docType) => {
               const uploadedFiles = filesByType[docType] ?? [];
               const isMissing = !!declaredMissingMap[docType];
+              const isRequired = REQUIRED_DOCUMENT_TYPES.includes(docType);
               const isOthers = docType === "others";
               const canEditDocType = !lockEditing && (isCurrent || isOthers);
 
@@ -432,10 +613,12 @@ export default function Stage1Section({
                   <div className="document-card-header">
                     <div className="document-card-info">
                       <h4 className="document-card-title">
-                        {t(`documents.${docType}.title`)}
+                        {getDocumentTitle(docType, t)}
                       </h4>
                       <div className="document-card-type">
-                        {isOthers ? t("common.optional") : t("common.required")}
+                        {isOthers
+                          ? t("common.optional")
+                          : t("common.required")}
                       </div>
                     </div>
 
@@ -456,7 +639,7 @@ export default function Stage1Section({
 
                       {!isMissing &&
                         uploadedFiles.length === 0 &&
-                        !isOthers && (
+                        isRequired && (
                           <span className="doc-badge doc-badge-neutral">
                             {t("step1.pending")}
                           </span>
@@ -605,7 +788,7 @@ export default function Stage1Section({
                     </div>
                     <ul className="stage1-error-list">
                       {confirmError.missingDocs!.map((d) => (
-                        <li key={d}>{t(`documents.${d}.title`)}</li>
+                        <li key={d}>{getDocumentTitle(d, t)}</li>
                       ))}
                     </ul>
                   </div>

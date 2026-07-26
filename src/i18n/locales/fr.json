@@ -397,6 +397,7 @@
       "by": "par",
       "admin1": "administrateur",
       "user1": "utilisateur",
+      "confirmComplete": "Êtes-vous sûr de vouloir marquer cette déclaration comme entièrement terminée ?",
       "noAdminFilesYet": "Aucun fichier administrateur pour le moment.",
       "noUserFilesYet": "Aucun fichier utilisateur pour le moment.",
       "finalUploadSuccess": "Téléchargement final réussi",

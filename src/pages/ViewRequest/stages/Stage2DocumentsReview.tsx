@@ -19,10 +19,20 @@ type Props = {
   setStep2AdminComment: (v: string) => void;
   isAddingStep2Comment: boolean;
   user: User | null;
-  onDownloadFile: (fileId: string) => void;
+  onDownloadFile: (fileId: string) => void | Promise<void>;
   onApproveStep2: (note?: string) => void;
   onAddStep2Comment: (comment: string) => Promise<void>;
 };
+
+const DOCUMENT_TRANSLATION_TYPE_MAP: Record<string, string> = {
+  property_deed_main_residence: "property_deed_main",
+  property_deed_rental_property: "property_deed_rental",
+  debt_loan_statement: "debt_statement",
+};
+
+function getDocumentTranslationType(documentType: string): string {
+  return DOCUMENT_TRANSLATION_TYPE_MAP[documentType] ?? documentType;
+}
 
 export default function Stage2DocumentsReview({
   data,
@@ -45,6 +55,9 @@ export default function Stage2DocumentsReview({
   const [isOpen, setIsOpen] = React.useState(!isCompleted);
   const [step1Answers, setStep1Answers] = React.useState<Record<string, any>>({});
   const [step1Questions, setStep1Questions] = React.useState<Step1Question[]>([]);
+  const [isDownloadingAll, setIsDownloadingAll] = React.useState(false);
+  const [downloadedCount, setDownloadedCount] = React.useState(0);
+  const [downloadAllError, setDownloadAllError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (isCompleted) setIsOpen(false);
@@ -84,13 +97,74 @@ export default function Stage2DocumentsReview({
     await onAddStep2Comment(text);
   };
 
-  const docTitle = (type?: string) => {
-    if (!type) return t("documents.unknown.title", { defaultValue: "Unknown document" });
-    return t(`documents.${type}.title`, { defaultValue: type });
+  const handleDownloadAll = async () => {
+    if (!isAdmin || isDownloadingAll || allFiles.length === 0) return;
+
+    setIsDownloadingAll(true);
+    setDownloadedCount(0);
+    setDownloadAllError(null);
+
+    let failedCount = 0;
+
+    for (let index = 0; index < allFiles.length; index += 1) {
+      const file = allFiles[index];
+
+      try {
+        await Promise.resolve(onDownloadFile(file.id));
+      } catch (error) {
+        failedCount += 1;
+        console.error(`Failed to download file ${file.id}`, error);
+      } finally {
+        setDownloadedCount(index + 1);
+      }
+
+      // A small delay prevents browsers from receiving all download requests
+      // at exactly the same time.
+      if (index < allFiles.length - 1) {
+        await new Promise((resolve) => window.setTimeout(resolve, 150));
+      }
+    }
+
+    if (failedCount === allFiles.length) {
+      setDownloadAllError(
+        String(
+          t("filesModal.downloadAllFailed", {
+            defaultValue:
+              "Could not download the files. Please try again.",
+          })
+        )
+      );
+    } else if (failedCount > 0) {
+      setDownloadAllError(
+        String(
+          t("filesModal.downloadAllPartial", {
+            count: failedCount,
+            defaultValue: `${failedCount} file(s) could not be downloaded.`,
+          })
+        )
+      );
+    }
+
+    setIsDownloadingAll(false);
   };
 
-  const adminFiles = (data.files ?? []).filter((f: any) => f?.meta?.uploaderRole === "admin");
-  // const userFiles = (data.files ?? []).filter((f: any) => f?.meta?.uploaderRole === "user");
+  const docTitle = (type?: string) => {
+    if (!type) {
+      return t("documents.unknown.title", {
+        defaultValue: "Unknown document",
+      });
+    }
+
+    const translationType = getDocumentTranslationType(type);
+
+    return t(`documents.${translationType}.title`, {
+      defaultValue: type,
+    });
+  };
+
+  const allFiles = data.files ?? [];
+  // const adminFiles = allFiles.filter((f: any) => f?.meta?.uploaderRole === "admin");
+  // const userFiles = allFiles.filter((f: any) => f?.meta?.uploaderRole === "user");
 
   // Match answers to questions for translated labels
   const answerRows = step1Questions
@@ -108,7 +182,7 @@ export default function Stage2DocumentsReview({
     if (value === null || value === undefined) return "—";
     return String(value);
   };
-  const uploadedCount = (data.files ?? []).length;
+  const uploadedCount = allFiles.length;
 
   return (
     <div className="stage1-container">
@@ -136,7 +210,7 @@ export default function Stage2DocumentsReview({
                 </div>
               )}
 
-              {adminFiles.length > 0 && (
+              {uploadedCount > 0 && (
                 <div className="stage1-meta-item">
                   <span className="stage1-progress-text">
                     {t("view.step5.userFilesCount")}{" "}
@@ -200,12 +274,73 @@ export default function Stage2DocumentsReview({
           )}
 
           {/* Files two-column layout */}
-          <div className="files-modal-body">
+          <div
+            className="files-modal-body"
+            style={{
+              alignItems: "start",
+            }}
+          >
             <div>
-              <h3 className="font-semibold text-lg mb-4">{t("view.step2.admin.filesTitle")}</h3>
-              {(data.files ?? []).length ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 12,
+                  minHeight: 42,
+                  marginBottom: 16,
+                }}
+              >
+                <h3 className="font-semibold text-lg" style={{ margin: 0 }}>
+                  {t("view.step2.admin.filesTitle")}
+                </h3>
+
+                {isAdmin && allFiles.length > 0 && (
+                  <button
+                    type="button"
+                    className="btn-primary"
+                    onClick={handleDownloadAll}
+                    disabled={isDownloadingAll}
+                    aria-label={t("filesModal.downloadAll", {
+                      count: allFiles.length,
+                    })}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <DownloadIcon size={17} color="#ffffff" />
+
+                    {isDownloadingAll
+                      ? t("filesModal.downloadingProgress", {
+                          completed: downloadedCount,
+                          total: allFiles.length,
+                          defaultValue: `Preparing ${downloadedCount}/${allFiles.length}…`,
+                        })
+                      : t("filesModal.downloadAll", {
+                          count: allFiles.length,
+                          defaultValue: `Download all (${allFiles.length})`,
+                        })}
+                  </button>
+                )}
+              </div>
+
+              {downloadAllError && (
+                <div
+                  role="alert"
+                  className="stage1-upload-error"
+                  style={{ marginBottom: 12 }}
+                >
+                  {downloadAllError}
+                </div>
+              )}
+
+              {allFiles.length ? (
                 <ul className="space-y-3">
-                  {(data.files ?? []).map((file) => (
+                  {allFiles.map((file) => (
                     <li key={file.id} className="file-row">
                       <div className="file-row-left">
                         <span className="file-icon">PDF</span>
@@ -230,7 +365,19 @@ export default function Stage2DocumentsReview({
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg mb-4">{t("view.step2.missingDocumentsTitle")}</h3>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  minHeight: 42,
+                  marginBottom: 16,
+                }}
+              >
+                <h3 className="font-semibold text-lg" style={{ margin: 0 }}>
+                  {t("view.step2.missingDocumentsTitle")}
+                </h3>
+              </div>
+
               {missingDocs.length ? (
                 <ul className="space-y-3">
                   {missingDocs.map((doc: any, index: number) => (

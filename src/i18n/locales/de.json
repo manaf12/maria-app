@@ -396,6 +396,7 @@
       "by": "von",
       "admin1": "Administrator",
       "user1": "Benutzer",
+      "confirmComplete": "Sind Sie sicher, dass Sie diese Steuererklärung als vollständig abgeschlossen markieren möchten?",
       "noAdminFilesYet": "Noch keine Administrator-Dateien.",
       "noUserFilesYet": "Noch keine Benutzer-Dateien.",
       "finalUploadSuccess": "Endgültiger Upload erfolgreich",

@@ -398,6 +398,7 @@
       "by": "by",
       "admin1": "admin",
       "user1": "user",
+      "confirmComplete": "Are you sure you want to mark this declaration as fully completed?",
       "noAdminFilesYet": "No admin files yet.",
       "noUserFilesYet": "No user files yet.",
       "finalUploadSuccess": "Final upload successful",
