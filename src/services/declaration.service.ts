@@ -1,4 +1,4 @@
- 
+
 import axiosClient from "../api/axiosClient";
 import type { StageId, ViewRequestData } from "../types/declaration.types";
 
@@ -8,22 +8,22 @@ export async function fetchDeclaration(declarationId: string) {
   const payload: any = res.data;
   const mapped: ViewRequestData = {
     id: payload.id,
-     files: payload.files ?? [],
-     steps: payload.steps ?? [],
+    files: payload.files ?? [],
+    steps: payload.steps ?? [],
     taxYear: payload.questionnaireSnapshot?.taxYear ?? new Date().getFullYear(),
     clientName: `${payload.clientProfile?.firstName ?? ""} ${payload.clientProfile?.lastName ?? ""}`.trim() || "—",
     productName: payload.offer ?? "—",
     currentStage: (payload.currentStep ?? payload.currentStage ?? 1) as StageId,
     wealthStatements: payload.questionnaireSnapshot?.wealthStatements ?? 0,
-status: payload.status,
-  clientProfile: {
-    streetAddress: payload.clientProfile?.streetAddress ?? undefined,
-    postalCode: payload.clientProfile?.postalCode ?? undefined,
-    city: payload.clientProfile?.city ?? undefined,
-    user: {
-      email: payload.clientProfile?.user?.email ?? undefined,
+    status: payload.status,
+    clientProfile: {
+      streetAddress: payload.clientProfile?.streetAddress ?? undefined,
+      postalCode: payload.clientProfile?.postalCode ?? undefined,
+      city: payload.clientProfile?.city ?? undefined,
+      user: {
+        email: payload.clientProfile?.user?.email ?? undefined,
+      },
     },
-  },
     summary: {
       maritalStatus: payload.questionnaireSnapshot?.maritalStatus ?? "—",
       childrenCount: payload.questionnaireSnapshot?.childrenCount ?? 0,
@@ -62,9 +62,14 @@ status: payload.status,
     invoice: {
       offerName: payload.offer ?? payload.questionnaireSnapshot?.offer ?? "—",
       totalAmount:
-  payload.invoice?.totalAmount ??
-  `${Number(payload.pricing?.finalPrice ?? 0)} CHF`,
-      invoiceUrl: payload.invoice?.url ?? payload.invoiceUrl ?? "",
+        payload.invoice?.totalAmount ??
+        `${Number(payload.pricing?.finalPrice ?? 0)} CHF`,
+      invoiceUrl:
+        payload.invoice?.url ??
+        payload.invoice?.fileUrl ??
+        payload.invoicePdfUrl ??
+        payload.invoiceUrl ??
+        "",
     },
   };
 

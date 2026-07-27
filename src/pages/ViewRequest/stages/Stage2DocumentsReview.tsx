@@ -5,6 +5,7 @@ import React from "react";
 import axiosClient from "../../../api/axiosClient";
 import { useTranslation } from "react-i18next";
 import type { Step1Question } from "../../../components/Step1Questions";
+import { DEFAULT_STEP1_QUESTIONS } from "../../../components/step1-questions.constant";
 
 type Props = {
   data: ViewRequestData;
@@ -54,7 +55,7 @@ export default function Stage2DocumentsReview({
   const { t: tLocal } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(!isCompleted);
   const [step1Answers, setStep1Answers] = React.useState<Record<string, any>>({});
-  const [step1Questions, setStep1Questions] = React.useState<Step1Question[]>([]);
+  const step1Questions: Step1Question[] = DEFAULT_STEP1_QUESTIONS;
   const [isDownloadingAll, setIsDownloadingAll] = React.useState(false);
   const [downloadedCount, setDownloadedCount] = React.useState(0);
   const [downloadAllError, setDownloadAllError] = React.useState<string | null>(null);
@@ -66,14 +67,12 @@ export default function Stage2DocumentsReview({
   React.useEffect(() => {
     (async () => {
       try {
-        const [qRes, aRes] = await Promise.all([
-          axiosClient.get<{ questions: Step1Question[] }>(`/files/${data.id}/step1/questions`),
-          axiosClient.get<{ answers: Record<string, any> }>(`/files/${data.id}/step1/answers`),
-        ]);
-        setStep1Questions(qRes.data.questions ?? []);
+        const aRes = await axiosClient.get<{ answers: Record<string, any> }>(
+          `/files/${data.id}/step1/answers`
+        );
         setStep1Answers(aRes.data.answers ?? {});
       } catch (e) {
-        console.error("Failed to load step1 questions/answers", e);
+        console.error("Failed to load step1 answers", e);
       }
     })();
   }, [data.id]);
