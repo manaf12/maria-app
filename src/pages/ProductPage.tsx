@@ -1338,6 +1338,10 @@ export default function ProductPage() {
                     }
 
                     try {
+                      // Finalize the questionnaire. The QR-bill / invoice PDF is no
+                      // longer generated here — the backend now exposes it on the
+                      // order as `invoiceUrl` (a ~7-day presigned link), which the
+                      // request view reads fresh from GET /orders/:id.
                       await axiosClient.post(
                         `/questionnaire/${questionnaireId}/finalize`,
                         {
@@ -1351,45 +1355,15 @@ export default function ProductPage() {
                           },
                         },
                       );
-                      const pdfResponse = await axiosClient.post(
-                        "/qr-bill/generate",
-
-                        {
-                          creditorAccount: "CH65 3080 8001 0062 4300 3",
-                          amount: selectedOffer.price,
-                          currency: "CHF",
-                          debtor: {
-                            name: `${formValues.billingFirstName} ${formValues.billingLastName}`,
-                            address: formValues.billingStreet,
-                            zip: formValues.billingPostalCode,
-                            city: formValues.billingCity,
-                            country: "CH",
-                          },
-                          reference: String(questionnaireId),
-                          additionalInformation: `Tax declaration ${taxYear}`,
-                          year: taxYear,
-                        },
-                        { responseType: "blob" },
-                      );
-
-                      const url = window.URL.createObjectURL(
-                        new Blob([pdfResponse.data]),
-                      );
-                      const link = document.createElement("a");
-                      link.href = url;
-                      link.setAttribute("download", "qr-bill.pdf");
-                      document.body.appendChild(link);
-                      link.click();
-                      link.remove();
 
                       clearDraft();
                       localStorage.removeItem("questionnaireId");
                       navigate("/client-dashboard");
                     } catch (error: any) {
-                      console.error("QR-Bill generation error", error);
+                      console.error("Finalize error", error);
                       alert(
                         error?.response?.data?.message ||
-                        "Failed to generate QR-Bill.",
+                        "Could not complete the request.",
                       );
                     }
                   })}
