@@ -6,6 +6,14 @@ export async function fetchDeclaration(declarationId: string) {
   const url = `/orders/${declarationId}`;
   const res = await axiosClient.get(url);
   const payload: any = res.data;
+
+  // The backend generates the invoice as a regular File tagged
+  // `documentType: "invoice"` but does not always expose a presigned
+  // `invoiceUrl` on the payload. Fall back to downloading it by file id.
+  const invoiceFile = (payload.files ?? []).find(
+    (f: any) => f.documentType === "invoice",
+  );
+
   const mapped: ViewRequestData = {
     id: payload.id,
     files: payload.files ?? [],
@@ -70,6 +78,7 @@ export async function fetchDeclaration(declarationId: string) {
         payload.invoicePdfUrl ??
         payload.invoiceUrl ??
         "",
+      invoiceFileId: invoiceFile?.id,
     },
   };
 

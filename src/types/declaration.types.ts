@@ -35,6 +35,11 @@ export type InvoiceBlock = {
   offerName: string;
   totalAmount: string;
   invoiceUrl: string;
+  /**
+   * Id of the generated invoice File. Set when the backend attaches the
+   * invoice to `files[]` but does not expose a presigned `invoiceUrl`.
+   */
+  invoiceFileId?: string;
 };
 
 export type FileMeta = {
