@@ -253,15 +253,11 @@ export default function ViewRequestContent(props: ViewRequestContentProps) {
           <span>{data.invoice.totalAmount}</span>
         </div>
 
-        {data.invoice.invoiceUrl || data.invoice.invoiceFileId ? (
+        {data.invoice.invoiceUrl ? (
           <div style={{ marginTop: 12 }}>
             <button
               className="btn-secondary"
-              onClick={() =>
-                data.invoice.invoiceUrl
-                  ? window.open(data.invoice.invoiceUrl, "_blank")
-                  : onDownloadFile(data.invoice.invoiceFileId!)
-              }
+              onClick={() => window.open(data.invoice.invoiceUrl, "_blank")}
             >
               {t("view.downloadInvoice")}
             </button>
