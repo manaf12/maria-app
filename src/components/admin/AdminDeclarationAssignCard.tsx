@@ -11,11 +11,11 @@ type Props = {
   onOpen: (id: string) => void;
 };
 
-function fmtDate(iso?: string) {
+function fmtDate(iso: string | undefined, locale: string) {
   if (!iso) return "—";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "—";
-  return d.toLocaleString();
+  return d.toLocaleString(locale);
 }
 
 export default function AdminDeclarationAssignCard({
@@ -24,7 +24,7 @@ export default function AdminDeclarationAssignCard({
   onToggle,
   onOpen,
 }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const clientName = useMemo(() => {
     const first = declaration.clientProfile?.firstName ?? "";
@@ -38,12 +38,9 @@ export default function AdminDeclarationAssignCard({
   const isAssigned = !!declaration.assignedAdminId;
 
   return (
-    <button
-      type="button"
+    <article
       className="declaration-card"
-      onClick={() => onOpen(declaration.id)}
       style={{
-        cursor: "pointer",
         opacity: isAssigned ? 0.7 : 1,
         width: "100%",
         textAlign: "left",
@@ -80,36 +77,22 @@ export default function AdminDeclarationAssignCard({
 
           <p className="declaration-subtitle" style={{ marginTop: 6 }}>
             {t("admin.declarations.datesLine", {
-              createdAt: fmtDate(declaration.createdAt),
-              updatedAt: fmtDate(declaration.updatedAt),
+              createdAt: fmtDate(declaration.createdAt, i18n.language),
+              updatedAt: fmtDate(declaration.updatedAt, i18n.language),
             })}
           </p>
         </div>
 
-        {/* 
-          NOTE: cannot use <button> inside <button> → invalid HTML 
-          so we use <div role="button"> and stopPropagation
-        */}
-        <div
-          role="button"
+        <button
+          type="button"
           className="btn-outline"
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpen(declaration.id);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              onOpen(declaration.id);
-            }
-          }}
-          tabIndex={0}
+          onClick={() => onOpen(declaration.id)}
           style={{ padding: "6px 12px", borderRadius: 6, cursor: "pointer" }}
         >
           {t("admin.declarations.open")}
-        </div>
+        </button>
 
       </div>
-    </button>
+    </article>
   );
 }

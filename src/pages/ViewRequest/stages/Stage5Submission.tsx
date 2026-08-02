@@ -1,5 +1,6 @@
 import React from "react";
 import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 import type { ViewRequestData } from "../../../types/declaration.types";
 import { DownloadIcon } from "../../../components/Icons";
 
@@ -41,6 +42,7 @@ export default function Stage5Submission({
   onUserUploadSubmission,
   onCompleteStep5,
 }: Props) {
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(!isCompleted);
 
   React.useEffect(() => {
@@ -59,7 +61,7 @@ export default function Stage5Submission({
   const formatDateTime = (value: any) => {
     if (!value) return t("common.unknownTime");
     const d = new Date(value);
-    return isNaN(d.getTime()) ? t("common.unknownTime") : d.toLocaleString();
+    return isNaN(d.getTime()) ? t("common.unknownTime") : d.toLocaleString(i18n.language);
   };
 
   return (
@@ -143,10 +145,10 @@ export default function Stage5Submission({
 
             {/* Admin files column */}
             <div>
-              <h3 className="font-semibold text-lg mb-4">{t("view.step5.adminFilesTitle")}</h3>
+              <h3 className="stage-column-title">{t("view.step5.adminFilesTitle")}</h3>
 
               {adminFiles.length ? (
-                <ul className="space-y-3">
+                <ul className="file-list">
                   {adminFiles.map((f: any) => (
                     <li key={f.id} className="file-row">
                       <div className="file-row-left">
@@ -170,16 +172,16 @@ export default function Stage5Submission({
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">{t("view.step5.noAdminFilesYet")}</p>
+                <p className="stage-empty-text">{t("view.step5.noAdminFilesYet")}</p>
               )}
             </div>
 
             {/* User files column */}
             <div>
-              <h3 className="font-semibold text-lg mb-4">{t("view.step5.userFilesTitle")}</h3>
+              <h3 className="stage-column-title">{t("view.step5.userFilesTitle")}</h3>
 
               {userFiles.length ? (
-                <ul className="space-y-3">
+                <ul className="file-list">
                   {userFiles.map((f: any) => (
                     <li key={f.id} className="file-row">
                       <div className="file-row-left">
@@ -203,7 +205,7 @@ export default function Stage5Submission({
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">{t("view.step5.noUserFilesYet")}</p>
+                <p className="stage-empty-text">{t("view.step5.noUserFilesYet")}</p>
               )}
             </div>
           </div>
@@ -211,7 +213,9 @@ export default function Stage5Submission({
           {/* Admin upload */}
           {isCurrent && isAdmin && (
             <div style={{ marginTop: 20 }}>
-              <label className="block mb-2 font-medium">{t("view.step5.admin.uploadFinalLabel")}</label>
+              <label className="stage-field-label" htmlFor={adminFinalInputId}>
+                {t("view.step5.admin.uploadFinalLabel")}
+              </label>
 
               <input
                 id={adminFinalInputId}
@@ -227,35 +231,27 @@ export default function Stage5Submission({
               />
 
               <div className="document-card" style={{ marginTop: 8 }}>
-                <div className="uploaded-file-item">
+                <div className="uploaded-file-item stage5-upload-row">
                   <div className="uploaded-file-left">
                     <span className="uploaded-file-name">
                       {adminFinalFile ? adminFinalFile.name : t("common.noFileChosen")}
                     </span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div
+                    className="stage5-upload-actions"
+                    style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  >
                     <label
                       htmlFor={adminFinalInputId}
-                      style={{
-                        border: "1px solid rgb(229,231,235)", background: "#fff",
-                        borderRadius: 10, padding: "10px 14px", fontSize: 14,
-                        fontWeight: 600, color: "rgb(22,62,100)", cursor: "pointer",
-                        lineHeight: "18px", display: "inline-flex", alignItems: "center",
-                      }}
+                      className="stage5-choose-btn"
                     >
                       {t("common.chooseFile")}
                     </label>
                     <button
                       type="button"
+                      className="stage5-upload-btn"
                       disabled={isUploadingFinal || !adminFinalFile}
                       onClick={onAdminUploadFinal}
-                      style={{
-                        border: "1px solid rgb(22,62,100)", background: "rgb(22,62,100)",
-                        borderRadius: 10, padding: "10px 14px", fontSize: 14,
-                        fontWeight: 600, color: "#fff", cursor: "pointer",
-                        lineHeight: "18px",
-                        opacity: (isUploadingFinal || !adminFinalFile) ? 0.5 : 1,
-                      }}
                     >
                       {isUploadingFinal ? t("common.uploading") : t("view.step5.admin.uploadFinalBtn")}
                     </button>
@@ -265,9 +261,9 @@ export default function Stage5Submission({
 
               {/* Mark as fully completed */}
               <div style={{ marginTop: 24, paddingTop: 24, borderTop: "1px solid #eee" }}>
-                <label className="block mb-2 font-medium">{t("view.step5.admin.markFullyCompleted")}</label>
+                <p className="stage-field-label">{t("view.step5.admin.markFullyCompleted")}</p>
                 <div className="document-card">
-                  <div className="uploaded-file-item">
+                  <div className="uploaded-file-item stage5-complete-row">
                     <div className="uploaded-file-left">
                       <span className="uploaded-file-name muted small">
                         {t("view.step5.admin.markFullyCompletedHint")}
@@ -285,7 +281,9 @@ export default function Stage5Submission({
           {/* User upload */}
           {canUserUploadInStep5 && (
             <div style={{ marginTop: 20 }}>
-              <label className="block mb-2 font-medium">{t("view.step5.user.uploadNoticeLabel")}</label>
+              <label className="stage-field-label" htmlFor={userSubmissionInputId}>
+                {t("view.step5.user.uploadNoticeLabel")}
+              </label>
 
               <input
                 id={userSubmissionInputId}
@@ -301,35 +299,27 @@ export default function Stage5Submission({
               />
 
               <div className="document-card" style={{ marginTop: 8 }}>
-                <div className="uploaded-file-item">
+                <div className="uploaded-file-item stage5-upload-row">
                   <div className="uploaded-file-left">
                     <span className="uploaded-file-name">
                       {userSubmissionFile ? userSubmissionFile.name : t("common.noFileChosen")}
                     </span>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div
+                    className="stage5-upload-actions"
+                    style={{ display: "flex", alignItems: "center", gap: 8 }}
+                  >
                     <label
                       htmlFor={userSubmissionInputId}
-                      style={{
-                        border: "1px solid rgb(229,231,235)", background: "#fff",
-                        borderRadius: 10, padding: "10px 14px", fontSize: 14,
-                        fontWeight: 600, color: "rgb(22,62,100)", cursor: "pointer",
-                        lineHeight: "18px", display: "inline-flex", alignItems: "center",
-                      }}
+                      className="stage5-choose-btn"
                     >
                       {t("common.chooseFile")}
                     </label>
                     <button
                       type="button"
+                      className="stage5-upload-btn"
                       disabled={isUploadingUserSubmission || !userSubmissionFile}
                       onClick={onUserUploadSubmission}
-                      style={{
-                        border: "1px solid rgb(22,62,100)", background: "rgb(22,62,100)",
-                        borderRadius: 10, padding: "10px 14px", fontSize: 14,
-                        fontWeight: 600, color: "#fff", cursor: "pointer",
-                        lineHeight: "18px",
-                        opacity: (isUploadingUserSubmission || !userSubmissionFile) ? 0.5 : 1,
-                      }}
                     >
                       {isUploadingUserSubmission ? t("common.uploading") : t("view.step5.user.uploadNoticeBtn")}
                     </button>

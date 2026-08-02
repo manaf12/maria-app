@@ -331,11 +331,11 @@ export default function SignupPage() {
           <label className="checkbox-row">
             <input type="checkbox" {...register("terms", { required: true })} />
 
-            <span className="ml-2">
+            <span className="checkbox-copy">
               {t("auth.signup.iAgree")}{" "}
               <a
                 href="/terms-of-use"
-                className="text-blue-600 underline hover:text-blue-800"
+                className="inline-policy-link"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -344,7 +344,7 @@ export default function SignupPage() {
               {t("auth.signup.and")}{" "}
               <a
                 href="/privacy-policy"
-                className="text-blue-600 underline hover:text-blue-800"
+                className="inline-policy-link"
                 target="_blank"
                 rel="noopener noreferrer"
               >

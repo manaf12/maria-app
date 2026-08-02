@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../auth/AuthContext";
 import logoTaxera from "../assets/Icon.svg";
 import { useQueryClient } from "@tanstack/react-query";
-import { isAdminRole } from "../auth/AdminRoute";
+import { isAdminRole } from "../auth/role-utils";
 
 const LANGS: { code: "de" | "fr" | "en"; labelKey: string }[] = [
   { code: "de", labelKey: "topbar.lang.de" },

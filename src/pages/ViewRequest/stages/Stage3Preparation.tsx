@@ -102,7 +102,7 @@ export default function Stage3Preparation({
           {/* Admin: upload draft */}
           {isCurrent && isAdmin && (
             <div style={{ marginTop: 16, borderTop: "1px solid #eee", paddingTop: 16 }}>
-              <label className="block mb-2 font-medium">
+              <label className="stage-field-label" htmlFor={adminDraftInputId}>
                 {t("view.step3.admin.uploadDraftLabel")}
               </label>
 
@@ -127,7 +127,10 @@ export default function Stage3Preparation({
                 }}
               />
 
-              <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+              <div
+                className="stage3-file-picker-row"
+                style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}
+              >
                 <label
                   htmlFor={adminDraftInputId}
                   className="btn-primary"
@@ -143,7 +146,7 @@ export default function Stage3Preparation({
                 </span>
               </div>
 
-              <div style={{ marginTop: 8 }}>
+              <div className="stage3-action-row" style={{ marginTop: 8 }}>
                 <button
                   className="btn-primary"
                   disabled={isUploadingDraft || !adminDraftFile}
@@ -159,7 +162,7 @@ export default function Stage3Preparation({
 
           {/* Admin: complete step */}
           {isAdmin && isCurrent && (
-            <div style={{ marginTop: 24 }}>
+            <div className="stage3-action-row" style={{ marginTop: 24 }}>
               <button
                 className="btn-primary"
                 onClick={onCompleteStep3}
@@ -169,7 +172,7 @@ export default function Stage3Preparation({
               </button>
 
               {!draftFileForStep4 && (
-                <p className="muted small mt-2">
+                <p className="stage-help-text">
                   {t("view.step3.admin.mustUploadFirst", "You must upload the draft file before completing this step.")}
                 </p>
               )}

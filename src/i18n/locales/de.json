@@ -3,6 +3,8 @@
   "topbar.lang.de": "Deutsch",
   "topbar.lang.fr": "Französisch",
   "topbar.lang.en": "Englisch",
+  "common.showPassword": "Passwort anzeigen",
+  "common.hidePassword": "Passwort ausblenden",
   "auth.login.title": "Anmelden",
   "auth.login.email": "E-Mail",
   "auth.login.password": "Passwort",
@@ -267,7 +269,9 @@
       "properties": "Immobilien",
       "offer": "Gewählte Dienstleistung",
       "price": "Preis",
-      "taxYear": "Steuerjahr"
+      "taxYear": "Steuerjahr",
+      "address": "Adresse",
+      "email": "E-Mail"
     },
     "sections": {
       "initialUpload": "Erstes Hochladen der Unterlagen",
@@ -332,6 +336,8 @@
       "you": "Sie",
       "unknown": "Unbekannt",
       "unknownTime": "unbekannte Zeit",
+      "userFilesLabel": "Ihre Dateien",
+      "answersTitle": "Antworten aus dem Fragebogen",
       "admin": {
         "description": "Wir überprüfen die hochgeladenen Dokumente. Sie können diese prüfen, herunterladen und bei Bedarf weitere Informationen anfordern.",
         "filesTitle": "Hochgeladene Dateien",
@@ -351,6 +357,7 @@
       "completed": "Schritt 3 wurde als abgeschlossen markiert!",
       "completeError": "Ein Fehler ist aufgetreten.",
       "draftUploadSuccess": "Die Erklärung wurde erfolgreich hochgeladen.",
+      "draftReady": "Entwurf hochgeladen",
       "submitConfirm": "Sind Sie sicher, dass Sie die Erklärung einreichen möchten?",
       "admin": {
         "uploadDraftLabel": "Admin: Steuererklärung hochladen (PDF)",
@@ -372,6 +379,11 @@
       "uploadFile": "Datei hochladen",
       "commentSubmitted": "Kommentar erfolgreich gesendet.",
       "clientNote": "Wenn Sie das Confort- oder Premium-Paket gewählt haben, warten Sie bitte auf Ihr Gespräch mit unserem Experten, bevor Sie diesen Schritt bestätigen.",
+      "draftAvailable": "Entwurf verfügbar",
+      "commentsCount": "Kommentare: {{count}}",
+      "writeCommentFirst": "Bitte schreiben Sie zuerst einen Kommentar.",
+      "submitFailed": "Der Kommentar konnte nicht gesendet werden.",
+      "completed": "Schritt 4 abgeschlossen.",
       "addComment": {
         "label": "Kommentar hinzufügen",
         "forClient": "(für den Kunden)",
@@ -397,6 +409,8 @@
       "admin1": "Administrator",
       "user1": "Benutzer",
       "confirmComplete": "Sind Sie sicher, dass Sie diese Steuererklärung als vollständig abgeschlossen markieren möchten?",
+      "completed": "Schritt 5 wurde als abgeschlossen markiert!",
+      "completeError": "Schritt 5 konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut.",
       "noAdminFilesYet": "Noch keine Administrator-Dateien.",
       "noUserFilesYet": "Noch keine Benutzer-Dateien.",
       "finalUploadSuccess": "Endgültiger Upload erfolgreich",
@@ -705,6 +719,8 @@
     },
     "title": "Ihre Offerte für die Steuererklärung",
     "subtitle": "Beantworten Sie einige Fragen, damit wir den passenden Preis für Ihre Online-Steuererklärung berechnen können.",
+    "calculatingPrices": "Preise werden berechnet...",
+    "enterValidValue": "Bitte geben Sie einen gültigen Wert ein.",
     "editRequest": "Anfrage bearbeiten",
     "sections": {
       "profile": "Ihr Profil",
@@ -782,6 +798,8 @@
     "close": "Schließen",
     "admin": "ADMIN",
     "notProvided": "Nicht angegeben",
+    "yes": "Ja",
+    "no": "Nein",
     "chooseFile": "Datei auswählen",
     "noFileChosen": "Keine Datei ausgewählt",
     "uploading": "Wird hochgeladen...",
@@ -800,6 +818,7 @@
     "lockMessage": "Schritt 1 ist gesperrt, da der Administrator Ihre Dokumente (Schritt 2) genehmigt hat.",
     "additionalQuestions": "Zusätzliche Fragen",
     "loadingQuestions": "Fragen werden geladen...",
+    "uploadFailed": "Das Dokument konnte nicht hochgeladen werden.",
     "confirmDeleteFile": "„{{fileName}}“ löschen?",
     "uploadedCount": "Hochgeladen ({{count}})",
     "notAvailable": "Nicht verfügbar",
@@ -884,12 +903,16 @@
     "others": {
       "title": "Weitere Dokumente"
     },
+    "unknown": {
+      "title": "Unbekanntes Dokument"
+    },
     "upload": {
       "chooseFile": "Datei auswählen",
       "filesSelected_one": "{{count}} Datei ausgewählt",
       "filesSelected_other": "{{count}} Dateien ausgewählt",
       "upload": "Hochladen",
-      "uploading": "Wird hochgeladen..."
+      "uploading": "Wird hochgeladen...",
+      "selected": "Ausgewählt"
     },
     "missing": {
       "cta": "Ich habe dieses Dokument nicht",
@@ -1178,6 +1201,7 @@
       "terms": "Ich stimme den Bedingungen & Datenschutz zu",
       "submit": "Konto erstellen",
       "loading": "Wird erstellt...",
+      "verifying": "Wird überprüft...",
       "haveAccount": "Sie haben bereits ein Konto?",
       "signin": "Anmelden",
       "verifyTitle": "E-Mail bestätigen",
@@ -1339,6 +1363,11 @@
       "results": "Ergebnisse",
       "confirmDelete": "Sind Sie sicher, dass Sie diese Erklärung löschen möchten?",
       "deleteFailed": "Löschen der Erklärung fehlgeschlagen.",
+      "select": "Steuererklärung auswählen",
+      "cardTitle": "Steuererklärung {{year}} — {{name}}",
+      "cardSubtitle": "Dossier #{{fileIdShort}} · {{email}} · {{status}}",
+      "datesLine": "Erstellt: {{createdAt}} · Aktualisiert: {{updatedAt}}",
+      "open": "Öffnen",
       "filter": {
         "unassigned": "Nur nicht zugewiesen",
         "assigned": "Nur zugewiesen",

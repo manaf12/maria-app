@@ -1,5 +1,6 @@
 import React from "react";
 import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 import type { User, ViewRequestData } from "../../../types/declaration.types";
 
 type Props = {
@@ -48,6 +49,7 @@ export default function Stage4Validation({
   isUploadingStep4,
   onStep4Upload,
 }: Props) {
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(!isCompleted);
 
   React.useEffect(() => {
@@ -89,7 +91,7 @@ export default function Stage4Validation({
   const formatDateTime = (value: any) => {
     if (!value) return t("common.unknownTime");
     const d = new Date(value);
-    return isNaN(d.getTime()) ? t("common.unknownTime") : d.toLocaleString();
+    return isNaN(d.getTime()) ? t("common.unknownTime") : d.toLocaleString(i18n.language);
   };
 
   const downloadedBy = (latest as any)?.meta?.downloadedBy;

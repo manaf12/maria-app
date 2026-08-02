@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { type FileEntity } from "../../types/declaration.types";
 import { DownloadIcon } from "../Icons";
@@ -22,17 +22,51 @@ export default function FilesSummaryModal({
   declarationId,
 }: Props) {
   const { t } = useTranslation();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const handler = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (event.key !== "Tab" || !modalRef.current) return;
+
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      if (!focusable.length) {
+        event.preventDefault();
+        modalRef.current.focus();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handler);
+    closeButtonRef.current?.focus();
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handler);
+      previouslyFocused?.focus();
     };
   }, [isOpen, onClose]);
 
@@ -45,24 +79,23 @@ export default function FilesSummaryModal({
     <div className="files-modal-overlay">
       <div className="files-modal-backdrop" onClick={onClose} />
 
-      <div className="files-modal">
+      <div
+        ref={modalRef}
+        className="files-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="files-modal-title"
+        tabIndex={-1}
+      >
         <div className="files-modal-header">
           <div>
-            <h2 className="text-lg font-semibold">{t("filesModal.title")}</h2>
-            <p className="text-sm text-white/70">{t("filesModal.subtitle")}</p>
+            <h2 id="files-modal-title" className="files-modal-title">
+              {t("filesModal.title")}
+            </h2>
+            <p className="files-modal-subtitle">{t("filesModal.subtitle")}</p>
           </div>
 
-          {/* <button
-            type="button"
-            onClick={onClose}
-            className="h-9 w-9 flex items-center justify-center rounded-md
-               hover:bg-white/10 active:bg-white/20 transition"
-            aria-label={t("filesModal.closeAria")}
-          >
-            <CloseIcon size={18} color="#ffffff" />
-          </button> */}
-
-          <div className="p-4 border-t bg-gray-50 flex justify-end" style={{ gap: 10 }}>
+          <div className="files-modal-actions">
             {isAdmin && (
               <DownloadAllButton
                 files={files ?? []}
@@ -71,6 +104,7 @@ export default function FilesSummaryModal({
             )}
 
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={onClose}
               className="files-modal-close"
@@ -117,17 +151,17 @@ function FileColumn({
 
   return (
     <div>
-      <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+      <h3 className="files-modal-column-title">
         {title}
         {admin && (
-          <span className="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-700">
+          <span className="files-modal-admin-badge">
             {t("common.admin")}
           </span>
         )}
       </h3>
 
       {files.length ? (
-        <ul className="space-y-3">
+        <ul className="file-list">
           {files.map((file) => (
             <li
               key={file.id}
@@ -148,6 +182,7 @@ function FileColumn({
               </div>
 
               <button
+                type="button"
                 onClick={() => onDownloadFile(file.id)}
                 className="file-download-btn"
                 aria-label={t("filesModal.downloadAria")}
@@ -158,7 +193,7 @@ function FileColumn({
           ))}
         </ul>
       ) : (
-        <p className="text-gray-500">{t("filesModal.empty")}</p>
+        <p className="files-modal-empty">{t("filesModal.empty")}</p>
       )}
     </div>
   );

@@ -8,11 +8,24 @@ type Props = {
 
 const TextField = forwardRef<HTMLInputElement, Props>(
   ({ label, error, ...inputProps }, ref) => {
+    const inputId = inputProps.id ?? inputProps.name;
+    const errorId = inputId ? `${inputId}-error` : undefined;
+
     return (
       <div>
-        {label && <label>{label}</label>}
-        <input ref={ref} {...inputProps} />
-        {error && <div className="error">{error}</div>}
+        {label && <label htmlFor={inputId}>{label}</label>}
+        <input
+          ref={ref}
+          {...inputProps}
+          id={inputId}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? errorId : inputProps["aria-describedby"]}
+        />
+        {error && (
+          <div id={errorId} className="error" role="alert">
+            {error}
+          </div>
+        )}
       </div>
     );
   }

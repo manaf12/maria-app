@@ -332,7 +332,7 @@ export default function Stage1Section({
             />
           </div>
 
-          <div className="mt-6">
+          <div className="step1-summary-wrap">
             <Step1AnswersSummary
               declarationId={declaration.id}
               reloadKey={answersReload}

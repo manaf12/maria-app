@@ -3,6 +3,8 @@
   "topbar.lang.de": "German",
   "topbar.lang.fr": "French",
   "topbar.lang.en": "English",
+  "common.showPassword": "Show password",
+  "common.hidePassword": "Hide password",
   "auth.login.title": "Sign in",
   "auth.login.email": "Email",
   "auth.login.password": "Password",
@@ -263,7 +265,9 @@
       "properties": "Real estate",
       "offer": "Selected offer",
       "price": "Price",
-      "taxYear": "Tax year"
+      "taxYear": "Tax year",
+      "address": "Address",
+      "email": "Email"
     },
     "sections": {
       "initialUpload": "Initial document upload",
@@ -335,6 +339,8 @@
       "unknown": "Unknown",
       "unknownTime": "unknown time",
       "filesLabel": "Files uploaded",
+      "userFilesLabel": "Your files",
+      "answersTitle": "Questionnaire answers",
       "admin": {
         "description": "We are reviewing the uploaded documents. You may review, download, and request additional details if required.",
         "filesTitle": "Uploaded files",
@@ -354,6 +360,7 @@
       "completed": "Step 3 marked as complete!",
       "completeError": "An error occurred.",
       "draftUploadSuccess": "The declaration was uploaded successfully.",
+      "draftReady": "Draft uploaded",
       "admin": {
         "uploadDraftLabel": "Admin: Upload the Tax Declaration (PDF)",
         "uploadDraftBtn": "Upload Declaration",
@@ -374,6 +381,11 @@
       "commentSubmitted": "Comment submitted successfully.",
       "uploadFile": "Upload file",
       "clientNote": "If you selected the Confort or Premium service, please wait for your meeting with our expert before validating this step.",
+      "draftAvailable": "Draft available",
+      "commentsCount": "Comments: {{count}}",
+      "writeCommentFirst": "Please write a comment first.",
+      "submitFailed": "Could not submit the comment.",
+      "completed": "Step 4 completed.",
       "addComment": {
         "label": "Add Comment",
         "forClient": "(for client)",
@@ -399,6 +411,8 @@
       "admin1": "admin",
       "user1": "user",
       "confirmComplete": "Are you sure you want to mark this declaration as fully completed?",
+      "completed": "Step 5 marked as complete!",
+      "completeError": "Could not complete Step 5. Please try again.",
       "noAdminFilesYet": "No admin files yet.",
       "noUserFilesYet": "No user files yet.",
       "finalUploadSuccess": "Final upload successful",
@@ -707,6 +721,8 @@
     },
     "title": "Get your Swiss tax quote",
     "subtitle": "Answer a few questions so we can calculate the right price for your online tax declaration.",
+    "calculatingPrices": "Calculating prices...",
+    "enterValidValue": "Please enter a valid value.",
     "editRequest": "Edit my request",
     "sections": {
       "profile": "Your profile",
@@ -792,7 +808,9 @@
     "unknownTime": "unknown time",
     "mark": "Mark as not available",
     "select": "Select...",
-    "notProvided": "Not provided"
+    "notProvided": "Not provided",
+    "yes": "Yes",
+    "no": "No"
   },
   "step1": {
     "title": "Step 1 — Documents & Questions",
@@ -801,6 +819,7 @@
     "lockMessage": "Step 1 is locked because the admin approved your documents (Step 2).",
     "additionalQuestions": "Additional questions",
     "loadingQuestions": "Loading questions...",
+    "uploadFailed": "Could not upload the document.",
     "confirmDeleteFile": "Delete “{{fileName}}”?",
     "uploadedCount": "Uploaded ({{count}})",
     "notAvailable": "Not available",
@@ -885,12 +904,16 @@
     "others": {
       "title": "Other documents"
     },
+    "unknown": {
+      "title": "Unknown document"
+    },
     "upload": {
       "chooseFile": "Choose file",
       "filesSelected_one": "{{count}} file selected",
       "filesSelected_other": "{{count}} files selected",
       "upload": "Upload",
-      "uploading": "Uploading..."
+      "uploading": "Uploading...",
+      "selected": "Selected"
     },
     "missing": {
       "cta": "I don’t have this document",
@@ -1179,6 +1202,7 @@
       "terms": "I agree to the Terms & Privacy",
       "submit": "Create account",
       "loading": "Creating...",
+      "verifying": "Verifying...",
       "haveAccount": "Already have an account?",
       "signin": "Sign in",
       "successMsg": "Account created! Please verify your email.",
@@ -1340,6 +1364,11 @@
       "count": "Total: {{count}}",
       "confirmDelete": "Are you sure you want to delete this declaration?",
       "deleteFailed": "Failed to delete declaration.",
+      "select": "Select declaration",
+      "cardTitle": "{{year}} tax declaration — {{name}}",
+      "cardSubtitle": "File #{{fileIdShort}} · {{email}} · {{status}}",
+      "datesLine": "Created: {{createdAt}} · Updated: {{updatedAt}}",
+      "open": "Open",
       "filter": {
         "unassigned": "Unassigned only",
         "assigned": "Assigned only",

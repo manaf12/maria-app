@@ -46,10 +46,10 @@ export default function DocumentUploadItem({
   const pickLabel = useMemo(() => {
     if (!selectedFiles.length) return t("documents.upload.chooseFile");
     if (!allowMultiple) return selectedFiles[0].name;
-    // safer: just show count directly
-    return `${selectedFiles.length} ${t("documents.upload.filesSelected", {
-      defaultValue: "files selected",
-    })}`;
+    return t("documents.upload.filesSelected", {
+      count: selectedFiles.length,
+      defaultValue: "{{count}} files selected",
+    });
   }, [t, allowMultiple, selectedFiles]);
 
   const onPickFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,9 +163,10 @@ export default function DocumentUploadItem({
             onChange={onPickFiles}
           />
 
-          <div style={styles.row}>
+          <div className="document-upload-actions" style={styles.row}>
             <button
               type="button"
+              className="document-upload-button"
               style={styles.btn}
               onClick={() => document.getElementById(inputId)?.click()}
               disabled={busy === "upload"}
@@ -176,6 +177,7 @@ export default function DocumentUploadItem({
 
             <button
               type="button"
+              className="document-upload-button"
               style={{
                 ...styles.btn,
                 ...styles.btnPrimary,
@@ -192,6 +194,7 @@ export default function DocumentUploadItem({
             {canMarkMissing && (
               <button
                 type="button"
+                className="document-upload-missing"
                 style={styles.link}
                 onClick={() => setShowMissingBox(true)}
                 disabled={selectedFiles.length > 0}
@@ -236,9 +239,13 @@ export default function DocumentUploadItem({
                 />
               </div>
 
-              <div style={{ ...styles.row, marginTop: 12 }}>
+              <div
+                className="document-upload-dialog-actions"
+                style={{ ...styles.row, marginTop: 12 }}
+              >
                 <button
                   type="button"
+                  className="document-upload-button"
                   style={styles.btn}
                   onClick={() => setShowMissingBox(false)}
                   disabled={busy === "missing"}
@@ -247,6 +254,7 @@ export default function DocumentUploadItem({
                 </button>
                 <button
                   type="button"
+                  className="document-upload-button"
                   style={{
                     ...styles.btn,
                     ...styles.btnPrimary,
@@ -267,12 +275,13 @@ export default function DocumentUploadItem({
 
       {isMissing && (
         <div style={styles.card}>
-          <div style={styles.row}>
+          <div className="document-upload-undo-row" style={styles.row}>
             <div style={{ fontSize: 14, color: "#374151" }}>
               {t("common.mark")}
             </div>
             <button
               type="button"
+              className="document-upload-button"
               style={{
                 ...styles.btn,
                 marginLeft: "auto",

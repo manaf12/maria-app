@@ -193,12 +193,12 @@ export function Step1Questions({
   );
 
   const renderQuestion = (q: Step1Question) => (
-    <div key={q.id} className="flex items-start gap-4">
-      <div className="flex-1">
-        <label className="block text-sm font-medium mb-1" htmlFor={q.id}>
+    <div key={q.id} className="step1-question-row">
+      <div className="step1-question-main">
+        <label className="step1-question-label" htmlFor={q.id}>
           {t(q.labelKey, { defaultValue: q.labelKey })}
           {!q.required && (
-            <span className="ml-1 text-xs font-normal text-gray-400">
+            <span className="step1-question-optional">
               ({t("common.optional", { defaultValue: "optional" })})
             </span>
           )}
@@ -207,10 +207,7 @@ export function Step1Questions({
         {q.type === "select" ? (
           <select
             id={q.id}
-            className={
-              "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
-              (disabled ? "bg-gray-100 cursor-not-allowed" : "")
-            }
+            className={`step1-question-control${disabled ? " is-disabled" : ""}`}
             value={answers[q.id] ?? ""}
             disabled={disabled}
             onChange={(e) => handleChange(q.id, e.target.value)}
@@ -227,10 +224,7 @@ export function Step1Questions({
         ) : (
           <input
             id={q.id}
-            className={
-              "w-full p-2 border rounded focus:outline-none focus:ring focus:ring-opacity-50 " +
-              (disabled ? "bg-gray-100 cursor-not-allowed" : "")
-            }
+            className={`step1-question-control${disabled ? " is-disabled" : ""}`}
             type={q.type === "number" ? "number" : "text"}
             min={q.type === "number" ? q.min : undefined}
             value={answers[q.id] ?? ""}
@@ -240,23 +234,23 @@ export function Step1Questions({
         )}
 
         {statusMap[q.id] === "error" && (
-          <div className="text-xs text-red-600 mt-1">{t("common.error")}</div>
+          <div className="step1-question-error">{t("common.error")}</div>
         )}
       </div>
 
       {/* Save status indicator */}
-      <div style={{ width: 140 }} className="text-right text-sm pt-6">
+      <div className="step1-question-save-status" aria-live="polite">
         {statusMap[q.id] === "saving" && (
-          <div className="text-gray-500 animate-pulse">{t("common.saving")}</div>
+          <div className="step1-question-saving">{t("common.saving")}</div>
         )}
         {statusMap[q.id] === "saved" && (
-          <div className="text-green-600">✓ {t("common.saved")}</div>
+          <div className="step1-question-saved">✓ {t("common.saved")}</div>
         )}
         {statusMap[q.id] === "error" && (
-          <div className="text-red-600">{t("common.error")}</div>
+          <div className="step1-question-error">{t("common.error")}</div>
         )}
         {savedAt[q.id] && statusMap[q.id] !== "saving" && (
-          <div className="text-xs text-gray-400 mt-1">
+          <div className="step1-question-saved-at">
             {t("common.last")}:{" "}
             {new Date(savedAt[q.id]).toLocaleString(i18n.language)}
           </div>

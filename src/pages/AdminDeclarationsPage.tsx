@@ -142,16 +142,18 @@ function openRequest(id: string) {
         >
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div className="field-row" style={{ margin: 0 }}>
-              <label>Admin ID</label>
+              <label htmlFor="admin-assignment-id">Admin ID</label>
               <input
+                id="admin-assignment-id"
                 value={adminId}
                 onChange={(e) => setAdminId(e.target.value)}
                 placeholder="fbbf3e56-43ac-4bb6-988d-7bcc6f1a961e"
               />
             </div>
             <div className="field-row" style={{ margin: 0 }}>
-              <label>Note (optional)</label>
+              <label htmlFor="admin-assignment-note">Note (optional)</label>
               <input
+                id="admin-assignment-note"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Assigned due to high priority workload"

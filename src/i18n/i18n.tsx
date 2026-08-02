@@ -5,7 +5,14 @@ import en from "./locales/en.json";
 import fr from "./locales/fr.json";
 import de from "./locales/de.json";
 
-const savedLang = localStorage.getItem("taxonline_lang") || "en";
+const supportedLanguages = new Set(["en", "fr", "de"]);
+const storedLanguage = localStorage.getItem("taxonline_lang")?.slice(0, 2);
+const savedLang =
+  storedLanguage && supportedLanguages.has(storedLanguage)
+    ? storedLanguage
+    : "fr";
+
+document.documentElement.lang = savedLang;
 
 i18n
   .use(initReactI18next)
@@ -19,5 +26,12 @@ i18n
     fallbackLng: "en",
     interpolation: { escapeValue: false },
   });
+
+i18n.on("languageChanged", (language) => {
+  const normalizedLanguage = language.slice(0, 2);
+  document.documentElement.lang = supportedLanguages.has(normalizedLanguage)
+    ? normalizedLanguage
+    : "fr";
+});
 
 export default i18n;

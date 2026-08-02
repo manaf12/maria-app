@@ -52,7 +52,7 @@ export default function Stage2DocumentsReview({
   onApproveStep2,
   onAddStep2Comment,
 }: Props) {
-  const { t: tLocal } = useTranslation();
+  const { t: tLocal, i18n } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(!isCompleted);
   const [step1Answers, setStep1Answers] = React.useState<Record<string, any>>({});
   const step1Questions: Step1Question[] = DEFAULT_STEP1_QUESTIONS;
@@ -244,7 +244,7 @@ export default function Stage2DocumentsReview({
           {/* ── Step 1 Answers ── */}
           {answerRows.length > 0 && (
             <div style={{ marginBottom: 20 }}>
-              <h3 className="font-semibold text-lg mb-4">
+              <h3 className="stage-column-title">
                 {t("view.step2.answersTitle", { defaultValue: "Questionnaire Answers" })}
               </h3>
               <div className="document-card" style={{ padding: 0, overflow: "hidden" }}>
@@ -281,6 +281,7 @@ export default function Stage2DocumentsReview({
           >
             <div>
               <div
+                className="stage2-files-heading"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -290,7 +291,7 @@ export default function Stage2DocumentsReview({
                   marginBottom: 16,
                 }}
               >
-                <h3 className="font-semibold text-lg" style={{ margin: 0 }}>
+                <h3 className="stage-column-title" style={{ margin: 0 }}>
                   {t("view.step2.admin.filesTitle")}
                 </h3>
 
@@ -338,7 +339,7 @@ export default function Stage2DocumentsReview({
               )}
 
               {allFiles.length ? (
-                <ul className="space-y-3">
+                <ul className="file-list">
                   {allFiles.map((file) => (
                     <li key={file.id} className="file-row">
                       <div className="file-row-left">
@@ -359,7 +360,7 @@ export default function Stage2DocumentsReview({
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">{t("filesModal.empty")}</p>
+                <p className="stage-empty-text">{t("filesModal.empty")}</p>
               )}
             </div>
 
@@ -372,13 +373,13 @@ export default function Stage2DocumentsReview({
                   marginBottom: 16,
                 }}
               >
-                <h3 className="font-semibold text-lg" style={{ margin: 0 }}>
+                <h3 className="stage-column-title" style={{ margin: 0 }}>
                   {t("view.step2.missingDocumentsTitle")}
                 </h3>
               </div>
 
               {missingDocs.length ? (
-                <ul className="space-y-3">
+                <ul className="file-list">
                   {missingDocs.map((doc: any, index: number) => (
                     <li key={index} className="file-row">
                       <div className="file-row-left">
@@ -396,7 +397,7 @@ export default function Stage2DocumentsReview({
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500 muted small">{t("view.step2.noMissingDocuments")}</p>
+                <p className="stage-empty-text">{t("view.step2.noMissingDocuments")}</p>
               )}
             </div>
           </div>
@@ -420,21 +421,22 @@ export default function Stage2DocumentsReview({
 
           {/* Comments section */}
           <div style={{ marginTop: 16 }}>
-            <h4 className="font-medium">{t("view.step2.commentSectionTitle")}</h4>
+            <h4 className="stage-subsection-title">{t("view.step2.commentSectionTitle")}</h4>
 
             {lastComment && (
               <div className="muted small" style={{ marginTop: 6 }}>
                 {t("view.step2.lastComment")}: <strong>{lastComment.text}</strong>{" "}
-                <em>({new Date(lastComment.at).toLocaleString()})</em>
+                <em>({new Date(lastComment.at).toLocaleString(i18n.language)})</em>
               </div>
             )}
 
             <div style={{ marginTop: 12 }}>
-              <label className="block mb-2 font-medium">
+              <label className="stage-field-label" htmlFor="step2-comment">
                 {isAdmin ? t("view.step2.addCommentLabelAdmin") : t("view.step2.addCommentLabelUser")}
               </label>
 
               <textarea
+                id="step2-comment"
                 className="input-textarea"
                 value={currentCommentValue}
                 onChange={(e) => setCurrentCommentValue(e.target.value)}
@@ -446,7 +448,7 @@ export default function Stage2DocumentsReview({
                 }
               />
 
-              <div style={{ marginTop: 8 }}>
+              <div className="stage-action-row" style={{ marginTop: 8 }}>
                 <button
                   className="btn-secondary"
                   onClick={() => setCurrentCommentValue("")}
@@ -469,7 +471,7 @@ export default function Stage2DocumentsReview({
             {/* Comment history */}
             <div style={{ marginTop: 16 }}>
               {commentHistory.length > 0 ? (
-                <ul className="space-y-3" style={{ marginTop: 8 }}>
+                <ul className="file-list" style={{ marginTop: 8 }}>
                   {commentHistory.map((c: any, idx: number) => (
                     <li
                       key={idx}
@@ -482,14 +484,14 @@ export default function Stage2DocumentsReview({
                             ? t("view.step2.you")
                             : c.byName || c.byEmail || t("view.step2.unknown")}
                         </strong>{" "}
-                        — {c.at ? new Date(c.at).toLocaleString() : t("view.step2.unknownTime")}
+                        — {c.at ? new Date(c.at).toLocaleString(i18n.language) : t("view.step2.unknownTime")}
                       </div>
                       <div style={{ marginTop: 6 }}>{c.text}</div>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500 muted small" style={{ marginTop: 8 }}>
+                <p className="stage-empty-text" style={{ marginTop: 8 }}>
                   {t("view.step2.noComments")}
                 </p>
               )}

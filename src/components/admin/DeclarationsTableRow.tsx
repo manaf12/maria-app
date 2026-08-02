@@ -14,10 +14,10 @@ function shortId(id: string) {
   return id?.slice(0, 8) ?? "—";
 }
 
-function fmtDate(iso?: string | null) {
+function fmtDate(iso: string | null | undefined, locale: string) {
   if (!iso) return "—";
   const d = new Date(iso);
-  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString();
+  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleDateString(locale);
 }
 
 function StatusBadge({ status }: { status: string }) {
@@ -40,7 +40,7 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 export default function DeclarationsTableRow({ item, checked, onToggle, onDelete }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const name = useMemo(() => {
@@ -106,11 +106,11 @@ export default function DeclarationsTableRow({ item, checked, onToggle, onDelete
       </td>
 
       <td style={{ padding: "12px 10px", color: "#64748b", fontSize: 13 }}>
-        {fmtDate(item.createdAt)}
+        {fmtDate(item.createdAt, i18n.language)}
       </td>
 
       <td style={{ padding: "12px 10px", color: "#64748b", fontSize: 13 }}>
-        {fmtDate(item.updatedAt)}
+        {fmtDate(item.updatedAt, i18n.language)}
       </td>
 
       <td style={{ padding: "12px 10px" }}>

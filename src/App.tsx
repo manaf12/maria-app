@@ -35,8 +35,12 @@ const DashboardPage = lazy(() => import("./pages/DashboardPage"));
 const DashboardPage1 = lazy(() => import("./pages/DashboardPage1"));
 const AccountSettingsPage = lazy(() => import("./pages/AccountSettingsPage"));
 const ViewRequestPage = lazy(() => import("./pages/ViewRequestPage"));
-const TestViewRequestPage = lazy(() => import("./pages/TestViewRequestPage"));
-const TestDeclarationCard = lazy(() => import("./pages/TestDeclarationCard"));
+const TestViewRequestPage = import.meta.env.DEV
+  ? lazy(() => import("./pages/TestViewRequestPage"))
+  : null;
+const TestDeclarationCard = import.meta.env.DEV
+  ? lazy(() => import("./pages/TestDeclarationCard"))
+  : null;
 
 // Admin
 const AdminDeclarationsPage = lazy(
@@ -84,12 +88,15 @@ export default function App() {
             <Route path="/settings" element={<AccountSettingsPage />} />
 
             <Route path="/declaration/:id" element={<ViewRequestPage />} />
-            <Route
-              path="/declarations/:declarationId"
-              element={<TestViewRequestPage />}
-            />
-
-            <Route path="/test-card" element={<TestDeclarationCard />} />
+            {import.meta.env.DEV && TestViewRequestPage && TestDeclarationCard && (
+              <>
+                <Route
+                  path="/declarations/:declarationId"
+                  element={<TestViewRequestPage />}
+                />
+                <Route path="/test-card" element={<TestDeclarationCard />} />
+              </>
+            )}
           </Route>
 
           {/* ADMIN ONLY */}

@@ -685,8 +685,8 @@ export default function ProductPage() {
           {step === 1 && (
             <StepCard title={t("product.taxYear")} onNext={goNext} onCancel={handleCancel}>
               <div className="field-row">
-                {/* <label>{t("product.taxYear")}</label> */}
-                <select {...register("taxYear", { valueAsNumber: true, required: "Tax year is required" })}>
+                <label htmlFor="taxYear">{t("product.taxYear")}</label>
+                <select id="taxYear" {...register("taxYear", { valueAsNumber: true, required: "Tax year is required" })}>
                   <option value={currentYear - 1}>{currentYear - 1}</option>
                   <option value={currentYear}>{currentYear}</option>
                 </select>
@@ -879,8 +879,9 @@ export default function ProductPage() {
               onNext={canGoFrom7 ? goNext : undefined}
             >
               <div className="field-row">
-                <label>{t("product.propertiesCount")}</label>
+                <label htmlFor="properties">{t("product.propertiesCount")}</label>
                 <input
+                  id="properties"
                   type="number"
                   min={1}
                   readOnly
@@ -898,12 +899,13 @@ export default function ProductPage() {
               </div>
 
               <div className="field-row">
-                <label>{t("product.newProperties")}</label>
+                <label htmlFor="newProperties">{t("product.newProperties")}</label>
                 <p className="label-subtitle">
                   {t("product.newPropertiesHint")}
                 </p>
 
                 <input
+                  id="newProperties"
                   type="number"
                   min={0}
                   max={properties}
@@ -927,12 +929,13 @@ export default function ProductPage() {
               </div>
 
               <div className="field-row">
-                <label>{t("product.propertiesWithEffectiveCost")}</label>
+                <label htmlFor="propertiesWithEffectiveCost">{t("product.propertiesWithEffectiveCost")}</label>
                 <p className="label-subtitle">
                   {t("product.propertiesWithEffectiveCostHint")}
                 </p>
 
                 <input
+                  id="propertiesWithEffectiveCost"
                   type="number"
                   min={0}
                   max={properties}
@@ -1283,24 +1286,24 @@ export default function ProductPage() {
 
               <div className="field-grid-2">
                 <div className="field-row">
-                  <label>{t("product.billing.firstName")}</label>
-                  <input type="text" {...register("billingFirstName")} />
+                  <label htmlFor="billingFirstName">{t("product.billing.firstName")}</label>
+                  <input id="billingFirstName" type="text" {...register("billingFirstName")} />
                 </div>
                 <div className="field-row">
-                  <label>{t("product.billing.lastName")}</label>
-                  <input type="text" {...register("billingLastName")} />
+                  <label htmlFor="billingLastName">{t("product.billing.lastName")}</label>
+                  <input id="billingLastName" type="text" {...register("billingLastName")} />
                 </div>
                 <div className="field-row">
-                  <label>{t("product.billing.street")}</label>
-                  <input type="text" {...register("billingStreet")} />
+                  <label htmlFor="billingStreet">{t("product.billing.street")}</label>
+                  <input id="billingStreet" type="text" {...register("billingStreet")} />
                 </div>
                 <div className="field-row">
-                  <label>{t("product.billing.postalCode")}</label>
-                  <input type="text" {...register("billingPostalCode")} />
+                  <label htmlFor="billingPostalCode">{t("product.billing.postalCode")}</label>
+                  <input id="billingPostalCode" type="text" {...register("billingPostalCode")} />
                 </div>
                 <div className="field-row">
-                  <label>{t("product.billing.city")}</label>
-                  <input type="text" {...register("billingCity")} />
+                  <label htmlFor="billingCity">{t("product.billing.city")}</label>
+                  <input id="billingCity" type="text" {...register("billingCity")} />
                 </div>
               </div>
 
@@ -1325,7 +1328,7 @@ export default function ProductPage() {
                     );
 
                     if (!selectedOffer) {
-                      alert("Please choose an offer first");
+                      alert(t("product.errors.noOfferSelected"));
                       setStep(8);
                       return;
                     }

@@ -1,6 +1,7 @@
 // src/components/PasswordField.tsx
 import { useState, forwardRef } from "react";
 import type { InputHTMLAttributes } from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   label?: string;
@@ -65,35 +66,47 @@ function EyeOffIcon() {
 }
 
 const PasswordField = forwardRef<HTMLInputElement, Props>(
-  ({ label = "Password", error, disabled, id, ...inputProps }, ref) => {
+  ({ label = "Password", error, disabled, id: providedId, ...inputProps }, ref) => {
     const [show, setShow] = useState(false);
+    const { t } = useTranslation();
+    const inputId = providedId ?? inputProps.name;
+    const errorId = inputId ? `${inputId}-error` : undefined;
+    const visibilityLabel = show
+      ? t("common.hidePassword")
+      : t("common.showPassword");
 
     return (
       <div>
-        {label && <label htmlFor={id}>{label}</label>}
+        {label && <label htmlFor={inputId}>{label}</label>}
 
         <div className="password-wrapper">
           <input
             ref={ref}
-            id={id}
+            {...inputProps}
+            id={inputId}
             type={show ? "text" : "password"}
             disabled={disabled}
-            {...inputProps}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? errorId : inputProps["aria-describedby"]}
           />
 
           <button
             type="button"
             className="toggle-visibility"
             onClick={() => setShow((s) => !s)}
-            aria-label={show ? "Hide password" : "Show password"}
-            title={show ? "Hide password" : "Show password"}
+            aria-label={visibilityLabel}
+            title={visibilityLabel}
             disabled={disabled}
           >
             {show ? <EyeOffIcon /> : <EyeIcon />}
           </button>
         </div>
 
-        {error && <div className="error">{error}</div>}
+        {error && (
+          <div id={errorId} className="error" role="alert">
+            {error}
+          </div>
+        )}
       </div>
     );
   }

@@ -3,6 +3,8 @@
   "topbar.lang.de": "Allemand",
   "topbar.lang.fr": "Français",
   "topbar.lang.en": "Anglais",
+  "common.showPassword": "Afficher le mot de passe",
+  "common.hidePassword": "Masquer le mot de passe",
   "auth.login.title": "Connexion",
   "auth.login.email": "E-mail",
   "auth.login.password": "Mot de passe",
@@ -267,7 +269,9 @@
       "properties": "Biens immobiliers",
       "offer": "Offre sélectionnée",
       "price": "Prix",
-      "taxYear": "Année fiscale"
+      "taxYear": "Année fiscale",
+      "address": "Adresse",
+      "email": "E-mail"
     },
     "sections": {
       "initialUpload": "Téléchargement initial des documents",
@@ -333,6 +337,8 @@
       "you": "Vous",
       "unknown": "Inconnu",
       "unknownTime": "heure inconnue",
+      "userFilesLabel": "Vos fichiers",
+      "answersTitle": "Réponses au questionnaire",
       "admin": {
         "description": "Nous examinons les documents téléchargés. Vous pouvez les consulter, les télécharger et demander des informations supplémentaires si nécessaire.",
         "filesTitle": "Fichiers téléchargés",
@@ -352,6 +358,7 @@
       "completed": "Étape 3 marquée comme terminée !",
       "completeError": "Une erreur s’est produite.",
       "draftUploadSuccess": "La déclaration a été téléversée avec succès.",
+      "draftReady": "Brouillon téléversé",
       "submitConfirm": "Êtes-vous sûr de vouloir soumettre la déclaration ?",
       "admin": {
         "uploadDraftLabel": "Admin : Téléverser la déclaration d’impôts (PDF)",
@@ -373,6 +380,11 @@
       "commentSubmitted": "Commentaire envoyé avec succès.",
       "uploadFile": "Téléverser un fichier",
       "clientNote": "Si vous avez choisi le service Confort ou Premium, veuillez attendre votre rendez-vous avec notre expert avant de valider cette étape.",
+      "draftAvailable": "Brouillon disponible",
+      "commentsCount": "Commentaires : {{count}}",
+      "writeCommentFirst": "Veuillez d’abord écrire un commentaire.",
+      "submitFailed": "Impossible d’envoyer le commentaire.",
+      "completed": "Étape 4 terminée.",
       "addComment": {
         "label": "Ajouter un commentaire",
         "forClient": "(pour le client)",
@@ -398,6 +410,8 @@
       "admin1": "administrateur",
       "user1": "utilisateur",
       "confirmComplete": "Êtes-vous sûr de vouloir marquer cette déclaration comme entièrement terminée ?",
+      "completed": "Étape 5 marquée comme terminée !",
+      "completeError": "Impossible de terminer l’étape 5. Veuillez réessayer.",
       "noAdminFilesYet": "Aucun fichier administrateur pour le moment.",
       "noUserFilesYet": "Aucun fichier utilisateur pour le moment.",
       "finalUploadSuccess": "Téléchargement final réussi",
@@ -706,6 +720,8 @@
     },
     "title": "Obtenez votre offre pour la déclaration d’impôts",
     "subtitle": "Répondez à quelques questions afin que nous puissions calculer le prix adapté à votre situation fiscale.",
+    "calculatingPrices": "Calcul des prix en cours...",
+    "enterValidValue": "Veuillez saisir une valeur valide.",
     "editRequest": "Modifier ma demande",
     "sections": {
       "profile": "Votre profil",
@@ -783,6 +799,8 @@
     "close": "Fermer",
     "admin": "ADMIN",
     "notProvided": "Non renseigné",
+    "yes": "Oui",
+    "no": "Non",
     "chooseFile": "Choisir un fichier",
     "noFileChosen": "Aucun fichier sélectionné",
     "uploading": "Téléchargement en cours...",
@@ -801,6 +819,7 @@
     "lockMessage": "L’étape 1 est verrouillée car l’administrateur a approuvé vos documents (Étape 2).",
     "additionalQuestions": "Questions complémentaires",
     "loadingQuestions": "Chargement des questions...",
+    "uploadFailed": "Impossible de téléverser le document.",
     "confirmDeleteFile": "Supprimer « {{fileName}} » ?",
     "uploadedCount": "Téléchargé(s) ({{count}})",
     "notAvailable": "Non disponible",
@@ -895,12 +914,16 @@
     "others": {
       "title": "Autres documents"
     },
+    "unknown": {
+      "title": "Document inconnu"
+    },
     "upload": {
       "chooseFile": "Choisir un fichier",
       "filesSelected_one": "{{count}} fichier sélectionné",
       "filesSelected_other": "{{count}} fichiers sélectionnés",
       "upload": "Téléverser",
-      "uploading": "Téléversement..."
+      "uploading": "Téléversement...",
+      "selected": "Sélectionné"
     },
     "missing": {
       "cta": "Je n’ai pas ce document",
@@ -1189,6 +1212,7 @@
       "terms": "J’accepte les Termes & la Politique de confidentialité",
       "submit": "Créer un compte",
       "loading": "Création...",
+      "verifying": "Vérification...",
       "haveAccount": "Vous avez déjà un compte ?",
       "signin": "Se connecter",
       "successMsg": "Compte créé ! Veuillez vérifier votre e-mail.",
@@ -1350,6 +1374,11 @@
       "count": "Total : {{count}}",
       "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette déclaration ?",
       "deleteFailed": "Échec de la suppression de la déclaration.",
+      "select": "Sélectionner la déclaration",
+      "cardTitle": "Déclaration fiscale {{year}} — {{name}}",
+      "cardSubtitle": "Dossier #{{fileIdShort}} · {{email}} · {{status}}",
+      "datesLine": "Créé : {{createdAt}} · Mis à jour : {{updatedAt}}",
+      "open": "Ouvrir",
       "filter": {
         "unassigned": "Non attribuées",
         "assigned": "Attribuées",

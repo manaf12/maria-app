@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import { useTranslation } from "react-i18next";
 import DeclarationsTableRow from "../../components/admin/DeclarationsTableRow";
-import { isSuperAdminRole } from "../../auth/AdminRoute";
+import { isSuperAdminRole } from "../../auth/role-utils";
 import {
   fetchAdminDeclarations,
   postAssignDeclarations,
@@ -51,16 +51,6 @@ export default function AdminDeclarationsPage() {
   const [assignedAdminFilter, setAssignedAdminFilter] = useState<string>(""); // "" = all admins
   
 
-  useEffect(() => {
-    fetchAdmins()
-      .then((data) => {
-        setAdmins(data);
-      })
-      .catch((err) => {
-        console.error("Failed to load admins", err);
-      });
-  }, []);
-
   async function load() {
     setError("");
     setLoading(true);
@@ -79,6 +69,8 @@ export default function AdminDeclarationsPage() {
   useEffect(() => {
     load();
     (async () => {
+      if (!isSuperAdmin) return;
+
       try {
         const list = await fetchAdmins();
         setAdmins(list);
