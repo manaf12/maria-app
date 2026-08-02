@@ -5,6 +5,40 @@ import { useQueryClient } from "@tanstack/react-query";
 import axiosClient from "../api/axiosClient";
 import { useTranslation } from "react-i18next";
 
+const STEP1_ANSWER_ALIASES: Record<string, string[]> = {
+  personalChanges: ["personalChangesSinceLastYear"],
+  transportMode: ["commuteMethod"],
+  distanceToWorkKm: ["workplaceDistanceKm"],
+  weeklyTripsToWork: ["workplaceTripsPerWeek"],
+  mealsOutsidePerWeek: ["workMealsOutsidePerWeek"],
+  netAnnualRentVD_GE: ["netAnnualRent"],
+  controlOrDeclarationCode: ["controlDeclarationCode"],
+};
+
+function normalizeAnswers(source?: Record<string, any>) {
+  const normalized = { ...(source ?? {}) };
+
+  Object.entries(STEP1_ANSWER_ALIASES).forEach(([questionId, aliases]) => {
+    const currentValue = normalized[questionId];
+    if (
+      currentValue !== undefined &&
+      currentValue !== null &&
+      String(currentValue).trim() !== ""
+    ) {
+      return;
+    }
+
+    const alias = aliases.find((key) => {
+      const value = normalized[key];
+      return value !== undefined && value !== null && String(value).trim() !== "";
+    });
+
+    if (alias) normalized[questionId] = normalized[alias];
+  });
+
+  return normalized;
+}
+
 export type Step1Question = {
   id: string;
   labelKey: string;
@@ -33,21 +67,28 @@ export function Step1Questions({
   const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
 
-  const [answers, setAnswers] = useState<Record<string, any>>(initialAnswers ?? {});
+  const [answers, setAnswers] = useState<Record<string, any>>(() =>
+    normalizeAnswers(initialAnswers),
+  );
   const [statusMap, setStatusMap] = useState<Record<string, "idle" | "saving" | "saved" | "error">>({});
 
   const [savedAt, setSavedAt] = useState<Record<string, string>>({});
   const timers = useRef<Record<string, number | undefined>>({});
   const controllers = useRef<Record<string, AbortController | undefined>>({});
+  const latestInitialAnswers = useRef(initialAnswers);
+  const editedQuestionIds = useRef(new Set<string>());
   const DEBOUNCE_MS = 800;
-  const hasLoadedRef = useRef(false);
+
+  latestInitialAnswers.current = initialAnswers;
 
   useEffect(() => {
-    setAnswers(initialAnswers ?? {});
+    // Reset only when navigating to a different declaration. Refreshing the
+    // current declaration after a save must not clear the values in the form.
+    setAnswers(normalizeAnswers(latestInitialAnswers.current));
     setStatusMap({});
     setSavedAt({});
-    hasLoadedRef.current = false;
-  }, [declarationId, initialAnswers]);
+    editedQuestionIds.current.clear();
+  }, [declarationId]);
 
   useEffect(() => {
     let mounted = true;
@@ -57,8 +98,17 @@ export function Step1Questions({
           `/files/${declarationId}/step1/answers`,
         );
         if (!mounted) return;
-        setAnswers(res.data.answers ?? {});
-        hasLoadedRef.current = true;
+        const loadedAnswers = normalizeAnswers(res.data.answers);
+
+        // A slow initial request can finish after the user has started typing.
+        // Keep those local edits while hydrating the rest from the server.
+        setAnswers((current) => {
+          const merged = { ...loadedAnswers };
+          editedQuestionIds.current.forEach((questionId) => {
+            merged[questionId] = current[questionId];
+          });
+          return merged;
+        });
       } catch (err) {
         console.error("Could not load step1 answers", err);
       }
@@ -83,6 +133,7 @@ export function Step1Questions({
 
   const handleChange = (qid: string, value: string) => {
     if (disabled) return;
+    editedQuestionIds.current.add(qid);
     setAnswers((p) => ({ ...p, [qid]: value }));
     setStatusMap((s: any) => ({ ...s, [qid]: "idle" }));
 
